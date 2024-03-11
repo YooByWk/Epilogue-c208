@@ -1,4 +1,4 @@
-#Mon Mar 11 17:34:47 KST 2024
-base.0=C\:\\Users\\SSAFY\\Desktop\\S10P22C208\\frontend\\build\\app\\intermediates\\dex\\debug\\mergeDexDebug\\classes.dex
+#Tue Mar 12 00:30:52 KST 2024
+base.0=C\:\\Users\\yoo\\Desktop\\S10P22C208\\frontend\\build\\app\\intermediates\\dex\\debug\\mergeDexDebug\\classes.dex
 path.0=classes.dex
 renamed.0=classes.dex

@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:frontend/screens/login/login_viewmodel.dart';
+import 'package:frontend/screens/signup/signup_screen.dart';
  // provider 를 이용해 정리해야합니다.
  // 아무튼 그렇습니다.
 class LoginScreen extends StatelessWidget {
@@ -131,6 +132,13 @@ class LoginScreen extends StatelessWidget {
                   onPressed: () {},
                   child: Text('네이버 로그인'),
                 ),
+              ElevatedButton(
+                // 카카오 로그인 버튼 : 추후 수정 예정
+                onPressed: () {
+                  Navigator.push(context, MaterialPageRoute(builder: (context) => SignUpScreen()));
+                },
+                child: Text('다음 페이지'),
+              ),
               ],
             ), // END: Row
           ],
