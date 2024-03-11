@@ -1,0 +1,1 @@
+// will_viewmodel. 유언장 화면의 ViewModel입니다.
