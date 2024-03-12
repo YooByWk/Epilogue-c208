@@ -62,4 +62,7 @@ setState(() {
    > Dart에서 다양한 암호화 알고리즘 제공  
    > web3dart 를 통해 스마트 컨트랙트를 배포 호출하며, crypto 라이브러리를 통해 데이터 전송 확인
 5. flutter native splash : 
+6. flutter launcher icons :
+   ![alt text](launcher.png)  
+   아이콘 변경 
   

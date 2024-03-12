@@ -1,148 +1,156 @@
 import 'package:flutter/material.dart';
 import 'package:frontend/screens/login/login_viewmodel.dart';
 import 'package:frontend/screens/signup/signup_screen.dart';
- // provider 를 이용해 정리해야합니다.
- // 아무튼 그렇습니다.
+import 'package:provider/provider.dart';
+
 class LoginScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
+    final loginViewModel = Provider.of<LoginViewModel>(context);
+
     return Scaffold(
       backgroundColor: Color(0xFF617C77),
-      // appBar: AppBar(
-      //     // title: Text('Login'),
-      //     ),
-      body: Center(
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: [
-            // Text(
-            //   'E:pilogue',
-            //   style: TextStyle(fontSize: 45),
-            // ),
-            Container(
-              width: 300,
-              height: 125,
-              decoration: BoxDecoration(
-                image: DecorationImage(
-                  image: AssetImage('assets/images/logo.png'),
-                  fit: BoxFit.fill,
-                ),
-              ),
-            ),
-
-            // Image.asset('assets/images/logo.png'),
-
-            SizedBox(height: 6),
-            SizedBox(height: 16),
-            Container(
-              width: MediaQuery.of(context).size.width * 0.8,
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  Text(
-                    '아이디',
-                    style: TextStyle(
-                      fontSize: 20,
-                      color: Color(0xFFececec),
+      body: Stack(
+        children: [
+          Center(
+            child: Column(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                Container(
+                  width: 300,
+                  height: 125,
+                  decoration: BoxDecoration(
+                    image: DecorationImage(
+                      image: AssetImage('assets/images/logo.png'),
+                      fit: BoxFit.fill,
                     ),
                   ),
-                  // SizedBox(height: 4),
-                  TextFormField(
-                    onChanged: (value) {
-                      // 여기에 입력함
-                      LoginViewModel().setUsername(value);
-                    },
+                ),
+                SizedBox(height: 6),
+                SizedBox(height: 16),
+                Container(
+                  width: MediaQuery.of(context).size.width * 0.8,
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      Text(
+                        '아이디',
+                        style: TextStyle(
+                          fontSize: 20,
+                          color: Color(0xFFececec),
+                        ),
+                      ),
+                      TextFormField(
+                        onChanged: (value) {
+                          loginViewModel.setUsername(value);
+                        },
+                        style: TextStyle(
+                          fontSize: 20,
+                          color: Color(0xFFececec),
+                        ),
+                        decoration: InputDecoration(
+                          enabledBorder: UnderlineInputBorder(
+                            borderSide: BorderSide(color: Color(0xFFececec)),
+                          ),
+                          focusedBorder: UnderlineInputBorder(
+                            borderSide: BorderSide(color: Color(0xFFececec)),
+                          ),
+                        ),
+                      ),
+                    ],
+                  ),
+                ),
+                Container(
+                  width: MediaQuery.of(context).size.width * 0.8,
+                  child: TextFormField(
                     style: TextStyle(
                       fontSize: 20,
                       color: Color(0xFFececec),
                     ),
                     decoration: InputDecoration(
+                      labelText: '비밀번호',
+                      labelStyle: TextStyle(
+                        color: Color(0xFFececec),
+                      ),
                       enabledBorder: UnderlineInputBorder(
                         borderSide: BorderSide(color: Color(0xFFececec)),
                       ),
                       focusedBorder: UnderlineInputBorder(
                         borderSide: BorderSide(color: Color(0xFFececec)),
                       ),
-                      // contentPadding: EdgeInsets.fromLTRB(10.0, 0, 0, 0),
+                    ),
+                    obscureText: true,
+                    onChanged : (value) => loginViewModel.setPassword(value),
+                  ),
+                ),
+                SizedBox(height: 12),
+                ElevatedButton(
+                  onPressed: () {
+                    loginViewModel.login();
+                  },
+                  child: Text('로그인'),
+                ),
+                SizedBox(height: 5),
+                Text(
+                  '------------------or------------------',
+                  style: TextStyle(fontSize: 20, color: Colors.grey),
+                ),
+                SizedBox(height: 7),
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                  children: [
+                    ElevatedButton(
+                      onPressed: () {},
+                      child: Text('구글 로그인'),
+                    ),
+                    ElevatedButton(
+                      onPressed: () {},
+                      child: Text('네이버 로그인'),
+                    ),
+                    ElevatedButton(
+                      onPressed: () {
+                        Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                            builder: (context) => SignUpScreen(),
+                          ),
+                        );
+                      },
+                      child: Text('다음 페이지'),
+                    ),
+                  ],
+                ),
+              ],
+            ),
+          ),
+          Positioned(
+              bottom: 10,
+              left: 0,
+              right:0,
+              child: !loginViewModel.isFocused?  Align(
+                alignment: Alignment.center,
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                  Container(
+                    width: 50,
+                    height: 50,
+                    decoration: BoxDecoration(
+                      image: DecorationImage(
+                        image: AssetImage('assets/images/flower.png'),
+                        fit: BoxFit.fill,
+                      ),
                     ),
                   ),
-                ],
+                  Text('디지털 추모관 입장 >',
+                      style: TextStyle(
+                        fontSize: 20,
+                        color: Color(0xFFececec),
+                      ))
+                ]),
+              ) : Container()
               ),
-            ),
-
-            SizedBox(height: 16),
-
-            Container(
-              width: MediaQuery.of(context).size.width * 0.8,
-              child: TextFormField(
-                style: TextStyle(
-                  fontSize: 20,
-                  color: Color(0xFFececec),
-                ),
-                decoration: InputDecoration(
-                  labelText: '비밀번호',
-                  labelStyle: TextStyle(
-                    color: Color(0xFFececec),
-                  ),
-                  enabledBorder: UnderlineInputBorder(
-                    borderSide: BorderSide(color: Color(0xFFececec)),
-                  ),
-                  focusedBorder: UnderlineInputBorder(
-                    borderSide: BorderSide(color: Color(0xFFececec)),
-                  ),
-                ),
-                obscureText: true,
-              ),
-            ),
-
-            // TextFormField(
-            //   decoration: InputDecoration(
-            //     labelText: '비밀번호',
-            //   ),
-            //   obscureText: true,
-            // ),
-            SizedBox(height: 12),
-
-            ElevatedButton(
-              // 일반 로그인 버튼
-              onPressed: () {
-                LoginViewModel().login();
-              },
-              child: Text('로그인'),
-            ),
-            SizedBox(height: 5),
-
-            Text(
-              '------------------or------------------',
-              style: TextStyle(fontSize: 20, color: Colors.grey),
-            ),
-            SizedBox(height: 7),
-
-            Row(
-              // BEGIN: Row
-              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-              children: [
-                ElevatedButton(
-                  // 구글 로그인 버튼 : 추후 수정 예정
-                  onPressed: () {},
-                  child: Text('구글 로그인'),
-                ),
-                ElevatedButton(
-                  // 네이버 로그인 버튼 : 추후 수정 예정
-                  onPressed: () {},
-                  child: Text('네이버 로그인'),
-                ),
-              ElevatedButton(
-                // 카카오 로그인 버튼 : 추후 수정 예정
-                onPressed: () {
-                  Navigator.push(context, MaterialPageRoute(builder: (context) => SignUpScreen()));
-                },
-                child: Text('다음 페이지'),
-              ),
-              ],
-            ), // END: Row
-          ],
-        ),
+        ],
       ),
     );
   }

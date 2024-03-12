@@ -41,7 +41,7 @@
 33        android:appComponentFactory="androidx.core.app.CoreComponentFactory"
 33-->[androidx.core:core:1.6.0] C:\Users\SSAFY\.gradle\caches\transforms-3\2579a7de00054bf46a8dbc332552f622\transformed\core-1.6.0\AndroidManifest.xml:24:18-86
 34        android:debuggable="true"
-35        android:icon="@mipmap/ic_launcher"
+35        android:icon="@mipmap/launcher_icon"
 36        android:label="frontend" >
 37        <activity
 38            android:name="com.example.frontend.MainActivity"
