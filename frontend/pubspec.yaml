@@ -39,6 +39,7 @@ dependencies:
   http: ^1.2.1
   web3dart: ^2.7.3
   crypto: ^3.0.3
+  flutter_native_splash: ^2.3.13
 
 dev_dependencies:
   flutter_test:
