@@ -40,13 +40,24 @@ setState(() {
 ## Controller ?
 - 상태 & 동작 관리 
 - UI 요소와 로직 혹은 데이터 사이의 중개
-##
-##
+## Margin / Padding
+- Container 위젯의 `margin` 혹은 `padding` 속성을 사용해 마진을 설정할 수 있다.
+- `EdgeInsets` 클래스를 사용해 크기를 설정할 수 있다.
+## Align
+- 위젯의 내부 여백을 의미한다.
+- Align 위젯은 자식 위젯을 부모 위젯 내에서 특정 위치에 배치할 수 있게 해준다.
+- Alignment.center, Alignment.topLeft 외... 를 사용해 특정 위치를 지정 할 수 있다.
+## 
 
 ##
 
-##
+## 디버그 터미널에 너무 많은 정보가 나와서 불편할 때 
+![alt text](debugConsole.png)  
 
+필터를 이용하자.
+`I/flutter` 를 이용해 플러터에서 보내는 디버그 출력만 확인 할 수 있다.
+
+![alt text](debugRes.png)
 
 ## 사용 라이브러리
 1. http : 
@@ -62,6 +73,8 @@ setState(() {
    > Dart에서 다양한 암호화 알고리즘 제공  
    > web3dart 를 통해 스마트 컨트랙트를 배포 호출하며, crypto 라이브러리를 통해 데이터 전송 확인
 5. flutter native splash : 
+```bash
+```
 6. flutter launcher icons :
    ![alt text](launcher.png)  
    아이콘 변경 

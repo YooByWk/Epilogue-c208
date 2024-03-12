@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:frontend/screens/login/login_viewmodel.dart';
+import 'package:frontend/screens/login/social_button_widget.dart';
 import 'package:frontend/screens/signup/signup_screen.dart';
 import 'package:provider/provider.dart';
 
@@ -9,26 +10,37 @@ class LoginScreen extends StatelessWidget {
     final loginViewModel = Provider.of<LoginViewModel>(context);
 
     return Scaffold(
+      resizeToAvoidBottomInset: false,
       backgroundColor: Color(0xFF617C77),
       body: Stack(
         children: [
           Center(
             child: Column(
-              mainAxisAlignment: MainAxisAlignment.center,
+              mainAxisAlignment: MainAxisAlignment.start,
               children: [
-                Container(
-                  width: 300,
-                  height: 125,
-                  decoration: BoxDecoration(
-                    image: DecorationImage(
-                      image: AssetImage('assets/images/logo.png'),
-                      fit: BoxFit.fill,
-                    ),
+                SizedBox(height: MediaQuery.of(context).size.height * 0.13),
+                Align(
+                  alignment: Alignment.center,
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      Container(
+                        width: 300,
+                        height: 128,
+                        decoration: BoxDecoration(
+                          image: DecorationImage(
+                            image: AssetImage('assets/images/logo.png'),
+                            fit: BoxFit.fill,
+                          ),
+                        ),
+                      ),
+                    ],
                   ),
                 ),
                 SizedBox(height: 6),
-                SizedBox(height: 16),
+                SizedBox(height: 6),
                 Container(
+                  margin: EdgeInsets.only(top: 25),
                   width: MediaQuery.of(context).size.width * 0.8,
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
@@ -80,16 +92,50 @@ class LoginScreen extends StatelessWidget {
                       ),
                     ),
                     obscureText: true,
-                    onChanged : (value) => loginViewModel.setPassword(value),
+                    onChanged: (value) => loginViewModel.setPassword(value),
                   ),
                 ),
+                Row(mainAxisAlignment: MainAxisAlignment.end, children: [
+                  Padding(
+                    padding: EdgeInsets.only(
+                        right: MediaQuery.of(context).size.width * 0.1),
+                    child: InkWell(
+                      onTap: () {
+                        debugPrint('비밀번호 찾기 버튼 클릭');
+                      },
+                      child : Text(
+                      '비밀번호 찾기',
+                      style: TextStyle(
+                        fontSize: 15,
+                        color: Colors.white60,
+                      ),
+                    ),
+                  )),
+                ]),
                 SizedBox(height: 12),
-                ElevatedButton(
-                  onPressed: () {
-                    loginViewModel.login();
-                  },
-                  child: Text('로그인'),
-                ),
+SizedBox(
+  width: MediaQuery.of(context).size.width * 0.8,
+  height: 50,
+  child: ElevatedButton(
+    style: ButtonStyle(
+      backgroundColor: MaterialStateProperty.all<Color>(Color(0xFFADC2A9)),
+      shape: MaterialStateProperty.all<RoundedRectangleBorder>(
+        RoundedRectangleBorder(
+          borderRadius: BorderRadius.circular(10),
+        ),
+      ),
+    ),
+    onPressed: () {
+      loginViewModel.login();
+    },
+    child: Text('로그인',
+    style: TextStyle(
+      color: Color(0xFFececec),
+      fontWeight: FontWeight.bold,
+      fontSize: 23,
+    )),
+  ),
+),
                 SizedBox(height: 5),
                 Text(
                   '------------------or------------------',
@@ -99,57 +145,70 @@ class LoginScreen extends StatelessWidget {
                 Row(
                   mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                   children: [
-                    ElevatedButton(
-                      onPressed: () {},
-                      child: Text('구글 로그인'),
+                    SocialButtonWidget(
+                      imagePath: 'assets/images/kakao.png',
+                      onPressed: () =>
+                          debugPrint('Kakao login button clicked!'),
                     ),
-                    ElevatedButton(
-                      onPressed: () {},
-                      child: Text('네이버 로그인'),
-                    ),
-                    ElevatedButton(
-                      onPressed: () {
-                        Navigator.push(
-                          context,
-                          MaterialPageRoute(
-                            builder: (context) => SignUpScreen(),
-                          ),
-                        );
-                      },
-                      child: Text('다음 페이지'),
+                    SocialButtonWidget(
+                      imagePath: 'assets/images/naver.png',
+                      onPressed: () =>
+                          debugPrint('Naver login button clicked!'),
                     ),
                   ],
+                ),
+                SizedBox(height: 15),
+                ElevatedButton(
+                  onPressed: () {
+                    Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                        builder: (context) => SignUpScreen(),
+                      ),
+                    );
+                  },
+                  child: Text('다음 페이지'),
                 ),
               ],
             ),
           ),
           Positioned(
-              bottom: 10,
+              bottom: 0,
               left: 0,
-              right:0,
-              child: !loginViewModel.isFocused?  Align(
-                alignment: Alignment.center,
-                child: Row(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  children: [
-                  Container(
-                    width: 50,
-                    height: 50,
-                    decoration: BoxDecoration(
-                      image: DecorationImage(
-                        image: AssetImage('assets/images/flower.png'),
-                        fit: BoxFit.fill,
+              right: 0,
+              child: !loginViewModel.isFocused
+                  ? Container(
+                      decoration: BoxDecoration(
+                        color: Color(0xFFC0BC9C),
                       ),
-                    ),
-                  ),
-                  Text('디지털 추모관 입장 >',
-                      style: TextStyle(
-                        fontSize: 20,
-                        color: Color(0xFFececec),
-                      ))
-                ]),
-              ) : Container()
-              ),
+                      child: Align(
+                        alignment: Alignment.center,
+                        child: Row(
+                            mainAxisAlignment: MainAxisAlignment.center,
+                            children: [
+                              Container(
+                                width: 50,
+                                height: 100,
+                                decoration: BoxDecoration(
+                                  image: DecorationImage(
+                                    image:
+                                        AssetImage('assets/images/flower.png'),
+                                    fit: BoxFit.scaleDown,
+                                  ),
+                                ),
+                              ),
+                              Padding(
+                                padding: EdgeInsets.only(left: 15),
+                              ),
+                              Text('디지털 추모관 입장 >',
+                                  style: TextStyle(
+                                    fontSize: 30,
+                                    color: Color(0xFF121212),
+                                  ))
+                            ]),
+                      ),
+                    )
+                  : Container()),
         ],
       ),
     );
