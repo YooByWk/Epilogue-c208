@@ -9,6 +9,7 @@ class MemorialListViewModel extends ChangeNotifier {
 
   void loadMore() {
     // Add more items to the list
+      debugPrint('Added item $_nextItem');
     for (int i = 0; i < 20; i++) {
       _memorialCards.add('assets/images/ameno.jpg');
       _nextItem++;

@@ -25,9 +25,9 @@ class _MemorialListState extends State<MemorialList> {
   }
 
   void _onScroll() {
-    debugPrint('Current scroll position: ${_scrollController.position.pixels}'); // Print the current scroll position
+    // debugPrint('Current scroll position: ${_scrollController.position.pixels}'); // Print the current scroll position
     if (_scrollController.position.pixels >= _scrollController.position.maxScrollExtent - 100) {
-      debugPrint('스크롤 완료'); // Print a message when the scroll reaches the end
+      debugPrint('함수호출함수호출함수호출함수호출함수호출함수호출함수호출함수호출함수호출함수호출함수호출함수호출'); // Print a message when the scroll reaches the end
       _viewModel.loadMore();
     }
   }

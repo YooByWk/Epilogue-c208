@@ -3,31 +3,62 @@ import 'package:flutter/widgets.dart';
 import 'package:frontend/main.dart';
 import 'package:frontend/screens/memorial/memorial_body.dart'; // memorial body widget import
 import 'package:frontend/screens/memorial/memorial_widgets.dart'; // memorial image widget import
+import 'package:frontend/screens/memorial/memorial_card.dart';
+import 'package:frontend/screens/memorial/memorial_list_viewmodel.dart'; // Import the ViewModel
 
-import 'package:frontend/screens/memorial/memorial_list.dart';
-
-class MemorialScreen extends StatelessWidget {
+class MemorialScreen extends StatefulWidget {
   @override
+  _MemorialScreenState createState() => _MemorialScreenState();
+}
 
-Widget build(BuildContext context) {
-  return Scaffold(
+class _MemorialScreenState extends State<MemorialScreen> {
+  final ScrollController _scrollController = ScrollController();
+  final MemorialListViewModel _viewModel = MemorialListViewModel();
+
+  @override
+  void initState() {
+    super.initState();
+    _scrollController.addListener(_onScroll);
+    _viewModel.loadMore();
+  }
+
+  @override
+  void dispose() {
+    _scrollController.dispose();
+    super.dispose();
+  }
+
+  void _onScroll() {
+    debugPrint('스크롤 감지' + _scrollController.position.pixels.toString());
+    debugPrint('현재 Item 수: ' + _viewModel.memorialCards.length.toString());
+    if (_scrollController.position.pixels >= _scrollController.position.maxScrollExtent - 200) {
+      _viewModel.loadMore();
+    }
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
       appBar: AppBar(
         backgroundColor: themeColour2,
         title: Text('디지털 추모관'),
       ),
-      body: Column(
+      body: ListView(
+        controller: _scrollController,
         children: [
-          Stack(
-            children: [
-              MemorialImage(),
-              MemorialBody(),
-            ],
+          Container(
+            height: 300,
+            child: Stack(
+              children: [
+                MemorialImage(),
+                MemorialBody(),
+              ],
+            ),
           ),
           MemorialSearchWidget(),
-          Expanded(
-            child: MemorialList(),
-          ),
-        ]
-      ));
-}
+          ..._viewModel.memorialCards.map((card) => MemorialCard(imagePath: card)).toList(),
+        ],
+      ),
+    );
+  }
 }
