@@ -177,7 +177,11 @@ SizedBox(
               left: 0,
               right: 0,
               child: !loginViewModel.isFocused
-                  ? Container(
+                  ? InkWell(
+                    onTap: () {
+                      Navigator.pushNamed(context, '/memorial') ;
+                    },
+                    child:Container(
                       decoration: BoxDecoration(
                         color: Color(0xFFC0BC9C),
                       ),
@@ -200,6 +204,7 @@ SizedBox(
                               Padding(
                                 padding: EdgeInsets.only(left: 15),
                               ),
+
                               Text('디지털 추모관 입장 >',
                                   style: TextStyle(
                                     fontSize: 30,
@@ -208,6 +213,7 @@ SizedBox(
                             ]),
                       ),
                     )
+                  )
                   : Container()),
         ],
       ),
