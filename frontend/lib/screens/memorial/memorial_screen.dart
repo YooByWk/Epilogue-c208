@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 import 'package:frontend/main.dart';
 import 'package:frontend/screens/memorial/memorial_body.dart'; // memorial body widget import
+import 'package:frontend/screens/memorial/memorial_topbtn.dart';
 import 'package:frontend/screens/memorial/memorial_widgets.dart'; // memorial image widget import
 import 'package:frontend/screens/memorial/memorial_card.dart';
 import 'package:frontend/screens/memorial/memorial_list_viewmodel.dart'; // Import the ViewModel
@@ -59,6 +60,7 @@ class _MemorialScreenState extends State<MemorialScreen> {
           ..._viewModel.memorialCards.map((card) => MemorialCard(imagePath: card)).toList(),
         ],
       ),
+      floatingActionButton : ScrollToTopBtn(scrollController: _scrollController)
     );
   }
 }
