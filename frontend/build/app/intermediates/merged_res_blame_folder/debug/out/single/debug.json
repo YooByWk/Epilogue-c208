@@ -1,5 +1,9 @@
 [
     {
+        "merged": "com.example.frontend.app-merged_res-11:/mipmap-mdpi_launcher_icon.png.flat",
+        "source": "com.example.frontend.app-main-5:/mipmap-mdpi/launcher_icon.png"
+    },
+    {
         "merged": "com.example.frontend.app-merged_res-11:/drawable-night-xhdpi_android12splash.png.flat",
         "source": "com.example.frontend.app-main-5:/drawable-night-xhdpi/android12splash.png"
     },
@@ -8,32 +12,20 @@
         "source": "com.example.frontend.app-main-5:/drawable-xhdpi/android12splash.png"
     },
     {
-        "merged": "C:\\Users\\SSAFY\\.gradle\\daemon\\7.6.3\\com.example.frontend.app-merged_res-11:\\mipmap-xxhdpi_ic_launcher.png.flat",
-        "source": "C:\\Users\\SSAFY\\.gradle\\daemon\\7.6.3\\com.example.frontend.app-main-5:\\mipmap-xxhdpi\\ic_launcher.png"
+        "merged": "com.example.frontend.app-merged_res-11:/drawable-v21_launch_background.xml.flat",
+        "source": "com.example.frontend.app-main-5:/drawable-v21/launch_background.xml"
     },
     {
-        "merged": "C:\\Users\\SSAFY\\.gradle\\daemon\\7.6.3\\com.example.frontend.app-merged_res-11:\\drawable_launch_background.xml.flat",
-        "source": "C:\\Users\\SSAFY\\.gradle\\daemon\\7.6.3\\com.example.frontend.app-main-5:\\drawable\\launch_background.xml"
+        "merged": "com.example.frontend.app-merged_res-11:/drawable-night-v21_launch_background.xml.flat",
+        "source": "com.example.frontend.app-main-5:/drawable-night-v21/launch_background.xml"
     },
     {
-        "merged": "C:\\Users\\SSAFY\\.gradle\\daemon\\7.6.3\\com.example.frontend.app-merged_res-11:\\drawable-xxxhdpi_splash.png.flat",
-        "source": "C:\\Users\\SSAFY\\.gradle\\daemon\\7.6.3\\com.example.frontend.app-main-5:\\drawable-xxxhdpi\\splash.png"
+        "merged": "com.example.frontend.app-merged_res-11:/drawable_launch_background.xml.flat",
+        "source": "com.example.frontend.app-main-5:/drawable/launch_background.xml"
     },
     {
-        "merged": "C:\\Users\\SSAFY\\.gradle\\daemon\\7.6.3\\com.example.frontend.app-merged_res-11:\\drawable-v21_launch_background.xml.flat",
-        "source": "C:\\Users\\SSAFY\\.gradle\\daemon\\7.6.3\\com.example.frontend.app-main-5:\\drawable-v21\\launch_background.xml"
-    },
-    {
-        "merged": "C:\\Users\\SSAFY\\.gradle\\daemon\\7.6.3\\com.example.frontend.app-merged_res-11:\\mipmap-xhdpi_launcher_icon.png.flat",
-        "source": "C:\\Users\\SSAFY\\.gradle\\daemon\\7.6.3\\com.example.frontend.app-main-5:\\mipmap-xhdpi\\launcher_icon.png"
-    },
-    {
-        "merged": "C:\\Users\\SSAFY\\.gradle\\daemon\\7.6.3\\com.example.frontend.app-merged_res-11:\\mipmap-hdpi_ic_launcher.png.flat",
-        "source": "C:\\Users\\SSAFY\\.gradle\\daemon\\7.6.3\\com.example.frontend.app-main-5:\\mipmap-hdpi\\ic_launcher.png"
-    },
-    {
-        "merged": "C:\\Users\\SSAFY\\.gradle\\daemon\\7.6.3\\com.example.frontend.app-merged_res-11:\\drawable-night-xxhdpi_android12splash.png.flat",
-        "source": "C:\\Users\\SSAFY\\.gradle\\daemon\\7.6.3\\com.example.frontend.app-main-5:\\drawable-night-xxhdpi\\android12splash.png"
+        "merged": "com.example.frontend.app-merged_res-11:/mipmap-hdpi_ic_launcher.png.flat",
+        "source": "com.example.frontend.app-main-5:/mipmap-hdpi/ic_launcher.png"
     },
     {
         "merged": "com.example.frontend.app-merged_res-11:/drawable-mdpi_android12splash.png.flat",
@@ -44,140 +36,88 @@
         "source": "com.example.frontend.app-main-5:/drawable-xxxhdpi/splash.png"
     },
     {
-        "merged": "com.example.frontend.app-merged_res-11:/drawable-night-xxxhdpi_android12splash.png.flat",
-        "source": "com.example.frontend.app-main-5:/drawable-night-xxxhdpi/android12splash.png"
+        "merged": "com.example.frontend.app-merged_res-11:/mipmap-xhdpi_launcher_icon.png.flat",
+        "source": "com.example.frontend.app-main-5:/mipmap-xhdpi/launcher_icon.png"
     },
     {
-        "merged": "C:\\Users\\SSAFY\\.gradle\\daemon\\7.6.3\\com.example.frontend.app-merged_res-11:\\drawable-night-xhdpi_android12splash.png.flat",
-        "source": "C:\\Users\\SSAFY\\.gradle\\daemon\\7.6.3\\com.example.frontend.app-main-5:\\drawable-night-xhdpi\\android12splash.png"
+        "merged": "com.example.frontend.app-merged_res-11:/drawable-night-xxxhdpi_android12splash.png.flat",
+        "source": "com.example.frontend.app-main-5:/drawable-night-xxxhdpi/android12splash.png"
     },
     {
         "merged": "com.example.frontend.app-merged_res-11:/drawable-xxxhdpi_android12splash.png.flat",
         "source": "com.example.frontend.app-main-5:/drawable-xxxhdpi/android12splash.png"
     },
     {
-        "merged": "C:\\Users\\SSAFY\\.gradle\\daemon\\7.6.3\\com.example.frontend.app-merged_res-11:\\drawable-night_launch_background.xml.flat",
-        "source": "C:\\Users\\SSAFY\\.gradle\\daemon\\7.6.3\\com.example.frontend.app-main-5:\\drawable-night\\launch_background.xml"
-    },
-    {
-        "merged": "C:\\Users\\SSAFY\\.gradle\\daemon\\7.6.3\\com.example.frontend.app-merged_res-11:\\drawable-night-v21_launch_background.xml.flat",
-        "source": "C:\\Users\\SSAFY\\.gradle\\daemon\\7.6.3\\com.example.frontend.app-main-5:\\drawable-night-v21\\launch_background.xml"
-    },
-    {
         "merged": "com.example.frontend.app-merged_res-11:/drawable-hdpi_android12splash.png.flat",
         "source": "com.example.frontend.app-main-5:/drawable-hdpi/android12splash.png"
     },
     {
-        "merged": "C:\\Users\\SSAFY\\.gradle\\daemon\\7.6.3\\com.example.frontend.app-merged_res-11:\\drawable_background.png.flat",
-        "source": "C:\\Users\\SSAFY\\.gradle\\daemon\\7.6.3\\com.example.frontend.app-main-5:\\drawable\\background.png"
-    },
-    {
-        "merged": "C:\\Users\\SSAFY\\.gradle\\daemon\\7.6.3\\com.example.frontend.app-merged_res-11:\\drawable-xxhdpi_android12splash.png.flat",
-        "source": "C:\\Users\\SSAFY\\.gradle\\daemon\\7.6.3\\com.example.frontend.app-main-5:\\drawable-xxhdpi\\android12splash.png"
-    },
-    {
-        "merged": "C:\\Users\\SSAFY\\.gradle\\daemon\\7.6.3\\com.example.frontend.app-merged_res-11:\\mipmap-mdpi_ic_launcher.png.flat",
-        "source": "C:\\Users\\SSAFY\\.gradle\\daemon\\7.6.3\\com.example.frontend.app-main-5:\\mipmap-mdpi\\ic_launcher.png"
-    },
-    {
-        "merged": "C:\\Users\\SSAFY\\.gradle\\daemon\\7.6.3\\com.example.frontend.app-merged_res-11:\\drawable-night-xxxhdpi_android12splash.png.flat",
-        "source": "C:\\Users\\SSAFY\\.gradle\\daemon\\7.6.3\\com.example.frontend.app-main-5:\\drawable-night-xxxhdpi\\android12splash.png"
-    },
-    {
-        "merged": "com.example.frontend.app-merged_res-11:/drawable-hdpi_splash.png.flat",
-        "source": "com.example.frontend.app-main-5:/drawable-hdpi/splash.png"
+        "merged": "com.example.frontend.app-merged_res-11:/mipmap-hdpi_launcher_icon.png.flat",
+        "source": "com.example.frontend.app-main-5:/mipmap-hdpi/launcher_icon.png"
     },
     {
         "merged": "com.example.frontend.app-merged_res-11:/drawable-xxhdpi_splash.png.flat",
         "source": "com.example.frontend.app-main-5:/drawable-xxhdpi/splash.png"
     },
     {
-        "merged": "C:\\Users\\SSAFY\\.gradle\\daemon\\7.6.3\\com.example.frontend.app-merged_res-11:\\drawable-xxxhdpi_android12splash.png.flat",
-        "source": "C:\\Users\\SSAFY\\.gradle\\daemon\\7.6.3\\com.example.frontend.app-main-5:\\drawable-xxxhdpi\\android12splash.png"
+        "merged": "com.example.frontend.app-merged_res-11:/drawable-hdpi_splash.png.flat",
+        "source": "com.example.frontend.app-main-5:/drawable-hdpi/splash.png"
+    },
+    {
+        "merged": "com.example.frontend.app-merged_res-11:/drawable_background.png.flat",
+        "source": "com.example.frontend.app-main-5:/drawable/background.png"
     },
     {
         "merged": "com.example.frontend.app-merged_res-11:/drawable-mdpi_splash.png.flat",
         "source": "com.example.frontend.app-main-5:/drawable-mdpi/splash.png"
     },
     {
-        "merged": "C:\\Users\\SSAFY\\.gradle\\daemon\\7.6.3\\com.example.frontend.app-merged_res-11:\\drawable-mdpi_android12splash.png.flat",
-        "source": "C:\\Users\\SSAFY\\.gradle\\daemon\\7.6.3\\com.example.frontend.app-main-5:\\drawable-mdpi\\android12splash.png"
+        "merged": "com.example.frontend.app-merged_res-11:/drawable-v21_background.png.flat",
+        "source": "com.example.frontend.app-main-5:/drawable-v21/background.png"
     },
     {
-        "merged": "C:\\Users\\SSAFY\\.gradle\\daemon\\7.6.3\\com.example.frontend.app-merged_res-11:\\mipmap-hdpi_launcher_icon.png.flat",
-        "source": "C:\\Users\\SSAFY\\.gradle\\daemon\\7.6.3\\com.example.frontend.app-main-5:\\mipmap-hdpi\\launcher_icon.png"
+        "merged": "com.example.frontend.app-merged_res-11:/drawable-night_launch_background.xml.flat",
+        "source": "com.example.frontend.app-main-5:/drawable-night/launch_background.xml"
     },
     {
-        "merged": "C:\\Users\\SSAFY\\.gradle\\daemon\\7.6.3\\com.example.frontend.app-merged_res-11:\\mipmap-xxxhdpi_ic_launcher.png.flat",
-        "source": "C:\\Users\\SSAFY\\.gradle\\daemon\\7.6.3\\com.example.frontend.app-main-5:\\mipmap-xxxhdpi\\ic_launcher.png"
+        "merged": "com.example.frontend.app-merged_res-11:/mipmap-xxxhdpi_ic_launcher.png.flat",
+        "source": "com.example.frontend.app-main-5:/mipmap-xxxhdpi/ic_launcher.png"
     },
     {
-        "merged": "C:\\Users\\SSAFY\\.gradle\\daemon\\7.6.3\\com.example.frontend.app-merged_res-11:\\drawable-night-hdpi_android12splash.png.flat",
-        "source": "C:\\Users\\SSAFY\\.gradle\\daemon\\7.6.3\\com.example.frontend.app-main-5:\\drawable-night-hdpi\\android12splash.png"
-    },
-    {
-        "merged": "C:\\Users\\SSAFY\\.gradle\\daemon\\7.6.3\\com.example.frontend.app-merged_res-11:\\drawable-hdpi_android12splash.png.flat",
-        "source": "C:\\Users\\SSAFY\\.gradle\\daemon\\7.6.3\\com.example.frontend.app-main-5:\\drawable-hdpi\\android12splash.png"
-    },
-    {
-        "merged": "C:\\Users\\SSAFY\\.gradle\\daemon\\7.6.3\\com.example.frontend.app-merged_res-11:\\drawable-v21_background.png.flat",
-        "source": "C:\\Users\\SSAFY\\.gradle\\daemon\\7.6.3\\com.example.frontend.app-main-5:\\drawable-v21\\background.png"
+        "merged": "com.example.frontend.app-merged_res-11:/mipmap-xxhdpi_launcher_icon.png.flat",
+        "source": "com.example.frontend.app-main-5:/mipmap-xxhdpi/launcher_icon.png"
     },
     {
         "merged": "com.example.frontend.app-merged_res-11:/drawable-night-xxhdpi_android12splash.png.flat",
         "source": "com.example.frontend.app-main-5:/drawable-night-xxhdpi/android12splash.png"
     },
     {
-        "merged": "C:\\Users\\SSAFY\\.gradle\\daemon\\7.6.3\\com.example.frontend.app-merged_res-11:\\drawable-hdpi_splash.png.flat",
-        "source": "C:\\Users\\SSAFY\\.gradle\\daemon\\7.6.3\\com.example.frontend.app-main-5:\\drawable-hdpi\\splash.png"
+        "merged": "com.example.frontend.app-merged_res-11:/mipmap-mdpi_ic_launcher.png.flat",
+        "source": "com.example.frontend.app-main-5:/mipmap-mdpi/ic_launcher.png"
     },
     {
-        "merged": "C:\\Users\\SSAFY\\.gradle\\daemon\\7.6.3\\com.example.frontend.app-merged_res-11:\\drawable-mdpi_splash.png.flat",
-        "source": "C:\\Users\\SSAFY\\.gradle\\daemon\\7.6.3\\com.example.frontend.app-main-5:\\drawable-mdpi\\splash.png"
+        "merged": "com.example.frontend.app-merged_res-11:/mipmap-xxhdpi_ic_launcher.png.flat",
+        "source": "com.example.frontend.app-main-5:/mipmap-xxhdpi/ic_launcher.png"
     },
     {
-        "merged": "C:\\Users\\SSAFY\\.gradle\\daemon\\7.6.3\\com.example.frontend.app-merged_res-11:\\drawable-xxhdpi_splash.png.flat",
-        "source": "C:\\Users\\SSAFY\\.gradle\\daemon\\7.6.3\\com.example.frontend.app-main-5:\\drawable-xxhdpi\\splash.png"
+        "merged": "com.example.frontend.app-merged_res-11:/mipmap-xhdpi_ic_launcher.png.flat",
+        "source": "com.example.frontend.app-main-5:/mipmap-xhdpi/ic_launcher.png"
     },
     {
         "merged": "com.example.frontend.app-merged_res-11:/drawable-night-mdpi_android12splash.png.flat",
         "source": "com.example.frontend.app-main-5:/drawable-night-mdpi/android12splash.png"
     },
     {
-        "merged": "C:\\Users\\SSAFY\\.gradle\\daemon\\7.6.3\\com.example.frontend.app-merged_res-11:\\mipmap-xxxhdpi_launcher_icon.png.flat",
-        "source": "C:\\Users\\SSAFY\\.gradle\\daemon\\7.6.3\\com.example.frontend.app-main-5:\\mipmap-xxxhdpi\\launcher_icon.png"
-    },
-    {
-        "merged": "C:\\Users\\SSAFY\\.gradle\\daemon\\7.6.3\\com.example.frontend.app-merged_res-11:\\mipmap-xhdpi_ic_launcher.png.flat",
-        "source": "C:\\Users\\SSAFY\\.gradle\\daemon\\7.6.3\\com.example.frontend.app-main-5:\\mipmap-xhdpi\\ic_launcher.png"
-    },
-    {
-        "merged": "C:\\Users\\SSAFY\\.gradle\\daemon\\7.6.3\\com.example.frontend.app-merged_res-11:\\drawable-night-mdpi_android12splash.png.flat",
-        "source": "C:\\Users\\SSAFY\\.gradle\\daemon\\7.6.3\\com.example.frontend.app-main-5:\\drawable-night-mdpi\\android12splash.png"
+        "merged": "com.example.frontend.app-merged_res-11:/mipmap-xxxhdpi_launcher_icon.png.flat",
+        "source": "com.example.frontend.app-main-5:/mipmap-xxxhdpi/launcher_icon.png"
     },
     {
         "merged": "com.example.frontend.app-merged_res-11:/drawable-night-hdpi_android12splash.png.flat",
         "source": "com.example.frontend.app-main-5:/drawable-night-hdpi/android12splash.png"
     },
     {
-        "merged": "C:\\Users\\SSAFY\\.gradle\\daemon\\7.6.3\\com.example.frontend.app-merged_res-11:\\mipmap-xxhdpi_launcher_icon.png.flat",
-        "source": "C:\\Users\\SSAFY\\.gradle\\daemon\\7.6.3\\com.example.frontend.app-main-5:\\mipmap-xxhdpi\\launcher_icon.png"
-    },
-    {
-        "merged": "C:\\Users\\SSAFY\\.gradle\\daemon\\7.6.3\\com.example.frontend.app-merged_res-11:\\drawable-xhdpi_splash.png.flat",
-        "source": "C:\\Users\\SSAFY\\.gradle\\daemon\\7.6.3\\com.example.frontend.app-main-5:\\drawable-xhdpi\\splash.png"
-    },
-    {
-        "merged": "C:\\Users\\SSAFY\\.gradle\\daemon\\7.6.3\\com.example.frontend.app-merged_res-11:\\mipmap-mdpi_launcher_icon.png.flat",
-        "source": "C:\\Users\\SSAFY\\.gradle\\daemon\\7.6.3\\com.example.frontend.app-main-5:\\mipmap-mdpi\\launcher_icon.png"
-    },
-    {
         "merged": "com.example.frontend.app-merged_res-11:/drawable-xhdpi_splash.png.flat",
         "source": "com.example.frontend.app-main-5:/drawable-xhdpi/splash.png"
-    },
-    {
-        "merged": "C:\\Users\\SSAFY\\.gradle\\daemon\\7.6.3\\com.example.frontend.app-merged_res-11:\\drawable-xhdpi_android12splash.png.flat",
-        "source": "C:\\Users\\SSAFY\\.gradle\\daemon\\7.6.3\\com.example.frontend.app-main-5:\\drawable-xhdpi\\android12splash.png"
     },
     {
         "merged": "com.example.frontend.app-merged_res-11:/drawable-xxhdpi_android12splash.png.flat",

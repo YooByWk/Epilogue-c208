@@ -4,14 +4,14 @@
             "outputFile": "com.example.frontend.app-mergeDebugResources-9:/values-night-v8/values-night-v8.xml",
             "map": [
                 {
-                    "source": "C:\\Users\\SSAFY\\Desktop\\S10P22C208\\frontend\\android\\app\\src\\main\\res\\values-night\\styles.xml",
+                    "source": "C:\\Users\\yoo\\Desktop\\S10P22C208\\frontend\\android\\app\\src\\main\\res\\values-night\\styles.xml",
                     "from": {
                         "startLines": "3,18",
                         "startColumns": "4,4",
-                        "startOffsets": "172,1094",
+                        "startOffsets": "175,1106",
                         "endLines": "11,20",
                         "endColumns": "12,12",
-                        "endOffsets": "747,1258"
+                        "endOffsets": "757,1272"
                     },
                     "to": {
                         "startLines": "2,10",

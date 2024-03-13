@@ -1,7 +1,14 @@
-class MemorialCard {
-  final String imageUrl;
-  final String route; 
-  final String title;
+import 'package:flutter/material.dart';
 
-  MemorialCard({required this.imageUrl, required this.route, required this.title});
+class MemorialCard extends StatelessWidget {
+  final String imagePath;
+
+  MemorialCard({required this.imagePath});
+
+  @override
+  Widget build(BuildContext context) {
+    return Card(
+      child: Image.asset(imagePath),
+    );
+  }
 }

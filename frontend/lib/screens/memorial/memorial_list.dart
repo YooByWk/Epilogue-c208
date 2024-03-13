@@ -1,45 +1,21 @@
 import 'package:flutter/material.dart';
-import 'package:provider/provider.dart';
-import 'memorial_card.dart';
-import 'memorial_list_viewmodel.dart';
-class MemorialCardList extends StatefulWidget {
+import 'package:frontend/screens/memorial/memorial_card.dart';
+import 'package:frontend/screens/memorial/memorial_list_viewmodel.dart'; // Import the ViewModel
+
+class MemorialList extends StatefulWidget {
   @override
-  _MemorialCardListState createState() => _MemorialCardListState();
+  _MemorialListState createState() => _MemorialListState();
 }
 
-class _MemorialCardListState extends State<MemorialCardList> {
-  final _scrollController = ScrollController();
+class _MemorialListState extends State<MemorialList> {
+  final ScrollController _scrollController = ScrollController();
+  final MemorialListViewModel _viewModel = MemorialListViewModel();
 
   @override
   void initState() {
     super.initState();
     _scrollController.addListener(_onScroll);
-    Provider.of<MemorialListViewModel>(context, listen: false).loadMemorialCards();
-  }
-
-  @override
-  Widget build(BuildContext context) {
-    return Consumer<MemorialListViewModel>(
-      builder: (context, viewModel, child) {
-        return ListView.builder(
-          controller: _scrollController,
-          itemCount: viewModel.memorialCards.length,
-          itemBuilder: (context, index) {
-            return ListTile(
-              title: Text(viewModel.memorialCards[index].title),
-              leading: Image.asset(viewModel.memorialCards[index].imageUrl),
-            );
-          },
-        );
-      },
-    );
-  }
-
-  void _onScroll() {
-    if (_scrollController.position.pixels ==
-        _scrollController.position.maxScrollExtent) {
-      Provider.of<MemorialListViewModel>(context, listen: false).loadMemorialCards();
-    }
+    _viewModel.loadMore();
   }
 
   @override
@@ -47,4 +23,24 @@ class _MemorialCardListState extends State<MemorialCardList> {
     _scrollController.dispose();
     super.dispose();
   }
+
+  void _onScroll() {
+    debugPrint('Current scroll position: ${_scrollController.position.pixels}'); // Print the current scroll position
+    if (_scrollController.position.pixels >= _scrollController.position.maxScrollExtent - 100) {
+      debugPrint('스크롤 완료'); // Print a message when the scroll reaches the end
+      _viewModel.loadMore();
+    }
+  }
+
+Widget build(BuildContext context) {
+  return ListView.builder(
+    controller: _scrollController,
+    itemCount: _viewModel.memorialCards.length,
+    itemBuilder: (context, index) {
+      return MemorialCard(imagePath: _viewModel.memorialCards[index]);
+    },
+    // other properties...
+  );
+}
+
 }
