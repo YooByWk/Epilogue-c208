@@ -51,7 +51,7 @@ Widget build(BuildContext context) {
           delegate: SliverChildListDelegate(
             [
               Container(
-                height: 300,
+                height: MediaQuery.of(context).size.height * 0.3,
                 child: Stack(
                   children: [
                     MemorialImage(),
