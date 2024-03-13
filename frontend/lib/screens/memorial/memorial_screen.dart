@@ -37,30 +37,46 @@ class _MemorialScreenState extends State<MemorialScreen> {
     }
   }
 
-  @override
-  Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(
-        backgroundColor: themeColour2,
-        title: Text('디지털 추모관'),
-      ),
-      body: ListView(
-        controller: _scrollController,
-        children: [
-          Container(
-            height: 300,
-            child: Stack(
-              children: [
-                MemorialImage(),
-                MemorialBody(),
-              ],
-            ),
+@override
+Widget build(BuildContext context) {
+  return Scaffold(
+    appBar: AppBar(
+      backgroundColor: themeColour2,
+      title: Text('디지털 추모관'),
+    ),
+    body: CustomScrollView(
+      controller: _scrollController,
+      slivers: <Widget>[
+        SliverList(
+          delegate: SliverChildListDelegate(
+            [
+              Container(
+                height: 300,
+                child: Stack(
+                  children: [
+                    MemorialImage(),
+                    MemorialBody(),
+                  ],
+                ),
+              ),
+              MemorialSearchWidget(),
+            ],
           ),
-          MemorialSearchWidget(),
-          ..._viewModel.memorialCards.map((card) => MemorialCard(imagePath: card)).toList(),
-        ],
-      ),
-      floatingActionButton : ScrollToTopBtn(scrollController: _scrollController)
-    );
-  }
+        ),
+        SliverGrid(
+          gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+            crossAxisCount: 2, // Set the number of items in a row
+          ),
+          delegate: SliverChildBuilderDelegate(
+            (BuildContext context, int index) {
+              return MemorialCard(imagePath: _viewModel.memorialCards[index]);
+            },
+            childCount: _viewModel.memorialCards.length,
+          ),
+        ),
+      ],
+    ),
+    floatingActionButton: ScrollToTopBtn(scrollController: _scrollController),
+  );
+}
 }
