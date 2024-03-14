@@ -1,0 +1,30 @@
+// memorial_grid.dart
+import 'package:flutter/material.dart';
+import 'package:frontend/screens/memorial/memorial_card.dart';
+import 'package:frontend/screens/memorial/memorial_list_viewmodel.dart';
+
+class MemorialGrid extends StatelessWidget {
+  final MemorialListViewModel viewModel;
+
+  MemorialGrid({required this.viewModel});
+
+  @override
+  Widget build(BuildContext context) {
+    return SliverGrid(
+      gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+        crossAxisCount: 2, // Set the number of items in a row
+      ),
+      delegate: SliverChildBuilderDelegate(
+        (BuildContext context, int index) {
+          return MemorialCard(
+            imagePath: viewModel.memorialCards[index],
+            index: index,
+            userName: 'userName' + index.toString(),
+
+          );
+        },
+        childCount: viewModel.memorialCards.length,
+      ),
+    );
+  }
+}

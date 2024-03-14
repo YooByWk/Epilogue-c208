@@ -1,13 +1,15 @@
+// memorial_screen.dart
 import 'package:flutter/material.dart';
-import 'package:flutter/widgets.dart';
 import 'package:frontend/main.dart';
-import 'package:frontend/screens/memorial/memorial_body.dart'; // memorial body widget import
+import 'package:frontend/screens/memorial/memorial_app_bar.dart';
+import 'package:frontend/screens/memorial/memorial_grid.dart';
+import 'package:frontend/screens/memorial/memorial_list_viewmodel.dart';
 import 'package:frontend/screens/memorial/memorial_topbtn.dart';
-import 'package:frontend/screens/memorial/memorial_widgets.dart'; // memorial image widget import
-import 'package:frontend/screens/memorial/memorial_card.dart';
-import 'package:frontend/screens/memorial/memorial_list_viewmodel.dart'; // Import the ViewModel
+import 'package:frontend/screens/memorial/memorial_body.dart';
+import 'package:frontend/screens/memorial/memorial_widgets.dart';
 
 class MemorialScreen extends StatefulWidget {
+  
   @override
   _MemorialScreenState createState() => _MemorialScreenState();
 }
@@ -30,53 +32,40 @@ class _MemorialScreenState extends State<MemorialScreen> {
   }
 
   void _onScroll() {
-    debugPrint('스크롤 감지' + _scrollController.position.pixels.toString());
-    debugPrint('현재 Item 수: ' + _viewModel.memorialCards.length.toString());
-    if (_scrollController.position.pixels >= _scrollController.position.maxScrollExtent - 200) {
+    // debugPrint('스크롤 감지' + _scrollController.position.pixels.toString());
+    if (_scrollController.position.pixels >= _scrollController.position.maxScrollExtent - 50) {
+      debugPrint('현재 Item 수: ' + _viewModel.memorialCards.length.toString() + '새로운 정보를 불러옵니다.');
       _viewModel.loadMore();
+      
+      setState((){}); // Update the UI
     }
   }
 
-@override
-Widget build(BuildContext context) {
-  return Scaffold(
-    appBar: AppBar(
-      backgroundColor: themeColour2,
-      title: Text('디지털 추모관'),
-    ),
-    body: CustomScrollView(
-      controller: _scrollController,
-      slivers: <Widget>[
-        SliverList(
-          delegate: SliverChildListDelegate(
-            [
-              Container(
-                height: MediaQuery.of(context).size.height * 0.3,
-                child: Stack(
-                  children: [
-                    MemorialImage(),
-                    MemorialBody(),
-                  ],
-                ),
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      appBar: MemorialAppBar(
+        screenName : '디지털 추모관',
+        colour : 'themeColour'
+      ),
+      body: Container(
+        color: backgroundColour, // Set the background color here
+        child: CustomScrollView(
+          controller: _scrollController,
+          slivers: <Widget>[
+            SliverList(
+              delegate: SliverChildListDelegate(
+                [
+                  MemorialBodyWidget(),
+                  MemorialSearchWidget(),
+                ],
               ),
-              MemorialSearchWidget(),
-            ],
-          ),
+            ),
+            MemorialGrid(viewModel: _viewModel),
+          ],
         ),
-        SliverGrid(
-          gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
-            crossAxisCount: 2, // Set the number of items in a row
-          ),
-          delegate: SliverChildBuilderDelegate(
-            (BuildContext context, int index) {
-              return MemorialCard(imagePath: _viewModel.memorialCards[index]);
-            },
-            childCount: _viewModel.memorialCards.length,
-          ),
-        ),
-      ],
-    ),
-    floatingActionButton: ScrollToTopBtn(scrollController: _scrollController),
-  );
-}
+      ),
+      floatingActionButton: ScrollToTopBtn(scrollController: _scrollController),
+    );
+  }
 }

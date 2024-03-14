@@ -1,6 +1,22 @@
 import 'package:flutter/material.dart';
 import 'package:frontend/screens/memorial/memorial_widgets.dart';
 
+
+class MemorialBodyWidget extends StatelessWidget {
+  @override
+  Widget build(BuildContext context) {
+    return Container(
+      height: MediaQuery.of(context).size.height * 0.3,
+      child: Stack(
+        children: [
+          MemorialImage(),
+          MemorialBody(),
+        ],
+      ),
+    );
+  }
+}
+
 class MemorialBody extends StatelessWidget {
   @override
   Widget build(BuildContext context) {

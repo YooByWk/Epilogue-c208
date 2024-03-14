@@ -3,8 +3,8 @@ import 'package:frontend/screens/login/login_screen.dart';
 import 'package:frontend/screens/login/login_viewmodel.dart';
 import 'package:provider/provider.dart';
 import 'package:frontend/routes/main_route.dart';
-
 import 'package:frontend/screens/memorial/memorial_list_viewmodel.dart';
+// import 'package:frontend/routes/memorial_route.dart';
 
 const Color themeColour1 = Color(0xFFF0EBE3);
 const Color themeColour2 = Color(0xFFE4DCCF);
@@ -13,7 +13,7 @@ const Color themeColour4 = Color(0xFF99A799);
 const Color themeColour5 = Color(0xFF617C77);
 const Color whiteText = Color(0xFFFFFFFF);
 const Color blackText = Color(0xFF121212);
-
+const Color backgroundColour = Color(0xFFF8F6F2);
 void main() {
   runApp(MyApp());
 }
@@ -29,7 +29,8 @@ class MyApp extends StatelessWidget {
         // 이하 필요한 ViewModel 들을 추가 해주면 됩니다.
       ],
       child: MaterialApp(
-          routes: {...mainRoutes},
+          // routes: {...mainRoutes},
+          onGenerateRoute : generateMainRoute,
           title: 'E:pilogue',
           theme: ThemeData(
               primarySwatch: Colors.blueGrey,
