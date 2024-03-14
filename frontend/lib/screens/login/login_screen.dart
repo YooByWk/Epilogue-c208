@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:frontend/screens/login/login_viewmodel.dart';
 import 'package:frontend/screens/login/social_button_widget.dart';
 import 'package:frontend/screens/signup/signup_screen.dart';
+import 'package:frontend/screens/will/will_select_type_screen.dart';
 import 'package:frontend/widgets/common_button.dart';
 import 'package:provider/provider.dart';
 import 'package:frontend/widgets/common_button.dart';
@@ -99,39 +100,38 @@ class LoginScreen extends StatelessWidget {
                 ),
                 Row(mainAxisAlignment: MainAxisAlignment.end, children: [
                   Padding(
-                    padding: EdgeInsets.only(
-                        right: MediaQuery.of(context).size.width * 0.1),
-                    child: InkWell(
-                      onTap: () {
-                        debugPrint('비밀번호 찾기 버튼 클릭');
-                      },
-                      child : Text(
-                      '비밀번호 찾기',
-                      style: TextStyle(
-                        fontSize: 15,
-                        color: Colors.white60,
-                      ),
-                    ),
-                  )),
+                      padding: EdgeInsets.only(
+                          right: MediaQuery.of(context).size.width * 0.1),
+                      child: InkWell(
+                        onTap: () {
+                          debugPrint('비밀번호 찾기 버튼 클릭');
+                        },
+                        child: Text(
+                          '비밀번호 찾기',
+                          style: TextStyle(
+                            fontSize: 15,
+                            color: Colors.white60,
+                          ),
+                        ),
+                      )),
                 ]),
                 SizedBox(height: 12),
-SizedBox(
-  width: MediaQuery.of(context).size.width * 0.8,
-  height: 50,
-  child: CommonButtonWidget(
-    text: '로그인',
-    textColor: Color(0xFFececec),
-    backgroundColor: Color(0xFFADC2A9),
-    width: MediaQuery.of(context).size.width * 0.8,
-    height: 50,
-    fontSize: 23,
-    onPressed: () {
-      loginViewModel.login();
-      Navigator.pushNamed(context, '/main');
-    },
-  ),
-),
-
+                SizedBox(
+                  width: MediaQuery.of(context).size.width * 0.8,
+                  height: 50,
+                  child: CommonButtonWidget(
+                    text: '로그인',
+                    textColor: Color(0xFFececec),
+                    backgroundColor: Color(0xFFADC2A9),
+                    width: MediaQuery.of(context).size.width * 0.8,
+                    height: 50,
+                    fontSize: 23,
+                    onPressed: () {
+                      loginViewModel.login();
+                      Navigator.pushNamed(context, '/main');
+                    },
+                  ),
+                ),
                 SizedBox(height: 5),
                 Text(
                   '------------------or------------------',
@@ -165,6 +165,17 @@ SizedBox(
                   },
                   child: Text('다음 페이지'),
                 ),
+                ElevatedButton(
+                  onPressed: () {
+                    Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                        builder: (context) => WillSelectTypeScreen(),
+                      ),
+                    );
+                  },
+                  child: Text('유언 작성'),
+                ),
               ],
             ),
           ),
@@ -174,42 +185,40 @@ SizedBox(
               right: 0,
               child: !loginViewModel.isFocused
                   ? InkWell(
-                    onTap: () {
-                      Navigator.pushNamed(context, '/memorial') ;
-                    },
-                    child:Container(
-                      decoration: BoxDecoration(
-                        color: Color(0xFFC0BC9C),
-                      ),
-                      child: Align(
-                        alignment: Alignment.center,
-                        child: Row(
-                            mainAxisAlignment: MainAxisAlignment.center,
-                            children: [
-                              Container(
-                                width: 50,
-                                height: 100,
-                                decoration: BoxDecoration(
-                                  image: DecorationImage(
-                                    image:
-                                        AssetImage('assets/images/flower.png'),
-                                    fit: BoxFit.scaleDown,
+                      onTap: () {
+                        Navigator.pushNamed(context, '/memorial');
+                      },
+                      child: Container(
+                        decoration: BoxDecoration(
+                          color: Color(0xFFC0BC9C),
+                        ),
+                        child: Align(
+                          alignment: Alignment.center,
+                          child: Row(
+                              mainAxisAlignment: MainAxisAlignment.center,
+                              children: [
+                                Container(
+                                  width: 50,
+                                  height: 100,
+                                  decoration: BoxDecoration(
+                                    image: DecorationImage(
+                                      image: AssetImage(
+                                          'assets/images/flower.png'),
+                                      fit: BoxFit.scaleDown,
+                                    ),
                                   ),
                                 ),
-                              ),
-                              Padding(
-                                padding: EdgeInsets.only(left: 15),
-                              ),
-
-                              Text('디지털 추모관 입장 >',
-                                  style: TextStyle(
-                                    fontSize: 30,
-                                    color: Color(0xFF121212),
-                                  ))
-                            ]),
-                      ),
-                    )
-                  )
+                                Padding(
+                                  padding: EdgeInsets.only(left: 15),
+                                ),
+                                Text('디지털 추모관 입장 >',
+                                    style: TextStyle(
+                                      fontSize: 30,
+                                      color: Color(0xFF121212),
+                                    ))
+                              ]),
+                        ),
+                      ))
                   : Container()),
         ],
       ),
