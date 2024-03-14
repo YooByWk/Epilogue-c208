@@ -26,7 +26,7 @@ class MyApp extends StatelessWidget {
       providers: [
         ChangeNotifierProvider(create: (context) => LoginViewModel()),
         ChangeNotifierProvider(create: (context) => MemorialListViewModel()),
-        // 이하 필요한 ViewModel 들을 추가해주면 됩니다.
+        // 이하 필요한 ViewModel 들을 추가 해주면 됩니다.
       ],
       child: MaterialApp(
           routes: {...mainRoutes},
