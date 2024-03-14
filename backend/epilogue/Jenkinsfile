@@ -1,9 +1,9 @@
 pipeline {
     agent any
 
-    tools {
-        gradle 8.5
-    }
+//     tools {
+//         gradle 8.5
+//     }
 
     stages {
         stage('Git Clone') {
