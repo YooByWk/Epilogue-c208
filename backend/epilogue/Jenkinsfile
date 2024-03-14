@@ -5,7 +5,8 @@ pipeline {
         stage('Git Clone') {
             steps {
                 // Git 저장소에서 소스 코드를 가져옵니다.
-                git 'https://lab.ssafy.com/s10-blockchain-contract-sub2/S10P22C208.git'
+                git url: 'https://lab.ssafy.com/s10-blockchain-contract-sub2/S10P22C208.git',
+                    credentialsId: 'kn9012'
             }
         }
 
