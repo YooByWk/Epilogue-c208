@@ -28,7 +28,10 @@ Route<dynamic> generateMainRoute(RouteSettings settings) {
     // case '/main':
     //   return MaterialPageRoute(builder: (context) => MainScreen());
     case '/memorialDetail':
-      return MaterialPageRoute(builder: (context) => MemorialDetailScreen());
+    
+      return MaterialPageRoute(builder: (context) => MemorialDetailScreen(),
+      settings : RouteSettings(arguments: settings.arguments)
+      );
 
     default:
       debugPrint('Route Error');
