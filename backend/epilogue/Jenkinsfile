@@ -8,7 +8,7 @@ pipeline {
 //                 git url: 'https://lab.ssafy.com/s10-blockchain-contract-sub2/S10P22C208.git',
 //                     credentialsId: 'kn9012'
                 echo 'Clone'
-                git branch: 'backend', credentialsId: 'kn9012', url: 'https://lab.ssafy.com/s10-blockchain-contract-sub2/S10P22C208.git'
+                git branch: 'backend', credentialsId: 'epilogue', url: 'https://lab.ssafy.com/s10-blockchain-contract-sub2/S10P22C208.git'
             }
         }
 
