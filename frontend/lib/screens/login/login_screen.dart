@@ -2,7 +2,9 @@ import 'package:flutter/material.dart';
 import 'package:frontend/screens/login/login_viewmodel.dart';
 import 'package:frontend/screens/login/social_button_widget.dart';
 import 'package:frontend/screens/signup/signup_screen.dart';
+import 'package:frontend/widgets/common_button.dart';
 import 'package:provider/provider.dart';
+import 'package:frontend/widgets/common_button.dart';
 
 class LoginScreen extends StatelessWidget {
   @override
@@ -116,26 +118,20 @@ class LoginScreen extends StatelessWidget {
 SizedBox(
   width: MediaQuery.of(context).size.width * 0.8,
   height: 50,
-  child: ElevatedButton(
-    style: ButtonStyle(
-      backgroundColor: MaterialStateProperty.all<Color>(Color(0xFFADC2A9)),
-      shape: MaterialStateProperty.all<RoundedRectangleBorder>(
-        RoundedRectangleBorder(
-          borderRadius: BorderRadius.circular(10),
-        ),
-      ),
-    ),
+  child: CommonButtonWidget(
+    text: '로그인',
+    textColor: Color(0xFFececec),
+    backgroundColor: Color(0xFFADC2A9),
+    width: MediaQuery.of(context).size.width * 0.8,
+    height: 50,
+    fontSize: 23,
     onPressed: () {
       loginViewModel.login();
+      Navigator.pushNamed(context, '/main');
     },
-    child: Text('로그인',
-    style: TextStyle(
-      color: Color(0xFFececec),
-      fontWeight: FontWeight.bold,
-      fontSize: 23,
-    )),
   ),
 ),
+
                 SizedBox(height: 5),
                 Text(
                   '------------------or------------------',
