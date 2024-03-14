@@ -14,7 +14,6 @@ pipeline {
 
         stage('Build') {
             steps {
-                java -version
                 // Maven을 사용하여 Spring Boot 프로젝트를 빌드합니다.
                 sh './gradlew clean build'
             }
