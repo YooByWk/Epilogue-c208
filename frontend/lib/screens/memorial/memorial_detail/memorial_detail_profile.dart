@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:frontend/screens/memorial/memorial_detail/memorial_detail_widgets.dart';
 import 'package:frontend/screens/memorial/memorial_detail/memorial_detail_viewmodel.dart';
+import 'package:frontend/widgets/common_button.dart';
+import 'package:frontend/widgets/common_text_widget.dart';
 import 'package:provider/provider.dart';
 
 class MemorialProfile extends StatelessWidget {
@@ -18,7 +20,7 @@ class MemorialProfile extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return ChangeNotifierProvider(
-      create: (context) => MemorialDetailViewModel(), 
+      create: (context) => MemorialDetailViewModel(userName: userName ?? ''), 
       child : Consumer<MemorialDetailViewModel>(
         builder : (context, viewModel, child) {
           return Column(
@@ -28,10 +30,11 @@ class MemorialProfile extends StatelessWidget {
                 mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                 children: <Widget>[
                   MemorialProfileImage(imagePath: viewModel.imagePath),
-                  Text('프로필 이미지'),
+                  // Text('프로필 이미지'),
                   Column(
                     children : <Widget>[
-                      Text('추모관 이름 : $userName'),
+                      CommonText(text:  userName ?? '',  fontSize: 20, isBold: true),
+                      // Text('추모관 이름 : $userName'),
                       Text('추모관 인덱스 : $index')
                     ]
                   )
