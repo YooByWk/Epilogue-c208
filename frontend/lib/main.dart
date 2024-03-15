@@ -3,7 +3,7 @@ import 'package:frontend/screens/login/login_screen.dart';
 import 'package:frontend/screens/login/login_viewmodel.dart';
 import 'package:provider/provider.dart';
 import 'package:frontend/routes/main_route.dart';
-import 'package:frontend/screens/memorial/memorial_list_viewmodel.dart';
+import 'package:frontend/screens/memorial/memorial_main/memorial_list_viewmodel.dart';
 // import 'package:frontend/routes/memorial_route.dart';
 
 const Color themeColour1 = Color(0xFFF0EBE3);
@@ -14,6 +14,7 @@ const Color themeColour5 = Color(0xFF617C77);
 const Color whiteText = Color(0xFFFFFFFF);
 const Color blackText = Color(0xFF121212);
 const Color backgroundColour = Color(0xFFF8F6F2);
+
 void main() {
   runApp(MyApp());
 }

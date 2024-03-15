@@ -6,7 +6,6 @@ class MemorialListViewModel extends ChangeNotifier {
 
   List<String> get memorialCards => _memorialCards;
 
-
   void loadMore() {
     // Add more items to the list
       debugPrint('Added item $_nextItem');
