@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:frontend/main.dart';
-import 'package:frontend/screens/will/will_select_type_screen.dart';
 import 'package:frontend/widgets/common_button.dart';
 
 class WillSelectMemorialScreen extends StatelessWidget {
@@ -11,10 +10,12 @@ class WillSelectMemorialScreen extends StatelessWidget {
     return Scaffold(
       appBar: AppBar(
         backgroundColor: themeColour2,
-        title: Text('유언장 생성하기'),
+        title: const Text('유언장 생성하기'),
       ),
       body: Column(children: [
-        Text("디지털 추모관을 이용하시나요?"),
+        const Text("유언을 안전하게 기록 중입니다 ..."),
+        const Text("디지털 추모관을 이용하시나요?"),
+        const Text("디지털 추모관은 추후 유언이 공개되었을 때 회원님을 추억할 수 있는 공간입니다."),
         Column(
           children: [
             CommonButtonWidget(
@@ -55,14 +56,9 @@ class WillSelectMemorialScreen extends StatelessWidget {
         ),
         ElevatedButton(
           onPressed: () {
-            Navigator.push(
-              context,
-              MaterialPageRoute(
-                builder: (context) => WillSelectTypeScreen(),
-              ),
-            );
+            Navigator.pop(context);
           },
-          child: Text('이전으로'),
+          child: const Text('이전으로'),
         ),
       ]),
     );

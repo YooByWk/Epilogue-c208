@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:frontend/main.dart';
 import 'package:frontend/screens/login/login_screen.dart';
-import 'package:frontend/screens/will/will_select_memorial_screen.dart';
+import 'package:frontend/screens/will/will_recording_screen.dart';
 import 'package:frontend/widgets/common_button.dart';
 
 class WillSelectTypeScreen extends StatelessWidget {
@@ -12,10 +12,10 @@ class WillSelectTypeScreen extends StatelessWidget {
     return Scaffold(
       appBar: AppBar(
         backgroundColor: themeColour2,
-        title: Text('유언장 생성하기'),
+        title: const Text('유언장 생성하기'),
       ),
       body: Column(children: [
-        Text("유언을 남기고 싶은 방법"),
+        const Text("유언을 남기고 싶은 방법"),
         Row(
           children: [
             CommonButtonWidget(
@@ -29,7 +29,7 @@ class WillSelectTypeScreen extends StatelessWidget {
                 Navigator.push(
                   context,
                   MaterialPageRoute(
-                    builder: (context) => WillSelectMemorialScreen(),
+                    builder: (context) => WillRecordingScreen(),
                   ),
                 );
               },
@@ -53,7 +53,7 @@ class WillSelectTypeScreen extends StatelessWidget {
                 Navigator.push(
                   context,
                   MaterialPageRoute(
-                    builder: (context) => WillSelectMemorialScreen(),
+                    builder: (context) => WillRecordingScreen(),
                   ),
                 );
               },
@@ -77,7 +77,7 @@ class WillSelectTypeScreen extends StatelessWidget {
                 ),
               );
             },
-            child: Text("이전으로"))
+            child: const Text("이전으로"))
       ]),
     );
   }
