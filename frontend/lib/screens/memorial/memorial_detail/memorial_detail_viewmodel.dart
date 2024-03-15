@@ -1,10 +1,13 @@
 import 'package:flutter/material.dart';
 
-class MemorialProfileImage extends StatelessWidget {
-  const MemorialProfileImage({super.key});
+class MemorialDetailViewModel extends ChangeNotifier {
+  String _imagePath = 'assets/images/memorial_test/portrait.png';
 
-  @override
-  Widget build(BuildContext context) {
-    return Text('이미지 공간');
+  String get imagePath => _imagePath;
+
+  void setProfileImage() {
+    _imagePath = imagePath;
+    debugPrint('Image changed to $imagePath');
+    notifyListeners();
   }
 }

@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:frontend/screens/memorial/memorial_app_bar.dart';
 import 'package:frontend/screens/memorial/memorial_detail/memorial_detail_widgets.dart';
-import 'package:frontend/screens/memorial/memorial_detail/memorial_detail_profile_widgets.dart';
+import 'package:frontend/screens/memorial/memorial_detail/memorial_detail_profile.dart';
 
 
 
@@ -38,11 +38,12 @@ class MemorialDetailScreen extends StatelessWidget {
             delegate: SliverChildListDelegate(
               [
                 Container(
-                  height: MediaQuery.of(context).size.height * 0.4,
+                  // height: MediaQuery.of(context).size.height * 0.1,
                   decoration : BoxDecoration(
                     
                   ),
-                  child : MemorialProfileWidget()
+                  child : MemorialProfile(userName: userName,index: index,)
+                  
                 ),
             ]
             )
