@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:frontend/screens/memorial/memorial_app_bar.dart';
 import 'package:frontend/screens/memorial/memorial_detail/memorial_detail_widgets.dart';
+import 'package:frontend/screens/memorial/memorial_detail/memorial_detail_profile.dart';
 
 
 
@@ -36,15 +37,19 @@ class MemorialDetailScreen extends StatelessWidget {
           SliverList(
             delegate: SliverChildListDelegate(
               [
-                Text('추모관 상세 페이지입니다.'),
-                Text('$index 번 추모관입니다.'),
+                Container(
+                  // height: MediaQuery.of(context).size.height * 0.1,
+                  decoration : BoxDecoration(
+                    
+                  ),
+                  child : MemorialProfile(userName: userName,index: index,)
+                  
+                ),
             ]
             )
           )
         ]
       )
-      // Text('$index 번 추모관입니다.')
-      // body: Text('추모관 상세 페이지입니다.')
     );
   }
 

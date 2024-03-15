@@ -1,9 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:frontend/screens/login/login_screen.dart';
-import 'package:frontend/screens/login/login_viewmodel.dart';
 import 'package:provider/provider.dart';
 import 'package:frontend/routes/main_route.dart';
-import 'package:frontend/screens/memorial/memorial_main/memorial_list_viewmodel.dart';
+import 'package:frontend/providers/providers.dart';
+// import 'package:frontend/screens/login/login_viewmodel.dart';
+// import 'package:frontend/screens/memorial/memorial_main/memorial_list_viewmodel.dart';
 // import 'package:frontend/routes/memorial_route.dart';
 
 const Color themeColour1 = Color(0xFFF0EBE3);
@@ -16,7 +17,9 @@ const Color blackText = Color(0xFF121212);
 const Color backgroundColour = Color(0xFFF8F6F2);
 
 void main() {
-  runApp(MyApp());
+  runApp(MyApp(
+
+  ));
 }
 
 class MyApp extends StatelessWidget {
@@ -24,19 +27,14 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MultiProvider(
-      providers: [
-        ChangeNotifierProvider(create: (context) => LoginViewModel()),
-        ChangeNotifierProvider(create: (context) => MemorialListViewModel()),
-        // 이하 필요한 ViewModel 들을 추가 해주면 됩니다.
-      ],
+      providers: providers, // providers 파일에서 추가하면 됩니다..
       child: MaterialApp(
-          // routes: {...mainRoutes},
           onGenerateRoute : generateMainRoute,
           title: 'E:pilogue',
           theme: ThemeData(
               primarySwatch: Colors.blueGrey,
               visualDensity: VisualDensity.adaptivePlatformDensity),
-          home: LoginScreen() // Change this to the home screen of your app
+          home: LoginScreen() 
           ),
     );
   }
