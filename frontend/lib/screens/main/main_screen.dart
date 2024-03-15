@@ -8,10 +8,39 @@ class MainScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      appBar: AppBar(
+        title: Image.asset(
+          'assets/images/logo_small.png',
+          height: 50,
+        ),
+        automaticallyImplyLeading: false,
+      ),
       body: Center(
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
+            Text(
+              '당신의 삶을 \n오랫동안 기념할 수 있는 플랫폼',
+              textAlign: TextAlign.center,
+              style: TextStyle(
+                color: Colors.black,
+                fontSize: 24,
+                fontFamily: 'Roboto Serif',
+                fontWeight: FontWeight.w700,
+              ),
+            ),
+            SizedBox(height: 30),
+            Text(
+              '에필로그는 법적 효력이 있는 유언의 5가지 형식 중\n녹음 방식을 통한 디지털 유언장 서비스를 제공합니다.\n\n저장된 유언장은 블록체인 기술을 통해\n타인에 의해 위변조, 훼손되지 않고 안전하게 보관됩니다.',
+              textAlign: TextAlign.center,
+              style: TextStyle(
+                color: Colors.black,
+                fontSize: 16,
+                fontFamily: 'Roboto Serif',
+                fontWeight: FontWeight.w400,
+              ),
+            ),
+            SizedBox(height: 30),
             Row(
               mainAxisAlignment: MainAxisAlignment.spaceEvenly,
               children: [
