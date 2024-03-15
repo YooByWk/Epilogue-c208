@@ -14,6 +14,11 @@ class MemorialDetailImage extends StatelessWidget {
   }
 }
 
+
+
+
+
+
 class QuickMenu  extends StatelessWidget {
   final List<String> items;
   final Function(String) onSelected;

@@ -89,3 +89,5 @@ View: 사용자에게 보여지는 UI를 담당. 사용자의 입력을 받아 V
 ViewModel: Model과 View 사이의 연결 고리 역할 합니다. View로부터 입력을 받아 Model을 업데이트하고, Model의 상태 변화를 View에 반영하기 위한 데이터를 준비.
 
 MVVM 패턴의 주요 장점 : View와 Model 사이의 의존성을 최소화, 테스트와 유지 관리를 용이하게 하는 것. 또한, View와 ViewModel은 데이터 바인딩을 통해 연결되므로, 코드의 양을 줄이고 가독성을 향상.
+
+![alt text](image.png)
