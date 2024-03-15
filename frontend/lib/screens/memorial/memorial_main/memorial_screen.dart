@@ -3,9 +3,9 @@ import 'package:flutter/material.dart';
 import 'package:frontend/main.dart';
 import 'package:frontend/screens/memorial/memorial_app_bar.dart';
 import 'package:frontend/screens/memorial/memorial_grid.dart';
-import 'package:frontend/screens/memorial/memorial_list_viewmodel.dart';
+import 'package:frontend/screens/memorial/memorial_main/memorial_list_viewmodel.dart';
 import 'package:frontend/screens/memorial/memorial_topbtn.dart';
-import 'package:frontend/screens/memorial/memorial_body.dart';
+import 'package:frontend/screens/memorial/memorial_main/memorial_body.dart';
 import 'package:frontend/screens/memorial/memorial_widgets.dart';
 
 class MemorialScreen extends StatefulWidget {
