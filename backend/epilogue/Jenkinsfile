@@ -19,7 +19,7 @@ pipeline {
         stage('Build') {
             steps {
                 echo 'Build'
-                sh 'cd backend/epilogue'
+//                 sh 'cd backend/epilogue'
                 sh 'ls'
                 // Gradle을 사용하여 Spring Boot 프로젝트를 빌드합니다.
                 sh './gradlew clean build' // 기존 파일을 지우고 gralde로 새로 빌드 실행
