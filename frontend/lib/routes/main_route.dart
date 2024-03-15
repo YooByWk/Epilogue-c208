@@ -2,9 +2,9 @@ import 'package:flutter/material.dart';
 
 
 import 'package:frontend/screens/login/login_screen.dart';
-import 'package:frontend/screens/memorial/memorial_screen.dart';
+import 'package:frontend/screens/memorial/memorial_main/memorial_screen.dart';
 // import 'package:frontend/screens/main/main_screen.dart';
-import 'package:frontend/screens/memorial/memorial_detail_screen.dart';
+import 'package:frontend/screens/memorial/memorial_detail/memorial_detail_screen.dart';
 
 
 final Map<String, WidgetBuilder> mainRoutes = {

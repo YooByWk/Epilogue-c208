@@ -1,12 +1,15 @@
 // memorial_grid.dart
 import 'package:flutter/material.dart';
-import 'package:frontend/screens/memorial/memorial_card.dart';
-import 'package:frontend/screens/memorial/memorial_list_viewmodel.dart';
+import 'package:frontend/screens/memorial/memorial_main/memorial_card.dart';
+import 'package:frontend/screens/memorial/memorial_main/memorial_list_viewmodel.dart';
 
 class MemorialGrid extends StatelessWidget {
   final MemorialListViewModel viewModel;
-
-  MemorialGrid({required this.viewModel});
+  final int gridCount;
+  MemorialGrid({
+    required this.viewModel,
+    this.gridCount = 2,
+    });
 
   @override
   Widget build(BuildContext context) {

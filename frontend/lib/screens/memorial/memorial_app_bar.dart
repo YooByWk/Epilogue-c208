@@ -1,14 +1,22 @@
 import 'package:flutter/material.dart';
 import 'package:frontend/main.dart';
+import 'package:frontend/screens/memorial/memorial_detail/memorial_detail_widgets.dart';
 
 class MemorialAppBar extends StatelessWidget implements PreferredSizeWidget {
 
   final String screenName;
   final String colour;
-  
+  final bool isMenu;
+  final List<String>? items;
+  final Function(String)? onSelected;
+
+
   MemorialAppBar(
     {required this.screenName,
-    this.colour = 'themeColour2'
+    this.colour = 'themeColour2',
+    this.isMenu = false,
+    this.items,
+    this.onSelected,
     }
     );
 
@@ -38,6 +46,13 @@ class MemorialAppBar extends StatelessWidget implements PreferredSizeWidget {
       title: Text(screenName),
       centerTitle: true,
       backgroundColor: getColour(colour),
+      actions: <Widget>[
+        if (isMenu && items != null && onSelected != null)
+          QuickMenu(
+            items: items!,
+            onSelected: onSelected!,
+          ),
+      ],
     );
   }
 }
