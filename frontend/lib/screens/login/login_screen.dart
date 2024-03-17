@@ -9,9 +9,13 @@ import 'package:frontend/widgets/common_button.dart';
 class LoginScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-    final loginViewModel = Provider.of<LoginViewModel>(context);
+    // final loginViewModel = Provider.of<LoginViewModel>(context);
 
-    return Scaffold(
+    return ChangeNotifierProvider(
+      create: (context) => LoginViewModel(),
+      child : Consumer<LoginViewModel>(
+        builder : (context, viewModel, child){
+          return     Scaffold(
       resizeToAvoidBottomInset: false,
       backgroundColor: Color(0xFF617C77),
       body: Stack(
@@ -56,7 +60,7 @@ class LoginScreen extends StatelessWidget {
                       ),
                       TextFormField(
                         onChanged: (value) {
-                          loginViewModel.setUsername(value);
+                          viewModel.setUsername(value);
                         },
                         style: TextStyle(
                           fontSize: 20,
@@ -94,7 +98,7 @@ class LoginScreen extends StatelessWidget {
                       ),
                     ),
                     obscureText: true,
-                    onChanged: (value) => loginViewModel.setPassword(value),
+                    onChanged: (value) => viewModel.setPassword(value),
                   ),
                 ),
                 Row(mainAxisAlignment: MainAxisAlignment.end, children: [
@@ -126,7 +130,7 @@ SizedBox(
     height: 50,
     fontSize: 23,
     onPressed: () {
-      loginViewModel.login();
+      viewModel.login();
       Navigator.pushNamed(context, '/main');
     },
   ),
@@ -172,7 +176,7 @@ SizedBox(
               bottom: 0,
               left: 0,
               right: 0,
-              child: !loginViewModel.isFocused
+              child: !viewModel.isFocused
                   ? InkWell(
                     onTap: () {
                       Navigator.pushNamed(context, '/memorial') ;
@@ -214,5 +218,10 @@ SizedBox(
         ],
       ),
     );
+        }
+      )
+    );
+    
+
   }
 }

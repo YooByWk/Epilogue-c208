@@ -1,19 +1,23 @@
 import 'package:flutter/material.dart';
-import 'package:frontend/main.dart';
 
-class MemorialDetailImage extends StatelessWidget {
+// 메모리얼 프로필 이미지
+class MemorialProfileImage extends StatelessWidget {
   final String imagePath;
- 
-  MemorialDetailImage({
-    required this.imagePath,
-  });
+
+  MemorialProfileImage({required this.imagePath});
 
   @override
   Widget build(BuildContext context) {
-    return Image.asset(imagePath);
+    debugPrint('imagePath : $imagePath');
+    return CircleAvatar(
+      radius: 50.0,
+      backgroundImage: NetworkImage(imagePath),
+    );
+  
   }
 }
 
+// common widget으로 분리 예정
 class QuickMenu  extends StatelessWidget {
   final List<String> items;
   final Function(String) onSelected;
@@ -39,3 +43,4 @@ class QuickMenu  extends StatelessWidget {
     );
   }
 }
+
