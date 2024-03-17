@@ -78,6 +78,8 @@ setState(() {
 6. flutter launcher icons :
    ![alt text](launcher.png)  
    아이콘 변경 
+7. flutter carousel_slider :
+   > 메인 배너 이미지 캐러셀
   
 ## MVVM 패턴
 MVVM(Model-View-ViewModel)은 소프트웨어 아키텍처 패턴 중 하나로, 사용자 인터페이스의 설계와 비즈니스 로직을 분리하는 데 사용. MVVM 패턴은 세 가지 주요 구성 요소가 있음.
