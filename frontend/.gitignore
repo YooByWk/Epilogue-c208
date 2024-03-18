@@ -71,6 +71,10 @@ lib/generated_plugin_registrant.dart
 */android/app/src/main/java/io/flutter/plugins/GeneratedPluginRegistrant.java
 */android/gradle/wrapper/gradle-wrapper.properties
 
+/android/.gradle
+/android/app/build/
+/android/app/src/main/java/io/flutter/plugins/GeneratedPluginRegistrant.java
+/android/gradle/wrapper/gradle-wrapper.properties
 
 
 # Exceptions to above rules.
