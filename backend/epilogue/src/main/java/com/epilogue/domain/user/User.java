@@ -25,4 +25,12 @@ public class User {
     private String phone; // 핸드폰 번호
     @NotNull
     private String birth; // 생년월일
+    private String refreshToken; // refresh token
+
+    public User(String userId, String name, String phone, String birth) {
+        this.userId = userId;
+        this.name = name;
+        this.phone = phone;
+        this.birth = birth;
+    }
 }
