@@ -19,22 +19,40 @@ pipeline {
         stage('Build') {
             steps {
                 echo 'Build'
-                sh 'pwd'
-//                 sh 'cd ./backend/epilogue'
+//              sh 'cd ./backend/epilogue'
                 dir('backend/epilogue') {
-//                     sh 'pwd'
-//                     sh 'ls -al'
-//                     sh 'whoami'
+//                  sh 'pwd'
+//                  sh 'ls -al'
+//                  sh 'whoami'
                     sh 'chmod +x ./gradlew'
-                    sh './gradlew clean build' // 기존 파일을 지우고 gralde로 새로 빌드 실행
+                    sh './gradlew clean build' // 기존 파일을 지우고 gralde로 프로젝트 새로 빌드
                 }
-//                 sh 'ls -al'
-//                 sh 'cd /backend'
-//                 sh 'pwd'
-//                 sh 'ls -al'
+            }
+        }
 
-                // Gradle을 사용하여 Spring Boot 프로젝트를 빌드합니다.
-//                 sh './gradlew clean build' // 기존 파일을 지우고 gralde로 새로 빌드 실행
+        stage('Deploy') {
+            steps {
+//                 sh 'cp ./build/libs/epilogue-0.0.1-SNAPSHOT.jar '
+
+
+                // 스프링 도커 컨테이너 중지
+                sh 'sudo docker stop spring-docker || true'
+                // 스프링 도커 컨테이너 제거
+                sh 'sudo docker rm spring-docker || true'
+                // 스프링 이미지 삭제
+                sh 'sudo docker rmi spring || true'
+                // 스프링 이미지 빌드(생성)
+                sh 'sudo docker build -t spring ./build/libs/epilogue-0.0.1-SNAPSHOT.jar'
+
+
+                // 도커 이미지 빌드(생성)
+//                 sh 'sudo docker build -t spring .'
+//                 sh 'sudo docker build -t spring ./build/libs/epilogue-0.0.1-SNAPSHOT.jar'
+
+
+                // 스프링 도커 컨테이너 실행
+                sh 'sudo docker run -d -p 8080:8080 --name spring-docker spring'
+
             }
         }
     }
