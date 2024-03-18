@@ -36,13 +36,13 @@ pipeline {
 
 
                 // 스프링 도커 컨테이너 중지
-                sh 'sudo docker stop spring-docker || true'
+                sh 'docker stop spring-docker || true'
                 // 스프링 도커 컨테이너 제거
-                sh 'sudo docker rm spring-docker || true'
+                sh 'docker rm spring-docker || true'
                 // 스프링 이미지 삭제
-                sh 'sudo docker rmi spring || true'
+                sh 'docker rmi spring || true'
                 // 스프링 이미지 빌드(생성)
-                sh 'sudo docker build -t spring ./build/libs/epilogue-0.0.1-SNAPSHOT.jar'
+                sh 'docker build -t spring ./build/libs/epilogue-0.0.1-SNAPSHOT.jar'
 
 
                 // 도커 이미지 빌드(생성)
@@ -51,7 +51,7 @@ pipeline {
 
 
                 // 스프링 도커 컨테이너 실행
-                sh 'sudo docker run -d -p 8080:8080 --name spring-docker spring'
+                sh 'docker run -d -p 8080:8080 --name spring-docker spring'
 
             }
         }
