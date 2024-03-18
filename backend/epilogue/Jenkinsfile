@@ -33,7 +33,7 @@ pipeline {
         stage('Deploy') {
             steps {
 //                 sh 'cp ./build/libs/epilogue-0.0.1-SNAPSHOT.jar '
-                sh 'su root'
+//                 sh 'su root'
 
                 // 스프링 도커 컨테이너 중지
                 sh 'docker stop spring-docker || true'
