@@ -22,7 +22,7 @@ pipeline {
                 sh 'pwd'
 //                 sh 'cd ./backend/epilogue'
                 sh 'ls -al'
-                sh 'cd ./backend'
+                sh 'cd backend'
                 sh 'pwd'
                 sh 'ls -al'
 
