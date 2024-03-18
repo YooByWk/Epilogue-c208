@@ -23,7 +23,7 @@ public class UserRepositoryImpl implements UserRepositoryCustom {
                     .getSingleResult();
 
             // refreshtoken 값 업데이트
-            findUser.setRefreshToken(refreshToken);
+            findUser.updateRefreshToken(refreshToken);
 
             // 엔터티 저장
             entityManager.persist(findUser);

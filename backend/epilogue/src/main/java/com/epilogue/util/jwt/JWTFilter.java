@@ -73,8 +73,7 @@ public class JWTFilter extends OncePerRequestFilter {
         String role = jwtUtil.getRole(token);
 
         // User 엔터티를 생성하여 값 set
-        User user = new User();
-        user.setUserId(userId);
+        User user = new User(userId);
 //        user.setPassword("temp password");
 //        user.setRole(role);
 
