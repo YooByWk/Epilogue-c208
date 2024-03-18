@@ -22,9 +22,10 @@ pipeline {
                 sh 'pwd'
 //                 sh 'cd ./backend/epilogue'
                 dir('backend/epilogue') {
-                    sh 'pwd'
-                    sh 'ls -al'
-                    sh 'whoami'
+//                     sh 'pwd'
+//                     sh 'ls -al'
+//                     sh 'whoami'
+                    sh 'chmod +x ./gradlew'
                     sh './gradlew clean build' // 기존 파일을 지우고 gralde로 새로 빌드 실행
                 }
 //                 sh 'ls -al'
