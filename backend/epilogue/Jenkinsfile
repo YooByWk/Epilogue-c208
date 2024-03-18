@@ -11,7 +11,7 @@ pipeline {
                 // Git 저장소에서 소스 코드를 가져옵니다.
 //                 git url: 'https://lab.ssafy.com/s10-blockchain-contract-sub2/S10P22C208.git',
 //                     credentialsId: 'kn9012'
-                echo 'Clone'
+                echo 'Git Clone'
                 git branch: 'backend', credentialsId: 'epilogue', url: 'https://lab.ssafy.com/s10-blockchain-contract-sub2/S10P22C208.git'
             }
         }
@@ -21,10 +21,17 @@ pipeline {
                 echo 'Build'
                 sh 'pwd'
 //                 sh 'cd ./backend/epilogue'
-                sh 'ls -al'
-                sh 'cd backend'
-                sh 'pwd'
-                sh 'ls -al'
+                dir('backend/epilogue') {
+//                     sh 'pwd'
+//                     sh 'ls -al'
+//                     sh 'whoami'
+                    sh 'chmod +x ./gradlew'
+                    sh './gradlew clean build' // 기존 파일을 지우고 gralde로 새로 빌드 실행
+                }
+//                 sh 'ls -al'
+//                 sh 'cd /backend'
+//                 sh 'pwd'
+//                 sh 'ls -al'
 
                 // Gradle을 사용하여 Spring Boot 프로젝트를 빌드합니다.
 //                 sh './gradlew clean build' // 기존 파일을 지우고 gralde로 새로 빌드 실행
