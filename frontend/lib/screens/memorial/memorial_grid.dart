@@ -22,7 +22,7 @@ class MemorialGrid extends StatelessWidget {
           return MemorialCard(
             imagePath: viewModel.memorialCards[index],
             index: index,
-            userName: 'userName' + index.toString(),
+            memorialName: '추모관 이름 ' + index.toString(),
           );
         },
         childCount: viewModel.memorialCards.length,

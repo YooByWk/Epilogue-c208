@@ -17,13 +17,13 @@ class MemorialDetailScreen extends StatelessWidget {
   Widget build(BuildContext context) {
   final args = ModalRoute.of(context)!.settings.arguments as Map<String, dynamic>?;
   final index = args?['index'] ?? '인덱스';
-  final userName = args?['userName'] ?? '유저이름';
+  final memorialName = args?['memorialName'] ?? '유저이름';
 
   debugPrint(ModalRoute.of(context)!.settings.arguments.toString() + '추모관 상세 페이지입니다.');
 
     return  Scaffold(
       appBar: MemorialAppBar(
-        screenName: '故 $userName 님의 추모관',
+        screenName: '故 $memorialName 님의 추모관',
         isMenu: true,
         items: ['회원가입', '로그인', '로그아웃'],
         onSelected: (value) {
@@ -42,7 +42,7 @@ class MemorialDetailScreen extends StatelessWidget {
                   decoration : BoxDecoration(
                     
                   ),
-                  child : MemorialProfile(userName: userName,index: index,)
+                  child : MemorialProfile(memorialName: memorialName,index: index,)
                   
                 ),
             ]
