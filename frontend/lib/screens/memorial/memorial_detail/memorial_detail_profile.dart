@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:frontend/screens/memorial/memorial_detail/memorial_detail_widgets.dart';
-import 'package:frontend/screens/memorial/memorial_detail/memorial_detail_viewmodel.dart';
+import 'package:frontend/view_models/memorial_view_models/memorial_detail_viewmodel.dart';
 import 'package:frontend/widgets/common_button.dart';
 import 'package:frontend/widgets/common_text_widget.dart';
 import 'package:provider/provider.dart';

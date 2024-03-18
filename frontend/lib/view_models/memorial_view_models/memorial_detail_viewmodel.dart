@@ -1,6 +1,11 @@
 import 'package:flutter/material.dart';
+import 'package:frontend/models/memorial_model.dart';
 
 class MemorialDetailViewModel extends ChangeNotifier {
+  late MemorialDetailModel _model;
+  late String _imagePath;
+
+  
 
   final String userName;
   late String _imagePath;

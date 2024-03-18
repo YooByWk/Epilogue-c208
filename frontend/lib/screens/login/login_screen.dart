@@ -1,11 +1,10 @@
 import 'package:flutter/material.dart';
-import 'package:frontend/screens/login/login_viewmodel.dart';
+import 'package:frontend/view_models/login_view_models/login_viewmodel.dart';
 import 'package:frontend/screens/login/social_button_widget.dart';
 import 'package:frontend/screens/signup/signup_screen.dart';
 import 'package:frontend/screens/will/will_select_type_screen.dart';
 import 'package:frontend/widgets/common_button.dart';
 import 'package:provider/provider.dart';
-import 'package:frontend/widgets/common_button.dart';
 
 class LoginScreen extends StatelessWidget {
   @override
