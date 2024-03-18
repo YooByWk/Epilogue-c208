@@ -61,7 +61,7 @@ class LoginScreen extends StatelessWidget {
                             ),
                             TextFormField(
                               onChanged: (value) {
-                                viewModel.setUsername(value);
+                                viewModel.setUserId(value);
                               },
                               style: TextStyle(
                                 fontSize: 20,
