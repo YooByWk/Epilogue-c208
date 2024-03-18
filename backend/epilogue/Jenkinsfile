@@ -42,9 +42,14 @@ pipeline {
                 // 스프링 이미지 삭제
                 sh 'docker rmi spring || true'
                 // 스프링 이미지 빌드(생성)
+//                 dir('backend/epilogue') {
+//                    sh 'docker build -t spring .'
+
+//                 }
 //                 sh 'docker build -t spring ./build/libs/epilogue-0.0.1-SNAPSHOT.jar'
-                sh 'pwd'
-                sh 'ls -al'
+                sh 'docker build -t spring ./backend/epilogue'
+//                 sh 'pwd'
+//                 sh 'ls -al'
 
                 // 도커 이미지 빌드(생성)
 //                 sh 'sudo docker build -t spring .'
