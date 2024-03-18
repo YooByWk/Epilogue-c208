@@ -76,7 +76,7 @@ public class JWTFilter extends OncePerRequestFilter {
         User user = new User();
         user.setUserId(userId);
 //        user.setPassword("temp password");
-        user.setRole(role);
+//        user.setRole(role);
 
         // UserDetails에 회원 정보 객체 담기
         CustomUserDetails customUserDetails = new CustomUserDetails(user);

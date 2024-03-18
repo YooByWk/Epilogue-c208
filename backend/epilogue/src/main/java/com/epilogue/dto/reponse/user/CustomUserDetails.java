@@ -19,12 +19,12 @@ public class CustomUserDetails implements UserDetails {
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
         Collection<GrantedAuthority> collection = new ArrayList<>();
-        collection.add(new GrantedAuthority() {
-            @Override
-            public String getAuthority() {
-                return user.getRole();
-            }
-        });
+//        collection.add(new GrantedAuthority() {
+//            @Override
+//            public String getAuthority() {
+//                return user.getRole();
+//            }
+//        });
         return collection;
     }
 
@@ -65,13 +65,8 @@ public class CustomUserDetails implements UserDetails {
 
     @Override
     public String toString() {
-        return user.getUserId() + ", "
-                + user.getName() + ", "
-                + user.getNickname() + ", "
-                + user.getPassword() + ", "
-                + user.getEmail() + ", "
-                + user.getPhone() + ", "
-                + user.getBirth() + ", "
-                + user.getRole();
+        return "CustomUserDetails{" +
+                "user=" + user +
+                '}';
     }
 }
