@@ -25,9 +25,13 @@ class MainWilliconWidget extends StatelessWidget {
           decoration: BoxDecoration(
             shape: BoxShape.circle,
             border: Border.all(color: borderColor, width: 2),
-            image: DecorationImage(
-              image: AssetImage(imagePath),
-              fit: BoxFit.cover, // 이미지를 컨테이너에 맞게 조절합니다.
+          ),
+          child: Center(
+            child: Image.asset(
+              imagePath,
+              fit: BoxFit.contain,
+              width: 60,
+              height: 60,
             ),
           ),
         ),

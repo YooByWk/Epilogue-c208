@@ -16,7 +16,7 @@ class CommonButtonWidget extends StatelessWidget {
   const CommonButtonWidget({
     required this.text,
     this.imagePath,
-    required this.textColor,
+    this.textColor = Colors.white,
     required this.backgroundColor,
     this.borderColor,
     required this.onPressed,

@@ -10,9 +10,13 @@ import 'package:frontend/widgets/common_button.dart';
 class LoginScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-    final loginViewModel = Provider.of<LoginViewModel>(context);
+    // final loginViewModel = Provider.of<LoginViewModel>(context);
 
-    return Scaffold(
+    return ChangeNotifierProvider(
+      create: (context) => LoginViewModel(),
+      child : Consumer<LoginViewModel>(
+        builder : (context, viewModel, child){
+          return     Scaffold(
       resizeToAvoidBottomInset: false,
       backgroundColor: Color(0xFF617C77),
       body: Stack(
@@ -57,7 +61,7 @@ class LoginScreen extends StatelessWidget {
                       ),
                       TextFormField(
                         onChanged: (value) {
-                          loginViewModel.setUsername(value);
+                          viewModel.setUsername(value);
                         },
                         style: TextStyle(
                           fontSize: 20,
@@ -95,7 +99,7 @@ class LoginScreen extends StatelessWidget {
                       ),
                     ),
                     obscureText: true,
-                    onChanged: (value) => loginViewModel.setPassword(value),
+                    onChanged: (value) => viewModel.setPassword(value),
                   ),
                 ),
                 Row(mainAxisAlignment: MainAxisAlignment.end, children: [
@@ -116,22 +120,23 @@ class LoginScreen extends StatelessWidget {
                       )),
                 ]),
                 SizedBox(height: 12),
-                SizedBox(
-                  width: MediaQuery.of(context).size.width * 0.8,
-                  height: 50,
-                  child: CommonButtonWidget(
-                    text: '로그인',
-                    textColor: Color(0xFFececec),
-                    backgroundColor: Color(0xFFADC2A9),
-                    width: MediaQuery.of(context).size.width * 0.8,
-                    height: 50,
-                    fontSize: 23,
-                    onPressed: () {
-                      loginViewModel.login();
-                      Navigator.pushNamed(context, '/main');
-                    },
-                  ),
-                ),
+SizedBox(
+  width: MediaQuery.of(context).size.width * 0.8,
+  height: 50,
+  child: CommonButtonWidget(
+    text: '로그인',
+    textColor: Color(0xFFececec),
+    backgroundColor: Color(0xFFADC2A9),
+    width: MediaQuery.of(context).size.width * 0.8,
+    height: 50,
+    fontSize: 23,
+    onPressed: () {
+      viewModel.login();
+      Navigator.pushNamed(context, '/main');
+    },
+  ),
+),
+
                 SizedBox(height: 5),
                 Text(
                   '------------------or------------------',
@@ -183,7 +188,7 @@ class LoginScreen extends StatelessWidget {
               bottom: 0,
               left: 0,
               right: 0,
-              child: !loginViewModel.isFocused
+              child: !viewModel.isFocused
                   ? InkWell(
                       onTap: () {
                         Navigator.pushNamed(context, '/memorial');
@@ -223,5 +228,10 @@ class LoginScreen extends StatelessWidget {
         ],
       ),
     );
+        }
+      )
+    );
+    
+
   }
 }
