@@ -1,17 +1,17 @@
 import 'package:flutter/material.dart';
-import 'package:frontend/screens/login/login_viewmodel.dart';
+import 'package:frontend/view_models/login_view_models/login_viewmodel.dart';
 import 'package:frontend/screens/login/social_button_widget.dart';
 import 'package:frontend/screens/signup/signup_screen.dart';
 import 'package:frontend/screens/will/will_select_type_screen.dart';
 import 'package:frontend/widgets/common_button.dart';
 import 'package:provider/provider.dart';
-import 'package:frontend/widgets/common_button.dart';
 
 class LoginScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     // final loginViewModel = Provider.of<LoginViewModel>(context);
-
+    final commonWidth = MediaQuery.of(context).size.width;
+    
     return ChangeNotifierProvider(
         create: (context) => LoginViewModel(),
         child: Consumer<LoginViewModel>(builder: (context, viewModel, child) {
@@ -33,7 +33,7 @@ class LoginScreen extends StatelessWidget {
                           children: [
                             Container(
                               width: 300,
-                              height: 128,
+                              height: commonWidth * 0.31,
                               decoration: BoxDecoration(
                                 image: DecorationImage(
                                   image: AssetImage('assets/images/logo.png'),
@@ -44,8 +44,7 @@ class LoginScreen extends StatelessWidget {
                           ],
                         ),
                       ),
-                      SizedBox(height: 6),
-                      SizedBox(height: 6),
+                      SizedBox(height: 4.5),
                       Container(
                         margin: EdgeInsets.only(top: 25),
                         width: MediaQuery.of(context).size.width * 0.8,
@@ -186,6 +185,7 @@ class LoginScreen extends StatelessWidget {
                   ),
                 ),
                 Positioned(
+                  height: MediaQuery.of(context).size.height * 0.1, 
                     bottom: 0,
                     left: 0,
                     right: 0,
@@ -205,7 +205,7 @@ class LoginScreen extends StatelessWidget {
                                     children: [
                                       Container(
                                         width: 50,
-                                        height: 100,
+                                        // height: MediaQuery.of(context).size.height * 0.1,
                                         decoration: BoxDecoration(
                                           image: DecorationImage(
                                             image: AssetImage(

@@ -4,14 +4,14 @@ class MemorialCard extends StatelessWidget {
   final String imagePath;
   final int index;
   // final String userText;
-  final String userName;
+  final String memorialName;
 
   MemorialCard({
     required this.imagePath,
     // required this.routes,
     // required this.userText,
     required this.index,
-    required this.userName,
+    required this.memorialName,
   });
 
   @override
@@ -19,10 +19,10 @@ class MemorialCard extends StatelessWidget {
     return Card(
       child: InkWell(
         onTap: () {
-          debugPrint('클릭 인덱스 : $index, $userName');
+          debugPrint('클릭 인덱스 : $index, $memorialName');
           Navigator.pushNamed(context, '/memorialDetail', arguments: {
             'index': index,
-            'userName': userName,
+            'memorialName': memorialName,
           });
         },
         child: Image.asset(imagePath),

@@ -1,7 +1,7 @@
 // memorial_grid.dart
 import 'package:flutter/material.dart';
 import 'package:frontend/screens/memorial/memorial_main/memorial_card.dart';
-import 'package:frontend/screens/memorial/memorial_main/memorial_list_viewmodel.dart';
+import 'package:frontend/view_models/memorial_view_models/memorial_list_viewmodel.dart';
 
 class MemorialGrid extends StatelessWidget {
   final MemorialListViewModel viewModel;
@@ -22,7 +22,7 @@ class MemorialGrid extends StatelessWidget {
           return MemorialCard(
             imagePath: viewModel.memorialCards[index],
             index: index,
-            userName: 'userName' + index.toString(),
+            memorialName: '추모관 이름 ' + index.toString(),
           );
         },
         childCount: viewModel.memorialCards.length,
