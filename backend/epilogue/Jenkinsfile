@@ -33,7 +33,7 @@ pipeline {
         stage('Deploy') {
             steps {
 //                 sh 'cp ./build/libs/epilogue-0.0.1-SNAPSHOT.jar '
-//                 sh 'su root'
+//                 sh 'su root' // Authentication Failure (Password)
 
                 // 스프링 도커 컨테이너 중지
                 sh 'docker stop spring-docker || true'
@@ -41,24 +41,21 @@ pipeline {
                 sh 'docker rm spring-docker || true'
                 // 스프링 이미지 삭제
                 sh 'docker rmi spring || true'
+
                 // 스프링 이미지 빌드(생성)
+//                 <1번 방법>
 //                 dir('backend/epilogue') {
 //                    sh 'docker build -t spring .'
-
 //                 }
+//                 <2번 방법>
 //                 sh 'docker build -t spring ./build/libs/epilogue-0.0.1-SNAPSHOT.jar'
-                sh 'docker build -t spring ./backend/epilogue'
-//                 sh 'pwd'
+//                 <3번 방법>
+//                 sh 'pwd' // jenkins-data/workspace/Epilogue_Backend
+                  sh 'docker build -t spring ./backend/epilogue' // backend/epilogue 들어가서 spring 이미지 생성
 //                 sh 'ls -al'
-
-                // 도커 이미지 빌드(생성)
-//                 sh 'sudo docker build -t spring .'
-//                 sh 'sudo docker build -t spring ./build/libs/epilogue-0.0.1-SNAPSHOT.jar'
-
 
                 // 스프링 도커 컨테이너 실행
                 sh 'docker run -d -p 8080:8080 --name spring-docker spring'
-
             }
         }
     }
