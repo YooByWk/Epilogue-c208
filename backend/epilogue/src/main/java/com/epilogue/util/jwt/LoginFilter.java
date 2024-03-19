@@ -1,10 +1,11 @@
 package com.epilogue.util.jwt;
-import com.epilogue.dto.reponse.user.CustomUserDetails;
+import com.epilogue.dto.response.user.CustomUserDetails;
 import com.epilogue.repository.user.UserRepository;
 import jakarta.servlet.FilterChain;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
@@ -21,6 +22,7 @@ import java.util.Iterator;
  * 로그인 요청이 들어오면 로그인 필터에서 가로챔
  */
 
+@Slf4j
 public class LoginFilter extends UsernamePasswordAuthenticationFilter {
 
     private final AuthenticationManager authenticationManager;
@@ -36,7 +38,6 @@ public class LoginFilter extends UsernamePasswordAuthenticationFilter {
 
     @Override
     public Authentication attemptAuthentication(HttpServletRequest request, HttpServletResponse response) {
-
         String userId = obtainUsername(request);
         String password = obtainPassword(request);
 
@@ -61,11 +62,10 @@ public class LoginFilter extends UsernamePasswordAuthenticationFilter {
         Collection<? extends GrantedAuthority> authorities = authentication.getAuthorities();
         Iterator<? extends GrantedAuthority> iterator = authorities.iterator();
         GrantedAuthority auth = iterator.next();
-        String role = auth.getAuthority(); // 권한
 
         // 사용자 아이디, 권한 입력해서 JWT 발급
-        String accessToken = jwtUtil.createAccessToken(userId, role); // access token
-        String refreshToken = jwtUtil.createRefreshToken(userId, role); // refresh token
+        String accessToken = jwtUtil.createAccessToken(userId); // access token
+        String refreshToken = jwtUtil.createRefreshToken(userId); // refresh token
 
         // Bearer 인증 방식
         // 응답 헤더에 JWT 토큰 값을 넣어 응답
@@ -74,7 +74,10 @@ public class LoginFilter extends UsernamePasswordAuthenticationFilter {
         response.addHeader(JWTUtil.REFRESH_TOKEN, "Bearer " + refreshToken);
 
         // 디비에 refreshToken 저장
-        userRepository.updateRefreshToken(userId, refreshToken);
+//        userRepository.updateRefreshToken(userId, refreshToken);
+
+        // Redis에 refresh token 저장
+        
     }
 
     // 로그인 실패시 실행하는 메소드

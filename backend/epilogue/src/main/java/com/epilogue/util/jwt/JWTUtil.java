@@ -29,19 +29,14 @@ public class JWTUtil {
         return Jwts.parser().verifyWith(secretKey).build().parseSignedClaims(token).getPayload().get("userId", String.class);
     }
 
-    public String getRole(String token) {
-        return Jwts.parser().verifyWith(secretKey).build().parseSignedClaims(token).getPayload().get("role", String.class);
-    }
-
     public boolean isExpired(String token) {
         return Jwts.parser().verifyWith(secretKey).build().parseSignedClaims(token).getPayload().getExpiration().before(new Date());
     }
 
     // AccessToken 생성 메서드
-    public String createAccessToken(String userId, String role) {
+    public String createAccessToken(String userId) {
         return Jwts.builder()
                 .claim("userId", userId)
-                .claim("role", role)
                 .issuedAt(new Date(System.currentTimeMillis())) // 토큰 발행시간
                 .expiration(new Date(System.currentTimeMillis() + 1209600000)) // 액세스토큰 만료기간 (1시간)
 //                .expiration(new Date(System.currentTimeMillis() + 60)) // 액세스토큰 만료기간 (1시간)
@@ -50,10 +45,9 @@ public class JWTUtil {
     }
 
     // Refresh 생성 메서드
-    public String createRefreshToken(String userId, String role) {
+    public String createRefreshToken(String userId) {
         return Jwts.builder()
                 .claim("userId", userId)
-                .claim("role", role)
                 .issuedAt(new Date(System.currentTimeMillis())) // 토큰 발행시간
                 .expiration(new Date(System.currentTimeMillis() + 1209600000)) // 리프레시토큰 만료기간(2주)
                 .signWith(secretKey) // 최종적으로 secretKey를 통해 토큰 암호화
