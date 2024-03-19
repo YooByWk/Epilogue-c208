@@ -1,34 +1,13 @@
-package com.epilogue.domain.will;
-
+package com.epilogue.dto.request.will;
 
 import io.swagger.v3.oas.annotations.media.Schema;
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
-import jakarta.validation.constraints.NotNull;
 import lombok.AllArgsConstructor;
-import lombok.Builder;
-import lombok.NoArgsConstructor;
+import lombok.Getter;
 
-import java.util.UUID;
-
-@Entity
-@Builder
+@Getter
 @AllArgsConstructor
-@NoArgsConstructor
-@Schema(description = "유언")
-public class Will {
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @NotNull
-    @Schema(description = "유언 식별키")
-    private int willSeq;
-
-    @NotNull
-    @Schema(description = "회원 식별키")
-    private int userSeq;
-
+@Schema(description = "유언 작성 DTO")
+public class WillRequestDto {
     @Schema(description = "연명 치료 여부")
     private boolean sustainCare;
 
@@ -41,7 +20,6 @@ public class Will {
     @Schema(description = "장기 기증 여부")
     private boolean organDonation;
 
-    @NotNull
     @Schema(description = "디지털 추모관 사용 여부")
     private boolean useMemorial;
 
@@ -51,21 +29,15 @@ public class Will {
     @Schema(description = "묘비 사진")
     private String graveImage;
 
-    @Schema(description = "유언 읽기용 스크립트")
+    @Schema(description = "유언 초안 스크립트")
     private String willDraftScript;
 
-    @Schema(description = "유언 최종 스크립트")
-    private String willFinalScript;
-
-    @NotNull
     @Schema(description = "유언 파일 이름")
     private String willFileName;
 
-    @NotNull
     @Schema(description = "열람 신청 링크")
     private String viewApplyLink;
 
-    @NotNull
     @Schema(description = "유언장 링크")
     private String willLink;
 }
