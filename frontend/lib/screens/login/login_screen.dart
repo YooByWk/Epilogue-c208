@@ -133,7 +133,7 @@ class LoginScreen extends StatelessWidget {
                           fontSize: 23,
                           onPressed: () {
                             viewModel.login();
-                            Navigator.pushNamed(context, '/main');
+                            Navigator.pushNamed(context, '/home');
                           },
                         ),
                       ),
