@@ -83,10 +83,22 @@ class _VideoCardState extends State<VideoCard> {
   }
   @override
   Widget build(BuildContext context) {
-    return Card(
+    return GestureDetector(
+      onLongPressStart : (details) {
+        if(videoPlayerController.value.isPlaying) {
+          videoPlayerController.pause();
+        }
+      },
+      onLongPressEnd : (details) {
+        if(!videoPlayerController.value.isPlaying) {
+          videoPlayerController.play();
+        }
+      },
+      child :  Card(
       child: Chewie(
         controller : chewieController,
       ),
+    )
     );
   }
 
