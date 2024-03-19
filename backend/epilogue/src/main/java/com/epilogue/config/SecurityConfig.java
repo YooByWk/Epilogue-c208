@@ -65,7 +65,7 @@ public class SecurityConfig {
 
         // 경로별 인가 작업
         http.authorizeHttpRequests((auth) -> auth
-                .requestMatchers("/swagger-ui/**", "/api-docs/**", "/api/authenticate", "/api", "/api/user/join/**", "/api/login", "/api/auth/**", "/api/oauth2/**", "/api/user/reissue", "/api/user/exists/**", "/api/ws-stomp/**", "/api/getCounselorList", "/api/getCounselor/**", "/api/community/getBoardList/**", "/api/community/view/**", "/api/gathering/getBoardList/**", "/api/gathering/view/**", "/api/overComing/getBoardList/**", "/api/overComing/view/**", "/api/capsule/get", "/api/mindLetGo/list", "/api/mindLetGo/topic", "/api/publishToken").permitAll()
+                .requestMatchers("/swagger-ui/**", "/api-docs/**", "/api/authenticate", "/api", "/api/user/join/**", "/login", "/api/auth/**", "/api/oauth2/**", "/api/user/reissue", "/api/user/exists/**", "/api/ws-stomp/**", "/api/getCounselorList", "/api/getCounselor/**", "/api/community/getBoardList/**", "/api/community/view/**", "/api/gathering/getBoardList/**", "/api/gathering/view/**", "/api/overComing/getBoardList/**", "/api/overComing/view/**", "/api/capsule/get", "/api/mindLetGo/list", "/api/mindLetGo/topic", "/api/publishToken").permitAll()
                 .requestMatchers("/api/reserve/**", "/api/mypage/reserve/**", "/api/mypage/cancelReservation/**", "/api/mypage/counselingLog/**", "/api/counseling/review/**", "/api/mypage/counselingReviewList/**", "/api/board", "/api/mypage/counselingReviewList/**").hasRole("CLIENT")
                 .requestMatchers("/api/mypage/reserve/**", "/api/counseling/saveCounselingLog/**", "/api/mypage/counselingLog/**", "/api/myReview").hasRole("COUNSELOR")
                 .anyRequest().authenticated());
