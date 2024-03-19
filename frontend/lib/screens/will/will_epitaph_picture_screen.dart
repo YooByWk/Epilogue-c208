@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:frontend/main.dart';
+import 'package:frontend/screens/will/will_select_info_screen.dart';
 import 'package:frontend/screens/will/will_widgets.dart';
 import 'package:frontend/widgets/common_button.dart';
 
@@ -46,16 +47,16 @@ class _WillEpitaphPictureScreenState extends State<WillEpitaphPictureScreen> {
           },
           child: const Text('이전'),
         ),
-        // TextButton(
-        //   onPressed: () =>
-        //       Navigator.push(
-        //         context,
-        //         MaterialPageRoute(
-        //           builder: (context) => WillSelectMemorialScreen(),
-        //         ),
-        //       ),
-        //   child: const Text('다음'),
-        // ),
+        TextButton(
+          onPressed: () =>
+              Navigator.push(
+                context,
+                MaterialPageRoute(
+                  builder: (context) => WillSelectInfoScreen(),
+                ),
+              ),
+          child: const Text('다음'),
+        ),
       ]),
     );
   }
