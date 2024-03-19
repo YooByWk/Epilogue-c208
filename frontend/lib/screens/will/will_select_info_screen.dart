@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:frontend/main.dart';
 import 'package:frontend/screens/main/main_screen.dart';
 import 'package:frontend/screens/will/will_additional_info_screen.dart';
+import 'package:frontend/screens/will/will_widgets.dart';
 import 'package:frontend/widgets/common_button.dart';
 
 class WillSelectInfoScreen extends StatefulWidget {
@@ -17,65 +18,81 @@ class _WillSelectInfoScreenState extends State<WillSelectInfoScreen> {
         backgroundColor: themeColour2,
         title: const Text('유언장 생성하기'),
       ),
-      body: Column(
-        children: [
-          const Text("추가 정보를 \n 입력하시겠어요?"),
-          const Text("[추가 정보] \n 연명치료 여부, 장기기증 여부, \n 장례 방식, 묘 방식"),
-          Column(
-            children: [
-              CommonButtonWidget(
+      body: Container(
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+          children: [
+            Padding(
+              padding: const EdgeInsets.only(left: 20.0, top: 30.0),
+              child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                  children: [
+                    Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        Row(
+                          children: [
+                            TextWidget(
+                              text: "추가 정보",
+                              fontSize: 50,
+                              fontWeight: FontWeight.w900,
+                            ),
+                            TextWidget(
+                              text: "를",
+                              fontSize: 50,
+                              fontWeight: FontWeight.w500,
+                            ),
+                          ],
+                        ),
+                        TextWidget(
+                          text: "입력하시겠어요?",
+                          fontSize: 50,
+                          fontWeight: FontWeight.w500,
+                        ),
+                        TextWidget(
+                            text: "[추가 정보] \n 연명치료 여부, 장기기증 여부, \n 장례 방식, 묘 방식",
+                            fontSize: 23),
+                      ],
+                    ),
+                  ]),
+            ),
+            Center(
+              child: WillCommonButtonWidget(
                 text: "입력하기",
-                width: 300,
-                height: 80,
-                textColor: Colors.black,
-                backgroundColor: Colors.white,
-                borderColor: themeColour4,
+                width: MediaQuery.of(context).size.width * 0.8,
+                height: MediaQuery.of(context).size.height * 0.11,
                 onPressed: () => Navigator.push(
                   context,
                   MaterialPageRoute(
                     builder: (context) => WillAdditionalInfoScreen(),
                   ),
                 ),
-                boxShadow: [
-                  BoxShadow(
-                    color: themeColour4.withOpacity(0.5),
-                    spreadRadius: 5,
-                    blurRadius: 7,
-                    offset: Offset(0, 3), // changes position of shadow
-                  ),
-                ],
               ),
-              CommonButtonWidget(
+            ),
+            Center(
+              child: WillCommonButtonWidget(
                 text: "메인으로",
-                width: 300,
-                height: 80,
-                textColor: Colors.black,
+                width: MediaQuery.of(context).size.width * 0.8,
+                height: MediaQuery.of(context).size.height * 0.11,
                 backgroundColor: themeColour3.withOpacity(0.5),
-                borderColor: themeColour4,
                 onPressed: () => Navigator.push(
                   context,
                   MaterialPageRoute(
                     builder: (context) => MainScreen(),
                   ),
                 ),
-                boxShadow: [
-                  BoxShadow(
-                    color: themeColour4.withOpacity(0.5),
-                    spreadRadius: 5,
-                    blurRadius: 7,
-                    offset: Offset(0, 3), // changes position of shadow
-                  ),
-                ],
               ),
-            ],
-          ),
-          TextButton(
-            onPressed: () {
-              Navigator.pop(context);
-            },
-            child: const Text('이전'),
-          ),
-        ],
+            ),
+            TextButton(
+              onPressed: () {
+                Navigator.pop(context);
+              },
+              child: const Text('이전', style: TextStyle(fontSize: 23),),
+            ),
+          ],
+        ),
       ),
     );
   }

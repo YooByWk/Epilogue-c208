@@ -136,3 +136,54 @@ class _ChoiceButtonWidgetState extends State<ChoiceButtonWidget> {
   }
 }
 
+class WillCommonButtonWidget extends StatelessWidget {
+  final String text;
+  final Color? backgroundColor;
+  final double? width;
+  final double? height;
+  final double? fontSize;
+  final VoidCallback onPressed;
+
+  const WillCommonButtonWidget({
+    required this.text,
+    this.backgroundColor = Colors.white,
+    required this.onPressed,
+    this.width = 150.0,
+    this.height = 35.0,
+    this.fontSize = 30.0,
+  });
+
+  @override
+  Widget build(BuildContext context) {
+    return GestureDetector(
+      onTap: onPressed,
+      child: Container(
+          width: width,
+          height: height,
+          decoration: BoxDecoration(
+            color: backgroundColor,
+            borderRadius: BorderRadius.circular(18.0),
+            border:
+             Border.all(color: themeColour3),
+            boxShadow: [
+              BoxShadow(
+                color: themeColour4.withOpacity(0.5),
+                spreadRadius: 5,
+                blurRadius: 7,
+                offset: Offset(0, 3), // changes position of shadow
+              ),
+            ],
+          ),
+          alignment: Alignment.center,
+          child: Text(
+            text,
+            textAlign: TextAlign.center,
+            style: TextStyle(
+              color: Colors.black,
+              fontSize: fontSize,
+              fontWeight: FontWeight.bold,
+            ),
+          )),
+    );
+  }
+}
