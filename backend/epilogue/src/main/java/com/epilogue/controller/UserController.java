@@ -25,6 +25,5 @@ public class UserController {
     public ResponseEntity<?> join(@Parameter(description = "회원 가입 DTO") @RequestBody JoinRequestDto joinRequestDto) {
         userService.join(joinRequestDto);
         return new ResponseEntity<>(HttpStatus.OK);
-    }
-
+    }   
 }
