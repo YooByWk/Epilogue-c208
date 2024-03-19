@@ -46,12 +46,30 @@ class PhotoTab extends StatelessWidget {
               ),
               delegate:
                   SliverChildBuilderDelegate((BuildContext context, int index) {
-                return PhotoTabCard(
+                    if (index == 0) {
+                      return Card(
+                        child : InkWell(
+                          onTap: () => {
+                            debugPrint('add Photo Button Clicked'),
+                            viewModel.testAPI()
+                          } ,
+
+                          child : Center(                        child : Column ( 
+                            mainAxisAlignment: MainAxisAlignment.center,
+                          children: [
+                             Icon(Icons.add),
+                        SizedBox(height: 15),
+                        Text('추모관 사진 추가')
+                          ])
+                      )
+                  ));
+                  } 
+               else { return PhotoTabCard(
                   key : ValueKey(index),
                   photoPath: viewModel.photos[index],
                   index: index,
                 );
-              }
+             }}
               , childCount: viewModel.photos.length,
               ),
             ),

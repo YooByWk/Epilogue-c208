@@ -26,19 +26,42 @@ class MemorialDetailScreen extends StatelessWidget {
           },
           // screenName: '추모관상세',
         ),
-        body: CustomScrollView(slivers: <Widget>[
-          SliverList(
-            delegate: SliverChildListDelegate([
-              Container(
+        body: NestedScrollView(
+          headerSliverBuilder: (BuildContext context, bool innerBoxIsScrolled) {
+            return <Widget> [
+              SliverList(
+                delegate: SliverChildListDelegate([
+                                Container(
                   // height: MediaQuery.of(context).size.height * 0.1,
                   decoration: BoxDecoration(),
                   child: MemorialProfile(
                     memorialName: memorialName,
                     index: index,
                   )),
-            ]),
+                ])
+              )
+            ];
+          },
+          body: MemorialDetailTabBar(),
           ),
-          SliverFillRemaining(child: MemorialDetailTabBar())
-        ]));
+        ); 
   }
 }
+        
+//          CustomScrollView(slivers: <Widget>[
+//           SliverList(
+//             delegate: SliverChildListDelegate([
+//               // Container(
+//               //     // height: MediaQuery.of(context).size.height * 0.1,
+//               //     decoration: BoxDecoration(),
+//               //     child: MemorialProfile(
+//               //       memorialName: memorialName,
+//               //       index: index,
+//               //     )),
+//             ]),
+//           ),
+//           // SliverFillRemaining(child: MemorialDetailTabBar())
+          
+//         ]));
+//   }
+// }
