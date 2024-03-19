@@ -15,7 +15,36 @@ class PhotoTabCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Card(child: Image.asset(photoPath));
+    OverlayEntry? overlayEntry;
+
+    return Card(
+      child: GestureDetector(
+        onLongPress: () {
+          overlayEntry = OverlayEntry(
+            builder: (context) => Container(
+              height: MediaQuery.of(context).size.height * 0.1,
+              width: MediaQuery.of(context).size.width * 0.1,
+              child: Material(
+                color: Colors.transparent,
+                child: Container(
+                  decoration: BoxDecoration(
+                    image: DecorationImage(
+                      image: AssetImage(photoPath),
+                      fit: BoxFit.scaleDown,
+                    ),
+                  ),
+                ),
+              ),
+            ),
+          );
+          Overlay.of(context).insert(overlayEntry!);
+        },
+        onLongPressEnd: (details) {
+          overlayEntry?.remove();
+        },
+        child: Image.asset(photoPath),
+      ),
+    );
   }
 }
 
