@@ -52,7 +52,12 @@ public class OAuth2UserServiceImplement extends DefaultOAuth2UserService {
 
             birth = kakaoAccount.get("birthyear") + "" + kakaoAccount.get("birthday");
 
-            user = new User(userId, name, phone, birth);
+            user = User.builder()
+                    .userId(userId)
+                    .name(name)
+                    .phone(phone)
+                    .birth(birth)
+                    .build();
         }
 
         if (oauthClientName.equals("naver")) {
@@ -61,7 +66,12 @@ public class OAuth2UserServiceImplement extends DefaultOAuth2UserService {
             name = responseMap.get("name");
             phone = responseMap.get("mobile").replace("-", "");
             birth = responseMap.get("birthyear") + responseMap.get("birthday").substring(0, 2) + responseMap.get("birthday").substring(3, 5);
-            user = new User(userId, name, phone, birth);
+            user = User.builder()
+                    .userId(userId)
+                    .name(name)
+                    .phone(phone)
+                    .birth(birth)
+                    .build();
         }
 
         assert user != null;

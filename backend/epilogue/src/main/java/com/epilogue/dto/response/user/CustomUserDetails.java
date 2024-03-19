@@ -1,4 +1,4 @@
-package com.epilogue.dto.reponse.user;
+package com.epilogue.dto.response.user;
 
 import com.epilogue.domain.user.User;
 import org.springframework.security.core.GrantedAuthority;

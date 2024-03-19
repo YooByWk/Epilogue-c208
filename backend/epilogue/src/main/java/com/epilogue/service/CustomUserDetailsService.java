@@ -1,7 +1,7 @@
 package com.epilogue.service;
 
 import com.epilogue.domain.user.User;
-import com.epilogue.dto.reponse.user.CustomUserDetails;
+import com.epilogue.dto.response.user.CustomUserDetails;
 import com.epilogue.repository.user.UserRepository;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.security.core.userdetails.UserDetails;
