@@ -74,7 +74,10 @@ public class LoginFilter extends UsernamePasswordAuthenticationFilter {
         response.addHeader(JWTUtil.REFRESH_TOKEN, "Bearer " + refreshToken);
 
         // 디비에 refreshToken 저장
-        userRepository.updateRefreshToken(userId, refreshToken);
+//        userRepository.updateRefreshToken(userId, refreshToken);
+
+        // Redis에 refresh token 저장
+        
     }
 
     // 로그인 실패시 실행하는 메소드
