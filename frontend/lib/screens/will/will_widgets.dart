@@ -39,13 +39,100 @@ class WillEpitaphWidget extends StatelessWidget {
             color: Colors.black,
           ),
           enabledBorder: UnderlineInputBorder(
-            borderSide: BorderSide(color: Colors.white,),
+            borderSide: BorderSide(
+              color: Colors.white,
+            ),
           ),
           focusedBorder: UnderlineInputBorder(
-            borderSide: BorderSide(color: Colors.white,),
+            borderSide: BorderSide(
+              color: Colors.white,
+            ),
           ),
         ),
       ),
     );
   }
 }
+
+class TextWidget extends StatelessWidget {
+  final String text;
+  final double fontSize;
+  final FontWeight? fontWeight;
+  final TextAlign? textAlign;
+
+  const TextWidget({
+    required this.text,
+    required this.fontSize,
+    this.fontWeight = FontWeight.normal,
+    this.textAlign = TextAlign.start,
+  });
+
+  @override
+  Widget build(BuildContext context) {
+    return Text(
+      text,
+      textAlign: textAlign,
+      style: TextStyle(
+        color: Colors.black,
+        fontFamily: 'Roboto Serif',
+        fontSize: fontSize,
+        fontWeight: fontWeight,
+      ),
+    );
+  }
+}
+
+class ChoiceButtonWidget extends StatefulWidget {
+  _ChoiceButtonWidgetState createState() => _ChoiceButtonWidgetState();
+
+  final String text;
+
+  const ChoiceButtonWidget({
+    required this.text
+});
+}
+
+class _ChoiceButtonWidgetState extends State<ChoiceButtonWidget> {
+  bool checked = false;
+
+  @override
+  Widget build(BuildContext context) {
+    return GestureDetector(
+      onTap: () {
+        setState(() {
+          checked = !checked;
+        });
+      },
+      child: Container(
+        width: 150,
+        height: 50,
+        decoration: BoxDecoration(
+          color: Colors.white,
+          border: Border.all(
+            color: (checked) ? themeColour3 : Colors.grey.withOpacity(0.5),
+          ),
+          borderRadius: BorderRadius.circular(8),
+        ),
+        child: Row(
+          children: [
+            Icon(
+              Icons.check_circle_outline,
+              color: (checked) ? themeColour3 : Colors.grey.withOpacity(0.5),
+            ),
+            Text(
+              widget.text,
+              textAlign: TextAlign.start,
+              style: TextStyle(
+                color: (checked) ? themeColour3 : Colors.grey.withOpacity(0.5),
+                fontFamily: 'Roboto Serif',
+                fontSize: 20,
+                fontWeight: FontWeight.normal,
+              ),
+            )
+          ],
+        ),
+      ),
+    );
+  }
+}
+
