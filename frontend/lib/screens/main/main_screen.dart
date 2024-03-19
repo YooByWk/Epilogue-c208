@@ -3,6 +3,8 @@ import 'package:frontend/main.dart';
 import 'package:frontend/widgets/main_willicon_widget.dart';
 import 'package:frontend/widgets/main_description.dart';
 import 'package:frontend/widgets/main_banner.dart';
+import 'package:frontend/widgets/custom_bottom_navigation.dart';
+
 
 class MainScreen extends StatelessWidget {
   const MainScreen({super.key});
@@ -80,6 +82,7 @@ class MainScreen extends StatelessWidget {
           ),
         )
       ),
+      bottomNavigationBar: BottomNavigationWidget(),
     );
   }
 }
