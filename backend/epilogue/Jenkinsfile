@@ -38,7 +38,7 @@ pipeline {
                 // 스프링 도커 컨테이너 중지
                 sh 'docker stop spring-docker || true'
                 // 실행중인 스프링 도커 컨테이너 강제 제거
-                sh 'docker rm -f spring-docker || true'
+                sh 'docker rm spring-docker || true'
                 // 스프링 이미지 삭제
                 sh 'docker rmi spring || true'
 
