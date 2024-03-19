@@ -21,7 +21,7 @@ class CommonButtonWidget extends StatelessWidget {
     this.borderColor,
     required this.onPressed,
     this.width = 150.0,
-    this.height = 35.0,
+    this.height = 40.0,
     this.fontSize = 16.0,
     this.border,
     this.boxShadow,
