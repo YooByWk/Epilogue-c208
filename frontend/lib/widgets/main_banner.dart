@@ -1,7 +1,9 @@
 import 'package:carousel_slider/carousel_slider.dart';
 import 'package:flutter/material.dart';
+import 'package:frontend/screens/will/will_select_type_screen.dart';
 import 'package:frontend/widgets/common_button.dart';
 import 'package:frontend/main.dart';
+import 'package:frontend/widgets/will_notice.dart';
 
 class BannerItem {
   final String imagePath;
@@ -29,10 +31,10 @@ class _MainBannerWidgetState extends State<MainBannerWidget> {
   final CarouselController _controller = CarouselController();
   final List<BannerItem> banners = [
     BannerItem(
-        imagePath: 'assets/images/banner1.jpg',
-        description: '블록체인을 활용한 디지털 유언장 서비스\n\n당신의 유언장을 남겨보세요.',
-        routeName: '/will',
-        buttonText: '유언장 기록하기',
+      imagePath: 'assets/images/banner1.jpg',
+      description: '블록체인을 활용한 디지털 유언장 서비스\n\n당신의 유언장을 남겨보세요.',
+      routeName: '/will',
+      buttonText: '유언장 기록하기',
     ),
     BannerItem(
       imagePath: 'assets/images/banner2.jpg',
@@ -101,7 +103,49 @@ class _MainBannerWidgetState extends State<MainBannerWidget> {
                             text: banner.buttonText,
                             backgroundColor: themeColour5,
                             onPressed: () {
-                              Navigator.pushNamed(context, banner.routeName);
+                              if (banner.routeName == '/will') {
+                                showDialog(
+                                  context: context,
+                                  barrierDismissible: true,
+                                  builder: (BuildContext context) {
+                                    return AlertDialog(
+                                      backgroundColor: Colors.white,
+                                      content: WillNotice(),
+                                      insetPadding: const EdgeInsets.symmetric(
+                                        horizontal: 10,
+                                        vertical: 100,
+                                      ),
+                                      actions: [
+                                        ElevatedButton(
+                                          child: const Text('동의 후 생성하기'),
+                                          style: ElevatedButton.styleFrom(
+                                            minimumSize: Size.fromHeight(50),
+                                            shape: RoundedRectangleBorder(
+                                              borderRadius: BorderRadius.all(
+                                                Radius.circular(10)
+                                              )
+                                            ),
+                                            backgroundColor: themeColour5,
+                                            foregroundColor: Colors.white,
+                                            textStyle: TextStyle(
+                                              fontSize: 24,
+                                            ),
+                                          ),
+                                          onPressed: () {
+                                            Navigator.push(
+                                                context,
+                                                MaterialPageRoute(
+                                                    builder: (context) =>
+                                                        WillSelectTypeScreen()));
+                                          },
+                                        ),
+                                      ],
+                                    );
+                                  },
+                                );
+                              } else {
+                                Navigator.pushNamed(context, banner.routeName);
+                              }
                             },
                           ),
                         ))),
