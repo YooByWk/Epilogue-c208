@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:frontend/main.dart';
+import 'package:frontend/screens/will/will_epitaph_picture_screen.dart';
 import 'package:frontend/widgets/common_button.dart';
 
 class WillSelectMemorialScreen extends StatelessWidget {
@@ -25,7 +26,12 @@ class WillSelectMemorialScreen extends StatelessWidget {
               textColor: Colors.black,
               backgroundColor: Colors.white,
               borderColor: themeColour4,
-              onPressed: () => (),
+              onPressed: () => Navigator.push(
+                context,
+                MaterialPageRoute(
+                  builder: (context) => WillEpitaphPictureScreen(),
+                ),
+              ),
               boxShadow: [
                 BoxShadow(
                   color: themeColour4.withOpacity(0.5),
@@ -42,7 +48,12 @@ class WillSelectMemorialScreen extends StatelessWidget {
               textColor: Colors.black,
               backgroundColor: Colors.white,
               borderColor: themeColour4,
-              onPressed: () => (),
+              onPressed: () => Navigator.push(
+                context,
+                MaterialPageRoute(
+                  builder: (context) => WillEpitaphPictureScreen(),
+                ),
+              ),
               boxShadow: [
                 BoxShadow(
                   color: themeColour4.withOpacity(0.5),
@@ -54,11 +65,11 @@ class WillSelectMemorialScreen extends StatelessWidget {
             ),
           ],
         ),
-        ElevatedButton(
+        TextButton(
           onPressed: () {
             Navigator.pop(context);
           },
-          child: const Text('이전으로'),
+          child: const Text('이전'),
         ),
       ]),
     );
