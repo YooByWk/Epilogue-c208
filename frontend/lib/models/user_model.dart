@@ -14,8 +14,27 @@ class UserModel {
     required this.phoneNumber,
     required this.birthDate,
   });
-
+ 
+  UserModel copyWith({
+    String? id,
+    String? email,
+    String? password,
+    String? name,
+    String? phoneNumber,
+    DateTime? birthDate,
+  }) {
+    return UserModel(
+      id: id ?? this.id,
+      email: email ?? this.email,
+      password: password ?? this.password,
+      name: name ?? this.name,
+      phoneNumber: phoneNumber ?? this.phoneNumber,
+      birthDate: birthDate ?? this.birthDate,
+    );
   
+  }
+  // 사용 예시
+  // UserModel updatedUser = currentUser.copyWith(email: 'new-email@example.com');
 
   Future <void> fetchUserDate() async {
     // 사용자의 데이터를 가져오는 비동기 함수 작성 예정
