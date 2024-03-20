@@ -1,3 +1,4 @@
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:frontend/view_models/login_view_models/login_viewmodel.dart';
 import 'package:frontend/screens/login/social_button_widget.dart';
@@ -11,7 +12,7 @@ class LoginScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     // final loginViewModel = Provider.of<LoginViewModel>(context);
     final commonWidth = MediaQuery.of(context).size.width;
-    
+
     return ChangeNotifierProvider(
         create: (context) => LoginViewModel(),
         child: Consumer<LoginViewModel>(builder: (context, viewModel, child) {
@@ -48,25 +49,30 @@ class LoginScreen extends StatelessWidget {
                       Container(
                         margin: EdgeInsets.only(top: 25),
                         width: MediaQuery.of(context).size.width * 0.8,
-                        child: Column(
-                          crossAxisAlignment: CrossAxisAlignment.start,
+                        child: Stack(
+                          alignment: Alignment.centerLeft,
                           children: [
-                            Text(
-                              '아이디',
-                              style: TextStyle(
-                                fontSize: 20,
-                                color: Color(0xFFececec),
+                            Positioned(
+                              left: 0,
+                              child: Text(
+                                '아이디',
+                                style: TextStyle(
+                                  fontSize: 24,
+                                  fontWeight: FontWeight.bold,
+                                  color: Color(0xFFececec),
+                                ),
                               ),
                             ),
                             TextFormField(
+                              style: TextStyle(
+                                color: Color(0xFFececec),
+                                fontSize: 24,
+                              ),
                               onChanged: (value) {
                                 viewModel.setUserId(value);
                               },
-                              style: TextStyle(
-                                fontSize: 20,
-                                color: Color(0xFFececec),
-                              ),
                               decoration: InputDecoration(
+                                contentPadding: EdgeInsets.only(left: 80),
                                 enabledBorder: UnderlineInputBorder(
                                   borderSide:
                                       BorderSide(color: Color(0xFFececec)),
@@ -80,29 +86,47 @@ class LoginScreen extends StatelessWidget {
                           ],
                         ),
                       ),
+                      SizedBox(height: 10),
                       Container(
                         width: MediaQuery.of(context).size.width * 0.8,
-                        child: TextFormField(
-                          style: TextStyle(
-                            fontSize: 20,
-                            color: Color(0xFFececec),
-                          ),
-                          decoration: InputDecoration(
-                            labelText: '비밀번호',
-                            labelStyle: TextStyle(
-                              color: Color(0xFFececec),
+                        child: Stack(
+                          alignment: Alignment.centerLeft,
+                          children: [
+                            Positioned(
+                              left: 0,
+                              child: Text(
+                                '비밀번호',
+                                style: TextStyle(
+                                  fontSize: 24,
+                                  fontWeight: FontWeight.bold,
+                                  color: Color(0xFFececec),
+                                ),
+                              ),
                             ),
-                            enabledBorder: UnderlineInputBorder(
-                              borderSide: BorderSide(color: Color(0xFFececec)),
+                            TextFormField(
+                              style: TextStyle(
+                                fontSize: 24,
+                                color: Color(0xFFececec),
+                              ),
+                              decoration: InputDecoration(
+                                contentPadding: EdgeInsets.only(left: 90),
+                                enabledBorder: UnderlineInputBorder(
+                                  borderSide:
+                                      BorderSide(color: Color(0xFFececec)),
+                                ),
+                                focusedBorder: UnderlineInputBorder(
+                                  borderSide:
+                                      BorderSide(color: Color(0xFFececec)),
+                                ),
+                              ),
+                              obscureText: true,
+                              onChanged: (value) =>
+                                  viewModel.setPassword(value),
                             ),
-                            focusedBorder: UnderlineInputBorder(
-                              borderSide: BorderSide(color: Color(0xFFececec)),
-                            ),
-                          ),
-                          obscureText: true,
-                          onChanged: (value) => viewModel.setPassword(value),
+                          ],
                         ),
                       ),
+                      SizedBox(height: 10),
                       Row(mainAxisAlignment: MainAxisAlignment.end, children: [
                         Padding(
                             padding: EdgeInsets.only(
@@ -114,13 +138,13 @@ class LoginScreen extends StatelessWidget {
                               child: Text(
                                 '비밀번호 찾기',
                                 style: TextStyle(
-                                  fontSize: 15,
+                                  fontSize: 18,
                                   color: Colors.white60,
                                 ),
                               ),
                             )),
                       ]),
-                      SizedBox(height: 12),
+                      SizedBox(height: 20),
                       SizedBox(
                         width: MediaQuery.of(context).size.width * 0.8,
                         height: 50,
@@ -130,19 +154,19 @@ class LoginScreen extends StatelessWidget {
                           backgroundColor: Color(0xFFADC2A9),
                           width: MediaQuery.of(context).size.width * 0.8,
                           height: 50,
-                          fontSize: 23,
+                          fontSize: 30,
                           onPressed: () {
                             viewModel.login();
                             Navigator.pushNamed(context, '/home');
                           },
                         ),
                       ),
-                      SizedBox(height: 5),
+                      SizedBox(height: 10),
                       Text(
-                        '------------------or------------------',
-                        style: TextStyle(fontSize: 20, color: Colors.grey),
+                        '------------------------------ or ------------------------------',
+                        style: TextStyle(fontSize: 20, color: Colors.white60),
                       ),
-                      SizedBox(height: 7),
+                      SizedBox(height: 15),
                       Row(
                         mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                         children: [
@@ -158,17 +182,26 @@ class LoginScreen extends StatelessWidget {
                           ),
                         ],
                       ),
-                      SizedBox(height: 15),
-                      ElevatedButton(
-                        onPressed: () {
-                          Navigator.push(
-                            context,
-                            MaterialPageRoute(
-                              builder: (context) => SignUpScreen(),
+                      SizedBox(height: 20),
+                      Center(
+                        child: InkWell(
+                          onTap: () {
+                            Navigator.push(
+                              context,
+                              MaterialPageRoute(
+                                builder: (context) => SignUpScreen(),
+                              ),
+                            );
+                          },
+                          child: Text(
+                            '아이디로 회원가입하기',
+                            style: TextStyle(
+                              fontSize: 24,
+                              color: Colors.white,
+                              fontWeight: FontWeight.bold,
                             ),
-                          );
-                        },
-                        child: Text('다음 페이지'),
+                          ),
+                        ),
                       ),
                       ElevatedButton(
                         onPressed: () {
@@ -185,7 +218,7 @@ class LoginScreen extends StatelessWidget {
                   ),
                 ),
                 Positioned(
-                  height: MediaQuery.of(context).size.height * 0.1, 
+                    height: MediaQuery.of(context).size.height * 0.1,
                     bottom: 0,
                     left: 0,
                     right: 0,

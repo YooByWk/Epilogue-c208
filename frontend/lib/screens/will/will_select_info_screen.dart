@@ -5,6 +5,7 @@ import 'package:frontend/screens/main/main_screen.dart';
 import 'package:frontend/screens/will/will_additional_info_screen.dart';
 import 'package:frontend/screens/will/will_widgets.dart';
 import 'package:frontend/widgets/common_button.dart';
+import 'package:frontend/widgets/custom_bottom_navigation.dart';
 
 class WillSelectInfoScreen extends StatefulWidget {
   _WillSelectInfoScreenState createState() => _WillSelectInfoScreenState();
@@ -80,7 +81,7 @@ class _WillSelectInfoScreenState extends State<WillSelectInfoScreen> {
                 onPressed: () => Navigator.push(
                   context,
                   MaterialPageRoute(
-                    builder: (context) => MainScreen(),
+                    builder: (context) => CustomBottomNavigation(),
                   ),
                 ),
               ),
