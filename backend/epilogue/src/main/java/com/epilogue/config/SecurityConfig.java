@@ -22,6 +22,7 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.oauth2.client.userinfo.DefaultOAuth2UserService;
 import org.springframework.security.web.AuthenticationEntryPoint;
 import org.springframework.security.web.SecurityFilterChain;
+import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
 import org.springframework.web.cors.CorsConfiguration;
 import org.springframework.web.cors.CorsConfigurationSource;
 import org.springframework.web.cors.UrlBasedCorsConfigurationSource;
@@ -66,7 +67,7 @@ public class SecurityConfig {
         // 경로별 인가 작업
         http.authorizeHttpRequests((auth) -> auth
 
-                .requestMatchers("/swagger-ui/**", "/api-docs/**", "/api/test", "/api/authenticate", "/api", "/api/user/join/**", "/api/login", "/api/auth/**", "/api/oauth2/**", "/api/user/join").permitAll()
+                .requestMatchers("/swagger-ui/**", "/api-docs/**", "/api/test", "/api/authenticate", "/api", "/api/user/join/**", "/login", "/api/auth/**", "/api/oauth2/**", "/api/user/join").permitAll()
                 .anyRequest().authenticated());
 
         // OAuth2
@@ -80,6 +81,7 @@ public class SecurityConfig {
         // 커스텀 필터 등록
         // (생성한 커스텀 필터, 필터를 넣을 위치)
         http.addFilterAt(new LoginFilter(authenticationManager(authenticationConfiguration), jwtUtil, userRepository), LoginFilter.class);
+
 
         // 세션 설정 (가장 중요!)
         // JWT 방식에서는 세션을 항상 stateless 상태로 유지함
