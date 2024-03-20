@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:frontend/main.dart';
 
 class CommonButtonWidget extends StatelessWidget {
   final String text;
@@ -17,11 +18,11 @@ class CommonButtonWidget extends StatelessWidget {
     required this.text,
     this.imagePath,
     this.textColor = Colors.white,
-    required this.backgroundColor,
+    this.backgroundColor = themeColour5,
     this.borderColor,
     required this.onPressed,
     this.width = 150.0,
-    this.height = 35.0,
+    this.height = 40.0,
     this.fontSize = 16.0,
     this.border,
     this.boxShadow,
@@ -42,7 +43,7 @@ class CommonButtonWidget extends StatelessWidget {
             image: imagePath != null
                 ? DecorationImage(
                     image: AssetImage(imagePath!),
-                    fit: BoxFit.cover,
+                    fit: BoxFit.contain,
                   )
                 : null,
             boxShadow: boxShadow,

@@ -4,6 +4,7 @@ import 'package:frontend/widgets/main_willicon_widget.dart';
 import 'package:frontend/widgets/main_description.dart';
 import 'package:frontend/widgets/main_banner.dart';
 
+
 class MainScreen extends StatelessWidget {
   const MainScreen({super.key});
 
