@@ -52,6 +52,9 @@ class _WillSelectInfoScreenState extends State<WillSelectInfoScreen> {
                           fontSize: 50,
                           fontWeight: FontWeight.w500,
                         ),
+                        SizedBox(
+                          height: 30,
+                        ),
                         TextWidget(
                             text: "[추가 정보] \n 연명치료 여부, 장기기증 여부, \n 장례 방식, 묘 방식",
                             fontSize: 23),
@@ -86,12 +89,12 @@ class _WillSelectInfoScreenState extends State<WillSelectInfoScreen> {
                 ),
               ),
             ),
-            TextButton(
-              onPressed: () {
-                Navigator.pop(context);
-              },
-              child: const Text('이전', style: TextStyle(fontSize: 23),),
-            ),
+            Container(
+                width: double.infinity,
+                height: 100,
+                child: TextButtonWidget(
+                  preText: '이전',
+                ))
           ],
         ),
       ),

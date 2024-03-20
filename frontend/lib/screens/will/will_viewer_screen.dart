@@ -29,21 +29,11 @@ class _WillViewerScreenState extends State<WillViewerScreen> {
           children: [
             Padding(
               padding: const EdgeInsets.only(left: 20.0, top: 30.0),
-              child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                  children: [
-                    Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        TextWidget(
-                          text: "디지털 유언장 \n열람인 지정",
-                          fontSize: 50,
-                          fontWeight: FontWeight.w700,
-                        ),
-                      ],
-                    ),
-                  ]),
+              child: TextWidget(
+                text: "디지털 유언장 \n열람인 지정",
+                fontSize: 50,
+                fontWeight: FontWeight.w700,
+              ),
             ),
             Column(
               children: List.generate(counter, (index) {
@@ -53,8 +43,8 @@ class _WillViewerScreenState extends State<WillViewerScreen> {
                     Container(
                         child: (index > 0)
                             ? ElevatedButton(
-                            onPressed: () => delete(index),
-                            child: Text('삭제'))
+                                onPressed: () => delete(index),
+                                child: Text('삭제'))
                             : null),
                   ],
                 );
@@ -65,29 +55,15 @@ class _WillViewerScreenState extends State<WillViewerScreen> {
                 child: (counter < 5)
                     ? ElevatedButton(onPressed: increment, child: Text('추가'))
                     : null),
-            Row(
-              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-              children: [
-                TextButton(
-                  onPressed: () => Navigator.push(
-                    context,
-                    MaterialPageRoute(
-                      builder: (context) => WillCheckScreen(),
-                    ),
-                  ),
-                  child: const Text('이전'),
-                ),
-                TextButton(
-                  onPressed: () => Navigator.push(
-                    context,
-                    MaterialPageRoute(
-                      builder: (context) => WillSelectMemorialScreen(),
-                    ),
-                  ),
-                  child: const Text('다음'),
-                ),
-              ],
-            ),
+            Container(
+              width: double.infinity,
+              height: 100,
+              child: TextButtonWidget(
+                preText: '이전',
+                nextText: '다음',
+                nextPage: WillSelectMemorialScreen(),
+              ),
+            )
           ],
         ),
       ),
