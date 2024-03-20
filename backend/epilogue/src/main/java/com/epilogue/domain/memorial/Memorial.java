@@ -22,7 +22,7 @@ public class Memorial {
 
     @NotNull
     @Schema(description = "회원 식별키")
-    private UUID userSeq;
+    private int userSeq;
 
     @NotNull
     @Schema(description = "별세 일자")
