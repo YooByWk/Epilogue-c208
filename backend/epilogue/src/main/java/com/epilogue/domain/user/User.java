@@ -39,7 +39,8 @@ public class User {
     @Schema(description = "생일")
     private String birth;
 
-    @Schema(description = "refresh token")
+    @NotNull
+    @Schema(description = "리프레시 토큰")
     private String refreshToken;
 
     public void updateRefreshToken(String refreshToken) {
