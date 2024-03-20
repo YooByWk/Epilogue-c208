@@ -26,60 +26,89 @@ class _MypageModifyInfoScreenState extends State<MypageModifyInfoScreen> {
         ),
       ),
       body: SingleChildScrollView(
-        child: Column(crossAxisAlignment: CrossAxisAlignment.center, children: [
-          Container(
-            margin: EdgeInsets.only(top: 20),
-            padding: EdgeInsets.symmetric(horizontal: 20),
-            width: MediaQuery.of(context).size.width * 0.8,
-            height: 50,
-            decoration: BoxDecoration(
-              borderRadius: BorderRadius.circular(8.0),
-              border: Border.all(color: themeColour3),
-            ),
-            child: Align(
+        child: Center(
+          child:
+              Column(crossAxisAlignment: CrossAxisAlignment.center, children: [
+            Container(
+              margin: EdgeInsets.only(top: 30),
+              padding: EdgeInsets.symmetric(horizontal: 20),
+              width: MediaQuery.of(context).size.width * 0.9,
+              height: 60,
+              decoration: BoxDecoration(
+                  borderRadius: BorderRadius.circular(8.0),
+                  border: Border.all(color: themeColour3),
+                  color: Colors.white),
               alignment: Alignment.centerLeft,
-              child: Text(
-                '이름 ',
-                style: TextStyle(
-                  fontSize: 16,
-                  color: themeColour3,
-                ),
+              child: Row(
+                children: [
+                  CommonText(
+                    text: '이름',
+                    fontSize: 24,
+                    textColor: themeColour3,
+                  ),
+                  SizedBox(width: 20),
+                  CommonText(
+                    text: 'userInfo',
+                    textColor: themeColour5,
+                    isBold: true,
+                    fontSize: 24,
+                  ),
+                ],
               ),
             ),
-          ),
-          Container(
-            margin: EdgeInsets.only(top: 10),
-            padding: EdgeInsets.symmetric(horizontal: 20),
-            width: MediaQuery.of(context).size.width * 0.8,
-            height: 50,
-            decoration: BoxDecoration(
-              borderRadius: BorderRadius.circular(8.0),
-              border: Border.all(color: themeColour3),
-            ),
-            child: Align(
+            Container(
+              margin: EdgeInsets.only(top: 30),
+              padding: EdgeInsets.symmetric(horizontal: 20),
+              width: MediaQuery.of(context).size.width * 0.9,
+              height: 60,
+              decoration: BoxDecoration(
+                  borderRadius: BorderRadius.circular(8.0),
+                  border: Border.all(color: themeColour3),
+                  color: Colors.white),
               alignment: Alignment.centerLeft,
-              child: Text(
-                '생년월일 ',
-                style: TextStyle(
-                  fontSize: 16,
-                  color: themeColour3,
-                ),
+              child: Row(
+                children: [
+                  CommonText(
+                    text: '생년월일',
+                    fontSize: 24,
+                    textColor: themeColour3,
+                  ),
+                  SizedBox(width: 15),
+                  CommonText(
+                    text: 'userInfo',
+                    textColor: themeColour5,
+                    isBold: true,
+                    fontSize: 24,
+                  ),
+                ],
               ),
             ),
-          ),
-          SizedBox(height: 10),
-          InputFormWidget(
-            controller: _phonenumController,
-            keyboardType: TextInputType.number,
-            label: '휴대폰 번호',
-            borderColor: themeColour3,
-            textColor: Colors.black,
-            width: MediaQuery.of(context).size.width * 0.8,
-            backgroundColor: Colors.white,
-          ),
-          SizedBox(height: 10),
-          CommonButtonWidget(text: '수정하기', onPressed: () {})
-        ]),
+            SizedBox(height: 30),
+            Row(
+              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                children: [
+              InputFormWidget(
+                controller: _phonenumController,
+                keyboardType: TextInputType.number,
+                text: '휴대폰 번호',
+                borderColor: themeColour3,
+                textColor: themeColour3,
+                width: MediaQuery.of(context).size.width * 0.7,
+                backgroundColor: Colors.white,
+              ),
+              CommonButtonWidget(
+                  text: '인증',
+                  width: 60,
+                  height: 50,
+                  fontSize: 24,
+                  backgroundColor: themeColour3,
+                  onPressed: (){})
+            ]),
+            SizedBox(height: 20),
+            CommonButtonWidget(
+                text: '수정하기', width: 100, fontSize: 24, onPressed: () {}),
+          ]),
+        ),
       ),
     );
   }
