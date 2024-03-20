@@ -1,3 +1,4 @@
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:frontend/main.dart';
 import 'package:frontend/screens/will/will_select_info_screen.dart';
@@ -17,47 +18,71 @@ class _WillEpitaphPictureScreenState extends State<WillEpitaphPictureScreen> {
         backgroundColor: themeColour2,
         title: const Text('유언장 생성하기'),
       ),
-      body: Column(children: [
-        const Text("추모관에 등록할 \n 묘비명과 사진"),
-        Column(
-          children: [
-            WillEpitaphWidget(),
-            CommonButtonWidget(
-              text: "사진 업로드",
-              width: 300,
-              height: 80,
-              textColor: Colors.black,
-              backgroundColor: Colors.white,
-              borderColor: themeColour4,
-              onPressed: () => (),
-              boxShadow: [
-                BoxShadow(
-                  color: themeColour4.withOpacity(0.5),
-                  spreadRadius: 5,
-                  blurRadius: 7,
-                  offset: Offset(0, 3), // changes position of shadow
+      body: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+        children: [
+          Padding(
+            padding: const EdgeInsets.only(left: 20.0, top: 30.0),
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                TextWidget(
+                  text: "추모관에 등록할",
+                  fontSize: 50,
+                  fontWeight: FontWeight.w500,
+                ),
+                Row(
+                  children: [
+                    TextWidget(
+                      text: '묘비명',
+                      fontSize: 50,
+                      fontWeight: FontWeight.w900,
+                    ),
+                    TextWidget(
+                      text: '과',
+                      fontSize: 50,
+                      fontWeight: FontWeight.w500,
+                    ),
+                    TextWidget(
+                      text: '사진',
+                      fontSize: 50,
+                      fontWeight: FontWeight.w900,
+                    ),
+                  ],
                 ),
               ],
             ),
-          ],
-        ),
-        TextButton(
-          onPressed: () {
-            Navigator.pop(context);
-          },
-          child: const Text('이전'),
-        ),
-        TextButton(
-          onPressed: () =>
-              Navigator.push(
-                context,
-                MaterialPageRoute(
-                  builder: (context) => WillSelectInfoScreen(),
-                ),
+          ),
+          Center(
+            child: WillEpitaphWidget(),
+          ),
+          Center(
+            child: WillCommonButtonWidget(
+              text: "사진 업로드",
+              width: MediaQuery.of(context).size.width * 0.8,
+              height: MediaQuery.of(context).size.height * 0.11,
+              backgroundColor: Colors.white,
+              onPressed: () => (),
+            ),
+          ),
+          TextButton(
+            onPressed: () {
+              Navigator.pop(context);
+            },
+            child: const Text('이전'),
+          ),
+          TextButton(
+            onPressed: () => Navigator.push(
+              context,
+              MaterialPageRoute(
+                builder: (context) => WillSelectInfoScreen(),
               ),
-          child: const Text('다음'),
-        ),
-      ]),
+            ),
+            child: const Text('다음'),
+          ),
+        ],
+      ),
     );
   }
 }
