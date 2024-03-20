@@ -28,38 +28,47 @@ class _WillViewerScreenState extends State<WillViewerScreen> {
             Column(
               children: List.generate(counter, (index) {
                 // debugPrint('추가');
-                return WillViewerWidget();
+                debugPrint(index.toString());
+                return Column(
+                  children: [
+                    WillViewerWidget(),
+                    Center(
+                        child: (index > 0)
+                            ? ElevatedButton(
+                                onPressed: () => delete(index),
+                                child: Text('삭제'))
+                            : null),
+                  ],
+                );
               }),
             ),
             Center(
                 child: (counter < 5)
                     ? ElevatedButton(onPressed: increment, child: Text('추가'))
                     : null),
-            Center(
-                child: (counter > 1)
-                    ? ElevatedButton(onPressed: delete, child: Text('삭제'))
-                    : null),
+            // Center(
+            //     child: (counter > 1)
+            //         ? ElevatedButton(onPressed: delete, child: Text('삭제'))
+            //         : null),
             // ElevatedButton(onPressed: increment, child: Text('추가')),
             Row(
               children: [
                 TextButton(
-                  onPressed: () =>
-                      Navigator.push(
-                        context,
-                        MaterialPageRoute(
-                          builder: (context) => WillCheckScreen(),
-                        ),
-                      ),
+                  onPressed: () => Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                      builder: (context) => WillCheckScreen(),
+                    ),
+                  ),
                   child: const Text('이전'),
                 ),
                 TextButton(
-                  onPressed: () =>
-                      Navigator.push(
-                        context,
-                        MaterialPageRoute(
-                          builder: (context) => WillSelectMemorialScreen(),
-                        ),
-                      ),
+                  onPressed: () => Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                      builder: (context) => WillSelectMemorialScreen(),
+                    ),
+                  ),
                   child: const Text('다음'),
                 ),
               ],
@@ -78,10 +87,13 @@ class _WillViewerScreenState extends State<WillViewerScreen> {
     });
   }
 
-  void delete() {
+  void delete(int index) {
     setState(() {
       if (counter > 1) {
         counter--;
+        if (index > 0) {
+          (context as Element).markNeedsBuild();
+        }
       }
     });
   }
