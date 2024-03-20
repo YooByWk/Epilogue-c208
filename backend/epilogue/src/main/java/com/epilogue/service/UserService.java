@@ -19,7 +19,7 @@ public class UserService {
     private final PasswordEncoder passwordEncoder = new BCryptPasswordEncoder();
 
     @Transactional
-    public String join(JoinRequestDto joinRequestDto) {
+    public void join(JoinRequestDto joinRequestDto) {
         User user = User.builder()
                 .userId(joinRequestDto.getUserId())
                 .password(bCryptPasswordEncoder.encode(joinRequestDto.getPassword()))
@@ -29,8 +29,6 @@ public class UserService {
                 .build();
 
         userRepository.save(user);
-
-        return jwtUtil.createAccessToken(user.getUserId());
     }
 
 
