@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:frontend/main.dart';
+import 'package:frontend/screens/main/main_screen.dart';
 
 class WillEpitaphWidget extends StatelessWidget {
   const WillEpitaphWidget({super.key});
@@ -87,9 +88,7 @@ class ChoiceButtonWidget extends StatefulWidget {
 
   final String text;
 
-  const ChoiceButtonWidget({
-    required this.text
-});
+  const ChoiceButtonWidget({required this.text});
 }
 
 class _ChoiceButtonWidgetState extends State<ChoiceButtonWidget> {
@@ -163,8 +162,7 @@ class WillCommonButtonWidget extends StatelessWidget {
           decoration: BoxDecoration(
             color: backgroundColor,
             borderRadius: BorderRadius.circular(18.0),
-            border:
-             Border.all(color: themeColour3),
+            border: Border.all(color: themeColour3),
             boxShadow: [
               BoxShadow(
                 color: themeColour4.withOpacity(0.5),
@@ -184,6 +182,58 @@ class WillCommonButtonWidget extends StatelessWidget {
               fontWeight: FontWeight.bold,
             ),
           )),
+    );
+  }
+}
+
+class TextButtonWidget extends StatelessWidget {
+  final String nextText;
+  final String preText;
+  final Widget? nextPage;
+  final Widget? prePage;
+
+  const TextButtonWidget({
+    this.nextText = '다음',
+    this.preText = '이전',
+    this.nextPage,
+    this.prePage,
+  });
+
+  @override
+  Widget build(BuildContext context) {
+    return Row(
+      children: [
+          TextButton(onPressed: ()
+
+        {
+          prePage != null ? Navigator.push(
+            context,
+            MaterialPageRoute(
+              builder: (context) => prePage!,
+            ),
+          ) : Navigator.pop(context);
+        }, child: Text(preText, style: TextStyle(fontSize: 23, fontFamily: 'Roboto Serif', color: themeColour4,),),
+        ),
+
+        TextButton(
+          onPressed: () {
+            Navigator.push(
+              context,
+              MaterialPageRoute(
+                builder: (context) => nextPage!,
+              ),
+            );
+          },
+          child: Text(
+            nextText,
+            style: TextStyle(
+              fontSize: 23,
+              fontFamily: 'Roboto Serif',
+              color: themeColour4,
+            ),
+          ),
+        ),
+      ],
     );
   }
 }
