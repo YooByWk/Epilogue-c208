@@ -6,7 +6,7 @@ import 'package:frontend/widgets/will_additional_info_widget.dart';
 import 'package:frontend/main.dart';
 
 class MypageWillMoreScreen extends StatelessWidget {
-  const MypageWillMoreScreen({super.key});
+  MypageWillMoreScreen({super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -29,35 +29,11 @@ class MypageWillMoreScreen extends StatelessWidget {
                   context: context,
                   barrierDismissible: true,
                   builder: (BuildContext context) {
-                    return AlertDialog(
-                      backgroundColor: Colors.white,
-                      content: PopupWidget(
-                          text: '삭제하면 처음부터 다시 생성해야 합니다.\n 정말 삭제하시겠습니까?'),
-                      insetPadding: const EdgeInsets.symmetric(
-                        horizontal: 10,
-                        vertical: 100,
-                      ),
-                      actions: [
-                        ElevatedButton(
-                          child: const Text('삭제'),
-                          style: ElevatedButton.styleFrom(
-                            minimumSize: Size.fromHeight(50),
-                            shape: RoundedRectangleBorder(
-                                borderRadius: BorderRadius.all(
-                                    Radius.circular(10)
-                                )
-                            ),
-                            backgroundColor: themeColour5,
-                            foregroundColor: Colors.white,
-                            textStyle: TextStyle(
-                              fontSize: 24,
-                            ),
-                          ),
-                          onPressed: () {
-                          },
-                        ),
-                      ],
-                    );
+                    return PopupWidget(
+                        text: '삭제하면 처음부터 다시 생성해야 합니다.\n정말 삭제하시겠습니까?',
+                        buttonText1: '삭제',
+                        onConfirm1: (){},
+                      );
                   },
                 );
               },
@@ -92,7 +68,6 @@ class MypageWillMoreScreen extends StatelessWidget {
                   ),
                 ],
               ),
-
               WillAdditionalInfo(),
             ],
           ),
