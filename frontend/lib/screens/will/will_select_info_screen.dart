@@ -4,6 +4,7 @@ import 'package:frontend/main.dart';
 import 'package:frontend/screens/main/main_screen.dart';
 import 'package:frontend/screens/will/will_additional_info_screen.dart';
 import 'package:frontend/screens/will/will_widgets.dart';
+import 'package:frontend/widgets/common_button.dart';
 import 'package:frontend/widgets/custom_bottom_navigation.dart';
 
 class WillSelectInfoScreen extends StatefulWidget {
@@ -51,7 +52,9 @@ class _WillSelectInfoScreenState extends State<WillSelectInfoScreen> {
                           fontSize: 50,
                           fontWeight: FontWeight.w500,
                         ),
-                        SizedBox(height: 30,),
+                        SizedBox(
+                          height: 30,
+                        ),
                         TextWidget(
                             text: "[추가 정보] \n 연명치료 여부, 장기기증 여부, \n 장례 방식, 묘 방식",
                             fontSize: 23),
@@ -89,7 +92,9 @@ class _WillSelectInfoScreenState extends State<WillSelectInfoScreen> {
             Container(
                 width: double.infinity,
                 height: 100,
-                child: TextButtonWidget(preText: '이전',))
+                child: TextButtonWidget(
+                  preText: '이전',
+                ))
           ],
         ),
       ),
