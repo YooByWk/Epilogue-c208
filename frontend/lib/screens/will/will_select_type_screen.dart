@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:frontend/main.dart';
 import 'package:frontend/screens/login/login_screen.dart';
 import 'package:frontend/screens/will/will_recording_screen.dart';
+import 'package:frontend/screens/will/will_widgets.dart';
 import 'package:frontend/widgets/common_button.dart';
 
 class WillSelectTypeScreen extends StatelessWidget {
@@ -14,71 +15,80 @@ class WillSelectTypeScreen extends StatelessWidget {
         backgroundColor: themeColour2,
         title: const Text('유언장 생성하기'),
       ),
-      body: Column(children: [
-        const Text("유언을 남기고 싶은 방법"),
-        Row(
+      body: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          mainAxisAlignment: MainAxisAlignment.spaceEvenly,
           children: [
-            CommonButtonWidget(
-              text: "음성 녹음",
-              width: 120,
-              height: 120,
-              textColor: Colors.black,
-              backgroundColor: Colors.white,
-              borderColor: themeColour4,
-              onPressed: () {
-                Navigator.push(
-                  context,
-                  MaterialPageRoute(
-                    builder: (context) => WillRecordingScreen(),
+            Padding(
+              padding: const EdgeInsets.only(left: 20.0, ),
+              child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                  children: [
+                    Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        Row(
+                          children: [
+                            TextWidget(
+                              text: "유언",
+                              fontSize: 50,
+                              fontWeight: FontWeight.w900,
+                            ),
+                            TextWidget(
+                              text: "을",
+                              fontSize: 50,
+                              fontWeight: FontWeight.w500,
+                            ),
+                          ],
+                        ),
+                        TextWidget(
+                          text: "남기고 싶은 방법",
+                          fontSize: 50,
+                          fontWeight: FontWeight.w500,
+                        ),
+                      ],
+                    ),
+                  ]),
+            ),
+            Row(
+              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+              children: [
+                WillCommonButtonWidget(
+                  text: "음성 녹음",
+                  width: MediaQuery.of(context).size.width * 0.4,
+                  height: MediaQuery.of(context).size.height * 0.2,
+                  onPressed: () => Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                      builder: (context) => WillRecordingScreen(),
+                    ),
                   ),
-                );
-              },
-              boxShadow: [
-                BoxShadow(
-                  color: themeColour4.withOpacity(0.5),
-                  spreadRadius: 5,
-                  blurRadius: 7,
-                  offset: Offset(0, 3), // changes position of shadow
+                ),
+                WillCommonButtonWidget(
+                  text: "영상 녹화",
+                  width: MediaQuery.of(context).size.width * 0.4,
+                  height: MediaQuery.of(context).size.height * 0.2,
+                  onPressed: () => Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                      builder: (context) => WillRecordingScreen(),
+                    ),
+                  ),
                 ),
               ],
             ),
-            CommonButtonWidget(
-              text: "영상 녹화",
-              width: 120,
-              height: 120,
-              textColor: Colors.black,
-              backgroundColor: Colors.white,
-              borderColor: themeColour4,
-              onPressed: () {
-                Navigator.push(
-                  context,
-                  MaterialPageRoute(
-                    builder: (context) => WillRecordingScreen(),
-                  ),
-                );
-              },
-              boxShadow: [
-                BoxShadow(
-                  color: themeColour4.withOpacity(0.5),
-                  spreadRadius: 5,
-                  blurRadius: 7,
-                  offset: Offset(0, 3), // changes position of shadow
-                ),
-              ],
-            ),
-          ],
-        ),
-        ElevatedButton(
-            onPressed: () {
-              Navigator.push(
-                context,
-                MaterialPageRoute(
-                  builder: (context) => LoginScreen(),
-                ),
-              );
-            },
-            child: const Text("이전으로"))
-      ]),
+            ElevatedButton(
+                onPressed: () {
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                      builder: (context) => LoginScreen(),
+                    ),
+                  );
+                },
+                child: const Text("이전으로"))
+          ]),
     );
   }
 }

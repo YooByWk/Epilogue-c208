@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:frontend/main.dart';
 import 'package:frontend/screens/will/will_epitaph_picture_screen.dart';
+import 'package:frontend/screens/will/will_select_info_screen.dart';
 import 'package:frontend/widgets/common_button.dart';
 
 class WillSelectMemorialScreen extends StatelessWidget {
@@ -51,7 +52,7 @@ class WillSelectMemorialScreen extends StatelessWidget {
               onPressed: () => Navigator.push(
                 context,
                 MaterialPageRoute(
-                  builder: (context) => WillEpitaphPictureScreen(),
+                  builder: (context) => WillSelectInfoScreen(),
                 ),
               ),
               boxShadow: [
