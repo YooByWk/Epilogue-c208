@@ -1,5 +1,9 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
+import 'package:frontend/main.dart';
+import 'package:frontend/widgets/common_button.dart';
 import 'package:frontend/widgets/common_text_widget.dart';
+import 'package:frontend/widgets/input_form_widget.dart';
 
 class MypageModifyInfoScreen extends StatefulWidget {
   const MypageModifyInfoScreen({super.key});
@@ -21,24 +25,62 @@ class _MypageModifyInfoScreenState extends State<MypageModifyInfoScreen> {
           fontSize: 30,
         ),
       ),
-      body: Column(children: [
-        TextField(
-          decoration: InputDecoration(
-            labelText: '이름',
+      body: SingleChildScrollView(
+        child: Column(crossAxisAlignment: CrossAxisAlignment.center, children: [
+          Container(
+            margin: EdgeInsets.only(top: 20),
+            padding: EdgeInsets.symmetric(horizontal: 20),
+            width: MediaQuery.of(context).size.width * 0.8,
+            height: 50,
+            decoration: BoxDecoration(
+              borderRadius: BorderRadius.circular(8.0),
+              border: Border.all(color: themeColour3),
+            ),
+            child: Align(
+              alignment: Alignment.centerLeft,
+              child: Text(
+                '이름 ',
+                style: TextStyle(
+                  fontSize: 16,
+                  color: themeColour3,
+                ),
+              ),
+            ),
           ),
-        ),
-        TextField(
-          decoration: InputDecoration(
-            labelText: '생년월일',
+          Container(
+            margin: EdgeInsets.only(top: 10),
+            padding: EdgeInsets.symmetric(horizontal: 20),
+            width: MediaQuery.of(context).size.width * 0.8,
+            height: 50,
+            decoration: BoxDecoration(
+              borderRadius: BorderRadius.circular(8.0),
+              border: Border.all(color: themeColour3),
+            ),
+            child: Align(
+              alignment: Alignment.centerLeft,
+              child: Text(
+                '생년월일 ',
+                style: TextStyle(
+                  fontSize: 16,
+                  color: themeColour3,
+                ),
+              ),
+            ),
           ),
-        ),
-        TextField(
-          controller: _phonenumController,
-          decoration: InputDecoration(
-            labelText: '휴대폰 번호',
+          SizedBox(height: 10),
+          InputFormWidget(
+            controller: _phonenumController,
+            keyboardType: TextInputType.number,
+            label: '휴대폰 번호',
+            borderColor: themeColour3,
+            textColor: Colors.black,
+            width: MediaQuery.of(context).size.width * 0.8,
+            backgroundColor: Colors.white,
           ),
-        ),
-      ]),
+          SizedBox(height: 10),
+          CommonButtonWidget(text: '수정하기', onPressed: () {})
+        ]),
+      ),
     );
   }
 }
