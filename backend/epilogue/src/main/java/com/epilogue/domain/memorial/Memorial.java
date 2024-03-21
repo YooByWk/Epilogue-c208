@@ -1,10 +1,8 @@
 package com.epilogue.domain.memorial;
 
+import com.epilogue.domain.user.User;
 import io.swagger.v3.oas.annotations.media.Schema;
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
+import jakarta.persistence.*;
 import jakarta.validation.constraints.NotNull;
 import lombok.Getter;
 
@@ -21,12 +19,13 @@ public class Memorial {
     private int memorialSeq;
 
     @NotNull
-    @Schema(description = "회원 식별키")
-    private int userSeq;
+    @Schema(description = "회원 정보")
+    @OneToOne
+    private User user;
 
     @NotNull
     @Schema(description = "별세 일자")
-    private Timestamp goneDate;
+    private String goneDate;
 
     @NotNull
     @Schema(description = "묘비명")
