@@ -54,6 +54,11 @@ public class User {
         this.refreshToken = refreshToken;
     }
 
+    public void updateUserInfo(String name, String mobile) {
+        this.name = name;
+        this.mobile = mobile;
+    }
+
     public void updateWill(Will will) {
         this.will = will;
     }
