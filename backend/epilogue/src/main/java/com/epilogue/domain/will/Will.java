@@ -9,25 +9,22 @@ import jakarta.persistence.Id;
 import jakarta.validation.constraints.NotNull;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
+import lombok.Getter;
 import lombok.NoArgsConstructor;
 
 import java.util.UUID;
 
 @Entity
 @Builder
+@Getter
 @AllArgsConstructor
 @NoArgsConstructor
 @Schema(description = "유언")
 public class Will {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @NotNull
     @Schema(description = "유언 식별키")
     private int willSeq;
-
-    @NotNull
-    @Schema(description = "회원 식별키")
-    private int userSeq;
 
     @Schema(description = "연명 치료 여부")
     private boolean sustainCare;
@@ -41,7 +38,7 @@ public class Will {
     @Schema(description = "장기 기증 여부")
     private boolean organDonation;
 
-    @NotNull
+    @NotNull(message = "디지털 추모관 사용 여부는 Null일 수 없습니다.")
     @Schema(description = "디지털 추모관 사용 여부")
     private boolean useMemorial;
 
@@ -51,21 +48,15 @@ public class Will {
     @Schema(description = "묘비 사진")
     private String graveImage;
 
-    @Schema(description = "유언 읽기용 스크립트")
-    private String willDraftScript;
-
-    @Schema(description = "유언 최종 스크립트")
-    private String willFinalScript;
-
-    @NotNull
+    @NotNull(message = "유언 파일 이름은 Null일 수 없습니다.")
     @Schema(description = "유언 파일 이름")
     private String willFileName;
 
-    @NotNull
+    @NotNull(message = "열람 신청 링크는 Null일 수 없습니다.")
     @Schema(description = "열람 신청 링크")
     private String viewApplyLink;
 
-    @NotNull
+    @NotNull(message = "유언장 링크는 Null일 수 없습니다.")
     @Schema(description = "유언장 링크")
     private String willLink;
 }
