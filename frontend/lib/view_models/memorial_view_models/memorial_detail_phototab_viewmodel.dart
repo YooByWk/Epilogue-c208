@@ -24,9 +24,9 @@ class PhotoTabViewModel extends ChangeNotifier {
     debugPrint('Added item $_nextItem');
     for (int i = 0; i < 20; i++) {
       _photos.add('assets/images/ameno.jpg');
-      _nextItem++;
+      _nextItem++;  // 다음 아이템을 가리키는 인덱스 증가
     }
-    notifyListeners();
+    notifyListeners();  // 데이터가 변경되었음을 알림
   }
 
   void testAPI() async {
