@@ -59,4 +59,12 @@ public class UserController {
         userService.updateUserInfo(loginUserId, updateInfoRequestDto);
         return new ResponseEntity<>(HttpStatus.OK);
     }
+
+    @ApiResponse(responseCode = "200", description = "성공")
+    @DeleteMapping("/user")
+    public ResponseEntity<?> deleteMember(Principal principal) {
+        String loginUserId = principal.getName();
+        userService.deleteMember(loginUserId);
+        return new ResponseEntity<>(HttpStatus.OK);
+    }
 }
