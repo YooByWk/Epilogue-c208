@@ -1,6 +1,7 @@
 package com.epilogue.controller;
 
 import com.epilogue.dto.request.user.JoinRequestDto;
+import com.epilogue.dto.response.user.UserDTO;
 import com.epilogue.service.UserService;
 import io.swagger.v3.oas.annotations.Parameter;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
@@ -8,10 +9,7 @@ import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.security.Principal;
 import java.util.Map;
@@ -38,10 +36,18 @@ public class UserController {
     }
 
     @ApiResponse(responseCode = "200", description = "성공")
-    @PostMapping("/user/password")
+    @PutMapping("/user/password")
     public ResponseEntity<?> updatePassword(Principal principal, @Parameter(description = "변경할 비밀번호") Map<String, String> passwordMap) {
         String loginUserId = principal.getName();
         userService.updatePassword(loginUserId, passwordMap.get("password"));
         return new ResponseEntity<>(HttpStatus.OK);
+    }
+
+    @ApiResponse(responseCode = "200", description = "성공")
+    @GetMapping("/user")
+    public ResponseEntity<?> userInfo(Principal principal) {
+        String loginUserId = principal.getName();
+        UserDTO userDTO = userService.userInfo(loginUserId);
+        return new ResponseEntity<>(userDTO, HttpStatus.OK);
     }
 }
