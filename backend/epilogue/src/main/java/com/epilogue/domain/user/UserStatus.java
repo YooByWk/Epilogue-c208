@@ -10,9 +10,6 @@ import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
-import org.springframework.boot.context.properties.bind.DefaultValue;
-
-import java.util.EnumMap;
 
 @Entity
 @Builder
@@ -28,6 +25,8 @@ public class UserStatus {
 
 //    @DefaultValue(0)
     @NotNull(message = "회원 상태는 Null일 수 없습니다.")
-    @Schema(description = "회원 상태(생사 및 유언장 전송 상태)")
-    private Enum status;
+    @Schema(description = "회원 상태(생사 및 유언장 전송 상태) : live(생존), deadAndSend(사망 및 전송 o), deadAndNotSend(사망 및 전송 x)")
+    private enum status {
+        LIVE, DEADANDSEND, DEADANTNOTSEND
+    }
 }

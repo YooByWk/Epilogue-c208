@@ -50,9 +50,11 @@ public class WillRequestDto {
     @Schema(description = "유언장 링크")
     private String willLink;
 
+    @NotNull(message = "증인 리스트는 Null일 수 없습니다.")
     @Schema(description = "증인 리스트")
     private List<WitnessRequestDto> witnessList;
 
+    @NotNull(message = "열람인 리스트는 Null일 수 없습니다.")
     @Schema(description = "열람인 리스트")
     private List<ViewerRequestDto> viewerList;
 }
