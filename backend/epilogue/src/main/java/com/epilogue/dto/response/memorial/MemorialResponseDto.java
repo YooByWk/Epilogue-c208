@@ -1,13 +1,11 @@
 package com.epilogue.dto.response.memorial;
 
 import io.swagger.v3.oas.annotations.media.Schema;
-import lombok.AllArgsConstructor;
-import lombok.Builder;
-import lombok.NoArgsConstructor;
-import lombok.RequiredArgsConstructor;
+import lombok.*;
 
 import java.util.List;
 
+@Getter
 @Builder
 @NoArgsConstructor
 @AllArgsConstructor
