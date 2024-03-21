@@ -1,12 +1,18 @@
 package com.epilogue.dto.request.will;
 
+import com.epilogue.domain.witness.Witness;
+import com.epilogue.dto.request.viewer.ViewerRequestDto;
+import com.epilogue.dto.request.witness.WitnessRequestDto;
 import io.swagger.v3.oas.annotations.media.Schema;
+import jakarta.validation.constraints.NotNull;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 
+import java.util.List;
+
 @Getter
 @AllArgsConstructor
-@Schema(description = "유언 작성 DTO")
+@Schema(description = "유언 요청 DTO")
 public class WillRequestDto {
     @Schema(description = "연명 치료 여부")
     private boolean sustainCare;
@@ -20,24 +26,35 @@ public class WillRequestDto {
     @Schema(description = "장기 기증 여부")
     private boolean organDonation;
 
+    @NotNull(message = "디지털 추모관 사용 여부는 Null일 수 없습니다.")
     @Schema(description = "디지털 추모관 사용 여부")
     private boolean useMemorial;
 
+    @NotNull(message = "묘비명은 Null일 수 없습니다.")
     @Schema(description = "묘비명")
     private String graveName;
 
+    @NotNull(message = "묘비 사진은 Null일 수 없습니다.")
     @Schema(description = "묘비 사진")
     private String graveImage;
 
-    @Schema(description = "유언 초안 스크립트")
-    private String willDraftScript;
-
+    @NotNull(message = "유언 파일 이름은 Null일 수 없습니다.")
     @Schema(description = "유언 파일 이름")
     private String willFileName;
 
+    @NotNull(message = "열람 신청 링크는 Null일 수 없습니다.")
     @Schema(description = "열람 신청 링크")
     private String viewApplyLink;
 
+    @NotNull(message = "유언장 링크는 Null일 수 없습니다.")
     @Schema(description = "유언장 링크")
     private String willLink;
+
+    @NotNull(message = "증인 리스트는 Null일 수 없습니다.")
+    @Schema(description = "증인 리스트")
+    private List<WitnessRequestDto> witnessList;
+
+    @NotNull(message = "열람인 리스트는 Null일 수 없습니다.")
+    @Schema(description = "열람인 리스트")
+    private List<ViewerRequestDto> viewerList;
 }
