@@ -28,6 +28,8 @@ public class UserService {
                 .birth(joinRequestDto.getBirth())
                 .build();
 
+        
+
         userRepository.save(user);
     }
 
