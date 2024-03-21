@@ -1,11 +1,11 @@
 import 'package:flutter/material.dart';
 
+import 'package:frontend/screens/block_chain_test.dart';
 import 'package:frontend/screens/login/login_screen.dart';
 import 'package:frontend/screens/memorial/memorial_detail/memorial_detail_screen.dart';
 import 'package:frontend/screens/memorial/memorial_main/memorial_screen.dart';
 import 'package:frontend/widgets/custom_bottom_navigation.dart';
 import 'package:frontend/screens/letter/letter_screen.dart';
-import 'package:frontend/screens/will/will_screen.dart';
 
 final Map<String, WidgetBuilder> mainRoutes = {
   '/login': (context) => LoginScreen(),
@@ -32,6 +32,9 @@ Route<dynamic> generateMainRoute(RouteSettings settings) {
       return MaterialPageRoute(
           builder: (context) => MemorialDetailScreen(),
           settings: RouteSettings(arguments: settings.arguments));
+
+    case '/blockChain':
+      return MaterialPageRoute(builder: (context) => BlockChainTest());
 
     default:
       debugPrint('Route Error');

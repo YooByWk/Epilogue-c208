@@ -40,6 +40,8 @@ class VideoTab extends StatelessWidget {
                             width: MediaQuery.of(context).size.width,
                             onPressed: () {
                               debugPrint('비디오 업로드 버튼 클릭');
+                              Navigator.pushNamed(context,'/blockChain');
+                              ;
                             }),
                         SizedBox(height: 10)
                       ]));

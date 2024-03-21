@@ -1,4 +1,4 @@
-import 'package:frontend/models/block_chain.dart';
+import 'package:frontend/models/block_chain_model.dart';
 import 'package:provider/provider.dart';
 import 'package:flutter/material.dart'; 
 
@@ -12,4 +12,8 @@ class BlockChainViewModel extends ChangeNotifier{
     notifyListeners();
     return response;
   } 
+
+  Future<String> retrieve() {
+    return _blockChainModel.callFunction('retrieve', []);
+  }
 }
