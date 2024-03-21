@@ -30,7 +30,7 @@ public class WillService {
                 .useMemorial(willRequestDto.isUseMemorial())
                 .graveName(willRequestDto.getGraveName())
                 .graveImage(willRequestDto.getGraveImage())
-                .willFileName(willRequestDto.getWillFileName())
+                .willFileAddress(willRequestDto.getWillFileAddress())
                 .viewApplyLink(willRequestDto.getViewApplyLink())
                 .willLink(willRequestDto.getWillLink())
                 .build();

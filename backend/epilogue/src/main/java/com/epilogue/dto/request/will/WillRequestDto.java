@@ -38,9 +38,9 @@ public class WillRequestDto {
     @Schema(description = "묘비 사진")
     private String graveImage;
 
-    @NotNull(message = "유언 파일 이름은 Null일 수 없습니다.")
-    @Schema(description = "유언 파일 이름")
-    private String willFileName;
+    @NotNull(message = "유언 파일 주소는 Null일 수 없습니다.")
+    @Schema(description = "유언 파일 주소")
+    private String willFileAddress;
 
     @NotNull(message = "열람 신청 링크는 Null일 수 없습니다.")
     @Schema(description = "열람 신청 링크")
