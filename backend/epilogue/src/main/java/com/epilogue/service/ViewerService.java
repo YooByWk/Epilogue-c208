@@ -28,7 +28,7 @@ public class ViewerService {
                     .will(willRepository.findById(willSeq).get())
                     .viewerName(v.getViewerName())
                     .viewerEmail(v.getViewerEmail())
-                    .viewerPhone(v.getViewerPhone())
+                    .viewerMobile(v.getViewerMobile())
                     .build();
 
             viewerRepository.save(viewer);

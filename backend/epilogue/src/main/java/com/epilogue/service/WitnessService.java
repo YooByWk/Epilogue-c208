@@ -30,7 +30,7 @@ public class WitnessService {
                     .will(willRepository.findById(willSeq).get())
                     .witnessName(w.getWitnessName())
                     .witnessEmail(w.getWitnessEmail())
-                    .witnessPhone(w.getWitnessPhone())
+                    .witnessMobile(w.getWitnessMobile())
                     .witnessCode(UUID.randomUUID().toString())
                     .build();
 

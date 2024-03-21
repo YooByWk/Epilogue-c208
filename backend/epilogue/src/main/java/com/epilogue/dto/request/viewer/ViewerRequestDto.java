@@ -17,5 +17,5 @@ public class ViewerRequestDto {
     private String viewerEmail;
 
     @Schema(description = "열람인 휴대폰 번호")
-    private String viewerPhone;
+    private String viewerMobile;
 }

@@ -38,7 +38,7 @@ public class Witness {
 
     @NotNull(message = "증인 휴대폰 번호는 Null일 수 없습니다.")
     @Schema(description = "증인 휴대폰 번호")
-    private String witnessPhone;
+    private String witnessMobile;
 
     @NotNull(message = "증인 코드는 Null일 수 없습니다.")
     @Schema(description = "증인 코드")
