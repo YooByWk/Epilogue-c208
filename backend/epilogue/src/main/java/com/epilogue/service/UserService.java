@@ -2,6 +2,7 @@ package com.epilogue.service;
 
 import com.epilogue.domain.user.User;
 import com.epilogue.dto.request.user.JoinRequestDto;
+import com.epilogue.dto.response.user.UserDTO;
 import com.epilogue.repository.user.UserRepository;
 import com.epilogue.util.jwt.JWTUtil;
 import jakarta.transaction.Transactional;
@@ -35,6 +36,11 @@ public class UserService {
 
     public void updatePassword(String loginUserId, String password) {
         userRepository.updatePassword(loginUserId, password);
+    }
+
+    public UserDTO userInfo(String loginUserId) {
+        User findUser = userRepository.findByUserId(loginUserId);
+        return new UserDTO(findUser);
     }
 
 }
