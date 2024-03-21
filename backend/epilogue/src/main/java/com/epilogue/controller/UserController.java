@@ -1,6 +1,7 @@
 package com.epilogue.controller;
 
 import com.epilogue.dto.request.user.JoinRequestDto;
+import com.epilogue.dto.request.user.UpdateInfoRequestDto;
 import com.epilogue.dto.response.user.UserDTO;
 import com.epilogue.service.UserService;
 import io.swagger.v3.oas.annotations.Parameter;
@@ -49,5 +50,13 @@ public class UserController {
         String loginUserId = principal.getName();
         UserDTO userDTO = userService.userInfo(loginUserId);
         return new ResponseEntity<>(userDTO, HttpStatus.OK);
+    }
+
+    @ApiResponse(responseCode = "200", description = "성공")
+    @PutMapping("/user")
+    public ResponseEntity<?> updateUserInfo(Principal principal, @RequestBody UpdateInfoRequestDto updateInfoRequestDto) {
+        String loginUserId = principal.getName();
+        userService.updateUserInfo(loginUserId, updateInfoRequestDto);
+        return new ResponseEntity<>(HttpStatus.OK);
     }
 }

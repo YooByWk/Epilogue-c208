@@ -2,6 +2,7 @@ package com.epilogue.service;
 
 import com.epilogue.domain.user.User;
 import com.epilogue.dto.request.user.JoinRequestDto;
+import com.epilogue.dto.request.user.UpdateInfoRequestDto;
 import com.epilogue.dto.response.user.UserDTO;
 import com.epilogue.repository.user.UserRepository;
 import com.epilogue.util.jwt.JWTUtil;
@@ -41,6 +42,11 @@ public class UserService {
     public UserDTO userInfo(String loginUserId) {
         User findUser = userRepository.findByUserId(loginUserId);
         return new UserDTO(findUser);
+    }
+
+    public void updateUserInfo(String loginUserId, UpdateInfoRequestDto updateInfoRequestDto) {
+        User findUser = userRepository.findByUserId(loginUserId);
+        findUser.updateUserInfo(updateInfoRequestDto.getName(), updateInfoRequestDto.getMobile());
     }
 
 }
