@@ -4,6 +4,7 @@ import com.epilogue.domain.will.Will;
 import com.epilogue.dto.request.will.WillApplyRequestDto;
 import com.epilogue.dto.request.will.WillRequestDto;
 import com.epilogue.repository.viewer.ViewerRepository;
+import com.epilogue.service.AwsS3Service;
 import com.epilogue.service.ViewerService;
 import com.epilogue.service.WillService;
 import com.epilogue.service.WitnessService;
@@ -16,6 +17,7 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
 
 import java.security.Principal;
 import java.util.List;
@@ -29,12 +31,12 @@ public class WillController {
     private final WillService willService;
     private final WitnessService witnessService;
     private final ViewerService viewerService;
+    private final AwsS3Service awsS3Service;
 
     @Operation(summary = "유언 작성 API", description = "유언을 작성하면 블록체인을 생성한 뒤, S3에 저장합니다.")
     @ApiResponse(responseCode = "200", description = "성공")
     @PostMapping
-    // 녹음 파일 Form-Data 형식으로 따로 받기
-    public ResponseEntity<Void> createWill(@Parameter(description = "유언 작성 요청 DTO") @RequestBody WillRequestDto willRequestDto, Principal principal) {
+    public ResponseEntity<Void> createWill(@Parameter(description = "유언 작성 요청 DTO") @RequestBody WillRequestDto willRequestDto, @RequestParam MultipartFile multipartFile, Principal principal) {
         // 유언 관련 정보 저장
         Will will = willService.create(willRequestDto, principal);
         int willSeq = will.getWillSeq();
@@ -52,6 +54,7 @@ public class WillController {
         // 1. 프론트에 알림 (200 보내기)
 
         // 2. S3 서버 저장 (원본 파일, 초기 영수증)
+        awsS3Service.upload(multipartFile);
 
         return new ResponseEntity<>(HttpStatus.OK);
     }
@@ -70,6 +73,9 @@ public class WillController {
     @DeleteMapping
     public ResponseEntity<Void> deleteMyWill(Principal principal) {
         willService.deleteMyWill(principal);
+
+        // S3에서 유언 원본 파일 삭제
+//        awsS3Service.deleteMp3FromS3(mp3Address);
         return new ResponseEntity<>(HttpStatus.OK);
     }
 
