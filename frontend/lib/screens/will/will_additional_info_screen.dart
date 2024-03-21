@@ -108,8 +108,8 @@ class _WillAdditionalInfoScreenState extends State<WillAdditionalInfoScreen> {
       bottomNavigationBar: Container(
         color: themeColour3,
         height: 80,
-        child: TextButton(
-          onPressed: () {
+        child: InkWell(
+          onTap: () {
             Navigator.push(
               context,
               MaterialPageRoute(
@@ -117,13 +117,12 @@ class _WillAdditionalInfoScreenState extends State<WillAdditionalInfoScreen> {
               ),
             );
           },
-          style: TextButton.styleFrom(
-            textStyle: const TextStyle(
-              fontSize: 30,
-              color: Colors.white,
+          child: Center(
+            child: Text(
+              "항목 선택 완료",
+              style: TextStyle(color: Colors.white, fontSize: 33, fontWeight: FontWeight.bold),
             ),
           ),
-          child: Text("항목 선택 완료"),
         ),
       ),
     );
