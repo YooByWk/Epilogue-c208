@@ -77,15 +77,6 @@ public class WillController {
     @ApiResponse(responseCode = "200", description = "성공")
     @PostMapping("/apply")
     public ResponseEntity<Boolean> applyWill(@Parameter(description = "유언 열람 인증 요청 DTO") @RequestBody WillApplyRequestDto willApplyRequestDto) {
-        // 인증에 성공할 경우
         return new ResponseEntity<>(willService.applyWill(willApplyRequestDto), HttpStatus.OK);
-    }
-
-    @Operation(summary = "유언 열람 API", description = "유언을 열람합니다.")
-    @ApiResponse(responseCode = "200", description = "성공")
-    @PostMapping("/view")
-    public ResponseEntity<String> viewWill() {
-
-        return new ResponseEntity<>(HttpStatus.OK);
     }
 }
