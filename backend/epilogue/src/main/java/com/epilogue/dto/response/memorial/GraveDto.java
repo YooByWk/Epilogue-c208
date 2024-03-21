@@ -2,8 +2,10 @@ package com.epilogue.dto.response.memorial;
 
 import io.swagger.v3.oas.annotations.media.Schema;
 import lombok.Builder;
+import lombok.Getter;
 
 @Builder
+@Getter
 public class GraveDto {
 
     @Schema(description = "고인 이름")

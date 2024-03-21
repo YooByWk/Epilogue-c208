@@ -29,9 +29,10 @@ public class MemorialController {
     public ResponseEntity<MemorialResponseDto> ViewMemorialList(Principal principal) {
         MemorialResponseDto memorialResponseDto = new MemorialResponseDto();
 
-        if(principal != null) { // 회원
-            String loginUserId = principal.getName();
-            memorialResponseDto = memorialService.viewMemorialListByMember(loginUserId);
+        if(principal == null) { // 회원
+//            String loginUserId = principal.getName();
+//            memorialResponseDto = memorialService.viewMemorialListByMember(loginUserId);
+            memorialResponseDto = memorialService.viewMemorialListByMember("1");
         } else { // 비회원
             memorialResponseDto = memorialService.viewMemorialListByNonMember();
         }

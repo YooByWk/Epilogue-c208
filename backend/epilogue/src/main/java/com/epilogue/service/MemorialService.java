@@ -32,15 +32,14 @@ public class MemorialService {
         List<GraveDto> favoriteMemorialList = new ArrayList<>();
         List<GraveDto> memorialList = new ArrayList<>();
 
-        // 즐겨찾기 목록
-        List<Favorite> favorites = favoriteRepository.findAll();
+        // 내가 즐겨찾기한 목록
+        User loginUser = userRepository.findByUserId(loginUserId);
+        int loginUserSeq = loginUser.getUserSeq();
+        List<Favorite> favorites = favoriteRepository.findListById(loginUserSeq); // 내가 즐겨찾기 한 목록
         for(Favorite favorite : favorites) {
-            int userSeq = favorite.getUserSeq();
-            Optional<User> user = userRepository.findById(userSeq);
-
             GraveDto graveDto = GraveDto.builder()
-                    .name(user.get().getName())
-                    .birth(user.get().getBirth())
+                    .name(favorite.getMemorial().getUser().getName())
+                    .birth(favorite.getMemorial().getUser().getBirth())
                     .goneDate(favorite.getMemorial().getGoneDate())
                     .graveName(favorite.getMemorial().getGraveName())
                     .graveImg(favorite.getMemorial().getGraveImg())
@@ -55,6 +54,8 @@ public class MemorialService {
             // 회원의 최신순 목록에 즐겨찾기 목록은 제외
             for(Favorite favorite : favorites) {
                 if(memorial.getMemorialSeq() == favorite.getMemorial().getMemorialSeq()) {
+//                    System.out.println("memorial.getMemorialSeq() : " + memorial.getMemorialSeq());
+//                    System.out.println("favorite.getMemorial().getMemorialSeq() : " + favorite.getMemorial().getMemorialSeq());
                     break;
                 }
             }
@@ -83,12 +84,12 @@ public class MemorialService {
 
         List<GraveDto> memorialList = new ArrayList<>();
 
-        List<Memorial> list = memorialRepository.findAll();
+        List<Memorial> list = memorialRepository.findAllByDate();
         for(Memorial memorial : list) {
             GraveDto graveDto = GraveDto.builder()
                     .name(memorial.getUser().getName())
                     .birth(memorial.getUser().getBirth())
-                    .birth(memorial.getGoneDate())
+                    .goneDate(memorial.getGoneDate())
                     .graveName(memorial.getGraveName())
                     .graveImg(memorial.getGraveImg())
                     .build();
