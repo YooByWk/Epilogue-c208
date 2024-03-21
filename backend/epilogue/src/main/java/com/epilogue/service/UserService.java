@@ -49,4 +49,8 @@ public class UserService {
         findUser.updateUserInfo(updateInfoRequestDto.getName(), updateInfoRequestDto.getMobile());
     }
 
+    public void deleteMember(String loginUserId) {
+        userRepository.delete(userRepository.findByUserId(loginUserId));
+    }
+
 }
