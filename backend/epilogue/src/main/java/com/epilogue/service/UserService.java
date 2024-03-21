@@ -14,24 +14,27 @@ import org.springframework.stereotype.Service;
 @RequiredArgsConstructor
 public class UserService {
     private final UserRepository userRepository;
-    private final BCryptPasswordEncoder bCryptPasswordEncoder;
     private final JWTUtil jwtUtil;
-    private final PasswordEncoder passwordEncoder = new BCryptPasswordEncoder();
 
     @Transactional
     public void join(JoinRequestDto joinRequestDto) {
         User user = User.builder()
                 .userId(joinRequestDto.getUserId())
-                .password(bCryptPasswordEncoder.encode(joinRequestDto.getPassword()))
+                .password(joinRequestDto.getPassword())
                 .name(joinRequestDto.getName())
-                .phone(joinRequestDto.getPhone())
+                .mobile(joinRequestDto.getMobile())
                 .birth(joinRequestDto.getBirth())
                 .build();
-
-        
 
         userRepository.save(user);
     }
 
+    public Boolean check(String userId) {
+        return userRepository.existsByUserId(userId);
+    }
+
+    public void updatePassword(String loginUserId, String password) {
+        userRepository.updatePassword(loginUserId, password);
+    }
 
 }

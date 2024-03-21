@@ -23,7 +23,7 @@ public class JoinRequestDto {
 
     @NotNull(message = "휴대폰 번호는 Null일 수 없습니다.")
     @Schema(description = "휴대폰 번호")
-    private String phone;
+    private String mobile;
 
     @NotNull(message = "생년월일은 Null일 수 없습니다.")
     @Schema(description = "생년월일")
