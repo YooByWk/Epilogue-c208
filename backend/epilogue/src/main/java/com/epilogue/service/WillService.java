@@ -2,6 +2,7 @@ package com.epilogue.service;
 
 import com.epilogue.domain.user.User;
 import com.epilogue.domain.will.Will;
+import com.epilogue.dto.request.will.WillApplyRequestDto;
 import com.epilogue.dto.request.will.WillRequestDto;
 import com.epilogue.repository.user.UserRepository;
 import com.epilogue.repository.will.WillRepository;
@@ -56,5 +57,11 @@ public class WillService {
         User user = userRepository.findByUserId(loginUserId);
         Will will = user.getWill();
         willRepository.deleteByWillSeq(will.getWillSeq());
+    }
+
+    public boolean applyWill(WillApplyRequestDto willApplyRequestDto) {
+        // 고인 이름, 고인 생년월일, 증인 이름, 증인 코드 일치 검사
+
+        return true;
     }
 }
