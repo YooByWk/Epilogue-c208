@@ -55,16 +55,16 @@ class _WillViewerScreenState extends State<WillViewerScreen> {
                 child: (counter < 5)
                     ? ElevatedButton(onPressed: increment, child: Text('추가'))
                     : null),
-            Container(
-              width: double.infinity,
-              height: 100,
-              child: TextButtonWidget(
-                preText: '이전',
-                nextText: '다음',
-                nextPage: WillSelectMemorialScreen(),
-              ),
-            )
           ],
+        ),
+      ),
+      bottomNavigationBar: SizedBox(
+        width: double.infinity,
+        height: 100,
+        child: TextButtonWidget(
+          preText: '이전',
+          nextText: '다음',
+          nextPage: WillSelectMemorialScreen(),
         ),
       ),
     );

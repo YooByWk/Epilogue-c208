@@ -83,15 +83,15 @@ class _WillSelectTypeScreenState extends State<WillSelectTypeScreen> {
                 ),
               ],
             ),
-            Container(
-              width: double.infinity,
-              height: 250,
-              child: TextButtonWidget(
-                preText: '이전',
-                prePage: CustomBottomNavigation(),
-              ),
-            )
           ]),
+      bottomNavigationBar: Container(
+        width: double.infinity,
+        height: 100,
+        child: TextButtonWidget(
+          preText: '이전',
+          prePage: CustomBottomNavigation(),
+        ),
+      ),
     );
   }
 }
