@@ -5,6 +5,7 @@ import com.epilogue.service.MemorialService;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -18,16 +19,24 @@ import java.util.List;
 @RequiredArgsConstructor
 @RequestMapping("/api")
 @Tag(name = "Memorial Controller", description = "디지털 추모관 관련 API")
+@Slf4j
 public class MemorialController {
 
     private final MemorialService memorialService;
 
     @GetMapping("/memorial/list")
     @ApiResponse(responseCode = "200", description = "성공")
-    public ResponseEntity<List<MemorialResponseDto>> ViewMemorialList(Principal principal) {
-        String loginUserId = principal.getName();
-        List<MemorialResponseDto> memorialList = memorialService.viewMemorialList(loginUserId);
-        return new ResponseEntity<>(memorialList, HttpStatus.OK);
+    public ResponseEntity<MemorialResponseDto> ViewMemorialList(Principal principal) {
+        MemorialResponseDto memorialResponseDto = new MemorialResponseDto();
+
+        if(principal != null) { // 회원
+            String loginUserId = principal.getName();
+            memorialResponseDto = memorialService.viewMemorialListByMember(loginUserId);
+        } else { // 비회원
+            memorialResponseDto = memorialService.viewMemorialListByNonMember();
+        }
+
+        return new ResponseEntity<>(memorialResponseDto, HttpStatus.OK);
     }
 
 }

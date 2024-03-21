@@ -67,7 +67,7 @@ public class SecurityConfig {
         // 경로별 인가 작업
         http.authorizeHttpRequests((auth) -> auth
 
-                .requestMatchers("/swagger-ui/**", "/api-docs/**", "/api/test", "/api/authenticate", "/api", "/api/user/join/**", "/login", "/api/auth/**", "/api/oauth2/**", "/api/user/join").permitAll()
+                .requestMatchers("/swagger-ui/**", "/api-docs/**", "/api/test", "/api/authenticate", "/api", "/api/user/join/**", "/login", "/api/auth/**", "/api/oauth2/**", "/api/memorial/list").permitAll()
                 .anyRequest().authenticated());
 
         // OAuth2
