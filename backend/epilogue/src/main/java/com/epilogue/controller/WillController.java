@@ -33,6 +33,7 @@ public class WillController {
     @Operation(summary = "유언 작성 API", description = "유언을 작성하면 블록체인을 생성한 뒤, S3에 저장합니다.")
     @ApiResponse(responseCode = "200", description = "성공")
     @PostMapping
+    // 녹음 파일 Form-Data 형식으로 따로 받기
     public ResponseEntity<Void> createWill(@Parameter(description = "유언 작성 요청 DTO") @RequestBody WillRequestDto willRequestDto, Principal principal) {
         // 유언 관련 정보 저장
         Will will = willService.create(willRequestDto, principal);
@@ -76,7 +77,15 @@ public class WillController {
     @ApiResponse(responseCode = "200", description = "성공")
     @PostMapping("/apply")
     public ResponseEntity<Boolean> applyWill(@Parameter(description = "유언 열람 인증 요청 DTO") @RequestBody WillApplyRequestDto willApplyRequestDto) {
-        willService.applyWill(willApplyRequestDto);
+        // 인증에 성공할 경우
+        return new ResponseEntity<>(willService.applyWill(willApplyRequestDto), HttpStatus.OK);
+    }
+
+    @Operation(summary = "유언 열람 API", description = "유언을 열람합니다.")
+    @ApiResponse(responseCode = "200", description = "성공")
+    @PostMapping("/view")
+    public ResponseEntity<String> viewWill() {
+
         return new ResponseEntity<>(HttpStatus.OK);
     }
 }
