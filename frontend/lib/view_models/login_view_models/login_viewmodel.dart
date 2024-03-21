@@ -1,20 +1,28 @@
 import 'package:flutter/material.dart';
 import 'package:frontend/models/login_model.dart';
+import 'package:frontend/providers/providers.dart';
 
 class LoginViewModel extends ChangeNotifier {
-  LoginModel _loginData = LoginModel(userId: '', password: '');
-  bool _isFocused = false;
 
-  String get email => _loginData.userId;
+  LoginModel _loginData = LoginModel(username: '', password: '');
+  bool _isFocused = false;
+  bool _isLoading = false;
+  String? _errorMessage;
+
   String get password => _loginData.password;
+
   bool get isFocused => _isFocused;
 
-  void setUserId(String value) {
-    _loginData = LoginModel(userId: value, password : _loginData.password);
+  bool get isLoading => _isLoading;
+
+  String? get errorMessage => _errorMessage;
+
+  void setUsername(String value) {
+    _loginData = LoginModel(username: value, password: _loginData.password);
   }
 
   void setPassword(String value) {
-    _loginData = LoginModel(userId : _loginData.userId, password : value); 
+    _loginData = LoginModel(username: _loginData.username, password: value);
   }
 
   void setFocused(bool value) {
@@ -22,8 +30,9 @@ class LoginViewModel extends ChangeNotifier {
   }
 
   void login() async {
-    debugPrint('로그인 정보 : 아이디 ${_loginData.userId},  PW ${_loginData.password}');
+    _isLoading = true;
+    _errorMessage = null;
+    notifyListeners();
+
   }
-
-
 }
