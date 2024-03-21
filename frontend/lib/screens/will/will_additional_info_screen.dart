@@ -4,6 +4,7 @@ import 'package:frontend/screens/will/will_widgets.dart';
 import 'package:frontend/widgets/custom_bottom_navigation.dart';
 
 class WillAdditionalInfoScreen extends StatefulWidget {
+  const WillAdditionalInfoScreen({super.key});
   _WillAdditionalInfoScreenState createState() =>
       _WillAdditionalInfoScreenState();
 }
