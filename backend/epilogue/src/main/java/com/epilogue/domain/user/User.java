@@ -4,14 +4,12 @@ import com.epilogue.domain.will.Will;
 import io.swagger.v3.oas.annotations.media.Schema;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotNull;
-import lombok.AllArgsConstructor;
-import lombok.Builder;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
+import lombok.*;
 
 @Entity
 @Builder
 @Getter
+@Setter
 @AllArgsConstructor
 @NoArgsConstructor
 @Schema(description = "회원")
@@ -35,7 +33,7 @@ public class User {
     
     @NotNull(message = "휴대폰 번호는 Null일 수 없습니다.")
     @Schema(description = "휴대폰 번호")
-    private String phone;
+    private String mobile;
     
     @NotNull(message = "생일은 Null일 수 없습니다.")
     @Schema(description = "생일")
@@ -54,6 +52,11 @@ public class User {
 
     public void updateRefreshToken(String refreshToken) {
         this.refreshToken = refreshToken;
+    }
+
+    public void updateUserInfo(String name, String mobile) {
+        this.name = name;
+        this.mobile = mobile;
     }
 
     public void updateWill(Will will) {
