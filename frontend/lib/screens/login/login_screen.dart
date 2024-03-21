@@ -1,5 +1,6 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:frontend/screens/will/recording_test.dart';
 import 'package:frontend/view_models/login_view_models/login_viewmodel.dart';
 import 'package:frontend/screens/login/social_button_widget.dart';
 import 'package:frontend/screens/signup/signup_screen.dart';
@@ -213,6 +214,17 @@ class LoginScreen extends StatelessWidget {
                           );
                         },
                         child: Text('유언 작성'),
+                      ),
+                      ElevatedButton(
+                        onPressed: () {
+                          Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                              builder: (context) => Demo(),
+                            ),
+                          );
+                        },
+                        child: Text('녹음'),
                       ),
                     ],
                   ),

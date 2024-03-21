@@ -73,16 +73,16 @@ class _WillRecordingScreenState extends State<WillRecordingScreen> {
                     child: const Text("저장"))
               ],
             ),
-            Container(
-              width: double.infinity,
-              height: 250,
-              child: TextButtonWidget(
-                preText: '이전',
-                nextText: '기록하기',
-                nextPage: WillViewerScreen(),
-              ),
-            )
           ]),
+      bottomNavigationBar: Container(
+        width: double.infinity,
+        height: 100,
+        child: TextButtonWidget(
+          preText: '이전',
+          nextText: '기록하기',
+          nextPage: WillViewerScreen(),
+        ),
+      ),
     );
   }
 }
