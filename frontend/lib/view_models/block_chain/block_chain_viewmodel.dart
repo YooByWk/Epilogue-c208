@@ -16,4 +16,8 @@ class BlockChainViewModel extends ChangeNotifier{
   Future<String> retrieve() {
     return _blockChainModel.callFunction('retrieve', []);
   }
+
+  Future<String> deployContract() {
+    return _blockChainModel.deployContract();
+  }
 }

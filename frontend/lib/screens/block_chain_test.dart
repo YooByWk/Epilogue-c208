@@ -22,6 +22,13 @@ class BlockChainTest extends StatelessWidget {
                   children: [
                     ElevatedButton(
                       onPressed: () async {
+                        final response = await viewModel.deployContract();
+                        debugPrint('컨트랙트 배포 결과: $response');
+                      },
+                      child: Text('컨트랙트 배포'),
+                    ),
+                    ElevatedButton(
+                      onPressed: () async {
                         final response = await viewModel.sendTransaction('store', [BigInt.from(35)]);
                         debugPrint('store 함수 호출 결과: $response');
                       },
