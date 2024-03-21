@@ -11,12 +11,12 @@ class WillEpitaphWidget extends StatelessWidget {
       margin: EdgeInsets.only(
         top: 10,
       ),
-      height: 80,
-      width: 300,
+      width: MediaQuery.of(context).size.width * 0.8,
+      height: MediaQuery.of(context).size.height * 0.11,
       alignment: Alignment.center,
       decoration: BoxDecoration(
         color: Colors.white,
-        borderRadius: BorderRadius.circular(8),
+        borderRadius: BorderRadius.circular(18),
         border: Border.all(color: themeColour4),
         boxShadow: [
           BoxShadow(
@@ -30,15 +30,18 @@ class WillEpitaphWidget extends StatelessWidget {
       child: TextFormField(
         style: TextStyle(
           decorationThickness: 0,
-          fontSize: 20,
+          fontSize: 30,
           color: themeColour5,
+          fontWeight: FontWeight.bold,
         ),
         textAlign: TextAlign.center,
         decoration: InputDecoration(
           hintText: '묘비명 입력하기',
           hintStyle: TextStyle(
-            color: Colors.black,
-          ),
+          color: Colors.black,
+          fontSize: 30,
+          fontWeight: FontWeight.bold,
+        ),
           enabledBorder: UnderlineInputBorder(
             borderSide: BorderSide(
               color: Colors.white,
@@ -102,33 +105,40 @@ class _ChoiceButtonWidgetState extends State<ChoiceButtonWidget> {
           checked = !checked;
         });
       },
-      child: Container(
-        width: 150,
-        height: 50,
-        decoration: BoxDecoration(
-          color: Colors.white,
-          border: Border.all(
-            color: (checked) ? themeColour3 : Colors.grey.withOpacity(0.5),
-          ),
-          borderRadius: BorderRadius.circular(8),
-        ),
-        child: Row(
-          children: [
-            Icon(
-              Icons.check_circle_outline,
-              color: (checked) ? themeColour3 : Colors.grey.withOpacity(0.5),
+      child: Padding(
+        padding: const EdgeInsets.only(top: 10.0),
+        child: Container(
+          width: MediaQuery.of(context).size.width * 0.4,
+          height: MediaQuery.of(context).size.width * 0.15,
+          decoration: BoxDecoration(
+            color: Colors.white,
+            border: Border.all(
+              color: (checked) ? themeColour5 : Colors.black26,
+              width: 3,
             ),
-            Text(
-              widget.text,
-              textAlign: TextAlign.start,
-              style: TextStyle(
-                color: (checked) ? themeColour3 : Colors.grey.withOpacity(0.5),
-                fontFamily: 'Roboto Serif',
-                fontSize: 20,
-                fontWeight: FontWeight.normal,
+            borderRadius: BorderRadius.circular(8),
+          ),
+          child: Row(
+            children: [
+              SizedBox(width: 10,),
+              Icon(
+                Icons.check_circle_outline,
+                color: (checked) ? themeColour5 : Colors.black26,
+                size: 35,
               ),
-            )
-          ],
+              SizedBox(width: 10,),
+              Text(
+                widget.text,
+                textAlign: TextAlign.start,
+                style: TextStyle(
+                  color: (checked) ? themeColour5 : Colors.black26,
+                  fontFamily: 'Roboto Serif',
+                  fontSize: 25,
+                  fontWeight: FontWeight.w600,
+                ),
+              )
+            ],
+          ),
         ),
       ),
     );
@@ -187,53 +197,77 @@ class WillCommonButtonWidget extends StatelessWidget {
 }
 
 class TextButtonWidget extends StatelessWidget {
-  final String nextText;
-  final String preText;
+  final String? nextText;
+  final String? preText;
   final Widget? nextPage;
   final Widget? prePage;
 
   const TextButtonWidget({
-    this.nextText = '다음',
-    this.preText = '이전',
+    this.nextText,
+    this.preText,
     this.nextPage,
     this.prePage,
   });
 
   @override
   Widget build(BuildContext context) {
-    return Row(
-      children: [
-          TextButton(onPressed: ()
-
-        {
-          prePage != null ? Navigator.push(
-            context,
-            MaterialPageRoute(
-              builder: (context) => prePage!,
-            ),
-          ) : Navigator.pop(context);
-        }, child: Text(preText, style: TextStyle(fontSize: 23, fontFamily: 'Roboto Serif', color: themeColour4,),),
-        ),
-
-        TextButton(
-          onPressed: () {
-            Navigator.push(
-              context,
-              MaterialPageRoute(
-                builder: (context) => nextPage!,
-              ),
-            );
-          },
-          child: Text(
-            nextText,
-            style: TextStyle(
-              fontSize: 23,
-              fontFamily: 'Roboto Serif',
-              color: themeColour4,
-            ),
+    return Padding(
+      padding: const EdgeInsets.only(left: 20.0),
+      child: Stack(children: [
+        Positioned(
+          bottom: 0,
+          left: 0,
+          right: 0,
+          height: 100,
+          child: Row(
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            children: [
+              if (preText != null)
+                TextButton(
+                  onPressed: () {
+                    prePage != null
+                        ? Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                              builder: (context) => prePage!,
+                            ),
+                          )
+                        : Navigator.pop(context);
+                  },
+                  child: Text(
+                    preText!,
+                    style: TextStyle(
+                      fontSize: 30,
+                      fontFamily: 'Roboto Serif',
+                      color: themeColour5,
+                      fontWeight: FontWeight.bold,
+                    ),
+                  ),
+                ),
+              if (nextText != null)
+                TextButton(
+                  onPressed: () {
+                    Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                        builder: (context) => nextPage!,
+                      ),
+                    );
+                  },
+                  child: Text(
+                    nextText!,
+                    style: TextStyle(
+                      fontSize: 30,
+                      fontFamily: 'Roboto Serif',
+                      color: themeColour5,
+                      fontWeight: FontWeight.bold,
+                    ),
+                  ),
+                ),
+            ],
           ),
         ),
-      ],
+      ]),
     );
   }
 }

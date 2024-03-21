@@ -4,10 +4,13 @@ import 'package:frontend/screens/login/login_screen.dart';
 import 'package:frontend/screens/will/will_recording_screen.dart';
 import 'package:frontend/screens/will/will_widgets.dart';
 import 'package:frontend/widgets/common_button.dart';
+import 'package:frontend/widgets/custom_bottom_navigation.dart';
 
-class WillSelectTypeScreen extends StatelessWidget {
-  const WillSelectTypeScreen({super.key});
+class WillSelectTypeScreen extends StatefulWidget {
+  _WillSelectTypeScreenState createState() => _WillSelectTypeScreenState();
+}
 
+class _WillSelectTypeScreenState extends State<WillSelectTypeScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -20,7 +23,9 @@ class WillSelectTypeScreen extends StatelessWidget {
           mainAxisAlignment: MainAxisAlignment.spaceEvenly,
           children: [
             Padding(
-              padding: const EdgeInsets.only(left: 20.0, ),
+              padding: const EdgeInsets.only(
+                left: 20.0,
+              ),
               child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   mainAxisAlignment: MainAxisAlignment.spaceEvenly,
@@ -78,16 +83,14 @@ class WillSelectTypeScreen extends StatelessWidget {
                 ),
               ],
             ),
-            ElevatedButton(
-                onPressed: () {
-                  Navigator.push(
-                    context,
-                    MaterialPageRoute(
-                      builder: (context) => LoginScreen(),
-                    ),
-                  );
-                },
-                child: const Text("이전으로"))
+            Container(
+              width: double.infinity,
+              height: 250,
+              child: TextButtonWidget(
+                preText: '이전',
+                prePage: CustomBottomNavigation(),
+              ),
+            )
           ]),
     );
   }
