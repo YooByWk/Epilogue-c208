@@ -19,7 +19,6 @@ import java.util.List;
 public class ViewerService {
     private final ViewerRepository viewerRepository;
     private final WillRepository willRepository;
-    private final UserRepository userRepository;
 
     public void create(int willSeq, WillRequestDto willRequestDto) {
         List<ViewerRequestDto> viewerList = willRequestDto.getViewerList();
