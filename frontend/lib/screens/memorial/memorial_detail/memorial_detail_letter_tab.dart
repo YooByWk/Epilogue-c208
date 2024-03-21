@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:frontend/view_models/dio_api_request_examples.dart';
 import 'package:frontend/view_models/memorial_view_models/memorial_detail_letterTab_viewmodel.dart';
 import 'package:provider/provider.dart';
 
@@ -34,7 +35,9 @@ class LetterTab extends StatelessWidget {
                         if (index == 0) {
                           return Card(
                               child: InkWell(
-                            onTap: () => {debugPrint('$index')},
+                            onTap: () => {
+                              DioExamples().GetRequest(),
+                              debugPrint('dio를 통한 호출입니다. $index')},
                             child: Column(
                                 children: [Icon(Icons.add), Text('편지 추가')]),
                           ));

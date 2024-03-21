@@ -48,6 +48,7 @@ dependencies:
   visibility_detector: ^0.4.0+2 # 스크롤 감지
   flutter_sound: ^9.4.6 # 음성 녹음 및 재생
   permission_handler: ^11.3.0 # 마이크 권한 부여
+  dio: ^5.4.1
 
 dev_dependencies:
   flutter_test:
