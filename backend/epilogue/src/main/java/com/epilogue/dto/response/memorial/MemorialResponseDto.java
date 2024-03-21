@@ -14,9 +14,9 @@ import java.util.List;
 public class MemorialResponseDto {
 
     @Schema(name = "즐겨찾기한 추모관 목록")
-    List<GraveDto> favoriteMemorialList;
+    private List<GraveDto> favoriteMemorialList;
 
     @Schema(name = "최신순 추모관 목록")
-    List<GraveDto> memorialList;
+    private List<GraveDto> memorialList;
 
 }
