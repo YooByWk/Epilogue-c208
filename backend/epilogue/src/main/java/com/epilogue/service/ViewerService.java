@@ -2,12 +2,10 @@ package com.epilogue.service;
 
 import com.epilogue.domain.user.User;
 import com.epilogue.domain.viewer.Viewer;
-import com.epilogue.domain.will.Will;
+import com.epilogue.dto.request.viewer.ViewerListRequestDto;
 import com.epilogue.dto.request.viewer.ViewerRequestDto;
-import com.epilogue.dto.request.will.WillRequestDto;
 import com.epilogue.repository.user.UserRepository;
 import com.epilogue.repository.viewer.ViewerRepository;
-import com.epilogue.repository.will.WillRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
@@ -18,14 +16,16 @@ import java.util.List;
 @RequiredArgsConstructor
 public class ViewerService {
     private final ViewerRepository viewerRepository;
-    private final WillRepository willRepository;
+    private final UserRepository userRepository;
 
-    public void create(int willSeq, WillRequestDto willRequestDto) {
-        List<ViewerRequestDto> viewerList = willRequestDto.getViewerList();
+    public void save(ViewerListRequestDto viewerListRequestDto, Principal principal) {
+        List<ViewerRequestDto> viewerList = viewerListRequestDto.getViewerList();
+
+        User user = userRepository.findByUserId(principal.getName());
 
         for (ViewerRequestDto v : viewerList) {
             Viewer viewer = Viewer.builder()
-                    .will(willRepository.findById(willSeq).get())
+                    .will(user.getWill())
                     .viewerName(v.getViewerName())
                     .viewerEmail(v.getViewerEmail())
                     .viewerMobile(v.getViewerMobile())

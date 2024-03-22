@@ -1,7 +1,7 @@
 package com.epilogue.config;
 
 import com.epilogue.service.CustomOAuth2UserService;
-import com.epilogue.service.CustomSuccessHandler;
+import com.epilogue.util.CustomSuccessHandler;
 import com.epilogue.util.JWTFilter;
 import com.epilogue.util.JWTUtil;
 import com.epilogue.util.LoginFilter;
@@ -14,6 +14,7 @@ import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configurers.AbstractHttpConfigurer;
 import org.springframework.security.config.http.SessionCreationPolicy;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
 
@@ -30,6 +31,12 @@ public class SecurityConfig {
     @Bean
     public AuthenticationManager authenticationManager(AuthenticationConfiguration configuration) throws Exception {
         return configuration.getAuthenticationManager();
+    }
+
+    @Bean
+    public BCryptPasswordEncoder bCryptPasswordEncoder() {
+
+        return new BCryptPasswordEncoder();
     }
 
 
@@ -60,13 +67,12 @@ public class SecurityConfig {
                         .successHandler(customSuccessHandler)
                 );
 
-        // 커스텀 필터 등록
         // (생성한 커스텀 필터, 필터를 넣을 위치)
-        http.addFilterAt(new LoginFilter(authenticationManager(authenticationConfiguration), jwtUtil), LoginFilter.class);
+        http.addFilterAt(new LoginFilter(authenticationManager(authenticationConfiguration), jwtUtil), UsernamePasswordAuthenticationFilter.class);
 
         // 경로별 인가 작업
         http.authorizeHttpRequests((auth) -> auth
-                .requestMatchers("/swagger-ui/**", "/api-docs/**", "/api/test", "/api/authenticate", "/api", "/api/user/join/**", "/login", "/api/auth/**", "/api/oauth2/**", "/api/memorial/list", "/api/will").permitAll()
+                .requestMatchers("/**", "/swagger-ui/**", "/api-docs/**", "/api/test", "/api/authenticate", "/api", "/api/user/join/**", "/login", "/api/auth/**", "/api/oauth2/**", "/api/memorial/list").permitAll()
                 .anyRequest().authenticated());
 
         //세션 설정 : STATELESS

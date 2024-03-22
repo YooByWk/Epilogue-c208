@@ -1,7 +1,5 @@
 package com.epilogue.util;
 
-import com.epilogue.dto.response.user.CustomUserDetails;
-import com.epilogue.repository.user.UserRepository;
 import jakarta.servlet.FilterChain;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.http.Cookie;
@@ -32,6 +30,9 @@ public class LoginFilter extends UsernamePasswordAuthenticationFilter {
         String userId = obtainUsername(request);
         String password = obtainPassword(request);
 
+        System.out.println(userId);
+        System.out.println(password);
+
         // 스프링 시큐리티에서 아이디와 비밀번호를 검증하기 위해서는 token에 담아야 함
         UsernamePasswordAuthenticationToken authToken = new UsernamePasswordAuthenticationToken(userId, password, null);
 
@@ -41,7 +42,6 @@ public class LoginFilter extends UsernamePasswordAuthenticationFilter {
 
     @Override
     protected void successfulAuthentication(HttpServletRequest request, HttpServletResponse response, FilterChain chain, Authentication authentication) {
-
         //유저 정보
         String username = authentication.getName();
 
@@ -51,12 +51,10 @@ public class LoginFilter extends UsernamePasswordAuthenticationFilter {
         String role = auth.getAuthority();
 
         //토큰 생성
-        String access = jwtUtil.createJwt("access", username, 600000L);
-        String refresh = jwtUtil.createJwt("refresh", username, 86400000L);
+        String token = jwtUtil.createJwt(username, role, 86400000L);
 
         //응답 설정
-        response.setHeader("access", access);
-        response.addCookie(createCookie("refresh", refresh));
+        response.addCookie(createCookie(token));
         response.setStatus(HttpStatus.OK.value());
     }
 
@@ -64,14 +62,15 @@ public class LoginFilter extends UsernamePasswordAuthenticationFilter {
     @Override
     protected void unsuccessfulAuthentication(HttpServletRequest request, HttpServletResponse
             response, AuthenticationException failed) throws IOException, ServletException {
+
         // 로그인 실패 시 401 응답 (Unauthorized)
         response.setStatus(401);
     }
 
-    private Cookie createCookie(String key, String value) {
+    private Cookie createCookie(String value) {
 
-        Cookie cookie = new Cookie(key, value);
-        cookie.setMaxAge(24 * 60 * 60);
+        Cookie cookie = new Cookie("Authorization", value);
+        cookie.setMaxAge(24*60*60);
         //cookie.setSecure(true);
         //cookie.setPath("/");
         cookie.setHttpOnly(true);

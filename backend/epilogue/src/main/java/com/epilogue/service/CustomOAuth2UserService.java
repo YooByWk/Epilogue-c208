@@ -5,7 +5,9 @@ import com.epilogue.dto.response.oauth2.NaverResponse;
 import com.epilogue.dto.response.oauth2.OAuth2Response;
 import com.epilogue.dto.response.user.UserDTO;
 import com.epilogue.repository.user.UserRepository;
+import com.epilogue.util.CustomOAuth2User;
 import lombok.RequiredArgsConstructor;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.oauth2.client.userinfo.DefaultOAuth2UserService;
 import org.springframework.security.oauth2.client.userinfo.OAuth2UserRequest;
 import org.springframework.security.oauth2.core.OAuth2AuthenticationException;
@@ -38,8 +40,6 @@ public class CustomOAuth2UserService extends DefaultOAuth2UserService {
         User existData = userRepository.findByUserId(username);
 
         if (existData == null) {
-
-
             User user = User.builder()
                     .name(oAuth2Response.getName())
                     .password("1")
@@ -53,6 +53,8 @@ public class CustomOAuth2UserService extends DefaultOAuth2UserService {
             UserDTO userDTO = new UserDTO();
             userDTO.setName(oAuth2Response.getName());
             userDTO.setUserId(oAuth2Response.getProviderId());
+            userDTO.setBirth(oAuth2Response.getBirthyear()+oAuth2Response.getBirthday());
+            userDTO.setMobile(oAuth2Response.getMobile());
             return new CustomOAuth2User(userDTO);
         } else {
 
