@@ -49,6 +49,7 @@ dependencies:
   flutter_sound: ^9.4.6 # 음성 녹음 및 재생
   permission_handler: ^11.3.0 # 마이크 권한 부여
   dio: ^5.4.1
+  convert: ^3.1.1
 
 dev_dependencies:
   flutter_test:
