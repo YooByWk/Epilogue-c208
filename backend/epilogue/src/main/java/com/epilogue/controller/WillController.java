@@ -36,7 +36,8 @@ public class WillController {
     @Operation(summary = "유언 작성 API", description = "유언을 작성하면 블록체인을 생성한 뒤, S3에 저장합니다.")
     @ApiResponse(responseCode = "200", description = "성공")
     @PostMapping
-    public ResponseEntity<Void> createWill(@Parameter(description = "유언 작성 요청 DTO") @RequestBody WillRequestDto willRequestDto, @RequestParam MultipartFile multipartFile, Principal principal) {
+    public ResponseEntity<Void> createWill(@Parameter(description = "유언 작성 요청 DTO") @RequestBody WillRequestDto willRequestDto,
+                                           @Parameter(description = "유언 녹음 파일") @RequestParam MultipartFile multipartFile, Principal principal) {
         // 유언 관련 정보 저장
         Will will = willService.create(willRequestDto, principal);
         int willSeq = will.getWillSeq();
@@ -54,7 +55,7 @@ public class WillController {
         // 1. 프론트에 알림 (200 보내기)
 
         // 2. S3 서버 저장 (원본 파일, 초기 영수증)
-        awsS3Service.upload(multipartFile);
+        String fileUrl = awsS3Service.upload(multipartFile);
 
         return new ResponseEntity<>(HttpStatus.OK);
     }
