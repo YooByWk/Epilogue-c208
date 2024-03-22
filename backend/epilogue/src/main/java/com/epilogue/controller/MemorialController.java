@@ -13,7 +13,6 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import java.security.Principal;
-import java.util.List;
 
 @RestController
 @RequiredArgsConstructor
@@ -29,10 +28,9 @@ public class MemorialController {
     public ResponseEntity<MemorialResponseDto> ViewMemorialList(Principal principal) {
         MemorialResponseDto memorialResponseDto = new MemorialResponseDto();
 
-        if(principal == null) { // 회원
-//            String loginUserId = principal.getName();
-//            memorialResponseDto = memorialService.viewMemorialListByMember(loginUserId);
-            memorialResponseDto = memorialService.viewMemorialListByMember("1");
+        if(principal != null) { // 회원
+            String loginUserId = principal.getName();
+            memorialResponseDto = memorialService.viewMemorialListByMember(loginUserId);
         } else { // 비회원
             memorialResponseDto = memorialService.viewMemorialListByNonMember();
         }

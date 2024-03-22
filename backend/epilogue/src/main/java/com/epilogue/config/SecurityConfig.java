@@ -64,12 +64,10 @@ public class SecurityConfig {
         // (생성한 커스텀 필터, 필터를 넣을 위치)
         http.addFilterAt(new LoginFilter(authenticationManager(authenticationConfiguration), jwtUtil), LoginFilter.class);
 
-
-        //경로별 인가 작업
-        http
-                .authorizeHttpRequests((auth) -> auth
-                        .requestMatchers("/").permitAll()
-                        .anyRequest().authenticated());
+        // 경로별 인가 작업
+        http.authorizeHttpRequests((auth) -> auth
+                .requestMatchers("/swagger-ui/**", "/api-docs/**", "/api/test", "/api/authenticate", "/api", "/api/user/join/**", "/login", "/api/auth/**", "/api/oauth2/**", "/api/memorial/list").permitAll()
+                .anyRequest().authenticated());
 
         //세션 설정 : STATELESS
         http
