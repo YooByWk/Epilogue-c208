@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:frontend/main.dart';
-import 'package:frontend/screens/main/main_screen.dart';
+import 'package:frontend/screens/main/main_body_screen.dart';
 
 class WillEpitaphWidget extends StatelessWidget {
   const WillEpitaphWidget({super.key});
@@ -268,6 +268,53 @@ class TextButtonWidget extends StatelessWidget {
           ),
         ),
       ]),
+    );
+  }
+}
+
+class StopwatchWidget extends StatefulWidget {
+  @override
+  _StopwatchWidgetState createState() => _StopwatchWidgetState();
+}
+
+class _StopwatchWidgetState extends State<StopwatchWidget> {
+  Stopwatch _stopwatch = Stopwatch();
+  String _elapsedTime = '00:00:00';
+
+  void _startTimer() {
+    _stopwatch.start();
+    setState(() {
+      _elapsedTime = _formatTime(_stopwatch.elapsedMilliseconds);
+    });
+  }
+  void _stopTimer() {
+    _stopwatch.reset();
+    setState(() {
+      _elapsedTime = '00:00:00';
+    });
+  }
+
+  String _formatTime(int milliseconds) {
+    int seconds = (milliseconds / 1000).truncate();
+    int minutes = (seconds / 60).truncate();
+
+    String minutesStr = (minutes % 60).toString().padLeft(2, '0');
+    String secondsStr = (seconds % 60).toString().padLeft(2, '0');
+
+    return '$minutesStr:$secondsStr';
+  }
+
+  @override
+  void dispose() {
+    _stopwatch.stop();
+    super.dispose();
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return Text(
+      _elapsedTime,
+      style: TextStyle(fontSize: 20),
     );
   }
 }

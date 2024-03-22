@@ -1,17 +1,19 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:frontend/screens/login/login_input_field_widget.dart';
 import 'package:frontend/screens/will/recording_test.dart';
 import 'package:frontend/view_models/login_view_models/login_viewmodel.dart';
 import 'package:frontend/screens/login/social_button_widget.dart';
 import 'package:frontend/screens/signup/signup_screen.dart';
 import 'package:frontend/screens/will/will_select_type_screen.dart';
 import 'package:frontend/widgets/common_button.dart';
+import 'package:frontend/widgets/memorial_enter_button.dart';
 import 'package:provider/provider.dart';
 
 class LoginScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-    // final loginViewModel = Provider.of<LoginViewModel>(context);
+    // final viewModel = Provider.of<LoginViewModel>(context);
     final commonWidth = MediaQuery.of(context).size.width;
 
     return ChangeNotifierProvider(
@@ -28,105 +30,28 @@ class LoginScreen extends StatelessWidget {
                     children: [
                       SizedBox(
                           height: MediaQuery.of(context).size.height * 0.13),
-                      Align(
-                        alignment: Alignment.center,
-                        child: Row(
-                          mainAxisAlignment: MainAxisAlignment.center,
-                          children: [
-                            Container(
-                              width: 300,
-                              height: commonWidth * 0.31,
-                              decoration: BoxDecoration(
-                                image: DecorationImage(
-                                  image: AssetImage('assets/images/logo.png'),
-                                  fit: BoxFit.fill,
-                                ),
-                              ),
+                      Center(
+                        child: Container(
+                          margin: EdgeInsets.only(left: 15),
+                          width: 300,
+                          height: commonWidth * 0.31,
+                          decoration: BoxDecoration(
+                            image: DecorationImage(
+                              image: AssetImage('assets/images/logo.png'),
+                              fit: BoxFit.fill,
                             ),
-                          ],
+                          ),
                         ),
                       ),
                       SizedBox(height: 4.5),
-                      Container(
-                        margin: EdgeInsets.only(top: 25),
-                        width: MediaQuery.of(context).size.width * 0.8,
-                        child: Stack(
-                          alignment: Alignment.centerLeft,
-                          children: [
-                            Positioned(
-                              left: 0,
-                              child: Text(
-                                '아이디',
-                                style: TextStyle(
-                                  fontSize: 24,
-                                  fontWeight: FontWeight.bold,
-                                  color: Color(0xFFececec),
-                                ),
-                              ),
-                            ),
-                            TextFormField(
-                              style: TextStyle(
-                                color: Color(0xFFececec),
-                                fontSize: 24,
-                              ),
-                              onChanged: (value) {
-                                viewModel.setUserId(value);
-                              },
-                              decoration: InputDecoration(
-                                contentPadding: EdgeInsets.only(left: 80),
-                                enabledBorder: UnderlineInputBorder(
-                                  borderSide:
-                                      BorderSide(color: Color(0xFFececec)),
-                                ),
-                                focusedBorder: UnderlineInputBorder(
-                                  borderSide:
-                                      BorderSide(color: Color(0xFFececec)),
-                                ),
-                              ),
-                            ),
-                          ],
-                        ),
-                      ),
-                      SizedBox(height: 10),
-                      Container(
-                        width: MediaQuery.of(context).size.width * 0.8,
-                        child: Stack(
-                          alignment: Alignment.centerLeft,
-                          children: [
-                            Positioned(
-                              left: 0,
-                              child: Text(
-                                '비밀번호',
-                                style: TextStyle(
-                                  fontSize: 24,
-                                  fontWeight: FontWeight.bold,
-                                  color: Color(0xFFececec),
-                                ),
-                              ),
-                            ),
-                            TextFormField(
-                              style: TextStyle(
-                                fontSize: 24,
-                                color: Color(0xFFececec),
-                              ),
-                              decoration: InputDecoration(
-                                contentPadding: EdgeInsets.only(left: 90),
-                                enabledBorder: UnderlineInputBorder(
-                                  borderSide:
-                                      BorderSide(color: Color(0xFFececec)),
-                                ),
-                                focusedBorder: UnderlineInputBorder(
-                                  borderSide:
-                                      BorderSide(color: Color(0xFFececec)),
-                                ),
-                              ),
-                              obscureText: true,
-                              onChanged: (value) =>
-                                  viewModel.setPassword(value),
-                            ),
-                          ],
-                        ),
-                      ),
+                      LoginInputField(
+                          label: '아이디',
+                          onChanged: (value) => viewModel.setUsername(value)),
+                      LoginInputField(
+                          label: '비밀번호',
+                          padding: 100,
+                          obscureText: true,
+                          onChanged: (value) => viewModel.setPassword(value)),
                       SizedBox(height: 10),
                       Row(mainAxisAlignment: MainAxisAlignment.end, children: [
                         Padding(
@@ -146,21 +71,30 @@ class LoginScreen extends StatelessWidget {
                             )),
                       ]),
                       SizedBox(height: 20),
-                      SizedBox(
+                      viewModel.isLoading
+                          ? CircularProgressIndicator()
+                          : Container(),
+                      CommonButtonWidget(
+                        text: '로그인',
+                        textColor: Color(0xFFececec),
+                        backgroundColor: Color(0xFFADC2A9),
                         width: MediaQuery.of(context).size.width * 0.8,
                         height: 50,
-                        child: CommonButtonWidget(
-                          text: '로그인',
-                          textColor: Color(0xFFececec),
-                          backgroundColor: Color(0xFFADC2A9),
-                          width: MediaQuery.of(context).size.width * 0.8,
-                          height: 50,
-                          fontSize: 30,
-                          onPressed: () {
-                            viewModel.login();
-                            Navigator.pushNamed(context, '/home');
-                          },
-                        ),
+                        fontSize: 30,
+                        onPressed: viewModel.isLoading
+                            ? () {}
+                            : () async {
+                                await viewModel.login();
+                                if (viewModel.isSuccessful) {
+                                  Navigator.pushNamed(context, '/home');
+                                } else {
+                                  ScaffoldMessenger.of(context).showSnackBar(
+                                    SnackBar(
+                                        content: Text(viewModel.errorMessage ??
+                                            '로그인 실패')),
+                                  );
+                                }
+                              },
                       ),
                       SizedBox(height: 10),
                       Text(
@@ -220,7 +154,7 @@ class LoginScreen extends StatelessWidget {
                           Navigator.push(
                             context,
                             MaterialPageRoute(
-                              builder: (context) => Demo(),
+                              builder: (context) => RecordTest(),
                             ),
                           );
                         },
@@ -229,48 +163,11 @@ class LoginScreen extends StatelessWidget {
                     ],
                   ),
                 ),
-                Positioned(
-                    height: MediaQuery.of(context).size.height * 0.1,
-                    bottom: 0,
-                    left: 0,
-                    right: 0,
-                    child: !viewModel.isFocused
-                        ? InkWell(
-                            onTap: () {
-                              Navigator.pushNamed(context, '/memorial');
-                            },
-                            child: Container(
-                              decoration: BoxDecoration(
-                                color: Color(0xFFC0BC9C),
-                              ),
-                              child: Align(
-                                alignment: Alignment.center,
-                                child: Row(
-                                    mainAxisAlignment: MainAxisAlignment.center,
-                                    children: [
-                                      Container(
-                                        width: 50,
-                                        // height: MediaQuery.of(context).size.height * 0.1,
-                                        decoration: BoxDecoration(
-                                          image: DecorationImage(
-                                            image: AssetImage(
-                                                'assets/images/flower.png'),
-                                            fit: BoxFit.scaleDown,
-                                          ),
-                                        ),
-                                      ),
-                                      Padding(
-                                        padding: EdgeInsets.only(left: 15),
-                                      ),
-                                      Text('디지털 추모관 입장 >',
-                                          style: TextStyle(
-                                            fontSize: 30,
-                                            color: Color(0xFF121212),
-                                          ))
-                                    ]),
-                              ),
-                            ))
-                        : Container()),
+                MemorialEnterButton(
+                    isFocused: viewModel.isFocused,
+                    onTap: () {
+                      Navigator.pushNamed(context, '/memorial');
+                    })
               ],
             ),
           );

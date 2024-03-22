@@ -1,11 +1,19 @@
 import 'package:flutter/material.dart';
+import 'package:frontend/models/user_model.dart';
 import 'package:frontend/screens/login/login_screen.dart';
 import 'package:provider/provider.dart';
 import 'package:frontend/routes/main_route.dart';
 import 'package:frontend/providers/providers.dart';
+
 // import 'package:frontend/screens/login/login_viewmodel.dart';
 // import 'package:frontend/screens/memorial/memorial_main/memorial_list_viewmodel.dart';
 // import 'package:frontend/routes/memorial_route.dart';
+
+import 'package:frontend/view_models/login_view_models/login_viewmodel.dart';
+import 'package:frontend/view_models/memorial_view_models/memorial_list_viewmodel.dart';
+import 'package:frontend/view_models/main_view_models/main_viewmodel.dart';
+import 'package:frontend/view_models/signup_view_models/signup_viewmodel.dart';
+
 
 const Color themeColour1 = Color(0xFFF0EBE3);
 const Color themeColour2 = Color(0xFFE4DCCF);
@@ -17,25 +25,32 @@ const Color blackText = Color(0xFF121212);
 const Color backgroundColour = Color(0xFFF8F6F2);
 
 void main() {
-  runApp(MyApp(
-
-  ));
+  runApp(MyApp());
 }
 
 class MyApp extends StatelessWidget {
   const MyApp({Key? key}) : super(key: key);
+
   @override
   Widget build(BuildContext context) {
     return MultiProvider(
-      providers: providers, // providers 파일에서 추가하면 됩니다..
+      providers: providers,
+      // providers: [
+      //   ChangeNotifierProvider(create: (context) => LoginViewModel()),
+      //   ChangeNotifierProvider(create: (context) => MemorialListViewModel()),
+      //   // ChangeNotifierProvider(create: (context) => MemorialDetailViewModel()),
+      //   // 이하 필요한 ViewModel 들을 추가 해주면 됩니다.
+      //   ChangeNotifierProvider(create: (context) => MainViewModel()),
+      //   ChangeNotifierProvider(create: (context) => SignupViewModel()),
+      // ],
       child: MaterialApp(
-          onGenerateRoute : generateMainRoute,
-          title: 'E:pilogue',
-          theme: ThemeData(
-              primarySwatch: Colors.blueGrey,
-              visualDensity: VisualDensity.adaptivePlatformDensity),
-          home: LoginScreen() 
-          ),
+        title: 'E:pilogue',
+        theme: ThemeData(
+            primarySwatch: Colors.blueGrey,
+            visualDensity: VisualDensity.adaptivePlatformDensity),
+        home: LoginScreen(),
+        onGenerateRoute: generateMainRoute,
+      ),
     );
   }
 }

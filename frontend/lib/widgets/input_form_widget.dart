@@ -2,78 +2,75 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:frontend/main.dart';
 
-class InputFormWidget extends StatefulWidget {
-  final String text;
+class InputFormWidget extends StatelessWidget {
+  final String label;
   final Color textColor;
   final Color? backgroundColor;
   final Color? borderColor;
-  final double? width;
   final double? height;
   final double? fontSize;
-  final Border? border;
-  final BorderRadius? radius;
-  final TextEditingController controller;
+  final EdgeInsets padding;
+  final EdgeInsets contentPadding;
+  final ValueChanged<String> onChanged;
+  final bool obscureText;
   final TextInputType keyboardType;
   final TextInputAction textInputAction;
 
-  const InputFormWidget({
-    Key? key,
-    required this.text,
-    this.backgroundColor = themeColour3,
-    this.borderColor = themeColour3,
+  InputFormWidget({
+    required this.label,
     this.textColor = Colors.black,
-    required this.controller,
-    this.width = 150.0,
+    this.backgroundColor,
+    this.borderColor,
     this.height = 60.0,
     this.fontSize = 24.0,
-    this.border,
-    this.radius = const BorderRadius.all(Radius.circular(8.0)),
+    this.padding = const EdgeInsets.only(left: 10),
+    this.contentPadding = const EdgeInsets.only(bottom: 5, left: 100),
+    required this.onChanged,
+    this.obscureText = false,
     this.keyboardType = TextInputType.number,
-    this.textInputAction = TextInputAction.done,
-  }) : super(key: key);
+    this.textInputAction = TextInputAction.next,
+  });
 
-  @override
-  _InputFormWidgetState createState() => _InputFormWidgetState();
-}
-
-class _InputFormWidgetState extends State<InputFormWidget> {
   @override
   Widget build(BuildContext context) {
     return Container(
-        width: widget.width,
-        height: widget.height,
-        alignment: Alignment.centerLeft,
+        width: MediaQuery.of(context).size.width * 0.9,
+        height: height,
+        padding: EdgeInsets.symmetric(horizontal: 5),
         decoration: BoxDecoration(
-          color: widget.backgroundColor ?? Colors.transparent,
-          borderRadius: widget.radius,
+          color: backgroundColor ?? Colors.transparent,
           border: Border.all(
-            color: widget.borderColor ?? themeColour3,
+            color: borderColor ?? themeColour3,
           ),
+          borderRadius: BorderRadius.circular(10)
         ),
         child: Stack(
           alignment: Alignment.centerLeft,
           children: [
-            Padding(
-              padding: const EdgeInsets.only(left: 20.0),
-              child: Text(
-                widget.text,
-                style: TextStyle(
-                  fontSize: widget.fontSize,
-                  color: widget.textColor,
-                ),
-              ),
-            ),
+            Positioned(
+                left: 0,
+                child: Container(
+                  padding: padding,
+                  child: Text(
+                    label,
+                    style: TextStyle(
+                      fontSize: fontSize,
+                      color: textColor,
+                    ),
+                  ),
+                )),
             TextFormField(
-              controller: widget.controller,
-              keyboardType: widget.keyboardType,
-              textInputAction: widget.textInputAction,
+              onChanged: onChanged,
+              obscureText: obscureText,
+              keyboardType: keyboardType,
+              textInputAction: textInputAction,
               style: TextStyle(
-                color: themeColour5,
-                fontSize: widget.fontSize,
+                color: textColor,
+                fontSize: fontSize,
               ),
               decoration: InputDecoration(
                 border: InputBorder.none,
-                contentPadding: EdgeInsets.only(left: 130, bottom: 5),
+                contentPadding: contentPadding,
               ),
             ),
           ],

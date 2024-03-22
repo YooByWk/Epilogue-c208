@@ -4,13 +4,13 @@ import 'package:frontend/screens/block_chain_test.dart';
 import 'package:frontend/screens/login/login_screen.dart';
 import 'package:frontend/screens/memorial/memorial_detail/memorial_detail_screen.dart';
 import 'package:frontend/screens/memorial/memorial_main/memorial_screen.dart';
-import 'package:frontend/widgets/custom_bottom_navigation.dart';
+import 'package:frontend/screens/main/main_screen.dart';
 import 'package:frontend/screens/letter/letter_screen.dart';
 
 final Map<String, WidgetBuilder> mainRoutes = {
   '/login': (context) => LoginScreen(),
   '/memorial': (context) => MemorialScreen(),
-  '/home': (context) => CustomBottomNavigation(),
+  '/home': (context) => MainScreen(),
   '/letter': (context) => LetterScreen(),
 };
 
@@ -23,7 +23,7 @@ Route<dynamic> generateMainRoute(RouteSettings settings) {
       return MaterialPageRoute(builder: (context) => MemorialScreen());
 
     case '/home':
-      return MaterialPageRoute(builder: (context) => CustomBottomNavigation());
+      return MaterialPageRoute(builder: (context) => MainScreen());
 
     case '/letter':
       return MaterialPageRoute(builder: (context) => LetterScreen());
