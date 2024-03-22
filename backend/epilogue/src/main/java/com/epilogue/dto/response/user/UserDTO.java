@@ -4,9 +4,11 @@ import com.epilogue.domain.user.User;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
+import lombok.ToString;
 
 @Getter
 @Setter
+@ToString
 @NoArgsConstructor
 public class UserDTO {
 
@@ -14,6 +16,8 @@ public class UserDTO {
     private String userId;
     private String mobile;
     private String birth;
+
+    private String role;
 
     public UserDTO(User user) {
         this.name = user.getName();

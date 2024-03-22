@@ -15,7 +15,7 @@ public class FavoriteRepositoryImpl implements FavoriteRepositoryCustom {
 
     @Override
     public List<Favorite> findListById(int userSeq) {
-        return entityManager.createQuery("SELECT f FROM Favorite f WHERE f.userSeq = :userSeq", Favorite.class)
+        return entityManager.createQuery("SELECT f FROM Favorite f JOIN FETCH f.memorial WHERE f.userSeq = :userSeq ORDER BY f.memorial.goneDate DESC", Favorite.class)
                 .setParameter("userSeq", userSeq)
                 .getResultList();
     }

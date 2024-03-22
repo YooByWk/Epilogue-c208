@@ -32,12 +32,13 @@ public class MemorialService {
         List<GraveDto> favoriteMemorialList = new ArrayList<>();
         List<GraveDto> memorialList = new ArrayList<>();
 
-        // 내가 즐겨찾기한 목록
+        // 1. 내가 즐겨찾기한 목록
         User loginUser = userRepository.findByUserId(loginUserId);
         int loginUserSeq = loginUser.getUserSeq();
         List<Favorite> favorites = favoriteRepository.findListById(loginUserSeq); // 내가 즐겨찾기 한 목록
         for(Favorite favorite : favorites) {
             GraveDto graveDto = GraveDto.builder()
+                    .graveSeq(favorite.getMemorial().getMemorialSeq())
                     .name(favorite.getMemorial().getUser().getName())
                     .birth(favorite.getMemorial().getUser().getBirth())
                     .goneDate(favorite.getMemorial().getGoneDate())
@@ -48,18 +49,11 @@ public class MemorialService {
             favoriteMemorialList.add(graveDto);
         }
 
-        // 즐겨찾기 목록 제외한 최신순 목록
-        List<Memorial> memorials = memorialRepository.findAll();
+        // 2. 즐겨찾기 목록 제외한 최신순 목록
+        List<Memorial> memorials = memorialRepository.findAllByDate();
         for(Memorial memorial : memorials) {
-            // 회원의 최신순 목록에 즐겨찾기 목록은 제외
-            for(Favorite favorite : favorites) {
-                if(memorial.getMemorialSeq() == favorite.getMemorial().getMemorialSeq()) {
-//                    System.out.println("memorial.getMemorialSeq() : " + memorial.getMemorialSeq());
-//                    System.out.println("favorite.getMemorial().getMemorialSeq() : " + favorite.getMemorial().getMemorialSeq());
-                    break;
-                }
-            }
             GraveDto graveDto = GraveDto.builder()
+                    .graveSeq(memorial.getMemorialSeq())
                     .name(memorial.getUser().getName())
                     .birth(memorial.getUser().getBirth())
                     .goneDate(memorial.getGoneDate())
@@ -68,6 +62,14 @@ public class MemorialService {
                     .build();
 
             memorialList.add(graveDto);
+        }
+
+        for(int i=0; i<memorialList.size(); i++) {
+            for(int j=0; j<favoriteMemorialList.size(); j++) {
+                if(memorialList.get(i).getGraveSeq() == favoriteMemorialList.get(j).getGraveSeq()) {
+                    memorialList.remove(i);
+                }
+            }
         }
 
         dto = MemorialResponseDto.builder()
@@ -87,6 +89,7 @@ public class MemorialService {
         List<Memorial> list = memorialRepository.findAllByDate();
         for(Memorial memorial : list) {
             GraveDto graveDto = GraveDto.builder()
+                    .graveSeq(memorial.getMemorialSeq())
                     .name(memorial.getUser().getName())
                     .birth(memorial.getUser().getBirth())
                     .goneDate(memorial.getGoneDate())

@@ -8,6 +8,9 @@ import lombok.Getter;
 @Getter
 public class GraveDto {
 
+    @Schema(description = "묘비 식별키")
+    private int graveSeq;
+
     @Schema(description = "고인 이름")
     private String name;
 
