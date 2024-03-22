@@ -1,5 +1,6 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/widgets.dart';
 import 'package:frontend/main.dart';
 import 'package:flutter_sound/flutter_sound.dart';
 import 'package:frontend/screens/will/will_viewer_screen.dart';
@@ -18,18 +19,39 @@ class RecordTest extends StatefulWidget {
 
 class _RecordTestState extends State<RecordTest> {
   Codec _codec = Codec.aacMP4;
-  String _mPath = 'tau_file.mp4';
+  String _mPath = 'will.mp4';
   FlutterSoundPlayer? _mPlayer = FlutterSoundPlayer();
   FlutterSoundRecorder? _mRecorder = FlutterSoundRecorder();
   bool _mPlayerIsInited = false;
   bool _mRecorderIsInited = false;
   bool _mplaybackReady = false;
 
+  // 첫 번째 play 하는 건지, 일시정지 및 다시 재생 하는 건지 판단
+  bool _isPlaying = false;
+
+  // 전체 재생 시간과 현재 재생 위치
+  double _currentPosition = 0;
+  double _currentDuration = 0;
+
+  // 00:00의 형식으로 맞추기 위한 함수
+  String _formatDuration(Duration duration) {
+    String minutes = (duration.inMinutes % 60).toString().padLeft(2, '0');
+    String seconds = (duration.inSeconds % 60).toString().padLeft(2, '0');
+    return '$minutes:$seconds';
+  }
+
   @override
   void initState() {
     _mPlayer!.openPlayer().then((value) {
       setState(() {
         _mPlayerIsInited = true;
+        _mPlayer!.setSubscriptionDuration(Duration(milliseconds: 100));
+        _mPlayer!.onProgress!.listen((e) {
+          setState(() {
+            _currentPosition = e.position.inMilliseconds.toDouble();
+            _currentDuration = e.duration.inMilliseconds.toDouble();
+          });
+        });
       });
     });
 
@@ -38,6 +60,8 @@ class _RecordTestState extends State<RecordTest> {
         _mRecorderIsInited = true;
       });
     });
+
+    _mRecorder!.setSubscriptionDuration(Duration(milliseconds: 1));
     super.initState();
   }
 
@@ -61,31 +85,12 @@ class _RecordTestState extends State<RecordTest> {
     await _mRecorder!.openRecorder();
     if (!await _mRecorder!.isEncoderSupported(_codec) && kIsWeb) {
       _codec = Codec.opusWebM;
-      _mPath = 'tau_file.webm';
+      _mPath = 'will.webm';
       if (!await _mRecorder!.isEncoderSupported(_codec) && kIsWeb) {
         _mRecorderIsInited = true;
         return;
       }
     }
-    // final session = await AudioSession.instance;
-    // await session.configure(AudioSessionConfiguration(
-    //   avAudioSessionCategory: AVAudioSessionCategory.playAndRecord,
-    //   avAudioSessionCategoryOptions:
-    //   AVAudioSessionCategoryOptions.allowBluetooth |
-    //   AVAudioSessionCategoryOptions.defaultToSpeaker,
-    //   avAudioSessionMode: AVAudioSessionMode.spokenAudio,
-    //   avAudioSessionRouteSharingPolicy:
-    //   AVAudioSessionRouteSharingPolicy.defaultPolicy,
-    //   avAudioSessionSetActiveOptions: AVAudioSessionSetActiveOptions.none,
-    //   androidAudioAttributes: const AndroidAudioAttributes(
-    //     contentType: AndroidAudioContentType.speech,
-    //     flags: AndroidAudioFlags.none,
-    //     usage: AndroidAudioUsage.voiceCommunication,
-    //   ),
-    //   androidAudioFocusGainType: AndroidAudioFocusGainType.gain,
-    //   androidWillPauseWhenDucked: true,
-    // ));
-
     _mRecorderIsInited = true;
   }
 
@@ -113,42 +118,71 @@ class _RecordTestState extends State<RecordTest> {
   }
 
   void play() {
-    assert(_mPlayerIsInited &&
-        _mplaybackReady &&
-        _mRecorder!.isStopped &&
-        _mPlayer!.isStopped);
+    assert(_mPlayerIsInited && _mplaybackReady && _mRecorder!.isStopped);
     _mPlayer!
         .startPlayer(
-            fromURI: _mPath,
-            //codec: kIsWeb ? Codec.opusWebM : Codec.aacADTS,
-            whenFinished: () {
-              setState(() {});
-            })
+      fromURI: _mPath,
+      whenFinished: () {
+        setState(() {
+          _currentPosition = 0;
+        });
+      },
+    )
         .then((value) {
-      setState(() {});
+      setState(() {
+        _isPlaying = true;
+      });
     });
   }
 
-  void stopPlayer() {
-    _mPlayer!.stopPlayer().then((value) {
-      setState(() {});
-    });
+  void pauseResumePlayer() async {
+    try {
+      if (_mPlayer!.isPlaying) {
+        await _mPlayer!.pausePlayer();
+        setState(() {
+          _isPlaying = true;
+          debugPrint('$_isPlaying');
+        });
+      } else {
+        await _mPlayer!.resumePlayer();
+        setState(() {
+          _isPlaying = true;
+          debugPrint('$_isPlaying');
+        });
+      }
+    } on Exception catch (err) {
+      _mPlayer!.logger.e('error: $err');
+    }
   }
 
 // ----------------------------- UI --------------------------------------------
 
   _Fn? getRecorderFn() {
-    if (!_mRecorderIsInited || !_mPlayer!.isStopped) {
+    if (!_mRecorderIsInited) {
       return null;
     }
     return _mRecorder!.isStopped ? record : stopRecorder;
+  }
+
+  _Fn? getPauseResumeFn() {
+    if (_mPlayer!.isPaused || _mPlayer!.isPlaying) {
+      return pauseResumePlayer;
+    }
+    return null;
   }
 
   _Fn? getPlaybackFn() {
     if (!_mPlayerIsInited || !_mplaybackReady || !_mRecorder!.isStopped) {
       return null;
     }
-    return _mPlayer!.isStopped ? play : stopPlayer;
+
+    if (_isPlaying && _currentPosition == 0) {
+      return play;
+    } if (_isPlaying) {
+      return pauseResumePlayer;
+    } else {
+      return play;
+    }
   }
 
   @override
@@ -157,120 +191,105 @@ class _RecordTestState extends State<RecordTest> {
       return Column(
         children: [
           Center(
-            child: Ink(
-              width: 100,
-              height: 100,
-              decoration: const ShapeDecoration(
-                shape: CircleBorder(),
-                color: themeColour3,
-              ),
-              child: _mRecorder!.isRecording
-                  ? IconButton(
-                      onPressed: getRecorderFn(),
-                      icon: const Icon(
-                        Icons.keyboard_voice_outlined,
-                        color: themeColour5,
-                        size: 50,
-                      ),
-                    )
-                  : IconButton(
-                      onPressed: getRecorderFn(),
-                      icon: const Icon(
-                        Icons.keyboard_voice,
-                        color: themeColour5,
-                        size: 50,
-                      ),
-                    ),
+            child: Column(
+              children: [
+                Ink(
+                  width: 100,
+                  height: 100,
+                  decoration: const ShapeDecoration(
+                    shape: CircleBorder(),
+                    color: themeColour3,
+                  ),
+                  child: _mRecorder!.isRecording
+                      ? IconButton(
+                          onPressed: getRecorderFn(),
+                          icon: const Icon(
+                            Icons.keyboard_voice_outlined,
+                            color: themeColour5,
+                            size: 50,
+                          ),
+                        )
+                      : IconButton(
+                          onPressed: getRecorderFn(),
+                          icon: const Icon(
+                            Icons.keyboard_voice,
+                            color: themeColour5,
+                            size: 50,
+                          ),
+                        ),
+                ),
+                Text('Current Position: $_currentPosition'),
+              ],
             ),
           ),
           Center(
-            child:
-              _mPlayer!.isPlaying
-                  ? IconButton(
-                onPressed: getPlaybackFn(),
-                icon: const Icon(
-                  Icons.stop_circle_rounded,
-                  color: themeColour5,
-                  size: 100,
-                ),
-              )
-                  : IconButton(
-                onPressed: getPlaybackFn(),
-                icon: const Icon(
-                  Icons.play_circle_fill_rounded,
-                  color: themeColour5,
-                  size: 100,
-                ),
-              ),
-            ),
+            child: _mPlayer!.isPlaying
+                ? Column(
+                    children: [
+                      IconButton(
+                        onPressed: getPauseResumeFn(),
+                        icon: const Icon(
+                          Icons.pause_circle_filled_rounded,
+                          color: themeColour5,
+                          size: 100,
+                        ),
+                      ),
+                      Slider(
+                        value: _currentPosition,
+                        min: 0,
+                        max: _currentDuration,
+                        onChanged: (value) {
+                          // 재생 위치 조정
+                          _mPlayer!.seekToPlayer(
+                              Duration(milliseconds: value.toInt()));
+                        },
+                      ),
+                      Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        children: [
+                          Text(_formatDuration(Duration(
+                              milliseconds: _currentPosition.toInt()))),
+                          Text(_formatDuration(Duration(
+                              milliseconds: _currentDuration.toInt()))),
+                        ],
+                      ),
+                    ],
+                  )
+                : Column(
+                    children: [
+                      IconButton(
+                        onPressed: getPlaybackFn(),
+                        icon: const Icon(
+                          Icons.play_circle_fill_rounded,
+                          color: themeColour5,
+                          size: 100,
+                        ),
+                      ),
+                      Slider(
+                        value: _currentPosition,
+                        min: 0,
+                        max: _currentDuration,
+                        onChanged: (value) {
+                          // 재생 위치 조정
+                          _mPlayer!.seekToPlayer(
+                              Duration(milliseconds: value.toInt()));
+                        },
+                      ),
+                      Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        children: [
+                          Text(_formatDuration(Duration(
+                              milliseconds: _currentPosition.toInt()))),
+                          Text(_formatDuration(Duration(
+                              milliseconds: _currentDuration.toInt()))),
+                        ],
+                      ),
+                    ],
+                  ),
+          ),
         ],
       );
     }
-
-    // @override
-    // Widget build(BuildContext context) {
-    //   Widget makeBody() {
-    //     return Column(
-    //       children: [
-    //         Container(
-    //           margin: const EdgeInsets.all(3),
-    //           padding: const EdgeInsets.all(3),
-    //           height: 80,
-    //           width: double.infinity,
-    //           alignment: Alignment.center,
-    //           decoration: BoxDecoration(
-    //             color: const Color(0xFFFAF0E6),
-    //             border: Border.all(
-    //               color: Colors.indigo,
-    //               width: 3,
-    //             ),
-    //           ),
-    //           child: Row(children: [
-    //             ElevatedButton(
-    //               onPressed: getRecorderFn(),
-    //               //color: Colors.white,
-    //               //disabledColor: Colors.grey,
-    //               child: Text(_mRecorder!.isRecording ? 'Stop' : 'Record'),
-    //             ),
-    //             const SizedBox(
-    //               width: 20,
-    //             ),
-    //             Text(_mRecorder!.isRecording
-    //                 ? 'Recording in progress'
-    //                 : 'Recorder is stopped'),
-    //           ]),
-    //         ),
-    //         Container(
-    //           margin: const EdgeInsets.all(3),
-    //           padding: const EdgeInsets.all(3),
-    //           height: 80,
-    //           width: double.infinity,
-    //           alignment: Alignment.center,
-    //           decoration: BoxDecoration(
-    //             color: const Color(0xFFFAF0E6),
-    //             border: Border.all(
-    //               color: Colors.indigo,
-    //               width: 3,
-    //             ),
-    //           ),
-    //           child: Row(children: [
-    //             ElevatedButton(
-    //               onPressed: getPlaybackFn(),
-    //               //color: Colors.white,
-    //               //disabledColor: Colors.grey,
-    //               child: Text(_mPlayer!.isPlaying ? 'Stop' : 'Play'),
-    //             ),
-    //             const SizedBox(
-    //               width: 20,
-    //             ),
-    //             Text(_mPlayer!.isPlaying
-    //                 ? 'Playback in progress'
-    //                 : 'Player is stopped'),
-    //           ]),
-    //         ),
-    //       ],
-    //     );
-    //   }
 
     return Scaffold(
       appBar: AppBar(
