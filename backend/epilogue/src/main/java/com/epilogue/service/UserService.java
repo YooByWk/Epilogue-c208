@@ -7,18 +7,21 @@ import com.epilogue.dto.response.user.UserDTO;
 import com.epilogue.repository.user.UserRepository;
 import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
 @Service
 @RequiredArgsConstructor
 public class UserService {
+
     private final UserRepository userRepository;
+    private final BCryptPasswordEncoder bCryptPasswordEncoder;
 
     @Transactional
     public void join(JoinRequestDto joinRequestDto) {
         User user = User.builder()
                 .userId(joinRequestDto.getUserId())
-                .password(joinRequestDto.getPassword())
+                .password(bCryptPasswordEncoder.encode(joinRequestDto.getPassword()))
                 .name(joinRequestDto.getName())
                 .mobile(joinRequestDto.getMobile())
                 .birth(joinRequestDto.getBirth())
