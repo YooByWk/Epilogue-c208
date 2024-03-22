@@ -3,6 +3,7 @@ package com.epilogue.service;
 import com.epilogue.domain.user.User;
 import com.epilogue.dto.request.user.JoinRequestDto;
 import com.epilogue.dto.request.user.UpdateInfoRequestDto;
+import com.epilogue.dto.request.user.UserStatusRepository;
 import com.epilogue.dto.response.user.UserDTO;
 import com.epilogue.repository.user.UserRepository;
 import jakarta.transaction.Transactional;

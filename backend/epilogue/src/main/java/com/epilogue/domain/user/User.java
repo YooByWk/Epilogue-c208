@@ -5,6 +5,7 @@ import io.swagger.v3.oas.annotations.media.Schema;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotNull;
 import lombok.*;
+import org.hibernate.annotations.ColumnDefault;
 
 @Entity
 @Builder
@@ -44,6 +45,7 @@ public class User {
     @OneToOne
     private Will will;
 
+    @ColumnDefault("'LIVE'")
     @Schema(description = "회원 상태")
     @OneToOne
     private UserStatus userStatus;
