@@ -25,6 +25,8 @@ class _RecordTestState extends State<RecordTest> {
   bool _mPlayerIsInited = false;
   bool _mRecorderIsInited = false;
   bool _mplaybackReady = false;
+  Stopwatch _stopwatch = Stopwatch();
+  String _recordTime = '00:00';
 
   // 첫 번째 play 하는 건지, 일시정지 및 다시 재생 하는 건지 판단
   bool _isPlaying = false;
@@ -32,6 +34,7 @@ class _RecordTestState extends State<RecordTest> {
   // 전체 재생 시간과 현재 재생 위치
   double _currentPosition = 0;
   double _currentDuration = 0;
+  double _currentRecord = 0;
 
   // 00:00의 형식으로 맞추기 위한 함수
   String _formatDuration(Duration duration) {
@@ -40,17 +43,30 @@ class _RecordTestState extends State<RecordTest> {
     return '$minutes:$seconds';
   }
 
+  String _formatTime(int milliseconds) {
+    int seconds = (milliseconds / 1000).truncate();
+    int minutes = (seconds / 60).truncate();
+
+    String minutesStr = (minutes % 60).toString().padLeft(2, '0');
+    String secondsStr = (seconds % 60).toString().padLeft(2, '0');
+
+    return '$minutesStr:$secondsStr';
+  }
   @override
   void initState() {
     _mPlayer!.openPlayer().then((value) {
       setState(() {
         _mPlayerIsInited = true;
         _mPlayer!.setSubscriptionDuration(Duration(milliseconds: 100));
+        _mRecorder!.setSubscriptionDuration(Duration(milliseconds: 100));
         _mPlayer!.onProgress!.listen((e) {
           setState(() {
             _currentPosition = e.position.inMilliseconds.toDouble();
             _currentDuration = e.duration.inMilliseconds.toDouble();
           });
+        });
+        _mRecorder!.onProgress!.listen((e) {
+          _currentRecord = e.duration.inMilliseconds.toDouble();
         });
       });
     });
@@ -106,6 +122,10 @@ class _RecordTestState extends State<RecordTest> {
         .then((value) {
       setState(() {});
     });
+    _stopwatch.start();
+    setState(() {
+      _recordTime = _formatTime(_stopwatch.elapsedMilliseconds);
+    });
   }
 
   void stopRecorder() async {
@@ -115,6 +135,7 @@ class _RecordTestState extends State<RecordTest> {
         _mplaybackReady = true;
       });
     });
+    _stopwatch.reset();
   }
 
   void play() {
@@ -141,7 +162,6 @@ class _RecordTestState extends State<RecordTest> {
         await _mPlayer!.pausePlayer();
         setState(() {
           _isPlaying = true;
-          debugPrint('$_isPlaying');
         });
       } else {
         await _mPlayer!.resumePlayer();
@@ -218,7 +238,7 @@ class _RecordTestState extends State<RecordTest> {
                           ),
                         ),
                 ),
-                Text('Current Position: $_currentPosition'),
+                Text(_recordTime),
               ],
             ),
           ),
