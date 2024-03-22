@@ -24,7 +24,11 @@ public class AwsS3Service {
     private final WillRepository willRepository;
 
     @Value("${cloud.aws.s3.bucketName}")
-    private String bucketName = "epilouge-bucket";
+    private String bucketName;
+    @Value("${cloud.aws.s3.photoBucketName}")
+    private String photoBucketName;
+    @Value("${cloud.aws.s3.videoBucketName}")
+    private String videoBucketName;
 
     public void upload(MultipartFile mp4, Principal principal) {
         try {
@@ -44,6 +48,14 @@ public class AwsS3Service {
             e.printStackTrace();
         }
     }
+
+    // 사진 불러오기
+    // 사진 불러오기
+    public String getPhotoFromS3(String fileName) {
+        return amazonS3.getUrl(photoBucketName, fileName).toString();
+    }
+
+
 
 //    private String getKeyFromMp4Address(String mp4Address){
 //        try {

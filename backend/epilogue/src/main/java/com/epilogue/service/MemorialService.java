@@ -4,6 +4,7 @@ import com.epilogue.domain.memorial.Favorite;
 import com.epilogue.domain.memorial.Memorial;
 import com.epilogue.domain.user.User;
 import com.epilogue.dto.response.memorial.GraveDto;
+import com.epilogue.dto.response.memorial.GraveResponseDto;
 import com.epilogue.dto.response.memorial.MemorialResponseDto;
 import com.epilogue.repository.memorial.MemorialRepository;
 import com.epilogue.repository.memorial.favorite.FavoriteRepository;
@@ -24,6 +25,7 @@ public class MemorialService {
     private final MemorialRepository memorialRepository;
     private final FavoriteRepository favoriteRepository;
     private final UserRepository userRepository;
+    private final AwsS3Service awsS3Service;
 
     // 회원 (즐겨찾기 목록 포함)
     public MemorialResponseDto viewMemorialListByMember(String loginUserId) {
@@ -94,7 +96,7 @@ public class MemorialService {
                     .birth(memorial.getUser().getBirth())
                     .goneDate(memorial.getGoneDate())
                     .graveName(memorial.getGraveName())
-                    .graveImg(memorial.getGraveImg())
+                    .graveImg(awsS3Service.getPhotoFromS3(memorial.getGraveImg()))
                     .build();
 
             memorialList.add(graveDto);
@@ -105,6 +107,25 @@ public class MemorialService {
                 .build();
 
         return dto;
+    }
+
+    public GraveResponseDto viewMemorial(int memorialSeq) {
+        Optional<Memorial> memorial = memorialRepository.findById(memorialSeq);
+
+        GraveResponseDto graveResponseDto = GraveResponseDto.builder()
+                .graveSeq(memorialSeq)
+                .name(memorial.get().getUser().getName())
+                .birth(memorial.get().getUser().getBirth())
+                .goneDate(memorial.get().getGoneDate())
+                .graveImg(memorial.get().getGraveImg())
+                // 추가 작성하기---------------------------------------
+                .build();
+
+
+
+
+
+        return graveResponseDto;
     }
 
 }
