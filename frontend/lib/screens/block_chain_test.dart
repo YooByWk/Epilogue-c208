@@ -9,7 +9,7 @@ class BlockChainTest extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return ChangeNotifierProvider(
-        create: (context) => BlockChainViewModel(BlockChainModel()),
+        create: (context) => BlockChainViewModel(BlockChainModel(), ),
         child: Consumer<BlockChainViewModel>(
           builder: (context, viewModel, child) {
             return Scaffold(
@@ -27,10 +27,17 @@ class BlockChainTest extends StatelessWidget {
                       },
                       child: Text('컨트랙트 배포'),
                     ),
+                    Text('값: ${viewModel.num}'),
+                    TextFormField(
+                      decoration: InputDecoration(labelText: '값 입력'),
+                      onChanged: (value) {viewModel.setNum(int.parse(value));
+                      debugPrint('입력값: $value');}
+                    ),
                     ElevatedButton(
                       onPressed: () async {
-                        final response = await viewModel.sendTransaction('store', [BigInt.from(35)]);
+                        final response = await viewModel.sendTransaction('store', [BigInt.from(viewModel.num *3)]);
                         debugPrint('store 함수 호출 결과: $response');
+                        
                       },
                       child: Text('store 함수 호출'),
                     ),
