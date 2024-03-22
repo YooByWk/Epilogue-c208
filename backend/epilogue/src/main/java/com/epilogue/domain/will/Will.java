@@ -64,8 +64,8 @@ public class Will {
 
     public void updateAdditionalInformation(boolean sustainCare, String funeralType, String graveType, boolean organDonation) {
         this.sustainCare = sustainCare;
-        this.funeralType = funeralType;
         this.graveType = graveType;
+        this.funeralType = funeralType;
         this.organDonation = organDonation;
     }
 }

@@ -36,7 +36,7 @@ public class WillController {
 
     @Operation(summary = "유언 파일 및 증인 저장 API", description = "유언 파일 및 증인을 저장합니다.")
     @ApiResponse(responseCode = "200", description = "성공")
-    @PostMapping(value = "/willAndWitness", consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
+    @PostMapping(value = "/willAndWitness")
     public ResponseEntity<Void> saveWillAndWitness(@Parameter(description = "유언 파일 및 증인 목록 요청 DTO") @ModelAttribute WillAndWitnessRequestDto willAndWitnessRequestDto, Principal principal) {
         // 임의 유언 생성
         Will will = new Will();
