@@ -17,6 +17,7 @@ import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
+import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -35,8 +36,8 @@ public class WillController {
 
     @Operation(summary = "유언 파일 및 증인 저장 API", description = "유언 파일 및 증인을 저장합니다.")
     @ApiResponse(responseCode = "200", description = "성공")
-    @PostMapping("/willAndWitness")
-    public ResponseEntity<Void> saveWillAndWitness(@Parameter(description = "유언 파일 및 증인 목록 요청 DTO") WillAndWitnessRequestDto willAndWitnessRequestDto, Principal principal) {
+    @PostMapping(value = "/willAndWitness", consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
+    public ResponseEntity<Void> saveWillAndWitness(@Parameter(description = "유언 파일 및 증인 목록 요청 DTO") @RequestPart WillAndWitnessRequestDto willAndWitnessRequestDto, Principal principal) {
         // 임의 유언 생성
         Will will = new Will();
 
@@ -47,11 +48,11 @@ public class WillController {
 
         // 블록체인 생성이 성공적으로 됐을 경우
 
-        // 1. 프론트에 알림 (200 보내기)
 
-        // 2. 유언 파일 S3 저장 (원본 파일, 초기 영수증)
+        // 유언 파일 S3 저장 (원본 파일, 초기 영수증)
         awsS3Service.upload(willAndWitnessRequestDto.getMultipartFile(), principal);
 
+        // 프론트에 알림 (200 보내기)
         return new ResponseEntity<>(HttpStatus.OK);
     }
 
