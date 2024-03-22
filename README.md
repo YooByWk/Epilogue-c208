@@ -72,11 +72,6 @@ $ sudo docker run -d -p 9999:8080 -v /home/ubuntu/jenkins-data:/var/jenkins_home
 
 `9000:8080`으로 A 컨테이너를 만들었을 경우 `9001:8080`으로 B 컨테이너를 만들어도 된다는 뜻이다!
 
-![Untitled](https://prod-files-secure.s3.us-west-2.amazonaws.com/e5569e3a-ec9d-4f85-957c-fbb39de77650/b8bfb482-bd0c-474d-9827-e8b9df81b631/Untitled.png)
-
-`http://<EC2 도메인네임>:9999`으로 접속하면 다음과 같은 화면이 뜬다.
-
-![Untitled](https://prod-files-secure.s3.us-west-2.amazonaws.com/e5569e3a-ec9d-4f85-957c-fbb39de77650/15179e79-8efe-4ccf-81e7-6bf3a0cc6f13/Untitled.png)
 
 - 일부 환경 설정 변경을 위해 docker container를 종료하고 상태 확인
 
@@ -112,8 +107,6 @@ $ sudo sed -i 's#https://updates.jenkins.io/update-center.json#https://raw.githu
 `http://<EC2 도메인네임>:설정한젠킨스포트`로 접속
 
 ⇒ `http://j10c208.p.ssafy.io:9999`
-
-![Untitled](https://prod-files-secure.s3.us-west-2.amazonaws.com/e5569e3a-ec9d-4f85-957c-fbb39de77650/76ec92f0-210c-49bc-989e-fd17e90479c1/Untitled.png)
 
 - `sudo docker logs jenkins` 입력 시 나오는 비밀번호 확인! (★★ 따로 적어놓기 : `9d333402e6bc4fa9b6c667eb53b65a10`)
 
