@@ -57,7 +57,7 @@ public class SecurityConfig {
 
         //JWTFilter 추가
         http
-                .addFilterAfter(new JWTFilter(jwtUtil), UsernamePasswordAuthenticationFilter.class);
+                .addFilterBefore(new JWTFilter(jwtUtil), UsernamePasswordAuthenticationFilter.class);
 
         //oauth2
         http
@@ -72,7 +72,7 @@ public class SecurityConfig {
 
         // 경로별 인가 작업
         http.authorizeHttpRequests((auth) -> auth
-                .requestMatchers("/swagger-ui/**", "/api-docs/**", "/api/test", "/api/authenticate", "/api", "/api/user/join/**", "/login", "/api/auth/**", "/api/oauth2/**", "/api/memorial/list", "/api/will").permitAll()
+                .requestMatchers("/**", "/swagger-ui/**", "/api-docs/**", "/api/test", "/api/authenticate", "/api", "/api/user/join/**", "/login", "/api/auth/**", "/api/oauth2/**", "/api/memorial/list").permitAll()
                 .anyRequest().authenticated());
 
         //세션 설정 : STATELESS
