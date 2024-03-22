@@ -5,15 +5,8 @@ import 'package:frontend/widgets/common_button.dart';
 import 'package:frontend/widgets/common_text_widget.dart';
 import 'package:frontend/widgets/input_form_widget.dart';
 
-class MypageModifyInfoScreen extends StatefulWidget {
+class MypageModifyInfoScreen extends StatelessWidget {
   const MypageModifyInfoScreen({super.key});
-
-  @override
-  State<MypageModifyInfoScreen> createState() => _MypageModifyInfoScreenState();
-}
-
-class _MypageModifyInfoScreenState extends State<MypageModifyInfoScreen> {
-  TextEditingController _phonenumController = TextEditingController();
 
   @override
   Widget build(BuildContext context) {
@@ -88,12 +81,11 @@ class _MypageModifyInfoScreenState extends State<MypageModifyInfoScreen> {
               mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                 children: [
               InputFormWidget(
-                controller: _phonenumController,
+                onChanged: (value) => (),
                 keyboardType: TextInputType.number,
-                text: '휴대폰 번호',
+                label: '휴대폰 번호',
                 borderColor: themeColour3,
                 textColor: themeColour3,
-                width: MediaQuery.of(context).size.width * 0.7,
                 backgroundColor: Colors.white,
               ),
               CommonButtonWidget(

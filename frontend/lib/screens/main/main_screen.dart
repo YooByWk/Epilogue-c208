@@ -1,85 +1,69 @@
 import 'package:flutter/material.dart';
 import 'package:frontend/main.dart';
-import 'package:frontend/widgets/main_willicon_widget.dart';
-import 'package:frontend/widgets/main_description.dart';
-import 'package:frontend/widgets/main_banner.dart';
+import 'package:frontend/screens/main/main_body_screen.dart';
+import 'package:frontend/screens/memorial/memorial_main/memorial_screen.dart';
+import 'package:frontend/screens/mypage/mypage_screen.dart';
+import 'package:frontend/view_models/main_view_models/main_viewmodel.dart';
+import 'package:provider/provider.dart';
 
+class MainScreen extends StatefulWidget {
+  MainScreen({super.key});
 
-class MainScreen extends StatelessWidget {
-  const MainScreen({super.key});
+  @override
+  _MainScreenState createState() => _MainScreenState();
+}
+
+class _MainScreenState extends State<MainScreen> {
 
   @override
   Widget build(BuildContext context) {
+    final MainViewModel viewModel = Provider.of<MainViewModel>(context);
+
     return Scaffold(
-      appBar: AppBar(
-        title: Image.asset(
-          'assets/images/logo_small.png',
-          height: 50,
-        ),
-        automaticallyImplyLeading: false,
+      body: IndexedStack(
+        index: viewModel.currentIndex,
+        children: [
+          MainBodyScreen(),
+          MemorialScreen(),
+          MypageScreen(),
+        ],
       ),
-      body: Center(
-        child: SingleChildScrollView(
-          child: Column(
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: [
-              MainBannerWidget(),
-              SizedBox(height: 30),
-              MainDescriptionWidget(
-                text: '만들어진 유언장',
-                fontSize: 24,
-                fontWeight: FontWeight.w700,
-              ),
-              SizedBox(height: 30),
-              MainDescriptionWidget(
-                text: '당신의 삶을 \n오랫동안 기념할 수 있는 플랫폼',
-                fontSize: 24,
-                fontWeight: FontWeight.w700,
-              ),
-              SizedBox(height: 30),
-              MainDescriptionWidget(
-                text: '에필로그는 법적 효력이 있는 유언의 5가지 형식 중\n녹음 방식을 통한 디지털 유언장 서비스를 제공합니다.\n\n저장된 유언장은 블록체인 기술을 통해\n타인에 의해 위변조, 훼손되지 않고 안전하게 보관됩니다.',
-                fontSize: 16,
-                fontWeight: FontWeight.w400,
-              ),
-              SizedBox(height: 30),
-              Row(
-                mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                children: [
-                  MainWilliconWidget(
-                    text: '자필증서',
-                    imagePath: 'assets/images/letter.png',
-                  ),
-                  MainWilliconWidget(
-                    text: '녹음',
-                    textColor: themeColour5,
-                    borderColor: themeColour5,
-                    imagePath: 'assets/images/voice.png',
-                  ),
-                  MainWilliconWidget(
-                    text: '공정증서',
-                    imagePath: 'assets/images/jury.png',
-                  ),
-                ],
-              ),
-              SizedBox(height: 20),
-              Row(
-                mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                children: [
-                  MainWilliconWidget(
-                    text: '비밀증서',
-                    imagePath: 'assets/images/secret.png',
-                  ),
-                  MainWilliconWidget(
-                    text: '구수증서',
-                    imagePath: 'assets/images/emergency.png',
-                  ),
-                ],
-              ),
-              SizedBox(height: 20),
-            ],
+      bottomNavigationBar: BottomNavigationBar(
+        currentIndex: viewModel.currentIndex,
+        onTap: (newIndex) {
+          viewModel.setCurrentIndex(newIndex);
+        },
+        showSelectedLabels: false,
+        showUnselectedLabels: false,
+        type: BottomNavigationBarType.fixed,
+        backgroundColor: Colors.grey[800],
+        items: [
+          BottomNavigationBarItem(
+            icon: _customMenu(0, '홈으로', viewModel),
+            label: '',
           ),
-        )
+          BottomNavigationBarItem(
+            icon: _customMenu(1, '디지털 추모관', viewModel),
+            label: '',
+          ),
+          BottomNavigationBarItem(
+            icon: _customMenu(2, '내 정보', viewModel),
+            label: '',
+          ),
+        ],
+      ),
+    );
+  }
+
+  Widget _customMenu(int index, String text, MainViewModel viewModel) {
+    bool isSelected = viewModel.currentIndex == index;
+
+    return Text(
+      text,
+      style: TextStyle(
+        fontWeight: FontWeight.bold,
+        fontSize: 24,
+        color: isSelected ? themeColour5 : Colors.white,
       ),
     );
   }

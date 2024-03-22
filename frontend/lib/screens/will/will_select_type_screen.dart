@@ -4,7 +4,7 @@ import 'package:frontend/screens/login/login_screen.dart';
 import 'package:frontend/screens/will/will_recording_screen.dart';
 import 'package:frontend/screens/will/will_widgets.dart';
 import 'package:frontend/widgets/common_button.dart';
-import 'package:frontend/widgets/custom_bottom_navigation.dart';
+import 'package:frontend/screens/main/main_screen.dart';
 
 class WillSelectTypeScreen extends StatefulWidget {
   _WillSelectTypeScreenState createState() => _WillSelectTypeScreenState();
@@ -89,7 +89,7 @@ class _WillSelectTypeScreenState extends State<WillSelectTypeScreen> {
         height: 100,
         child: TextButtonWidget(
           preText: '이전',
-          prePage: CustomBottomNavigation(),
+          prePage: MainScreen(),
         ),
       ),
     );
