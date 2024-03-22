@@ -7,7 +7,7 @@ import lombok.Getter;
 
 @Getter
 @AllArgsConstructor
-@Schema(description = "열람인")
+@Schema(description = "열람인 요청 DTO")
 public class ViewerRequestDto {
     @NotNull(message = "열람인 이름은 Null일 수 없습니다.")
     @Schema(description = "열람인 이름")

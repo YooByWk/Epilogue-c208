@@ -3,8 +3,9 @@ package com.epilogue.service;
 import com.epilogue.domain.user.User;
 import com.epilogue.domain.will.Will;
 import com.epilogue.domain.witness.Witness;
+import com.epilogue.dto.request.will.WillAdditionalRequestDto;
 import com.epilogue.dto.request.will.WillApplyRequestDto;
-import com.epilogue.dto.request.will.WillRequestDto;
+import com.epilogue.dto.request.will.WillMemorialRequestDto;
 import com.epilogue.repository.user.UserRepository;
 import com.epilogue.repository.will.WillRepository;
 import com.epilogue.repository.witness.WitnessRepository;
@@ -21,27 +22,18 @@ public class WillService {
     private final UserRepository userRepository;
     private final WitnessRepository witnessRepository;
 
-    public Will create(WillRequestDto willRequestDto, Principal principal) {
-        Will will = Will.builder()
-                .sustainCare(willRequestDto.isSustainCare())
-                .funeralType(willRequestDto.getFuneralType())
-                .graveType(willRequestDto.getGraveType())
-                .organDonation(willRequestDto.isOrganDonation())
-                .useMemorial(willRequestDto.isUseMemorial())
-                .graveName(willRequestDto.getGraveName())
-                .graveImage(willRequestDto.getGraveImage())
-                .willFileAddress(willRequestDto.getWillFileAddress())
-                .viewApplyLink(willRequestDto.getViewApplyLink())
-                .willLink(willRequestDto.getWillLink())
-                .build();
-
-        willRepository.save(will);
-
-        // 회원에 유언 insert
+    public void saveMemorial(WillMemorialRequestDto willMemorialRequestDto, Principal principal) {
         User user = userRepository.findByUserId(principal.getName());
-        user.updateWill(will);
+        Will will = willRepository.findById(user.getWill().getWillSeq()).get();
 
-        return will;
+        will.updateMemorial(willMemorialRequestDto.isUseMemorial(), willMemorialRequestDto.getGraveName(), willMemorialRequestDto.getGraveImageAddress());
+    }
+
+    public void saveAdditionalInformation(WillAdditionalRequestDto willAdditionalRequestDto, Principal principal) {
+        User user = userRepository.findByUserId(principal.getName());
+        Will will = willRepository.findById(user.getWill().getWillSeq()).get();
+
+        will.updateAdditionalInformation(willAdditionalRequestDto.isSustainCare(), willAdditionalRequestDto.getFuneralType(), willAdditionalRequestDto.getGraveType(), willAdditionalRequestDto.isOrganDonation());
     }
 
     public void viewMyWill(Principal principal) {

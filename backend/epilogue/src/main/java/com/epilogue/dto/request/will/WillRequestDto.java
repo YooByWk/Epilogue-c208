@@ -26,18 +26,6 @@ public class WillRequestDto {
     @Schema(description = "장기 기증 여부")
     private boolean organDonation;
 
-    @NotNull(message = "디지털 추모관 사용 여부는 Null일 수 없습니다.")
-    @Schema(description = "디지털 추모관 사용 여부")
-    private boolean useMemorial;
-
-    @NotNull(message = "묘비명은 Null일 수 없습니다.")
-    @Schema(description = "묘비명")
-    private String graveName;
-
-    @NotNull(message = "묘비 사진은 Null일 수 없습니다.")
-    @Schema(description = "묘비 사진")
-    private String graveImage;
-
     @NotNull(message = "유언 파일 주소는 Null일 수 없습니다.")
     @Schema(description = "유언 파일 주소")
     private String willFileAddress;
@@ -49,12 +37,4 @@ public class WillRequestDto {
     @NotNull(message = "유언장 링크는 Null일 수 없습니다.")
     @Schema(description = "유언장 링크")
     private String willLink;
-
-    @NotNull(message = "증인 리스트는 Null일 수 없습니다.")
-    @Schema(description = "증인 리스트")
-    private List<WitnessRequestDto> witnessList;
-
-    @NotNull(message = "열람인 리스트는 Null일 수 없습니다.")
-    @Schema(description = "열람인 리스트")
-    private List<ViewerRequestDto> viewerList;
 }

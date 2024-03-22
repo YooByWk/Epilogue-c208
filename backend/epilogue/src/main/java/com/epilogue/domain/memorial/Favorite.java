@@ -21,6 +21,6 @@ public class Favorite {
     @NotNull
     @Schema(description = "디지털 추모관")
     @ManyToOne // 즐겨찾기와 추모관은 '다대일 단방향' 관계
-//    @JoinColumn(name = "memorial_seq")
+    @JoinColumn(name = "memorial_seq")
     private Memorial memorial;
 }
