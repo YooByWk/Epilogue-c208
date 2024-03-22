@@ -41,10 +41,11 @@ class BlockChainTest extends StatelessWidget {
                       },
                       child: Text('store 함수 호출'),
                     ),
+                    Text('Current : value : $viewModel.newNum'),
                     ElevatedButton(
                       onPressed: () async {
-                        final response = await viewModel.retrieve();
-                        debugPrint('retrieve 함수 호출 결과: $response');
+                        // final response = await viewModel.retrieve();
+                        debugPrint('retrieve 함수 호출 결과: $viewModel.newNum.toString()');
                       },
                       child: Text('retrieve 함수 호출'),
                     ),

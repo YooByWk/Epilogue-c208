@@ -8,7 +8,8 @@ class BlockChainViewModel extends ChangeNotifier{
   final BlockChainModel _blockChainModel;
   int _num;
   int get num => _num;
-  BlockChainViewModel(this._blockChainModel,{int? num}) : _num = num ?? 0;
+  String newNum = '';
+  BlockChainViewModel(this._blockChainModel,{int? num}) : _num = num ?? 0 ;
 
   Future<String> sendTransaction(String functionName, List<dynamic> params) async {
     final response = await _blockChainModel.sendTransaction(functionName, params);
@@ -17,8 +18,10 @@ class BlockChainViewModel extends ChangeNotifier{
   } 
 
 
-  Future<String> retrieve() {
-    return _blockChainModel.callFunction('retrieve', []);
+  Future<void> retrieve() async {
+    newNum = await _blockChainModel.callFunction('retrieve', []);
+    debugPrint(newNum );
+    notifyListeners();
   }
 
   Future<String> deployContract() {

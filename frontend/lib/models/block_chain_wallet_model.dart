@@ -14,8 +14,16 @@ class BlockChainWalletModel {
 
 
   String get walletAddress => _walletAddress;
+  String get privateKey => _privateKey.toString();
 
   Future<void> createWallet() async {
+    debugPrint('createWallet() called ');
+
+    if (hasWallet) {
+      debugPrint('Todo : Wallet already exists.');
+      return;
+    }
+
     var rng = Random.secure();
     var credentials = EthPrivateKey.createRandom(rng);
     var address = await credentials.address;
@@ -29,6 +37,7 @@ class BlockChainWalletModel {
   }
 
   Future<void> checkWallet(String address) async{
+    debugPrint('checkWallet() called ');
       String? privateKey = await storage.read(key: "privateKey");
 
       if (privateKey != null) {
