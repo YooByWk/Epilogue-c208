@@ -34,6 +34,10 @@ public class AwsS3Service {
 
     @Value("${cloud.aws.s3.bucketName}")
     private String bucketName;
+    @Value("${cloud.aws.s3.photoBucketName}")
+    private String photoBucketName;
+    @Value("${cloud.aws.s3.videoBucketName}")
+    private String videoBucketName;
 
     public String upload(MultipartFile mp4) {
         try {
@@ -52,6 +56,14 @@ public class AwsS3Service {
 
         return null;
     }
+
+    // 사진 불러오기
+    // 사진 불러오기
+    public String getPhotoFromS3(String fileName) {
+        return amazonS3.getUrl(photoBucketName, fileName).toString();
+    }
+
+
 
 //    private String getKeyFromMp4Address(String mp4Address){
 //        try {
