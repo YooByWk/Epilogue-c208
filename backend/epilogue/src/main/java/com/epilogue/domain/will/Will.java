@@ -61,5 +61,12 @@ public class Will {
         this.graveName = graveName;
         this.graveImageAddress = graveImageAddress;
     }
+
+    public void updateAdditionalInformation(boolean sustainCare, String funeralType, String graveType, boolean organDonation) {
+        this.sustainCare = sustainCare;
+        this.funeralType = funeralType;
+        this.graveType = graveType;
+        this.organDonation = organDonation;
+    }
 }
 

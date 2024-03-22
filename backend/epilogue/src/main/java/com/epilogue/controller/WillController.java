@@ -2,6 +2,7 @@ package com.epilogue.controller;
 
 import com.epilogue.domain.will.Will;
 import com.epilogue.dto.request.viewer.ViewerListRequestDto;
+import com.epilogue.dto.request.will.WillAdditionalRequestDto;
 import com.epilogue.dto.request.will.WillAndWitnessRequestDto;
 import com.epilogue.dto.request.will.WillApplyRequestDto;
 import com.epilogue.dto.request.will.WillMemorialRequestDto;
@@ -35,7 +36,7 @@ public class WillController {
     @Operation(summary = "유언 파일 및 증인 저장 API", description = "유언 파일 및 증인을 저장합니다.")
     @ApiResponse(responseCode = "200", description = "성공")
     @PostMapping("/willAndWitness")
-    public ResponseEntity<Void> saveWillAndWitness(@Parameter(description = "유언 파일 및 증인 목록 요청 DTO") @RequestBody WillAndWitnessRequestDto willAndWitnessRequestDto, Principal principal) {
+    public ResponseEntity<Void> saveWillAndWitness(@Parameter(description = "유언 파일 및 증인 목록 요청 DTO") WillAndWitnessRequestDto willAndWitnessRequestDto, Principal principal) {
         // 임의 유언 생성
         Will will = new Will();
 
@@ -69,6 +70,15 @@ public class WillController {
     public ResponseEntity<Void> saveMemorial(@Parameter(description = "디지털 추모관 정보 요청 DTO") @RequestBody WillMemorialRequestDto willMemorialRequestDto, Principal principal) {
         // 열람인 리스트 저장
         willService.saveMemorial(willMemorialRequestDto, principal);
+        return new ResponseEntity<>(HttpStatus.OK);
+    }
+
+    @Operation(summary = "추가 정보 저장 API", description = "추가 정보를 저장합니다.")
+    @ApiResponse(responseCode = "200", description = "성공")
+    @PostMapping("/additional")
+    public ResponseEntity<Void> saveAdditionalInformation(@Parameter(description = "추가 정보 요청 DTO") @RequestBody WillAdditionalRequestDto willAdditionalRequestDto, Principal principal) {
+        // 열람인 리스트 저장
+        willService.saveAdditionalInformation(willAdditionalRequestDto, principal);
         return new ResponseEntity<>(HttpStatus.OK);
     }
 
