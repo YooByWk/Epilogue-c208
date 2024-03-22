@@ -1,6 +1,6 @@
 package com.epilogue.controller;
 
-import com.epilogue.util.SmsUtil;
+//import com.epilogue.util.SmsUtil;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
@@ -15,7 +15,7 @@ import org.springframework.web.bind.annotation.RestController;
 @Tag(name = "Test Controller", description = "배포 테스트용 API")
 public class TestController {
 
-    private final SmsUtil smsUtil;
+//    private final SmsUtil smsUtil;
 
     @GetMapping("/api/test")
     public ResponseEntity<String> test() {

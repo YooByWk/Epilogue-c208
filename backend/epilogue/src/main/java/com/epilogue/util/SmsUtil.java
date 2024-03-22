@@ -35,5 +35,4 @@ public class SmsUtil {
         SingleMessageSentResponse response = this.messageService.sendOne(new SingleMessageSendingRequest(message));
         return response;
     }
-
 }
