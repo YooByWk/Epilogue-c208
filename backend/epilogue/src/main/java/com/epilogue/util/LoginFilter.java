@@ -30,11 +30,11 @@ public class LoginFilter extends UsernamePasswordAuthenticationFilter {
         String userId = obtainUsername(request);
         String password = obtainPassword(request);
 
+        System.out.println(userId);
+        System.out.println(password);
+
         // 스프링 시큐리티에서 아이디와 비밀번호를 검증하기 위해서는 token에 담아야 함
         UsernamePasswordAuthenticationToken authToken = new UsernamePasswordAuthenticationToken(userId, password, null);
-
-        System.out.println(authToken.getName());
-
 
         // token에 담은 데이터를 검증을 위해 AuthenticationManager로 전달
         return authenticationManager.authenticate(authToken);
@@ -51,12 +51,10 @@ public class LoginFilter extends UsernamePasswordAuthenticationFilter {
         String role = auth.getAuthority();
 
         //토큰 생성
-        String access = jwtUtil.createJwt("access", username, role, 600000L);
-        String refresh = jwtUtil.createJwt("refresh", username, role, 86400000L);
+        String token = jwtUtil.createJwt(username, role, 86400000L);
 
         //응답 설정
-        response.setHeader("access", access);
-        response.addCookie(createCookie("refresh", refresh));
+        response.addCookie(createCookie(token));
         response.setStatus(HttpStatus.OK.value());
     }
 
@@ -69,9 +67,9 @@ public class LoginFilter extends UsernamePasswordAuthenticationFilter {
         response.setStatus(401);
     }
 
-    private Cookie createCookie(String key, String value) {
+    private Cookie createCookie(String value) {
 
-        Cookie cookie = new Cookie(key, value);
+        Cookie cookie = new Cookie("Authorization", value);
         cookie.setMaxAge(24*60*60);
         //cookie.setSecure(true);
         //cookie.setPath("/");

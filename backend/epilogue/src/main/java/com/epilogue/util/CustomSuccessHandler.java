@@ -5,6 +5,7 @@ import jakarta.servlet.http.Cookie;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.GrantedAuthority;
@@ -15,6 +16,7 @@ import java.io.IOException;
 import java.util.Collection;
 import java.util.Iterator;
 
+@Slf4j
 @Component
 @RequiredArgsConstructor
 public class CustomSuccessHandler extends SimpleUrlAuthenticationSuccessHandler {
@@ -31,24 +33,23 @@ public class CustomSuccessHandler extends SimpleUrlAuthenticationSuccessHandler 
         GrantedAuthority auth = iterator.next();
         String role = auth.getAuthority();
 
-        //토큰 생성
-        String access = jwtUtil.createJwt("access", username, role, 600000L);
-        String refresh = jwtUtil.createJwt("refresh", username, role, 86400000L);
+        //토큰 설정
+        String token = jwtUtil.createJwt(username, role, 60*60*60L);
 
         //응답 설정
-        response.setHeader("access", access);
-        response.addCookie(createCookie("refresh", refresh));
+        Cookie cookie = createCookie(token);
+        response.addCookie(cookie);
+        log.info("response={}", response);
         response.setStatus(HttpStatus.OK.value());
     }
 
-    private Cookie createCookie(String key, String value) {
-
-        Cookie cookie = new Cookie(key, value);
+    private Cookie createCookie(String value) {
+        Cookie cookie = new Cookie("Authorization", value);
         cookie.setMaxAge(24*60*60);
         //cookie.setSecure(true);
         //cookie.setPath("/");
         cookie.setHttpOnly(true);
-
+        System.out.println();
         return cookie;
     }
 }
