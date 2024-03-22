@@ -1,3 +1,5 @@
+import 'dart:async';
+
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
@@ -25,8 +27,11 @@ class _RecordTestState extends State<RecordTest> {
   bool _mPlayerIsInited = false;
   bool _mRecorderIsInited = false;
   bool _mplaybackReady = false;
+
+  // record time 실시간
   Stopwatch _stopwatch = Stopwatch();
   String _recordTime = '00:00';
+  Timer? _timer;
 
   // 첫 번째 play 하는 건지, 일시정지 및 다시 재생 하는 건지 판단
   bool _isPlaying = false;
@@ -34,7 +39,6 @@ class _RecordTestState extends State<RecordTest> {
   // 전체 재생 시간과 현재 재생 위치
   double _currentPosition = 0;
   double _currentDuration = 0;
-  double _currentRecord = 0;
 
   // 00:00의 형식으로 맞추기 위한 함수
   String _formatDuration(Duration duration) {
@@ -43,15 +47,6 @@ class _RecordTestState extends State<RecordTest> {
     return '$minutes:$seconds';
   }
 
-  String _formatTime(int milliseconds) {
-    int seconds = (milliseconds / 1000).truncate();
-    int minutes = (seconds / 60).truncate();
-
-    String minutesStr = (minutes % 60).toString().padLeft(2, '0');
-    String secondsStr = (seconds % 60).toString().padLeft(2, '0');
-
-    return '$minutesStr:$secondsStr';
-  }
   @override
   void initState() {
     _mPlayer!.openPlayer().then((value) {
@@ -64,9 +59,6 @@ class _RecordTestState extends State<RecordTest> {
             _currentPosition = e.position.inMilliseconds.toDouble();
             _currentDuration = e.duration.inMilliseconds.toDouble();
           });
-        });
-        _mRecorder!.onProgress!.listen((e) {
-          _currentRecord = e.duration.inMilliseconds.toDouble();
         });
       });
     });
@@ -110,6 +102,16 @@ class _RecordTestState extends State<RecordTest> {
     _mRecorderIsInited = true;
   }
 
+  String _formatTime(int milliseconds) {
+    int seconds = (milliseconds / 1000).truncate();
+    int minutes = (seconds / 60).truncate();
+
+    String minutesStr = (minutes % 60).toString().padLeft(2, '0');
+    String secondsStr = (seconds % 60).toString().padLeft(2, '0');
+
+    return '$minutesStr:$secondsStr';
+  }
+
   // ----------------------  Here is the code for recording and playback -------
 
   void record() {
@@ -123,10 +125,13 @@ class _RecordTestState extends State<RecordTest> {
       setState(() {});
     });
     _stopwatch.start();
-    setState(() {
-      _recordTime = _formatTime(_stopwatch.elapsedMilliseconds);
+    _timer = Timer.periodic(Duration(milliseconds: 100), (Timer timer) {
+      setState(() {
+        _recordTime = _formatTime(_stopwatch.elapsedMilliseconds);
+      });
     });
   }
+
 
   void stopRecorder() async {
     await _mRecorder!.stopRecorder().then((value) {
@@ -136,6 +141,10 @@ class _RecordTestState extends State<RecordTest> {
       });
     });
     _stopwatch.reset();
+    _timer?.cancel();
+    setState(() {
+      _recordTime = '00:00';
+    });
   }
 
   void play() {
@@ -198,7 +207,8 @@ class _RecordTestState extends State<RecordTest> {
 
     if (_isPlaying && _currentPosition == 0) {
       return play;
-    } if (_isPlaying) {
+    }
+    if (_isPlaying) {
       return pauseResumePlayer;
     } else {
       return play;
