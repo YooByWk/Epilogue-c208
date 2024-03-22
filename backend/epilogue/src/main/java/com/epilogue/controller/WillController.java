@@ -36,17 +36,19 @@ public class WillController {
     @Operation(summary = "유언 작성 API", description = "유언을 작성하면 블록체인을 생성한 뒤, S3에 저장합니다.")
     @ApiResponse(responseCode = "200", description = "성공")
     @PostMapping
-    public ResponseEntity<Void> createWill(@Parameter(description = "유언 작성 요청 DTO") @RequestBody WillRequestDto willRequestDto,
-                                           @Parameter(description = "유언 녹음 파일") @RequestParam MultipartFile multipartFile, Principal principal) {
+//    public ResponseEntity<Void> createWill(@Parameter(description = "유언 작성 요청 DTO") @RequestBody WillRequestDto willRequestDto,
+//                                           @Parameter(description = "유언 녹음 파일") @RequestParam MultipartFile multipartFile, Principal principal) {
+
+    public ResponseEntity<String> createWill(@Parameter(description = "유언 녹음 파일") @RequestParam MultipartFile multipartFile, Principal principal) {
         // 유언 관련 정보 저장
-        Will will = willService.create(willRequestDto, principal);
-        int willSeq = will.getWillSeq();
+//        Will will = willService.create(willRequestDto, principal);
+//        int willSeq = will.getWillSeq();
 
         // 증인 리스트 저장
-        witnessService.create(willSeq, willRequestDto);
+//        witnessService.create(willSeq, willRequestDto);
 
         // 열람인 리스트 저장
-        viewerService.create(willSeq, willRequestDto);
+//        viewerService.create(willSeq, willRequestDto);
 
         // 블록체인 트랜잭션 생성 (해시, 녹음 파일 url, 초기 영수증)
 
@@ -57,7 +59,8 @@ public class WillController {
         // 2. S3 서버 저장 (원본 파일, 초기 영수증)
         String fileUrl = awsS3Service.upload(multipartFile);
 
-        return new ResponseEntity<>(HttpStatus.OK);
+
+        return new ResponseEntity<>("S3 저장 성공!!!", HttpStatus.OK);
     }
 
     @Operation(summary = "나의 유언 조회 API", description = "내가 작성한 유언을 조회합니다.")
