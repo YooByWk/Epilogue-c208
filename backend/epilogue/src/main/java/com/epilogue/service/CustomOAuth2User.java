@@ -31,7 +31,7 @@ public class CustomOAuth2User implements OAuth2User {
         collection.add((GrantedAuthority) () -> {
 
 //                return userDTO.getRole();
-            return "user";
+            return "ROLE_USER";
         });
 
         return collection;
