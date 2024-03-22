@@ -15,7 +15,7 @@ public class MemorialRepositoryImpl implements MemorialRepositoryCustom {
 
     @Override
     public List<Memorial> findAllByDate() {
-        return entityManager.createQuery("SELECT m FROM Memorial m ORDER BY goneDate", Memorial.class)
+        return entityManager.createQuery("SELECT m FROM Memorial m ORDER BY goneDate DESC", Memorial.class)
                 .getResultList();
     }
 
