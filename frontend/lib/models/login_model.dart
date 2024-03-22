@@ -8,12 +8,12 @@ class LoginModel {
 
      });
 
-  // factory LoginModel.fromJson(Map<String, dynamic> json) {
-  //   return LoginModel(
-  //     username: json['username'],
-  //     password: json['password'],
-  //   );
-  // }
+  factory LoginModel.fromJson(Map<String, dynamic> json) {
+    return LoginModel(
+      username: json['username'],
+      password: json['password'],
+    );
+  }
 
   Map<String, dynamic> toJson() => {
     'username': username,

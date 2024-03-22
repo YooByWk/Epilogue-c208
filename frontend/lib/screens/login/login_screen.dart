@@ -13,7 +13,7 @@ import 'package:provider/provider.dart';
 class LoginScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-    // final loginViewModel = Provider.of<LoginViewModel>(context);
+    // final viewModel = Provider.of<LoginViewModel>(context);
     final commonWidth = MediaQuery.of(context).size.width;
 
     return ChangeNotifierProvider(
@@ -71,6 +71,9 @@ class LoginScreen extends StatelessWidget {
                             )),
                       ]),
                       SizedBox(height: 20),
+                      viewModel.isLoading
+                          ? CircularProgressIndicator()
+                          : Container(),
                       CommonButtonWidget(
                         text: '로그인',
                         textColor: Color(0xFFececec),
@@ -78,10 +81,20 @@ class LoginScreen extends StatelessWidget {
                         width: MediaQuery.of(context).size.width * 0.8,
                         height: 50,
                         fontSize: 30,
-                        onPressed: () {
-                          viewModel.login();
-                          Navigator.pushNamed(context, '/home');
-                        },
+                        onPressed: viewModel.isLoading
+                            ? () {}
+                            : () async {
+                                await viewModel.login();
+                                if (viewModel.isSuccessful) {
+                                  Navigator.pushNamed(context, '/home');
+                                } else {
+                                  ScaffoldMessenger.of(context).showSnackBar(
+                                    SnackBar(
+                                        content: Text(viewModel.errorMessage ??
+                                            '로그인 실패')),
+                                  );
+                                }
+                              },
                       ),
                       SizedBox(height: 10),
                       Text(

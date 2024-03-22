@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:frontend/main.dart';
 import 'package:frontend/screens/will/will_widgets.dart';
-import 'package:frontend/widgets/custom_bottom_navigation.dart';
+import 'package:frontend/screens/main/main_screen.dart';
 
 class WillAdditionalInfoScreen extends StatefulWidget {
   const WillAdditionalInfoScreen({super.key});
@@ -114,7 +114,7 @@ class _WillAdditionalInfoScreenState extends State<WillAdditionalInfoScreen> {
             Navigator.push(
               context,
               MaterialPageRoute(
-                builder: (context) => CustomBottomNavigation(),
+                builder: (context) => MainScreen(),
               ),
             );
           },
