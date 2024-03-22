@@ -38,7 +38,6 @@ public class Will {
     @Schema(description = "장기 기증 여부")
     private boolean organDonation;
 
-    @NotNull(message = "디지털 추모관 사용 여부는 Null일 수 없습니다.")
     @Schema(description = "디지털 추모관 사용 여부")
     private boolean useMemorial;
 
@@ -46,17 +45,21 @@ public class Will {
     private String graveName;
 
     @Schema(description = "묘비 사진")
-    private String graveImage;
+    private String graveImageAddress;
 
-    @NotNull(message = "유언 파일 주소는 Null일 수 없습니다.")
     @Schema(description = "유언 파일 주소")
     private String willFileAddress;
 
-    @NotNull(message = "열람 신청 링크는 Null일 수 없습니다.")
     @Schema(description = "열람 신청 링크")
     private String viewApplyLink;
 
-    @NotNull(message = "유언장 링크는 Null일 수 없습니다.")
     @Schema(description = "유언장 링크")
     private String willLink;
+
+    public void updateMemorial(boolean useMemorial, String graveName, String graveImageAddress) {
+        this.useMemorial = useMemorial;
+        this.graveName = graveName;
+        this.graveImageAddress = graveImageAddress;
+    }
 }
+
