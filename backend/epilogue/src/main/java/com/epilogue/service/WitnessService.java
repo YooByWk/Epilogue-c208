@@ -3,7 +3,7 @@ package com.epilogue.service;
 import com.epilogue.domain.user.User;
 import com.epilogue.domain.will.Will;
 import com.epilogue.domain.witness.Witness;
-import com.epilogue.dto.request.will.WillRequestDto;
+import com.epilogue.dto.request.will.WillAndWitnessRequestDto;
 import com.epilogue.dto.request.witness.WitnessRequestDto;
 import com.epilogue.repository.user.UserRepository;
 import com.epilogue.repository.will.WillRepository;
@@ -22,12 +22,12 @@ public class WitnessService {
     private final WillRepository willRepository;
     private final UserRepository userRepository;
 
-    public void create(int willSeq, WillRequestDto willRequestDto) {
-        List<WitnessRequestDto> witnessList = willRequestDto.getWitnessList();
+    public void save(Will will, WillAndWitnessRequestDto willAndWitnessRequestDto, Principal principal) {
+        List<WitnessRequestDto> witnessList = willAndWitnessRequestDto.getWitnessList();
 
         for (WitnessRequestDto w : witnessList) {
             Witness witness = Witness.builder()
-                    .will(willRepository.findById(willSeq).get())
+                    .will(willRepository.findById(will.getWillSeq()).get())
                     .witnessName(w.getWitnessName())
                     .witnessEmail(w.getWitnessEmail())
                     .witnessMobile(w.getWitnessMobile())
@@ -36,5 +36,9 @@ public class WitnessService {
 
             witnessRepository.save(witness);
         }
+
+        // 회원에 유언 insert
+        User user = userRepository.findByUserId(principal.getName());
+        user.updateWill(will);
     }
 }

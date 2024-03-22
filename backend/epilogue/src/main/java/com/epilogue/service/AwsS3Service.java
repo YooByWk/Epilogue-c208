@@ -1,27 +1,16 @@
 package com.epilogue.service;
-import com.amazonaws.services.s3.AmazonS3;
-import com.amazonaws.services.s3.model.CannedAccessControlList;
-import com.amazonaws.services.s3.model.DeleteObjectRequest;
-import com.amazonaws.services.s3.model.ObjectMetadata;
-import com.amazonaws.services.s3.model.PutObjectRequest;
-import com.amazonaws.util.IOUtils;
-import java.io.ByteArrayInputStream;
-import java.io.IOException;
-import java.io.InputStream;
-import java.io.UnsupportedEncodingException;
-import java.net.MalformedURLException;
-import java.net.URL;
-import java.net.URLDecoder;
-import java.util.Arrays;
-import java.util.List;
-import java.util.Objects;
-import java.util.UUID;
 
-import com.epilogue.exception.S3Exception;
+import com.amazonaws.services.s3.AmazonS3;
+import com.amazonaws.services.s3.model.ObjectMetadata;
+import java.io.IOException;
+import java.security.Principal;
+
+import com.epilogue.domain.user.User;
+import com.epilogue.repository.user.UserRepository;
+import com.epilogue.repository.will.WillRepository;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Value;
-import org.springframework.security.core.parameters.P;
 import org.springframework.stereotype.Component;
 import org.springframework.web.multipart.MultipartFile;
 
@@ -31,26 +20,29 @@ import org.springframework.web.multipart.MultipartFile;
 public class AwsS3Service {
 
     private final AmazonS3 amazonS3;
+    private final UserRepository userRepository;
+    private final WillRepository willRepository;
 
     @Value("${cloud.aws.s3.bucketName}")
-    private String bucketName;
+    private String bucketName = "epilouge-bucket";
 
-    public String upload(MultipartFile mp4) {
+    public void upload(MultipartFile mp4, Principal principal) {
         try {
             String fileName = mp4.getOriginalFilename();
-            String fileUrl = "http://" + bucketName + "/file" + fileName;
+            String willFileAddress = "https://" + bucketName + "/will" + fileName;
             ObjectMetadata metadata = new ObjectMetadata();
             metadata.setContentType(mp4.getContentType());
             metadata.setContentLength(mp4.getSize());
 
+            // 유언 파일 주소 업데이트
+            User user = userRepository.findByUserId(principal.getName());
+            willRepository.updateWillFileAddress(user.getWill().getWillSeq(), willFileAddress);
+
             amazonS3.putObject(bucketName, fileName, mp4.getInputStream(), metadata);
 
-            return fileUrl;
         } catch (IOException e) {
             e.printStackTrace();
         }
-
-        return null;
     }
 
 //    private String getKeyFromMp4Address(String mp4Address){
