@@ -1,3 +1,20 @@
+# 작업 내역
+
+## 개인기록용 / 
+
+# ~3월 22일
+
+## 목차
+- 개발 가이드라인 작성
+- 추모관 화면 구성
+- 블록체인 - 스마트 컨트랙트 
+
+<details>
+<summary>
+프론트엔드 Read.me 작성 : 개발 가이드라인 
+</summary>
+<div markdown='1'>
+
 # 개발 가이드
 > 개인 학습 겸 쓰여진 가이드입니다.
 >
@@ -213,3 +230,182 @@ class CounterPage extends StatelessWidget {
 
 2024_03_16 작성.
 2024_03_17 00:38 최종수정.
+2024_03_22 Readme.md 제출
+</div>
+</details>
+
+
+작업 내역 : 
+
+- 
+  
+<details>
+
+<summary>
+디지털 추모관 화면 구성
+</summary>
+
+> model 작업 필요한 상황입니다.
+
+## veiw
+
+1. 각 탭(사진, 동영상, 편지) 기본 레이아웃 구성
+   
+2. 사진
+   1.  무한 스크롤 구현 (SliverGrid) 
+   2.  LongPress를 통한 이미지 미리보기 오버레이 구현
+   3.  BE 와 testApi 를 통한 api 호출 확인
+
+3. 동영상
+   1.  화면 중앙 동영상 자동 재생
+   2.  동영상 썸네일 제공
+   3.  LongPress 를 통한 일시 정지 
+   4.  tap 하여 정지 
+   5.  무한스크롤 (ListView)
+
+4. 편지
+   1. 무한스크롤 구현 (SliverGrid) 
+
+</details>
+
+---
+
+<details>
+
+<summary>
+  flutter api 호출 예시 파일 작성
+</summary>
+
+- dart에서 제공하는 http가 아닌 dio를 사용해 api 호출을 진행합니다.
+-  Json 자료 처리가 간편해집니다!
+
+```dart
+
+// frontend/lib/dio_api_request_examples.dart
+
+import 'package:flutter/material.dart'; //debugPrint 사용 위함
+import 'package:dio/dio.dart'; // Dio 사용 위함 
+
+// Dio는 HTTP 클라이언트로서, Dart 언어로 작성된 비동기 HTTP 클라이언트 프레임워크.
+
+class DioExamples {
+final dio = Dio(); // 
+void GetRequest() async {
+  Response response = await dio.get('http://j10c208.p.ssafy.io:8080/api/test');
+  debugPrint(response.data.toString());
+}
+
+void PostRequest() async {
+  Response response = await dio.post('http://j10c208.p.ssafy.io:8080/api/test');
+  debugPrint(response.data.toString());
+}
+
+void PutRequest() async {
+  Response response = await dio.put('http://j10c208.p.ssafy.io:8080/api/test');
+  debugPrint(response.data.toString());
+}
+
+void DeleteRequest() async {
+  Response response = await dio.delete('http://j10c208.p.ssafy.io:8080/api/test');
+  debugPrint(response.data.toString());
+}
+
+void DownloadRequest() async {
+  Response response = await dio.download('http://j10c208.p.ssafy.io:8080/api/test', 'downloadPath');
+  debugPrint(response.data.toString());
+}
+// 대충 이런식으로 사용하면 됩니다.
+
+/* Dio의 Response 구성
+final response = await dio.get('https://pub.dev');
+print(response.data);
+print(response.headers);
+print(response.requestOptions);
+print(response.statusCode);
+*/
+
+// dio의 주요 메서드
+// get, post, put, delete, download, head, patch, request
+// 이 중에서 get, post, put, delete, download를 사용하면 됩니다.
+// https://pub.dev/packages/dio 참고
+}
+```
+
+</details>
+
+---
+
+<details>
+
+<summary>
+  블록체인 스마트 컨트랙트 테스트 배포
+</summary>
+
+### remix ide 배포 후 트랜잭션 확인
+.sol : 실습용 스마트 컨트랙트
+
+```solidity
+// frontend/smart_contract/test.sol
+// SPDX-License-Identifier: MIT
+pragma solidity =0.8.18;
+
+contract Test {
+
+  address owner;
+  uint128  number;
+  uint128[] numberList; 
+  uint128 isActivated = 0;
+
+  constructor() {
+    owner = msg.sender;
+  }  
+
+  modifier onlyOwner() {
+    require (msg.sender == owner, unicode"사용자 정보가 일치하지 않습니다");
+    _;
+  }
+
+  function setNumber(uint128 _number) public onlyOwner returns (string memory) {
+    number = _number;
+    isActivated++;
+
+    return unicode"숫자가 저장되었습니다";
+  }
+
+  function checkNumber(uint128 _number) public view returns (string memory) {
+    if (number == _number) {
+      return unicode"숫자가 일치합니다";
+    } else {
+      return unicode"숫자가 일치하지 않습니다";
+    }
+  }
+
+  function getNumber() public view returns (uint128) {
+    return number;
+  }
+
+  function addNumberList(uint128 _number) public onlyOwner {
+    numberList.push(_number);
+    isActivated++;
+  }
+
+  function getNumberList() public view returns (uint128[] memory) {
+    return numberList;
+  }
+  
+  function checkActivated() public view returns(uint128) {
+    return isActivated;
+  } 
+}
+```
+
+### flutter app 내부 트랜잭션 확인
+1. flutter app 내부 블록체인 테스트 페이지에서 버튼 클릭시 디버그 콘솔에 입력됩니다.
+2. remix ide에서 컨트랙트 주소를 통해 트랜잭션의 확인이 가능합니다.
+
+### flutter app 내부 스마트 컨트랙트 배포 확인
+1. 개인지갑을 통한 테스트 컨트랙트 배포
+2. remix Ide 를 통한 Abi, bytecode 복사 후 입력
+3. 디버그 콘솔 or remix Ide 에서 컨트랙트 주소를 통해 사용/확인 가능합니다.
+
+</details>

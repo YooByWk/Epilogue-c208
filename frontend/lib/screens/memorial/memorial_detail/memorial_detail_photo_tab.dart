@@ -62,7 +62,7 @@ class PhotoTab extends StatelessWidget {
                 if (scrollInfo.metrics.pixels >=
                     scrollInfo.metrics.maxScrollExtent - 50) {
                   viewModel.loadMore();
-                }
+                    }
                 return false;
               },
               child: CustomScrollView(

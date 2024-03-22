@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:frontend/main.dart';
-import 'package:frontend/screens/main/main_screen.dart';
+import 'package:frontend/screens/main/main_body_screen.dart';
 
 class WillEpitaphWidget extends StatelessWidget {
   const WillEpitaphWidget({super.key});
