@@ -48,8 +48,9 @@ dependencies:
   visibility_detector: ^0.4.0+2 # 스크롤 감지
   flutter_sound: ^9.4.6 # 음성 녹음 및 재생
   permission_handler: ^11.3.0 # 마이크 권한 부여
-  dio: ^5.4.1
-  convert: ^3.1.1
+  dio: ^5.4.1 # http 통신
+  convert: ^3.1.1 # 데이터 변환
+  flutter_secure_storage: ^4.2.1 # 데이터 저장 - 블록체인 키
 
 dev_dependencies:
   flutter_test:
