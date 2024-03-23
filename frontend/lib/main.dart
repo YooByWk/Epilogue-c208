@@ -17,7 +17,7 @@ const Color backgroundColour = Color(0xFFF8F6F2);
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
-  await dotenv.load(fileName: 'assets/config/.env');
+  await dotenv.load(fileName: '.env');
   runApp(MyApp());
 }
 

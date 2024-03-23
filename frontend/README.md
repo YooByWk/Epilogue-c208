@@ -5,6 +5,11 @@
 
 
 ![alt text](5mins.png)
+## .env 파일 관련
+- .env.example 파일을 복사해서 자신만의 .env 파일을 만들고, 필요한 환경 변수 값을 채워 넣음
+```
+cp .env.example .env
+```
 
 ## 네이밍 컨벤션
 
