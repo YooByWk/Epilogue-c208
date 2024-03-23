@@ -2,12 +2,12 @@ import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 import 'package:dio/dio.dart';
 import 'package:frontend/models/login_model.dart';
 import 'package:frontend/models/signup_model.dart';
-import 'package:flutter/material.dart';
+import 'package:flutter_dotenv/flutter_dotenv.dart';
 
 class AuthService {
   final Dio _dio = Dio();
   final _storage = FlutterSecureStorage();
-  final baseUrl = 'http://j10c208.p.ssafy.io:8080';
+  final baseUrl = dotenv.env['API_URL'] ?? '';
 
   AuthService() {
     _dio.interceptors.add(InterceptorsWrapper(
@@ -23,6 +23,7 @@ class AuthService {
     ));
   }
 
+  ///////////////////////// 로그인 //////////////////////////////////
   Future<Map<String, dynamic>> login(LoginModel loginModel) async {
     try {
       Response response =
@@ -31,31 +32,50 @@ class AuthService {
       if (response.statusCode == 200) {
         String token = response.data['Authorization'];
         await _storage.write(key: 'token', value: token);
-        return {'success': true, 'message': '로그인 성공'};
+        return {'success': true};
       } else {
-        return {'success': false, 'message': '로그인 실패', 'statusCode': response.statusCode};
+        return {'success': false, 'statusCode': response.statusCode};
       }
     } on DioError catch (e) {
-      return {'success': false, 'message': e.message, 'statusCode': e.response?.statusCode};
+      return {'success': false, 'statusCode': e.response?.statusCode};
     }
   }
 
-  Future<bool> signup(SignupModel signupModel) async {
+  //////////////////////////// 회원가입 ///////////////////////////////
+  Future<Map<String, dynamic>> signup(SignupModel signupModel) async {
     try {
       Response response = await _dio.post(baseUrl + '/api/user/join',
           data: signupModel.toJson());
 
       if (response.statusCode == 200) {
-        return true;
+        return {'success': true};
       } else {
-        return false;
+        return {'success': false, 'statusCode': response.statusCode};
       }
     } on DioError catch (e) {
       print(e);
-      return false;
+      return {'success': false, 'statusCode': e.response?.statusCode};
     }
   }
+
+  /////////////////////// 아이디 중복체크 ////////////////////////////////
+  // Future<bool> checkUserId(String userId) async {
+  //   try {
+  //     Response response = await _dio.get(
+  //         '$baseUrl/api/user/id/check', queryParameters: {'userId': userId});
+  //
+  //     if (response.statusCode == 200) {
+  //       return;
+  //     } else {
+  //       return;
+  //     }
+  //   } on DioError catch (e) {
+  //     print(e);
+  //     return false;
+  //   }
+  // }
 }
+
 
 class LoggingInterceptor extends Interceptor {
   @override

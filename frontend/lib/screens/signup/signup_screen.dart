@@ -120,16 +120,16 @@ class SignUpScreen extends StatelessWidget {
                       backgroundColor: themeColour3,
                       onPressed: () async {
                         await viewModel.signup();
-                        if (viewModel.isSuccessful) {
+                        if (viewModel.errorMessage == null) {
                           ScaffoldMessenger.of(context).showSnackBar(
-                            SnackBar(content: Text('회원가입 성공!')),
+                            SnackBar(content: Text('회원가입 성공')),
                           );
                           Navigator.pop(context);
                         } else {
                           ScaffoldMessenger.of(context).showSnackBar(
                             SnackBar(
                                 content:
-                                    Text(viewModel.errorMessage ?? '회원가입 실패')),
+                                    Text(viewModel.errorMessage!)),
                           );
                         }
                       }),
