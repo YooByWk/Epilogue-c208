@@ -120,13 +120,13 @@ Future<String> deployContract() async {
     return response;
   }
 
-  Future<String> callFunction(String functionName, List<dynamic> params) async {
+  Future callFunction(String functionName, List<dynamic> params) async {
     final function = _contract.function(functionName);
     final response = await _client.call(
       contract: _contract,
       function: function,
       params: params,
     );
-    return response.toString();
+    return response;
   }
 }

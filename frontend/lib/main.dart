@@ -9,10 +9,6 @@ import 'package:frontend/providers/providers.dart';
 // import 'package:frontend/screens/memorial/memorial_main/memorial_list_viewmodel.dart';
 // import 'package:frontend/routes/memorial_route.dart';
 
-import 'package:frontend/view_models/login_view_models/login_viewmodel.dart';
-import 'package:frontend/view_models/memorial_view_models/memorial_list_viewmodel.dart';
-import 'package:frontend/view_models/main_view_models/main_viewmodel.dart';
-import 'package:frontend/view_models/signup_view_models/signup_viewmodel.dart';
 
 
 const Color themeColour1 = Color(0xFFF0EBE3);

@@ -5,6 +5,8 @@ import 'package:flutter/material.dart';
 
 
 class BlockChainViewModel extends ChangeNotifier{
+
+
   final BlockChainModel _blockChainModel;
   int _num;
   int get num => _num;
@@ -13,15 +15,24 @@ class BlockChainViewModel extends ChangeNotifier{
 
   Future<String> sendTransaction(String functionName, List<dynamic> params) async {
     final response = await _blockChainModel.sendTransaction(functionName, params);
+    newNum = await retrieve();
+    await Future.delayed(Duration.zero);
     notifyListeners();
     return response;
   } 
 
 
-  Future<void> retrieve() async {
-    newNum = await _blockChainModel.callFunction('retrieve', []);
-    debugPrint(newNum );
+  Future<String> retrieve() async {
+    print('retrieve() called');
+    var k = await _blockChainModel.callFunction('retrieve', []);
+    // debugPrint(k.runtimeType.toString());
+    // debugPrint(k.toString());
+    newNum = k.join();
+
+
     notifyListeners();
+    debugPrint('엄청 아래임: $newNum');
+    return k.join();
   }
 
   Future<String> deployContract() {
