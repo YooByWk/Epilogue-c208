@@ -10,33 +10,40 @@ class AuthService {
   final baseUrl = 'http://j10c208.p.ssafy.io:8080';
 
   AuthService() {
-    _dio.interceptors.add(LoggingInterceptor());
+    _dio.interceptors.add(InterceptorsWrapper(
+      onRequest: (options, handler) async {
+        // 저장된 토큰을 가져온다
+        String? token = await _storage.read(key: 'token');
+        if (token != null) {
+          // 요청 헤더에 토큰을 추가한다
+          options.headers['Authorization'] = token;
+        }
+        return handler.next(options); // 요청을 계속 진행한다
+      },
+    ));
   }
 
-  Future<bool> login(LoginModel loginModel) async {
+  Future<Map<String, dynamic>> login(LoginModel loginModel) async {
     try {
-      Response response = await _dio.post(
-          baseUrl + '/login',
-          data: loginModel.toJson());
+      Response response =
+          await _dio.post(baseUrl + '/login', data: loginModel.toJson());
 
       if (response.statusCode == 200) {
-        String token = response.data['token'];
+        String token = response.data['Authorization'];
         await _storage.write(key: 'token', value: token);
-        return true;
+        return {'success': true, 'message': '로그인 성공'};
       } else {
-        return false;
+        return {'success': false, 'message': '로그인 실패', 'statusCode': response.statusCode};
       }
     } on DioError catch (e) {
-      print(e);
-      return false;
+      return {'success': false, 'message': e.message, 'statusCode': e.response?.statusCode};
     }
   }
 
   Future<bool> signup(SignupModel signupModel) async {
     try {
-      Response response = await _dio.post(
-        baseUrl + '/api/user/join',
-        data: signupModel.toJson());
+      Response response = await _dio.post(baseUrl + '/api/user/join',
+          data: signupModel.toJson());
 
       if (response.statusCode == 200) {
         return true;
