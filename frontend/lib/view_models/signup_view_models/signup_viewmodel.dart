@@ -1,32 +1,29 @@
 import 'package:flutter/foundation.dart';
 import 'package:frontend/models/signup_model.dart';
-import 'package:frontend/providers/auth_service.dart';
+import 'package:frontend/services/auth_service.dart';
 
 class SignupViewModel extends ChangeNotifier {
   final AuthService _authService = AuthService();
+
   SignupModel _signupData =
       SignupModel(userId: '', password: '', name: '', mobile: '', birth: '');
   String _confirmPassword = '';
   bool _isLoading = false;
-  bool _isSuccessful = false;
   String? _errorMessage;
 
   SignupModel get signupData => _signupData;
-
   bool get isLoading => _isLoading;
-
-  bool get isSuccessful => _isSuccessful;
-
   String? get errorMessage => _errorMessage;
 
+  // 비밀번호 유효성 검사
   bool validateSignupData() {
-    // 비밀번호 유효성 검사
     if (!validatePassword(_signupData.password)) {
       _errorMessage = '비밀번호는 8~16자리 영문 대소문자, 숫자, 특수문자를 포함해야 합니다.';
       notifyListeners();
       return false;
     }
 
+    // 비밀번호 확인과 일치 여부 판단
     if (_signupData.password != _confirmPassword) {
       _errorMessage = '비밀번호가 일치하지 않습니다.';
       notifyListeners();
@@ -98,22 +95,41 @@ class SignupViewModel extends ChangeNotifier {
     notifyListeners();
   }
 
+///////////////////////////////////////////////////////
   Future<void> signup() async {
     if (!validateSignupData()) {
       return;
     }
     _isLoading = true;
     _errorMessage = null;
+    debugPrint(_signupData.name);
+    debugPrint(_signupData.userId);
+    debugPrint(_signupData.password);
+    debugPrint(_signupData.mobile);
+    debugPrint(_signupData.birth);
     notifyListeners();
 
-    try {
-      bool result = await _authService.signup(_signupData);
-      _isSuccessful = result;
-    } catch (e) {
-      _errorMessage = e.toString();
-    } finally {
-      _isLoading = false;
-      notifyListeners();
+    final result = await _authService.signup(_signupData);
+    _isLoading = false;
+
+    if (!result['success']) {
+      int statusCode = result['statusCode'];
+      switch (statusCode) {
+        case 401:
+          _errorMessage = '인증 실패. 다시 시도해주세요.';
+          break;
+        case 409:
+          _errorMessage = '이미 가입된 사용자입니다.';
+          break;
+        case 500:
+          _errorMessage = '서버 오류가 발생했습니다. 잠시 후 다시 시도해주세요.';
+          break;
+        default:
+          _errorMessage = '알 수 없는 오류가 발생했습니다. 관리자에게 문의해주세요.';
+      }
+    } else {
+      _errorMessage = null;
     }
+    notifyListeners();
   }
 }
