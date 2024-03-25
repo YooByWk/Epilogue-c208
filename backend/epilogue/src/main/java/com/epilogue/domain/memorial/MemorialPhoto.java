@@ -11,7 +11,7 @@ public class MemorialPhoto {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Schema(description = "사진 식별키")
-    private String memorialPhotoSeq;
+    private int memorialPhotoSeq;
 
     @Schema(description = "사진 객체 url")
     private String photoURL;
