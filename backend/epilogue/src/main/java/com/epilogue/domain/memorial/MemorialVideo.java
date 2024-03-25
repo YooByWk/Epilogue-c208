@@ -13,7 +13,7 @@ public class MemorialVideo {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Schema(description = "동영상 식별키")
-    private String videoSeq;
+    private int videoSeq;
 
     @Schema(description = "동영상 객체 url")
     private String videoURL;

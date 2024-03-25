@@ -19,7 +19,7 @@ public class ProductInitializer {
         // 더미 데이터 작성
         User user = User.builder()
                 .name("한재현")
-                .userId("jaehyeon")
+                .userId("ssafy")
                 .password(bCryptPasswordEncoder.encode("1234"))
                 .birth("980228")
                 .mobile("01012345678")
