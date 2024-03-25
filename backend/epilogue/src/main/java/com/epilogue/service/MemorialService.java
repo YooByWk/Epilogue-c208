@@ -163,7 +163,7 @@ public class MemorialService {
         String[] url = multipartFile.getOriginalFilename().split("\\.");
         String fileType = url[1]; // 파일 확장자
         String originalFileName = multipartFile.getOriginalFilename(); // 원래 파일명
-        String uniqueFileName = UUID.randomUUID() + fileType; // 중복 방지를 위한 unique한 파일명
+        String uniqueFileName = UUID.randomUUID() + "." + fileType; // 중복 방지를 위한 unique한 파일명
 
         // 사진 저장
         if(fileType.equals("jpg") || fileType.equals("jpeg") || fileType.equals("png") || fileType.equals("gif")) {
