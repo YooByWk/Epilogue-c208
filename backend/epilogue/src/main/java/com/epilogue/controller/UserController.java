@@ -8,6 +8,7 @@ import com.epilogue.dto.response.user.UserDTO;
 import com.epilogue.service.UserService;
 import io.swagger.v3.oas.annotations.Parameter;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
+import io.swagger.v3.oas.annotations.responses.ApiResponses;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
@@ -31,7 +32,10 @@ public class UserController {
         return new ResponseEntity<>(HttpStatus.OK);
     }
 
-    @ApiResponse(responseCode = "200", description = "성공")
+    @ApiResponses(value = {
+            @ApiResponse(responseCode = "true", description = "중복 O"),
+            @ApiResponse(responseCode = "false", description = "중복 X"),
+    })
     @PostMapping("/user/id/check")
     public ResponseEntity<?> check(@Parameter(description = "중복 검증할 아이디") @RequestBody IdCheckRequestDto idCheckRequestDto) {
         Boolean userIdCheck = userService.check(idCheckRequestDto);
