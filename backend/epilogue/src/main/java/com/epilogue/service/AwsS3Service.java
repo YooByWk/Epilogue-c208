@@ -49,12 +49,15 @@ public class AwsS3Service {
         }
     }
 
-    // 사진 불러오기
+    // 사진 url 불러오기
     public String getPhotoFromS3(String fileName) {
         return amazonS3.getUrl(photoBucketName, fileName).toString();
     }
 
-    // 사진 목록 불러오기
+    // 동영상 url 불러오기
+    public String getVideoFromS3(String fileName) {
+        return amazonS3.getUrl(videoBucketName, fileName).toString();
+    }
 
 
 
