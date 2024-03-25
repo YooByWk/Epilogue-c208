@@ -39,9 +39,10 @@ public class WillController {
     public ResponseEntity<Void> saveWillAndWitness(@Parameter(description = "유언 파일 및 증인 목록 요청 DTO") @ModelAttribute WillAndWitnessRequestDto willAndWitnessRequestDto, Principal principal) {
         // 임의 유언 생성
         Will will = new Will();
+        willService.saveWill(will);
 
         // 증인 리스트 저장
-        witnessService.save(will, willAndWitnessRequestDto, principal);
+        witnessService.saveWitness(will, willAndWitnessRequestDto, principal);
 
         // 블록체인 트랜잭션 생성 (해시, 녹음 파일 url, 초기 영수증)
 
