@@ -160,7 +160,7 @@ public class MemorialService {
     }
 
     public void saveMedia(String loginUserId, int memorialSeq, MultipartFile multipartFile, MemorialMediaRequestDto memorialMediaRequestDto) throws Exception {
-        String[] url = multipartFile.getOriginalFilename().split(".");
+        String[] url = multipartFile.getOriginalFilename().split("\\.");
         String fileType = url[1]; // 파일 확장자
         String originalFileName = multipartFile.getOriginalFilename(); // 원래 파일명
         String uniqueFileName = UUID.randomUUID() + fileType; // 중복 방지를 위한 unique한 파일명
