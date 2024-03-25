@@ -13,7 +13,7 @@ class BlockChainWalletModel {
   String get privateKey => _privateKey.toString();
   // String get key => _key;
 
-  void setWallet (String privateKey, String walletrAddress, String key) {
+  void setWallet (String privateKey, String walletrAddress) {
     _privateKey = privateKey;
     _walletAddress = walletrAddress;
     // _key = key;

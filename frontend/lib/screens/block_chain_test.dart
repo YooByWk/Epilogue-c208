@@ -77,6 +77,12 @@ class BlockChainTest extends StatelessWidget {
                       },
                       child : Text('스토리지 확인')
                     ),
+                    ElevatedButton(
+                      onPressed: ()  async {
+                        Navigator.pushNamed(context, '/mnemonic');
+                      },
+                      child : Text('니모닉 복구')
+                    ),
                     
                   ],
                 ),

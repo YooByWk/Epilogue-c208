@@ -15,6 +15,8 @@ class BlockChainWalletViewModel extends ChangeNotifier {
 
   final BlockChainWalletModel _model;
   final storage = FlutterSecureStorage();
+  final _mnemonicControllers = List.generate(12, (index) => TextEditingController());
+  List<TextEditingController> get mnemonicControllers => _mnemonicControllers;
 
   BlockChainWalletViewModel (this._model);
 
@@ -36,18 +38,17 @@ class BlockChainWalletViewModel extends ChangeNotifier {
     bip32.BIP32 root = bip32.BIP32.fromSeed(seed);
     // 시드를 사용, 개인 키 생성
     bip32.BIP32 child = root.derivePath("m/44'/60'/0'/0/0");
-    var privateKeyHex = child.privateKey!.map((byte) => byte.toRadixString(16).padLeft(2, '0')).join();
+    var privateKeyHex = child.privateKey!.map((byte) => byte.toRadixString(16).padLeft(2, '0')).join('');
     var privateKey = EthPrivateKey.fromHex(privateKeyHex);  
     debugPrint('개인키 : $privateKeyHex');
     debugPrint(' 개인키 정수 : ${privateKey.privateKeyInt}');
     debugPrint('실험 주소 : ${privateKey.address}');
 
-    _model.setWallet(privateKeyHex, privateKey.address.toString(), privateKeyHex);
+    _model.setWallet(privateKeyHex, privateKey.address.toString());
     debugPrint(' 꾸엑 키 ${_model.privateKey}');
     debugPrint(' 꾸엑 주소 ${_model.walletAddress}');
 
 
-  // _model.setWallet(credentials, address.hex); // 모델에 해당 기록 전송
 
     await storage.write( key: "credentials", value: _model.privateKey); // 키 저장
     await storage.write( key: "walletAddress", value: _model.walletAddress); // 키 저장
@@ -61,12 +62,77 @@ class BlockChainWalletViewModel extends ChangeNotifier {
     Uint8List seed2 = bip39.mnemonicToSeed(wrtienMnemonic!);
     bip32.BIP32 root2 = bip32.BIP32.fromSeed(seed2);
     bip32.BIP32 child2 = root2.derivePath("m/44'/60'/0'/0/0");
-    var privateKeyHex2 = child2.privateKey!.map((byte) => byte.toRadixString(16).padLeft(2, '0')).join();
+    var privateKeyHex2 = child2.privateKey!.map((byte) => byte.toRadixString(16).padLeft(2, '0')).join('');
     var privateKey2 = EthPrivateKey.fromHex(privateKeyHex2);
+    
     debugPrint('복구된 개인키 : $privateKeyHex2');
     debugPrint('복구된 주소 : ${privateKey2.address}');
     debugPrint(privateKey == privateKey2 ? '복구 성공' : '복구 실패');
   }
+
+
+
+// 니모닉을 통한 지갑 복구
+
+  bool validateMnemonic() {
+    for (int i = 0; i < _mnemonicControllers.length; i++) {
+      if (_mnemonicControllers[i].text.isEmpty) {
+        return false;
+      }
+    }
+    return true;
+  }
+
+  Future<void> recoverFromMnemonic() async {
+    if (!validateMnemonic()) {
+      return;
+    }
+
+    String mnemonic = _mnemonicControllers.map((e) => e.text).join(' ');
+    // Uint8List seed = bip39.mnemonicToSeed(mnemonic);
+    // bip32.BIP32 root = bip32.BIP32.fromSeed(seed);
+    // bip32.BIP32 child = root.derivePath("m/44'/60'/0'/0/0");
+    // var privateKeyHex = child.privateKey!.map((byte) => byte.toRadixString(16).padLeft(2, '0')).join('');
+    // var privateKey = EthPrivateKey.fromHex(privateKeyHex);
+    // debugPrint('복구된 개인키 : $privateKeyHex');
+    // debugPrint('복구된 주소 : ${privateKey.address}');
+    
+    // _model.setWallet(privateKeyHex, privateKey.address.toString());
+
+    // await storage.write( key: "credentials", value: _model.privateKey); // 키 저장
+    // await storage.write( key: "walletAddress", value: _model.walletAddress); // 키 저장
+    // await storage.write( key : 'mnemonic', value: mnemonic); // 니모닉 저장
+    // var writenKey = (await storage.read(key: 'privateKey')); // 저장된 키 값 확인
+    // var writenAddress = (await storage.read(key : 'walletAddress'));
+    // var wrtienMnemonic = (await storage.read(key : 'mnemonic'));
+    // debugPrint('복구된 개인키 : $privateKeyHex');
+    // debugPrint('복구된 주소 : ${privateKey.address}');
+    // debugPrint('복구에 사용된 니모닉 : $wrtienMnemonic');
+    Uint8List seed = bip39.mnemonicToSeed(mnemonic);
+    bip32.BIP32 root = bip32.BIP32.fromSeed(seed);
+    // 시드를 사용, 개인 키 생성
+    bip32.BIP32 child = root.derivePath("m/44'/60'/0'/0/0");
+    var privateKeyHex = child.privateKey!.map((byte) => byte.toRadixString(16).padLeft(2, '0')).join('');
+    var privateKey = EthPrivateKey.fromHex(privateKeyHex);  
+    debugPrint('개인키 : $privateKeyHex');
+    debugPrint(' 개인키 정수 : ${privateKey.privateKeyInt}');
+    debugPrint('실험 주소 : ${privateKey.address}');
+
+    _model.setWallet(privateKeyHex, privateKey.address.toString());
+    debugPrint(' 꾸엑 키 ${_model.privateKey}');
+    debugPrint(' 꾸엑 주소 ${_model.walletAddress}');
+
+
+
+    await storage.write( key: "credentials", value: _model.privateKey); // 키 저장
+    await storage.write( key: "walletAddress", value: _model.walletAddress); // 키 저장
+    await storage.write( key : 'mnemonic', value: mnemonic); // 니모닉 저장
+    var writenKey = (await storage.read(key: 'privateKey')); // 저장된 키 값 확인
+    var writenAddress = (await storage.read(key : 'walletAddress'));
+    var wrtienMnemonic = (await storage.read(key : 'mnemonic'));
+    debugPrint('저장된 개인키 : $writenKey, 저장된 주소 : $writenAddress');
+    debugPrint('저장된 니모닉 : $wrtienMnemonic');
+  } 
 
   // Future<void> checkWallet() async {
   //   debugPrint('checkWallet() called ');
