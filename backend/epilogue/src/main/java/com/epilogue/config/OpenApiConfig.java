@@ -25,8 +25,8 @@ public class OpenApiConfig {
 
         SecurityScheme accessTokenSecurityScheme = new SecurityScheme()
                 .type(SecurityScheme.Type.HTTP)
-                .scheme("Bearer")
-                .bearerFormat("JWT")
+                .scheme("bearer")
+                .bearerFormat("Authorization")
                 .in(SecurityScheme.In.HEADER)
                 .name(HttpHeaders.AUTHORIZATION);
 
