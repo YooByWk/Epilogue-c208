@@ -24,8 +24,6 @@ public class TestController {
     
     @PostMapping("/home")
     public ResponseEntity<String> test2() {
-        System.out.println("==========");
-        System.out.println("==========");
         return new ResponseEntity<>("redirect-uri 테스트", HttpStatus.OK);
     }
 
