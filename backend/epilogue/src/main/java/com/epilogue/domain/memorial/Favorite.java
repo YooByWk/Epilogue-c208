@@ -1,5 +1,6 @@
 package com.epilogue.domain.memorial;
 
+import com.epilogue.domain.user.User;
 import io.swagger.v3.oas.annotations.media.Schema;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotNull;
