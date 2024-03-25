@@ -1,5 +1,6 @@
 package com.epilogue.util;
 
+import com.epilogue.dto.response.user.CustomUserDetails;
 import jakarta.servlet.FilterChain;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.http.Cookie;
@@ -43,19 +44,30 @@ public class LoginFilter extends UsernamePasswordAuthenticationFilter {
     @Override
     protected void successfulAuthentication(HttpServletRequest request, HttpServletResponse response, FilterChain chain, Authentication authentication) {
         //유저 정보
-        String username = authentication.getName();
+        // 로그인 성공 -> 로그인한 유저의 정보를 가지고 JWT 발급
+        // getPrincipal() : 현재 사용자 정보 가져오기
+        CustomUserDetails customUserDetails = (CustomUserDetails) authentication.getPrincipal();
+
+        String userId = customUserDetails.getUsername(); // 아이디
 
         Collection<? extends GrantedAuthority> authorities = authentication.getAuthorities();
         Iterator<? extends GrantedAuthority> iterator = authorities.iterator();
         GrantedAuthority auth = iterator.next();
-        String role = auth.getAuthority();
+        String role = auth.getAuthority(); // 권한
 
-        //토큰 생성
-        String token = jwtUtil.createJwt(username, role, 86400000L);
+        // 사용자 아이디, 권한 입력해서 JWT 발급
+        String accessToken = jwtUtil.createAccessToken(userId, role); // access token
+//        String refreshToken = jwtUtil.createRefreshToken(userId, role); // refresh token
 
-        //응답 설정
-        response.addCookie(createCookie(token));
-        response.setStatus(HttpStatus.OK.value());
+        // Bearer 인증 방식
+        // 응답 헤더에 JWT 토큰 값을 넣어 응답
+        // 응답 헤더에서 "Authorization" key 값에 "Bearer ~~" 값을 확인할 수 있음 (JWT)
+        response.addHeader(JWTUtil.ACCESS_TOKEN, "Bearer " + accessToken);
+//        response.addHeader(JWTUtil.REFRESH_TOKEN, "Bearer " + refreshToken);
+
+        // 디비에 refreshToken 저장
+//        userRepository.updateRefreshToken(userId, refreshToken);
+
     }
 
     // 로그인 실패시 실행하는 메소드
@@ -67,14 +79,4 @@ public class LoginFilter extends UsernamePasswordAuthenticationFilter {
         response.setStatus(401);
     }
 
-    private Cookie createCookie(String value) {
-
-        Cookie cookie = new Cookie("Authorization", value);
-        cookie.setMaxAge(24*60*60);
-        //cookie.setSecure(true);
-        //cookie.setPath("/");
-        cookie.setHttpOnly(true);
-
-        return cookie;
-    }
 }
