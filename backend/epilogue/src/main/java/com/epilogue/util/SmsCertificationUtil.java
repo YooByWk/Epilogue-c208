@@ -10,7 +10,7 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
 
 @Component
-public class SmsUtil {
+public class SmsCertificationUtil {
 
     @Value("${coolsms.api.key}")
     private String apiKey;
@@ -25,14 +25,13 @@ public class SmsUtil {
     }
 
     // 단일 메시지 발송 예제
-    public SingleMessageSentResponse sendOne(String to, String verificationCode) {
+    public SingleMessageSentResponse sendSms(String to, String verificationCode) {
         Message message = new Message();
         // 발신번호 및 수신번호는 반드시 01012345678 형태로 입력되어야 합니다.
         message.setFrom("01057056540");
         message.setTo(to);
-        message.setText("[Epilogue]\n" + verificationCode);
+        message.setText("[Epilogue] 본인 확인 인증번호는 " + verificationCode + "입니다.");
 
-        SingleMessageSentResponse response = this.messageService.sendOne(new SingleMessageSendingRequest(message));
-        return response;
+        return this.messageService.sendOne(new SingleMessageSendingRequest(message));
     }
 }

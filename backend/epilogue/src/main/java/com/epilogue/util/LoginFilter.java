@@ -31,9 +31,6 @@ public class LoginFilter extends UsernamePasswordAuthenticationFilter {
         String userId = obtainUsername(request);
         String password = obtainPassword(request);
 
-        System.out.println(userId);
-        System.out.println(password);
-
         // 스프링 시큐리티에서 아이디와 비밀번호를 검증하기 위해서는 token에 담아야 함
         UsernamePasswordAuthenticationToken authToken = new UsernamePasswordAuthenticationToken(userId, password, null);
 
