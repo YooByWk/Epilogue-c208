@@ -45,7 +45,6 @@ public class User {
     @OneToOne
     private Will will;
 
-//    @ColumnDefault("'LIVE'")
     @Schema(description = "회원 상태")
     @OneToOne
     private UserStatus userStatus;

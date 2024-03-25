@@ -22,7 +22,7 @@ public class MemorialLetter {
     private String content;
 
     @Schema(description = "작성일")
-    private Timestamp date;
+    private Timestamp writtenDate;
 
     @Schema(description = "고인 식별키")
     private int userSeq;
