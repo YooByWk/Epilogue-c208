@@ -3,6 +3,8 @@ import 'package:dio/dio.dart';
 import 'package:frontend/models/login_model.dart';
 import 'package:frontend/models/signup_model.dart';
 import 'package:flutter_dotenv/flutter_dotenv.dart';
+import 'package:flutter/material.dart';
+
 
 class AuthService {
   final Dio _dio = Dio();
@@ -21,6 +23,7 @@ class AuthService {
         return handler.next(options); // 요청을 계속 진행한다
       },
     ));
+    _dio.interceptors.add(LoggingInterceptor());  // console에 로깅
   }
 
   ///////////////////////// 로그인 //////////////////////////////////
@@ -80,20 +83,20 @@ class AuthService {
 class LoggingInterceptor extends Interceptor {
   @override
   void onRequest(RequestOptions options, RequestInterceptorHandler handler) {
-    print("REQUEST[${options.method}] => PATH: ${options.path}");
+    debugPrint("REQUEST[${options.method}] => PATH: ${options.path}");
     super.onRequest(options, handler);
   }
 
   @override
   void onResponse(Response response, ResponseInterceptorHandler handler) {
-    print(
+    debugPrint(
         "RESPONSE[${response.statusCode}] => PATH: ${response.requestOptions.path}");
     super.onResponse(response, handler);
   }
 
   @override
   void onError(DioError err, ErrorInterceptorHandler handler) {
-    print(
+    debugPrint(
         "ERROR[${err.response?.statusCode}] => PATH: ${err.requestOptions.path}");
     super.onError(err, handler);
   }
