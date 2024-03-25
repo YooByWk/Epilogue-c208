@@ -15,37 +15,46 @@ class MnemonicScreen extends StatelessWidget {
           appBar: AppBar(
             title: Text('유언장 복구'),
           ),
-          body: GridView.builder(
-            padding: const EdgeInsets.all(8.0),
-            gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
-              crossAxisCount: 3,
-              mainAxisSpacing: 8.0,
-              crossAxisSpacing: 8.0,
-            ),
-            itemCount: viewModel.mnemonicControllers.length,
-            itemBuilder: (context, index) {
-              return TextField(
-                controller: viewModel.mnemonicControllers[index],
-                focusNode: focusNodes[index],
-                decoration: InputDecoration(
-                  labelText: 'Enter word ${index + 1}',
-                ),
-                onSubmitted: (value) {
-                  if (index < 11) {
-                    FocusScope.of(context).requestFocus(focusNodes[index + 1]);
-                  }
-                },
-              );
+          body: 
+Padding(
+  padding: const EdgeInsets.only(top: 30.0), // 원하는 공백 크기로 조정
+  child: GridView.builder(
+    padding: const EdgeInsets.all(8.0),
+    gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+      crossAxisCount: 3,
+      mainAxisSpacing: 8.0,
+      crossAxisSpacing: 8.0,
+    ),
+    itemCount: viewModel.mnemonicControllers.length,
+    itemBuilder: (context, index) {
+      return Column (
+        children: [
+          Text(' ${index + 1}번 단어', style: TextStyle(fontSize: 20.0),),
+          TextField(
+            controller: viewModel.mnemonicControllers[index],
+            focusNode: focusNodes[index],
+            textAlign: TextAlign.center,
+            decoration: InputDecoration(),
+            onSubmitted: (value) {
+              if (index < 11) {
+                FocusScope.of(context).requestFocus(focusNodes[index + 1]);
+              }
             },
-          ),
+          )
+        ],
+      );
+    },
+  ),
+),
           floatingActionButton: FloatingActionButton(
             onPressed: () async {
               if (viewModel.validateMnemonic() == 0) {
                 showDialog(
                   context: context,
                   builder: (context) => AlertDialog(
-                    title: Text('경고'),
-                    content: Text('모든 단어를 입력해주세요.'),
+                    title: Text('경고',
+                    textAlign: TextAlign.center,),
+                    content: Text('모든 단어를 입력해주세요.', textAlign: TextAlign.center),
                     actions: [
                       TextButton(
                         onPressed: () {
@@ -60,8 +69,8 @@ class MnemonicScreen extends StatelessWidget {
                 showDialog(
                   context: context,
                   builder: (context) => AlertDialog(
-                    title: Text('경고'),
-                    content: Text('단어가 유효하지 않습니다.'),
+                    title: Text('경고', textAlign: TextAlign.center,),
+                    content: Text('단어가 유효하지 않습니다.', textAlign: TextAlign.center,),
                     actions: [
                       TextButton(
                         onPressed: () {
