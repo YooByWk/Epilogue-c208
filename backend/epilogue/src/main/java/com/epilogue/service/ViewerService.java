@@ -2,7 +2,6 @@ package com.epilogue.service;
 
 import com.epilogue.domain.user.User;
 import com.epilogue.domain.viewer.Viewer;
-import com.epilogue.dto.request.viewer.ViewerListRequestDto;
 import com.epilogue.dto.request.viewer.ViewerRequestDto;
 import com.epilogue.repository.user.UserRepository;
 import com.epilogue.repository.viewer.ViewerRepository;
@@ -18,9 +17,7 @@ public class ViewerService {
     private final ViewerRepository viewerRepository;
     private final UserRepository userRepository;
 
-    public void save(ViewerListRequestDto viewerListRequestDto, Principal principal) {
-        List<ViewerRequestDto> viewerList = viewerListRequestDto.getViewerList();
-
+    public void save(List<ViewerRequestDto> viewerList, Principal principal) {
         User user = userRepository.findByUserId(principal.getName());
 
         for (ViewerRequestDto v : viewerList) {
