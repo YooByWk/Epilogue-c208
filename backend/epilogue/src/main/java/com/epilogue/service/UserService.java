@@ -56,7 +56,7 @@ public class UserService {
         userRepository.delete(userRepository.findByUserId(loginUserId));
     }
 
-    public void sendSms(SmsCertificationRequest requestDto) {
+    public void sendSms(SmsCertificationRequestDto requestDto) {
         String to = requestDto.getPhone();
         int randomNumber = (int) (Math.random() * 9000) + 1000;
         String certificationNumber = String.valueOf(randomNumber);
@@ -64,14 +64,16 @@ public class UserService {
         smsCertificationRepository.createSmsCertification(to, certificationNumber);
     }
 
-    public void verifySms(SmsCertificationRequest requestDto) {
-        if (isVerify(requestDto)) {
+    public boolean verifySms(SmsCertificationRequestDto smsCertificationRequestDto) {
+        if (isVerify(smsCertificationRequestDto)) {
             System.out.println("인증번호 틀림");
+            return false;
         }
-        smsCertificationRepository.removeSmsCertification(requestDto.getPhone());
+        smsCertificationRepository.removeSmsCertification(smsCertificationRequestDto.getPhone());
+        return true;
     }
 
-    public boolean isVerify(SmsCertificationRequest requestDto) {
+    public boolean isVerify(SmsCertificationRequestDto requestDto) {
         return !(smsCertificationRepository.hasKey(requestDto.getPhone()) &&
                 smsCertificationRepository.getSmsCertification(requestDto.getPhone())
                         .equals(requestDto.getCertificationNumber()));
