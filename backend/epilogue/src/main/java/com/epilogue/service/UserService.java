@@ -2,10 +2,12 @@ package com.epilogue.service;
 
 import com.epilogue.domain.user.User;
 import com.epilogue.dto.request.user.JoinRequestDto;
+import com.epilogue.dto.request.user.SmsCertificationRequest;
 import com.epilogue.dto.request.user.UpdateInfoRequestDto;
-import com.epilogue.dto.request.user.UserStatusRepository;
 import com.epilogue.dto.response.user.UserDTO;
+import com.epilogue.repository.SmsCertificationRepository;
 import com.epilogue.repository.user.UserRepository;
+import com.epilogue.util.SmsCertificationUtil;
 import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
@@ -17,6 +19,8 @@ public class UserService {
 
     private final UserRepository userRepository;
     private final BCryptPasswordEncoder bCryptPasswordEncoder;
+    private final SmsCertificationUtil smsUtil;
+    private final SmsCertificationRepository smsCertificationRepository;
 
     @Transactional
     public void join(JoinRequestDto joinRequestDto) {
@@ -51,6 +55,27 @@ public class UserService {
 
     public void deleteMember(String loginUserId) {
         userRepository.delete(userRepository.findByUserId(loginUserId));
+    }
+
+    public void sendSms(SmsCertificationRequest requestDto) {
+        String to = requestDto.getPhone();
+        int randomNumber = (int) (Math.random() * 9000) + 1000;
+        String certificationNumber = String.valueOf(randomNumber);
+        smsUtil.sendSms(to, certificationNumber);
+        smsCertificationRepository.createSmsCertification(to, certificationNumber);
+    }
+
+    public void verifySms(SmsCertificationRequest requestDto) {
+        if (isVerify(requestDto)) {
+            System.out.println("인증번호 틀림");
+        }
+        smsCertificationRepository.removeSmsCertification(requestDto.getPhone());
+    }
+
+    public boolean isVerify(SmsCertificationRequest requestDto) {
+        return !(smsCertificationRepository.hasKey(requestDto.getPhone()) &&
+                smsCertificationRepository.getSmsCertification(requestDto.getPhone())
+                        .equals(requestDto.getCertificationNumber()));
     }
 
 }
