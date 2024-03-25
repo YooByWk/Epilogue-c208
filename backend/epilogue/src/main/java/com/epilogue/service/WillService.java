@@ -10,11 +10,13 @@ import com.epilogue.repository.user.UserRepository;
 import com.epilogue.repository.will.WillRepository;
 import com.epilogue.repository.witness.WitnessRepository;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.security.core.parameters.P;
 import org.springframework.stereotype.Service;
 
 import java.security.Principal;
 
+@Slf4j
 @Service
 @RequiredArgsConstructor
 public class WillService {
@@ -36,6 +38,7 @@ public class WillService {
     public void saveAdditionalInformation(WillAdditionalRequestDto willAdditionalRequestDto, Principal principal) {
         User user = userRepository.findByUserId(principal.getName());
         Will will = willRepository.findById(user.getWill().getWillSeq()).get();
+        log.info("will Seq={}", will.getWillSeq());
 
         will.updateAdditionalInformation(willAdditionalRequestDto.isSustainCare(), willAdditionalRequestDto.getFuneralType(), willAdditionalRequestDto.getGraveType(), willAdditionalRequestDto.isOrganDonation());
     }
