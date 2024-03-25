@@ -1,11 +1,18 @@
 package com.epilogue.service;
 
 import com.amazonaws.services.s3.AmazonS3;
+import com.amazonaws.services.s3.model.DeleteObjectRequest;
 import com.amazonaws.services.s3.model.ObjectMetadata;
 import java.io.IOException;
+import java.io.UnsupportedEncodingException;
+import java.net.MalformedURLException;
+import java.net.URL;
+import java.net.URLDecoder;
 import java.security.Principal;
 
 import com.epilogue.domain.user.User;
+import com.epilogue.domain.will.Will;
+import com.epilogue.exception.S3Exception;
 import com.epilogue.repository.user.UserRepository;
 import com.epilogue.repository.will.WillRepository;
 import lombok.RequiredArgsConstructor;
@@ -59,26 +66,21 @@ public class AwsS3Service {
         return amazonS3.getUrl(videoBucketName, fileName).toString();
     }
 
+    public void deleteFromS3(Principal principal) throws MalformedURLException, UnsupportedEncodingException {
+        Will will = userRepository.findByUserId(principal.getName()).getWill();
+
+        String key = getKeyFromAddress(will.getWillFileAddress());
+        amazonS3.deleteObject(new DeleteObjectRequest(bucketName, key));
+    }
 
 
-//    private String getKeyFromMp4Address(String mp4Address){
-//        try {
-//            URL url = new URL(mp4Address);
-//            String decodingKey = URLDecoder.decode(url.getPath(), "UTF-8");
-//            return decodingKey.substring(1); // 맨 앞의 '/' 제거
-//        } catch (MalformedURLException | UnsupportedEncodingException e){
-//            throw new S3Exception(ErrorCode.IO_EXCEPTION_ON_MP3_DELETE);
-//        }
-//    }
-//
-//    public void deleteMp4FromS3(String mp4Address) {
-//        String key = getKeyFromMp4Address(mp4Address);
-//        try {
-//            amazonS3.deleteObject(new DeleteObjectRequest(bucketName, key));
-//        } catch (Exception e) {
-//            throw new S3Exception(ErrorCode.IO_EXCEPTION_ON_MP3_DELETE);
-//        }
-//    }
+
+    private String getKeyFromAddress(String fileAddress) throws MalformedURLException, UnsupportedEncodingException {
+        URL url = new URL(fileAddress);
+        String decodingKey = URLDecoder.decode(url.getPath(), "UTF-8");
+        return decodingKey.substring(1); // 맨 앞의 '/' 제거r
+    }
+
 
 //    public String upload(MultipartFile mp3) {
 //        if (mp3.isEmpty() || Objects.isNull(mp3.getOriginalFilename())){

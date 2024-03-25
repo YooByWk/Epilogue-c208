@@ -21,6 +21,8 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
+import java.io.UnsupportedEncodingException;
+import java.net.MalformedURLException;
 import java.security.Principal;
 import java.util.List;
 
@@ -76,7 +78,7 @@ public class WillController {
     @ApiResponse(responseCode = "200", description = "성공")
     @PostMapping("/memorial")
     public ResponseEntity<Void> saveMemorial(@Parameter(description = "디지털 추모관 정보 요청 DTO") @ModelAttribute WillMemorialRequestDto willMemorialRequestDto, Principal principal) {
-        // 열람인 리스트 저장
+        // 디지털 추모관 정보 저장
         willService.saveMemorial(willMemorialRequestDto, principal);
         return new ResponseEntity<>(HttpStatus.OK);
     }
@@ -85,7 +87,7 @@ public class WillController {
     @ApiResponse(responseCode = "200", description = "성공")
     @PostMapping("/additional")
     public ResponseEntity<Void> saveAdditionalInformation(@Parameter(description = "추가 정보 요청 DTO") @RequestBody WillAdditionalRequestDto willAdditionalRequestDto, Principal principal) {
-        // 열람인 리스트 저장
+        // 추가 정보 저장
         willService.saveAdditionalInformation(willAdditionalRequestDto, principal);
         return new ResponseEntity<>(HttpStatus.OK);
     }
@@ -102,11 +104,11 @@ public class WillController {
     @Operation(summary = "나의 유언 삭제 API", description = "내가 작성한 유언을 삭제합니다.")
     @ApiResponse(responseCode = "200", description = "성공")
     @DeleteMapping
-    public ResponseEntity<Void> deleteMyWill(Principal principal) {
+    public ResponseEntity<Void> deleteMyWill(Principal principal) throws MalformedURLException, UnsupportedEncodingException {
         willService.deleteMyWill(principal);
 
         // S3에서 유언 원본 파일 삭제
-//        awsS3Service.deleteMp3FromS3(mp3Address);
+        awsS3Service.deleteFromS3(principal);
         return new ResponseEntity<>(HttpStatus.OK);
     }
 
