@@ -14,7 +14,7 @@ public class ProductInitializer {
     private final UserRepository userRepository;
     private final BCryptPasswordEncoder bCryptPasswordEncoder;
 
-//    @PostConstruct
+    @PostConstruct
     public void init() {
         // 더미 데이터 작성
         User user = User.builder()
