@@ -13,7 +13,7 @@ class MnemonicScreen extends StatelessWidget {
       child: Consumer<BlockChainWalletViewModel>(
         builder: (context, viewModel, child) => Scaffold(
           appBar: AppBar(
-            title: Text('Wallet Recovery'),
+            title: Text('유언장 복구'),
           ),
           body: GridView.builder(
             padding: const EdgeInsets.all(8.0),
@@ -40,12 +40,28 @@ class MnemonicScreen extends StatelessWidget {
           ),
           floatingActionButton: FloatingActionButton(
             onPressed: () async {
-              if (!viewModel.validateMnemonic()) {
+              if (viewModel.validateMnemonic() == 0) {
                 showDialog(
                   context: context,
                   builder: (context) => AlertDialog(
                     title: Text('경고'),
                     content: Text('모든 단어를 입력해주세요.'),
+                    actions: [
+                      TextButton(
+                        onPressed: () {
+                          Navigator.pop(context);
+                        },
+                        child: Text('확인'),
+                      ),
+                    ],
+                  ),
+                );
+              } else if (viewModel.validateMnemonic() == 1) {
+                showDialog(
+                  context: context,
+                  builder: (context) => AlertDialog(
+                    title: Text('경고'),
+                    content: Text('단어가 유효하지 않습니다.'),
                     actions: [
                       TextButton(
                         onPressed: () {

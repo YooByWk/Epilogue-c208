@@ -74,40 +74,41 @@ class BlockChainWalletViewModel extends ChangeNotifier {
 
 // 니모닉을 통한 지갑 복구
 
-  bool validateMnemonic() {
-    for (int i = 0; i < _mnemonicControllers.length; i++) {
-      if (_mnemonicControllers[i].text.isEmpty) {
-        return false;
-      }
+int validateMnemonic() {
+  for (int i = 0; i < _mnemonicControllers.length; i++) {
+    if (_mnemonicControllers[i].text.isEmpty) {
+      debugPrint('모든 단어를 입력해주세요.');
+      return 0;
     }
-    return true;
   }
 
+  String mnemonic = _mnemonicControllers.map((e) => e.text).join(' ');
+  if (!bip39.validateMnemonic(mnemonic)) {
+    debugPrint('니모닉이 유효하지 않습니다.');
+    return 1;
+  }
+
+  return -1;
+}
+
   Future<void> recoverFromMnemonic() async {
-    if (!validateMnemonic()) {
+    if (validateMnemonic() != -1) {
+      debugPrint(validateMnemonic().toString());
+      switch (validateMnemonic()) {
+        case 0:
+          debugPrint('모든 단어를 입력해주세요.');
+          break;
+        case 1:
+          debugPrint('니모닉이 유효하지 않습니다.');
+          break;
+      }
+
+
       return;
     }
-
+     
     String mnemonic = _mnemonicControllers.map((e) => e.text).join(' ');
-    // Uint8List seed = bip39.mnemonicToSeed(mnemonic);
-    // bip32.BIP32 root = bip32.BIP32.fromSeed(seed);
-    // bip32.BIP32 child = root.derivePath("m/44'/60'/0'/0/0");
-    // var privateKeyHex = child.privateKey!.map((byte) => byte.toRadixString(16).padLeft(2, '0')).join('');
-    // var privateKey = EthPrivateKey.fromHex(privateKeyHex);
-    // debugPrint('복구된 개인키 : $privateKeyHex');
-    // debugPrint('복구된 주소 : ${privateKey.address}');
     
-    // _model.setWallet(privateKeyHex, privateKey.address.toString());
-
-    // await storage.write( key: "credentials", value: _model.privateKey); // 키 저장
-    // await storage.write( key: "walletAddress", value: _model.walletAddress); // 키 저장
-    // await storage.write( key : 'mnemonic', value: mnemonic); // 니모닉 저장
-    // var writenKey = (await storage.read(key: 'privateKey')); // 저장된 키 값 확인
-    // var writenAddress = (await storage.read(key : 'walletAddress'));
-    // var wrtienMnemonic = (await storage.read(key : 'mnemonic'));
-    // debugPrint('복구된 개인키 : $privateKeyHex');
-    // debugPrint('복구된 주소 : ${privateKey.address}');
-    // debugPrint('복구에 사용된 니모닉 : $wrtienMnemonic');
     Uint8List seed = bip39.mnemonicToSeed(mnemonic);
     bip32.BIP32 root = bip32.BIP32.fromSeed(seed);
     // 시드를 사용, 개인 키 생성
