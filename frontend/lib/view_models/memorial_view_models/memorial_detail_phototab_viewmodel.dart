@@ -1,8 +1,11 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:provider/provider.dart';
 import 'package:http/http.dart' as http;
 
+
 class PhotoTabViewModel extends ChangeNotifier {
+  final baseURL = dotenv.env['API_URL'];
   List<String> _photos = [];
   int _nextItem = 0;
 
@@ -31,13 +34,13 @@ class PhotoTabViewModel extends ChangeNotifier {
 
   void testAPI() async {
     // api 실험 호출
-    String link = 'http://j10c208.p.ssafy.io:8080/api/test';
-    debugPrint('API 호출 + $link');
+    // String link = 'http://j10c208.p.ssafy.io:8080/api/test';
 
-    var res = await http.get(Uri.parse(link));
+    var res = await http.get(Uri.parse(baseURL.toString()+'/api/test'));
 
     if (res.statusCode == 200) {
-      debugPrint('API 호출 성공');
+      debugPrint('API 호출 성공555555555');
+      debugPrint('API 호출 + $baseURL');
     } else {
       debugPrint('API 호출 실패');
     }
