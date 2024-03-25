@@ -41,8 +41,11 @@ public class WillController {
         Will will = new Will();
         willService.saveWill(will);
 
+        log.info("will 저장 완료! will={}", will);
+
         // 증인 리스트 저장
         witnessService.saveWitness(will, willAndWitnessRequestDto, principal);
+        log.info("witness 저장 완료!");
 
         // 블록체인 트랜잭션 생성 (해시, 녹음 파일 url, 초기 영수증)
 
@@ -51,6 +54,8 @@ public class WillController {
 
         // 유언 파일 S3 저장 (원본 파일, 초기 영수증)
         awsS3Service.upload(willAndWitnessRequestDto.getMultipartFile(), principal);
+
+        log.info("유언 파일 저장 완료!");
 
         // 프론트에 알림 (200 보내기)
         return new ResponseEntity<>(HttpStatus.OK);
