@@ -55,7 +55,7 @@ public class MemorialController {
     @ApiResponse(responseCode = "400", description = "파일명 또는 파일 확장자 에러")
     @ApiResponse(responseCode = "403", description = "로그인 에러")
 //    public ResponseEntity<Void> saveMedia(@Parameter(description = "디지털 추모관 식별키") @PathVariable int memorialSeq, MemorialMediaRequestDto memorialMediaRequestDto, Principal principal) throws Exception {
-    public ResponseEntity<Void> saveMedia(@Parameter(description = "디지털 추모관 식별키") @PathVariable int memorialSeq, @RequestPart(value = "multipartFile", required = true) MultipartFile multipartFile, @RequestPart("memorialMediaRequestDto") MemorialMediaRequestDto memorialMediaRequestDto, Principal principal) throws Exception {
+    public ResponseEntity<Void> saveMedia(@Parameter(description = "디지털 추모관 식별키") @PathVariable int memorialSeq, @RequestPart(value = "multipartFile", required = true) MultipartFile multipartFile, @RequestPart MemorialMediaRequestDto memorialMediaRequestDto, Principal principal) throws Exception {
         if(principal != null) {
             String loginUserId = principal.getName();
 
