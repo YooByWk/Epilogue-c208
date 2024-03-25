@@ -4,8 +4,11 @@ import io.swagger.v3.oas.annotations.media.Schema;
 import jakarta.validation.constraints.NotNull;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
 
 @Getter
+@NoArgsConstructor
 @AllArgsConstructor
 @Schema(description = "증인 요청 DTO")
 public class WitnessRequestDto {
