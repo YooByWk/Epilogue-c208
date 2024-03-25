@@ -1,11 +1,11 @@
 package com.epilogue.controller;
 
 import com.epilogue.domain.will.Will;
-import com.epilogue.dto.request.viewer.ViewerListRequestDto;
+import com.epilogue.dto.request.viewer.ViewerRequestDto;
 import com.epilogue.dto.request.will.WillAdditionalRequestDto;
-import com.epilogue.dto.request.will.WillAndWitnessRequestDto;
 import com.epilogue.dto.request.will.WillApplyRequestDto;
 import com.epilogue.dto.request.will.WillMemorialRequestDto;
+import com.epilogue.dto.request.witness.WitnessRequestDto;
 import com.epilogue.service.AwsS3Service;
 import com.epilogue.service.ViewerService;
 import com.epilogue.service.WillService;
@@ -19,8 +19,10 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
 
 import java.security.Principal;
+import java.util.List;
 
 @Slf4j
 @Tag(name = "Will Controller", description = "유언 관련 API")
@@ -35,8 +37,8 @@ public class WillController {
 
     @Operation(summary = "유언 파일 및 증인 저장 API", description = "유언 파일 및 증인을 저장합니다.")
     @ApiResponse(responseCode = "200", description = "성공")
-    @PostMapping(value = "/willAndWitness", consumes = { "multipart/form-data" })
-    public ResponseEntity<Void> saveWillAndWitness(@Parameter(description = "유언 파일 및 증인 목록 요청 DTO") @ModelAttribute WillAndWitnessRequestDto willAndWitnessRequestDto, Principal principal) {
+    @PostMapping(value = "/willAndWitness")
+    public ResponseEntity<Void> saveWillAndWitness(@RequestPart MultipartFile multipartFile, @RequestPart List<WitnessRequestDto> witnessList, Principal principal) {
         // 임의 유언 생성
         Will will = new Will();
         willService.saveWill(will);
@@ -44,7 +46,7 @@ public class WillController {
         log.info("will 저장 완료! will={}", will);
 
         // 증인 리스트 저장
-        witnessService.saveWitness(will, willAndWitnessRequestDto, principal);
+        witnessService.saveWitness(will, witnessList, principal);
         log.info("witness 저장 완료!");
 
         // 블록체인 트랜잭션 생성 (해시, 녹음 파일 url, 초기 영수증)
@@ -53,7 +55,7 @@ public class WillController {
 
 
         // 유언 파일 S3 저장 (원본 파일, 초기 영수증)
-        awsS3Service.upload(willAndWitnessRequestDto.getMultipartFile(), principal);
+        awsS3Service.upload(multipartFile, principal);
 
         log.info("유언 파일 저장 완료!");
 
@@ -64,9 +66,9 @@ public class WillController {
     @Operation(summary = "열람인 저장 API", description = "열람인을 저장합니다.")
     @ApiResponse(responseCode = "200", description = "성공")
     @PostMapping("/viewer")
-    public ResponseEntity<Void> saveViewer(@Parameter(description = "열람인 요청 DTO") @RequestBody ViewerListRequestDto viewerListRequestDto, Principal principal) {
+    public ResponseEntity<Void> saveViewer(@Parameter(description = "열람인 요청 DTO") @RequestBody List<ViewerRequestDto> viewerList, Principal principal) {
         // 열람인 리스트 저장
-        viewerService.save(viewerListRequestDto, principal);
+        viewerService.save(viewerList, principal);
         return new ResponseEntity<>(HttpStatus.OK);
     }
 
