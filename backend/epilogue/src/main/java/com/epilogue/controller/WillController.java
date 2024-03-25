@@ -40,7 +40,7 @@ public class WillController {
     @Operation(summary = "유언 파일 및 증인 저장 API", description = "유언 파일 및 증인을 저장합니다.")
     @ApiResponse(responseCode = "200", description = "성공")
     @PostMapping(value = "/willAndWitness")
-    public ResponseEntity<Void> saveWillAndWitness(@Parameter(description = "유언 열람 파일") @RequestPart MultipartFile multipartFile, @RequestPart List<WitnessRequestDto> witnessList, Principal principal) {
+    public ResponseEntity<Void> saveWillAndWitness(@Parameter(description = "유언 열람 파일 (multipart/form-data 타입)") @RequestPart MultipartFile multipartFile, @Parameter(description = "증인 목록 (application/json 타입)") @RequestPart List<WitnessRequestDto> witnessList, Principal principal) {
         // 임의 유언 생성
         Will will = new Will();
         willService.saveWill(will);
@@ -49,7 +49,6 @@ public class WillController {
 
         // 증인 리스트 저장
         witnessService.saveWitness(will, witnessList, principal);
-        log.info("witness 저장 완료!");
 
         // 블록체인 트랜잭션 생성 (해시, 녹음 파일 url, 초기 영수증)
 
@@ -68,7 +67,7 @@ public class WillController {
     @Operation(summary = "열람인 저장 API", description = "열람인을 저장합니다.")
     @ApiResponse(responseCode = "200", description = "성공")
     @PostMapping("/viewer")
-    public ResponseEntity<Void> saveViewer(@Parameter(description = "열람인 요청 DTO") @RequestBody List<ViewerRequestDto> viewerList, Principal principal) {
+    public ResponseEntity<Void> saveViewer(@Parameter(description = "열람인 목록") @RequestBody List<ViewerRequestDto> viewerList, Principal principal) {
         // 열람인 리스트 저장
         viewerService.save(viewerList, principal);
         return new ResponseEntity<>(HttpStatus.OK);
