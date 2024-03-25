@@ -1,10 +1,9 @@
 package com.epilogue.domain.memorial;
 
+import com.epilogue.domain.user.User;
 import io.swagger.v3.oas.annotations.media.Schema;
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
+import jakarta.persistence.*;
+import jakarta.validation.constraints.NotNull;
 import lombok.Getter;
 
 @Entity
@@ -12,12 +11,20 @@ import lombok.Getter;
 public class MemorialVideo {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Schema(description = "동영상 식별키")
-    private int videoSeq;
+    @Schema(description = "추모관 동영상 식별키")
+    private int memorialVideoSeq;
 
-    @Schema(description = "동영상 객체 url")
-    private String videoURL;
+    @NotNull
+    @Schema(description = "동영상 url")
+    private String videoUrl;
 
-    @Schema(description = "고인 식별키")
-    private int userSeq;
+    @NotNull
+    @Schema(description = "디지털 추모관 식별키")
+    @ManyToOne
+    private Memorial memorial;
+
+    @NotNull
+    @Schema(description = "업로드한 회원 식별키")
+    @ManyToOne
+    private User user;
 }

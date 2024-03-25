@@ -22,6 +22,10 @@ public class WillService {
     private final UserRepository userRepository;
     private final WitnessRepository witnessRepository;
 
+    public void saveWill(Will will) {
+        willRepository.save(will);
+    }
+
     public void saveMemorial(WillMemorialRequestDto willMemorialRequestDto, Principal principal) {
         User user = userRepository.findByUserId(principal.getName());
         Will will = willRepository.findById(user.getWill().getWillSeq()).get();
