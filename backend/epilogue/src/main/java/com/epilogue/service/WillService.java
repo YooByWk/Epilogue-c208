@@ -38,7 +38,6 @@ public class WillService {
     public void saveAdditionalInformation(WillAdditionalRequestDto willAdditionalRequestDto, Principal principal) {
         User user = userRepository.findByUserId(principal.getName());
         Will will = willRepository.findById(user.getWill().getWillSeq()).get();
-        log.info("will Seq={}", will.getWillSeq());
 
         will.updateAdditionalInformation(willAdditionalRequestDto.isSustainCare(), willAdditionalRequestDto.getFuneralType(), willAdditionalRequestDto.getGraveType(), willAdditionalRequestDto.isOrganDonation());
     }
