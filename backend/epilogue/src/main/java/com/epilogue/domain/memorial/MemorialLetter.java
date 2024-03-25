@@ -13,7 +13,7 @@ public class MemorialLetter {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Schema(description = "디지털 추모관 편지 식별키")
-    private String memorialLetterSeq;
+    private int memorialLetterSeq;
 
     @Schema(description = "작성자 닉네임")
     private String nickname;

@@ -1,5 +1,6 @@
 package com.epilogue.domain.memorial;
 
+import com.epilogue.domain.user.User;
 import io.swagger.v3.oas.annotations.media.Schema;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotNull;
@@ -16,7 +17,8 @@ public class Favorite {
 
     @NotNull
     @Schema(description = "즐겨찾기 한 회원 식별키")
-    private int userSeq;
+//    private int userSeq;
+    private User user;
 
     @NotNull
     @Schema(description = "디지털 추모관")
