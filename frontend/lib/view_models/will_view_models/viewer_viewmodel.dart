@@ -1,43 +1,52 @@
 import 'package:flutter/material.dart';
 import 'package:frontend/models/will/viewer_model.dart';
+import 'package:frontend/services/will_service.dart';
 
 class ViewerViewModel extends ChangeNotifier {
-  List<ViewerModel> _viewers = [];
+  final WillService _willService = WillService();
+  List<ViewerModel> viewerList = [];
   ViewerModel _viewerData = ViewerModel(
-    viewerName: '',
-    viewerEmail: '',
-    viewerMobile: '',
-  );
+      viewerName: '', viewerEmail: '', viewerMobile:'');
+
   bool _isFocused = false;
   bool _isLoading = false;
   String? _errorMessage;
 
-  List<ViewerModel> get viewers => _viewers;
+  String get viewerName => _viewerData.viewerName;
+  String? get viewerEmail => _viewerData.viewerEmail;
+  String? get viewerMobile => _viewerData.viewerMobile;
+  bool get isFocused => _isFocused;
+  bool get isLoading => _isLoading;
+  String? get errorMessage => _errorMessage;
 
-  void setViewerName(String viewerName) {
-    _viewerData = ViewerModel(
-      viewerName: viewerName,
-      viewerEmail: _viewerData.viewerEmail,
-      viewerMobile: _viewerData.viewerMobile,
-    );
+  void addViewer() {
+    viewerList.add(ViewerModel(viewerName: _viewerData.viewerName,
+        viewerEmail: _viewerData.viewerEmail,
+        viewerMobile: _viewerData.viewerMobile));
+  }
+
+  void sendViewer() {
+    _willService.sendViewer(viewerList);
+  }
+
+  void setViewerName(String value) {
+    _viewerData = ViewerModel(viewerName: value,
+        viewerEmail: _viewerData.viewerEmail,
+        viewerMobile: _viewerData.viewerMobile);
     notifyListeners();
   }
 
-  void setViewerEmail(String viewerEmail) {
-    _viewerData = ViewerModel(
-      viewerName: _viewerData.viewerName,
-      viewerEmail: viewerEmail,
-      viewerMobile: _viewerData.viewerMobile,
-    );
+  void setViewerEmail(String value) {
+    _viewerData = ViewerModel(viewerName: _viewerData.viewerName,
+        viewerEmail: value,
+        viewerMobile: _viewerData.viewerMobile);
     notifyListeners();
   }
 
-  void setViewerMobile(String viewerMobile) {
-    _viewerData = ViewerModel(
-      viewerName: _viewerData.viewerName,
-      viewerEmail: _viewerData.viewerEmail,
-      viewerMobile: viewerMobile,
-    );
+  void setViewerMobile(String value) {
+    _viewerData = ViewerModel(viewerName: _viewerData.viewerName,
+        viewerEmail: _viewerData.viewerEmail,
+        viewerMobile: value);
     notifyListeners();
   }
 
@@ -51,7 +60,7 @@ class ViewerViewModel extends ChangeNotifier {
     _errorMessage = null;
     notifyListeners();
 
-    final result = await _viewerService.login(_loginData);
+    final result = await _willService.sendViewer(viewerList);
     _isLoading = false;
 
     if (!result['success']) {

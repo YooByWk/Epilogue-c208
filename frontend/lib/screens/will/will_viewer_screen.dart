@@ -7,7 +7,9 @@ import 'package:frontend/main.dart';
 import 'package:frontend/screens/will/will_check_screen.dart';
 import 'package:frontend/screens/will/will_select_memorial_screen.dart';
 import 'package:frontend/screens/will/will_widgets.dart';
+import 'package:frontend/view_models/will_view_models/viewer_viewmodel.dart';
 import 'package:frontend/widgets/will_viewer_widget.dart';
+import 'package:provider/provider.dart';
 
 class WillViewerScreen extends StatefulWidget {
   _WillViewerScreenState createState() => _WillViewerScreenState();
@@ -18,6 +20,9 @@ class _WillViewerScreenState extends State<WillViewerScreen> {
 
   @override
   Widget build(BuildContext context) {
+    return ChangeNotifierProvider(
+        create: (context) => ViewerViewModel(),
+        child: Consumer<ViewerViewModel>(builder: (context, viewModel, child) {
     return Scaffold(
       appBar: AppBar(
         backgroundColor: themeColour2,
@@ -53,7 +58,24 @@ class _WillViewerScreenState extends State<WillViewerScreen> {
             Padding(
                 padding: const EdgeInsets.only(left: 20.0, top: 10.0),
                 child: (counter < 5)
-                    ? ElevatedButton(onPressed: increment, child: Text('추가'))
+                    ? ElevatedButton(
+                        onPressed: () {
+                          if (!viewModel.isLoading) {
+                            viewModel.setViewer().then((_) {
+                              if (viewModel.errorMessage == null) {
+                                debugPrint('성공');
+                              } else {
+                                if (viewModel.errorMessage != null) {
+                                  ScaffoldMessenger.of(context).showSnackBar(
+                                    SnackBar(
+                                        content: Text(viewModel.errorMessage!)),
+                                  );
+                                }
+                              }
+                            });
+                          }
+                        },
+                        child: Text('추가'))
                     : null),
           ],
         ),
@@ -68,7 +90,8 @@ class _WillViewerScreenState extends State<WillViewerScreen> {
         ),
       ),
     );
-  }
+        }));
+        }
 
   void increment() {
     setState(() {
@@ -88,4 +111,5 @@ class _WillViewerScreenState extends State<WillViewerScreen> {
       }
     });
   }
-}
+
+  }

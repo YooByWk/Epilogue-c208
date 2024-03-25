@@ -1,7 +1,7 @@
 class ViewerModel {
-  final String viewerName;
-  final String? viewerEmail;
-  final String? viewerMobile;
+   String viewerName;
+   String? viewerEmail;
+   String? viewerMobile;
 
   ViewerModel({
     required this.viewerName,
