@@ -22,7 +22,7 @@ public class WitnessService {
     private final WillRepository willRepository;
     private final UserRepository userRepository;
 
-    public void save(Will will, WillAndWitnessRequestDto willAndWitnessRequestDto, Principal principal) {
+    public void saveWitness(Will will, WillAndWitnessRequestDto willAndWitnessRequestDto, Principal principal) {
         List<WitnessRequestDto> witnessList = willAndWitnessRequestDto.getWitnessList();
 
         for (WitnessRequestDto w : witnessList) {
