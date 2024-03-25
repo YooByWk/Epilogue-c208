@@ -5,10 +5,10 @@ import 'package:provider/provider.dart';
 import 'package:frontend/view_models/block_chain/block_chain_viewmodel.dart';
 import 'package:frontend/view_models/block_chain/block_chain_wallet_viewmodel.dart';
 import 'package:frontend/models/block_chain_wallet_model.dart'; 
-
+import 'package:frontend/view_models/block_chain/block_chain_will_viewmodel.dart';
 
 final walletViewModel = BlockChainWalletViewModel(BlockChainWalletModel());
-
+final audioHashViewModel = AudioHashViewModel();
 class BlockChainTest extends StatelessWidget {
   const BlockChainTest({Key? key}) : super(key: key);
   @override
@@ -83,6 +83,15 @@ class BlockChainTest extends StatelessWidget {
                       },
                       child : Text('니모닉 복구')
                     ),
+                    ElevatedButton(
+                      onPressed : () {audioHashViewModel.createAudioHash();},
+                      child : Text('테스트 파일 해싱')
+                    ),
+                    ElevatedButton(
+                      onPressed : () {audioHashViewModel.checkHash();},
+                      child : Text('테스트 파일 해싱')
+                    ),
+
                     
                   ],
                 ),
