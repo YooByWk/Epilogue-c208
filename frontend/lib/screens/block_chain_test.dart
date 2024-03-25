@@ -1,11 +1,16 @@
 import 'package:flutter/material.dart';
 import 'package:frontend/models/block_chain_model.dart';
+import 'package:frontend/view_models/block_chain/block_chain_wallet_viewmodel.dart';
 import 'package:provider/provider.dart';
 import 'package:frontend/view_models/block_chain/block_chain_viewmodel.dart';
+import 'package:frontend/view_models/block_chain/block_chain_wallet_viewmodel.dart';
+import 'package:frontend/models/block_chain_wallet_model.dart'; 
+
+
+final walletViewModel = BlockChainWalletViewModel(BlockChainWalletModel());
 
 class BlockChainTest extends StatelessWidget {
   const BlockChainTest({Key? key}) : super(key: key);
-
   @override
   Widget build(BuildContext context) {
     return ChangeNotifierProvider(
@@ -53,6 +58,26 @@ class BlockChainTest extends StatelessWidget {
                       },
                       child: Text('retrieve 함수 호출'),
                     ),
+                    ElevatedButton(
+                      onPressed: () async{
+                        await walletViewModel.createWallet();
+                        debugPrint('지갑 생성 완료');
+                      },
+                      child : Text('지갑 생성')
+                    ),
+                    ElevatedButton(
+                      onPressed: ()  async {
+                        // walletViewModel.checkWallet();
+                      },
+                      child : Text('지갑 확인')
+                    ),
+                    ElevatedButton(
+                      onPressed: ()  async {
+                        // walletViewModel.readPrivateKey();
+                      },
+                      child : Text('스토리지 확인')
+                    ),
+                    
                   ],
                 ),
               ),

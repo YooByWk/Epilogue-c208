@@ -52,6 +52,8 @@ dependencies:
   convert: ^3.1.1
   flutter_secure_storage: ^4.2.1  # 토큰 저장
   flutter_dotenv: ^5.0.2  # .env 파일 사용
+  bip39: ^1.0.6
+  bip32: ^2.0.0
 
 dev_dependencies:
   flutter_test:
