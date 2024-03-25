@@ -17,8 +17,9 @@ import java.util.Date;
 public class JWTUtil {
 
     private SecretKey secretKey;
+    public static final String ACCESS_TOKEN = "Access_Token";
 
-    public JWTUtil(@Value("${spring.jwt.secret}")String secret) {
+    public JWTUtil(@Value("${spring.jwt.secret}") String secret) {
 
 
         secretKey = new SecretKeySpec(secret.getBytes(StandardCharsets.UTF_8), Jwts.SIG.HS256.key().build().getAlgorithm());
@@ -39,13 +40,15 @@ public class JWTUtil {
         return Jwts.parser().verifyWith(secretKey).build().parseSignedClaims(token).getPayload().getExpiration().before(new Date());
     }
 
-    public String createJwt(String username, String role, Long expiredMs) {
+    public String createAccessToken(String userId, String role) {
         return Jwts.builder()
-                .claim("username", username)
+                .claim("userId", userId)
                 .claim("role", role)
-                .issuedAt(new Date(System.currentTimeMillis()))
-                .expiration(new Date(System.currentTimeMillis() + expiredMs))
-                .signWith(secretKey)
+                .issuedAt(new Date(System.currentTimeMillis())) // 토큰 발행시간
+                .expiration(new Date(System.currentTimeMillis() + 1209600000)) // 액세스토큰 만료기간 (1시간)
+//                .expiration(new Date(System.currentTimeMillis() + 60)) // 액세스토큰 만료기간 (1시간)
+                .signWith(secretKey) // 최종적으로 secretKey를 통해 토큰 암호화
                 .compact();
     }
+
 }
