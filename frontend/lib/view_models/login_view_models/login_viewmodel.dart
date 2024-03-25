@@ -1,7 +1,8 @@
+import 'package:dio/dio.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:frontend/models/login_model.dart';
-import 'package:frontend/providers/auth_service.dart';
-
+import 'package:frontend/services/auth_service.dart';
 
 class LoginViewModel extends ChangeNotifier {
   final AuthService _authService = AuthService();
@@ -9,17 +10,11 @@ class LoginViewModel extends ChangeNotifier {
   LoginModel _loginData = LoginModel(username: '', password: '');
   bool _isFocused = false;
   bool _isLoading = false;
-  bool _isSuccessful = false;
   String? _errorMessage;
 
   String get password => _loginData.password;
-
   bool get isFocused => _isFocused;
-
   bool get isLoading => _isLoading;
-
-  bool get isSuccessful => _isSuccessful;
-
   String? get errorMessage => _errorMessage;
 
   void setUsername(String value) {
@@ -41,24 +36,29 @@ class LoginViewModel extends ChangeNotifier {
 /////////////////////////////////////////////
   Future<void> login() async {
     _isLoading = true;
-    _isSuccessful = false;
     _errorMessage = null;
     debugPrint(_loginData.password);
     debugPrint(_loginData.username);
-    // notifyListeners();
+    notifyListeners();
 
-    try {
-      bool result = await _authService.login(_loginData);
-      if (result) {
-        _isSuccessful = true;
-      } else {
-        _errorMessage = '로그인 실패';
+    final result = await _authService.login(_loginData);
+    _isLoading = false;
+
+    if (!result['success']) {
+      int statusCode = result['statusCode'];
+      switch (statusCode) {
+        case 401:
+          _errorMessage = '로그인 정보가 잘못되었습니다.';
+          break;
+        case 500:
+          _errorMessage = '서버 오류가 발생했습니다. 잠시 후 다시 시도해주세요.';
+          break;
+        default:
+          _errorMessage = '알 수 없는 오류가 발생했습니다. 관리자에게 문의해주세요.';
       }
-    } catch (e) {
-      _errorMessage = '${e.toString()}';
-    } finally {
-      _isLoading = false;
-      notifyListeners();
+    } else {
+      _errorMessage = null;
     }
+    notifyListeners();
   }
 }

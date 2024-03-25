@@ -51,6 +51,7 @@ dependencies:
   dio: ^5.4.1
   convert: ^3.1.1
   flutter_secure_storage: ^4.2.1  # 토큰 저장
+  flutter_dotenv: ^5.0.2  # .env 파일 사용
 
 dev_dependencies:
   flutter_test:
@@ -79,6 +80,7 @@ flutter:
     - assets/images/
     - assets/launcher_icon/
     - assets/images/memorialTest/
+    - assets/config/
     # - images/a_dot_burr.jpeg
   #   - images/a_dot_ham.jpeg
 

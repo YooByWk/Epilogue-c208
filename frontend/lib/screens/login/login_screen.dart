@@ -77,24 +77,28 @@ class LoginScreen extends StatelessWidget {
                       CommonButtonWidget(
                         text: '로그인',
                         textColor: Color(0xFFececec),
-                        backgroundColor: Color(0xFFADC2A9),
+                        backgroundColor: viewModel.isLoading
+                            ? Colors.grey
+                            : Color(0xFFADC2A9),
                         width: MediaQuery.of(context).size.width * 0.8,
                         height: 50,
                         fontSize: 30,
-                        onPressed: viewModel.isLoading
-                            ? () {}
-                            : () async {
-                                await viewModel.login();
-                                if (viewModel.isSuccessful) {
-                                  Navigator.pushNamed(context, '/home');
-                                } else {
+                        onPressed: () {
+                          if (!viewModel.isLoading) {
+                            viewModel.login().then((_) {
+                              if (viewModel.errorMessage == null) {
+                                Navigator.pushNamed(context, '/home');
+                              } else {
+                                if (viewModel.errorMessage != null) {
                                   ScaffoldMessenger.of(context).showSnackBar(
                                     SnackBar(
-                                        content: Text(viewModel.errorMessage ??
-                                            '로그인 실패')),
+                                        content: Text(viewModel.errorMessage!)),
                                   );
                                 }
-                              },
+                              }
+                            });
+                          }
+                        },
                       ),
                       SizedBox(height: 10),
                       Text(
