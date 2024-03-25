@@ -1,9 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:frontend/main.dart';
-import 'package:frontend/screens/login/login_screen.dart';
-import 'package:frontend/screens/will/will_recording_screen.dart';
 import 'package:frontend/screens/will/will_widgets.dart';
-import 'package:frontend/widgets/common_button.dart';
+import 'package:frontend/screens/will/will_witness_screen.dart';
 import 'package:frontend/screens/main/main_screen.dart';
 
 class WillSelectTypeScreen extends StatefulWidget {
@@ -66,7 +64,7 @@ class _WillSelectTypeScreenState extends State<WillSelectTypeScreen> {
                   onPressed: () => Navigator.push(
                     context,
                     MaterialPageRoute(
-                      builder: (context) => WillRecordingScreen(),
+                      builder: (context) => WillWitnessScreen(),
                     ),
                   ),
                 ),
@@ -77,7 +75,7 @@ class _WillSelectTypeScreenState extends State<WillSelectTypeScreen> {
                   onPressed: () => Navigator.push(
                     context,
                     MaterialPageRoute(
-                      builder: (context) => WillRecordingScreen(),
+                      builder: (context) => WillWitnessScreen(),
                     ),
                   ),
                 ),
