@@ -1,7 +1,9 @@
 package com.epilogue.controller;
 
+import com.epilogue.dto.request.user.IdCheckRequestDto;
 import com.epilogue.dto.request.user.JoinRequestDto;
 import com.epilogue.dto.request.user.UpdateInfoRequestDto;
+import com.epilogue.dto.request.user.UpdatePasswordRequestDto;
 import com.epilogue.dto.response.user.UserDTO;
 import com.epilogue.service.UserService;
 import io.swagger.v3.oas.annotations.Parameter;
@@ -31,16 +33,16 @@ public class UserController {
 
     @ApiResponse(responseCode = "200", description = "성공")
     @PostMapping("/user/id/check")
-    public ResponseEntity<?> check(@Parameter(description = "아이디") Map<String, String> userIdMap) {
-        Boolean userIdCheck = userService.check(userIdMap.get("userId"));
+    public ResponseEntity<?> check(@Parameter(description = "중복 검증할 아이디") @RequestBody IdCheckRequestDto idCheckRequestDto) {
+        Boolean userIdCheck = userService.check(idCheckRequestDto);
         return new ResponseEntity<>(userIdCheck, HttpStatus.OK);
     }
 
     @ApiResponse(responseCode = "200", description = "성공")
     @PutMapping("/user/password")
-    public ResponseEntity<?> updatePassword(Principal principal, @Parameter(description = "변경할 비밀번호") Map<String, String> passwordMap) {
+    public ResponseEntity<?> updatePassword(Principal principal, @Parameter(description = "변경할 비밀번호") @RequestBody UpdatePasswordRequestDto updatePasswordRequestDto) {
         String loginUserId = principal.getName();
-        userService.updatePassword(loginUserId, passwordMap.get("password"));
+        userService.updatePassword(loginUserId, updatePasswordRequestDto);
         return new ResponseEntity<>(HttpStatus.OK);
     }
 
@@ -54,7 +56,7 @@ public class UserController {
 
     @ApiResponse(responseCode = "200", description = "성공")
     @PutMapping("/user")
-    public ResponseEntity<?> updateUserInfo(Principal principal, @RequestBody UpdateInfoRequestDto updateInfoRequestDto) {
+    public ResponseEntity<?> updateUserInfo(Principal principal, @Parameter(description = "변경할 유저 정보") @RequestBody UpdateInfoRequestDto updateInfoRequestDto) {
         String loginUserId = principal.getName();
         userService.updateUserInfo(loginUserId, updateInfoRequestDto);
         return new ResponseEntity<>(HttpStatus.OK);
