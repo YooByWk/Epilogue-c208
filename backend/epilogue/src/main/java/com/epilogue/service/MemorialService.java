@@ -15,6 +15,7 @@ import com.epilogue.repository.user.UserRepository;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
+import org.springframework.web.multipart.MultipartFile;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -158,10 +159,10 @@ public class MemorialService {
         return graveResponseDto;
     }
 
-    public void saveMedia(String loginUserId, int memorialSeq, MemorialMediaRequestDto memorialMediaRequestDto) throws Exception {
-        String[] url = memorialMediaRequestDto.getMultipartFile().getOriginalFilename().split(".");
+    public void saveMedia(String loginUserId, int memorialSeq, MultipartFile multipartFile, MemorialMediaRequestDto memorialMediaRequestDto) throws Exception {
+        String[] url = multipartFile.getOriginalFilename().split(".");
         String fileType = url[1]; // 파일 확장자
-        String originalFileName = memorialMediaRequestDto.getMultipartFile().getOriginalFilename(); // 원래 파일명
+        String originalFileName = multipartFile.getOriginalFilename(); // 원래 파일명
         String uniqueFileName = UUID.randomUUID() + fileType; // 중복 방지를 위한 unique한 파일명
 
         // 사진 저장
@@ -172,11 +173,12 @@ public class MemorialService {
                     .uniquePhotoUrl(uniqueFileName)
                     .memorial(memorialRepository.findById(memorialSeq).get())
                     .user(userRepository.findByUserId(loginUserId))
+                    .content(memorialMediaRequestDto.getContent())
                     .build();
             memorialPhotoRepository.save(memorialPhoto);
 
             // S3
-            awsS3Service.uploadPhoto(memorialMediaRequestDto.getMultipartFile(), uniqueFileName);
+            awsS3Service.uploadPhoto(multipartFile, uniqueFileName);
         }
 
         // 동영상 저장
@@ -187,11 +189,12 @@ public class MemorialService {
                     .uniqueVideoUrl(uniqueFileName)
                     .memorial(memorialRepository.findById(memorialSeq).get())
                     .user(userRepository.findByUserId(loginUserId))
+                    .content(memorialMediaRequestDto.getContent())
                     .build();
             memorialVideoRepository.save(memorialVideo);
 
             // S3
-            awsS3Service.uploadVideo(memorialMediaRequestDto.getMultipartFile(), uniqueFileName);
+            awsS3Service.uploadVideo(multipartFile, uniqueFileName);
         }
 
         else {
