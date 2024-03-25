@@ -33,7 +33,7 @@
     <uses-permission android:name="android.permission.FOREGROUND_SERVICE" />
 
     <application
-        android:label="frontend"
+        android:label="E:pilogue"
         android:name="${applicationName}"
         android:icon="@mipmap/launcher_icon">
         <activity

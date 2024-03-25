@@ -75,38 +75,6 @@ Future<String> deployContract() async {
   return _newAddress;
 }
 
-// Future<String> deployContract () async{
-//   final contract = DeployedContract(
-//     ContractAbi.fromJson(_newAbi, 'testContract'),
-//     // null,
-//     EthereumAddress.fromHex('0x0000000000000000000000000000000000000001')
-//     // EthereumAddress.fromHex('0000000000000000000000000000000000000000'),
-//   );
-//   final deployFunction = contract.function('getNumberList');
-
-//   final response = await _client.sendTransaction(
-//     _credentials,
-//     Transaction.callContract(contract: contract, function: deployFunction, parameters: []),
-//     fetchChainIdFromNetworkId: false,
-//     chainId: 31221,
-//   );
-
-//   TransactionReceipt? receipt;
-//   while (receipt == null) {
-//     await Future.delayed(Duration(seconds: 1));
-//     receipt = await _client.getTransactionReceipt(response);
-//   }
-  
-//   _newAddress = receipt.contractAddress?.hex.toString()??'없는뎁쇼';
-//   debugPrint(receipt.toString());
-//   if (_newAddress == null) {
-//     throw Exception('Contract was not created.');
-//   }
-
-//   debugPrint(receipt.toString());
-//   return _newAddress;
-// }
-
 
 
   Future<String> sendTransaction(String functionName, List<dynamic> params) async {
@@ -117,16 +85,33 @@ Future<String> deployContract() async {
       fetchChainIdFromNetworkId : false,
       chainId: 31221,
     );
+
+      TransactionReceipt? receipt;
+      while (receipt == null) {
+        await Future.delayed(Duration(seconds: 1));
+        receipt = await _client.getTransactionReceipt(response); 
+      }
+
+      if (receipt.status == 0) {
+        throw Exception('Transaction failed');
+      }
+
+      if (receipt.contractAddress != null) {
+        _newAddress = receipt.contractAddress!.hex;
+      }
+
+      debugPrint('$receipt.status.toString() 주소');
+
     return response;
   }
 
-  Future<String> callFunction(String functionName, List<dynamic> params) async {
+  Future callFunction(String functionName, List<dynamic> params) async {
     final function = _contract.function(functionName);
     final response = await _client.call(
       contract: _contract,
       function: function,
       params: params,
     );
-    return response.toString();
+    return response;
   }
 }
