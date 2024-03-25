@@ -33,14 +33,14 @@ public class UserController {
 
     @ApiResponse(responseCode = "200", description = "성공")
     @PostMapping("/user/id/check")
-    public ResponseEntity<?> check(@Parameter(description = "중복 검증할 아이디") IdCheckRequestDto idCheckRequestDto) {
+    public ResponseEntity<?> check(@Parameter(description = "중복 검증할 아이디") @RequestBody IdCheckRequestDto idCheckRequestDto) {
         Boolean userIdCheck = userService.check(idCheckRequestDto);
         return new ResponseEntity<>(userIdCheck, HttpStatus.OK);
     }
 
     @ApiResponse(responseCode = "200", description = "성공")
     @PutMapping("/user/password")
-    public ResponseEntity<?> updatePassword(Principal principal, @Parameter(description = "변경할 비밀번호") UpdatePasswordRequestDto updatePasswordRequestDto) {
+    public ResponseEntity<?> updatePassword(Principal principal, @Parameter(description = "변경할 비밀번호") @RequestBody UpdatePasswordRequestDto updatePasswordRequestDto) {
         String loginUserId = principal.getName();
         userService.updatePassword(loginUserId, updatePasswordRequestDto);
         return new ResponseEntity<>(HttpStatus.OK);

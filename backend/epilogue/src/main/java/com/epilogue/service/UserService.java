@@ -34,6 +34,7 @@ public class UserService {
     }
 
     public Boolean check(IdCheckRequestDto idCheckRequestDto) {
+        System.out.println(idCheckRequestDto.getUserId());
         return userRepository.existsByUserId(idCheckRequestDto.getUserId());
     }
 
