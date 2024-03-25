@@ -2,6 +2,7 @@ package com.epilogue.service;
 
 import com.epilogue.domain.memorial.*;
 import com.epilogue.domain.user.User;
+import com.epilogue.dto.request.memorial.MemorialMediaRequestDto;
 import com.epilogue.dto.response.memorial.GraveDto;
 import com.epilogue.dto.response.memorial.GraveResponseDto;
 import com.epilogue.dto.response.memorial.MemorialResponseDto;
@@ -18,6 +19,7 @@ import org.springframework.stereotype.Service;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
+import java.util.UUID;
 
 @Service
 @RequiredArgsConstructor
@@ -118,15 +120,15 @@ public class MemorialService {
         Optional<Memorial> memorial = memorialRepository.findById(memorialSeq);
         int userSeq = memorial.get().getUser().getUserSeq(); // 고인 식별키
 
-        // 고인의 사진 url 목록 불러오기
-        List<MemorialPhoto> memorialPhotoList = memorialPhotoRepository.findAllByUserSeq(userSeq);
-        // S3에 저장되어 있는 url 목록 불러오기
-        List<String> memorialS3PhotoList = new ArrayList<>(); // S3 url 목록
-        for(MemorialPhoto photo : memorialPhotoList) {
-            String S3url = awsS3Service.getPhotoFromS3(photo.getPhotoUrl());
-            memorialS3PhotoList.add(S3url);
-        }
-
+//        // 고인의 사진 url 목록 불러오기
+//        List<MemorialPhoto> memorialPhotoList = memorialPhotoRepository.findAllByUserSeq(userSeq);
+//        // S3에 저장되어 있는 url 목록 불러오기
+//        List<String> memorialS3PhotoList = new ArrayList<>(); // S3 url 목록
+//        for(MemorialPhoto photo : memorialPhotoList) {
+//            String S3url = awsS3Service.getPhotoFromS3(photo.getPhotoUrl());
+//            memorialS3PhotoList.add(S3url);
+//        }
+//
 //        // 고인의 동영상 url 목록 불러오기
 //        List<MemorialVideo> memorialVideoList = memorialVideoRepository.findAllByUserSeq(userSeq);
 //        // S3에 저장되어 있는 url 목록 불러오기
@@ -136,8 +138,8 @@ public class MemorialService {
 //            memorialS3VideoList.add(S3url);
 //        }
 
-//        // 고인의 편지 목록 불러오기
-//        List<MemorialLetter> memorialLetterList = memorialLetterRepository.findAllByUserSeq(userSeq);
+        // 고인의 편지 목록 불러오기
+        List<MemorialLetter> memorialLetterList = memorialLetterRepository.findAllByUserSeq(userSeq);
 
         GraveResponseDto graveResponseDto = GraveResponseDto.builder()
                 .graveSeq(memorialSeq)
@@ -145,15 +147,58 @@ public class MemorialService {
                 .birth(memorial.get().getUser().getBirth())
                 .goneDate(memorial.get().getGoneDate())
                 .graveImg(awsS3Service.getPhotoFromS3(memorial.get().getGraveImg()))
-                .memorialPhotoList(memorialS3PhotoList)
-                .photoCount(memorialS3PhotoList.size())
+//                .memorialPhotoList(memorialS3PhotoList)
+//                .photoCount(memorialS3PhotoList.size())
 //                .memorialVideoList(memorialS3VideoList)
 //                .videoCount(memorialS3VideoList.size())
-//                .memorialLetterList(memorialLetterList)
-//                .letterCount(memorialLetterList.size())
+                .memorialLetterList(memorialLetterList)
+                .letterCount(memorialLetterList.size())
                 .build();
 
         return graveResponseDto;
+    }
+
+    public void saveMedia(String loginUserId, int memorialSeq, MemorialMediaRequestDto memorialMediaRequestDto) throws Exception {
+        String[] url = memorialMediaRequestDto.getMultipartFile().getOriginalFilename().split(".");
+        String fileType = url[1]; // 파일 확장자
+        String originalFileName = memorialMediaRequestDto.getMultipartFile().getOriginalFilename(); // 원래 파일명
+        String uniqueFileName = UUID.randomUUID() + fileType; // 중복 방지를 위한 unique한 파일명
+
+        // 사진 저장
+        if(fileType.equals("jpg") || fileType.equals("jpeg") || fileType.equals("png") || fileType.equals("gif")) {
+            // DB
+            MemorialPhoto memorialPhoto = MemorialPhoto.builder()
+                    .originalPhotoUrl(originalFileName)
+                    .uniquePhotoUrl(uniqueFileName)
+                    .memorial(memorialRepository.findById(memorialSeq).get())
+                    .user(userRepository.findByUserId(loginUserId))
+                    .build();
+            memorialPhotoRepository.save(memorialPhoto);
+
+            // S3
+            awsS3Service.uploadPhoto(memorialMediaRequestDto.getMultipartFile(), uniqueFileName);
+        }
+
+        // 동영상 저장
+        else if(fileType.equals("mp4") || fileType.equals("mov")) {
+            // DB
+            MemorialVideo memorialVideo = MemorialVideo.builder()
+                    .originalVideoUrl(originalFileName)
+                    .uniqueVideoUrl(uniqueFileName)
+                    .memorial(memorialRepository.findById(memorialSeq).get())
+                    .user(userRepository.findByUserId(loginUserId))
+                    .build();
+            memorialVideoRepository.save(memorialVideo);
+
+            // S3
+            awsS3Service.uploadVideo(memorialMediaRequestDto.getMultipartFile(), uniqueFileName);
+        }
+
+        else {
+            log.error("{ error = 지원하지 않는 확장자입니다. }");
+            throw new Exception();
+        }
+
     }
 
 }

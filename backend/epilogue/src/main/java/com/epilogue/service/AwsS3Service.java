@@ -37,21 +37,44 @@ public class AwsS3Service {
     @Value("${cloud.aws.s3.videoBucketName}")
     private String videoBucketName;
 
-    public void upload(MultipartFile mp4, Principal principal) {
+    public void upload(MultipartFile file, Principal principal) {
         try {
-            String fileName = mp4.getOriginalFilename();
+            String fileName = file.getOriginalFilename();
             String willFileAddress = "https://" + bucketName + "/will" + fileName;
             ObjectMetadata metadata = new ObjectMetadata();
-            metadata.setContentType(mp4.getContentType());
-            metadata.setContentLength(mp4.getSize());
+            metadata.setContentType(file.getContentType());
+            metadata.setContentLength(file.getSize());
 
             // 유언 파일 주소 업데이트
             User user = userRepository.findByUserId(principal.getName());
             willRepository.updateWillFileAddress(user.getWill().getWillSeq(), willFileAddress);
 
-            amazonS3.putObject(bucketName, fileName, mp4.getInputStream(), metadata);
+            amazonS3.putObject(bucketName, fileName, file.getInputStream(), metadata);
 
         } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
+    // 사진 업로드
+    public void uploadPhoto(MultipartFile file, String uniqueFileName) {
+        try {
+//            String fileName = file.getOriginalFilename();
+//            log.info("fileName = {}", fileName);
+
+//            String S3Url = "https://" + photoBucketName + "/" + uniqueFileName;
+            ObjectMetadata metadata = new ObjectMetadata();
+            metadata.setContentType(file.getContentType());
+            metadata.setContentLength(file.getSize());
+
+            // 유언 파일 주소 업데이트
+//            User user = userRepository.findByUserId(principal.getName());
+//            willRepository.updateWillFileAddress(user.getWill().getWillSeq(), willFileAddress);
+
+            amazonS3.putObject(photoBucketName, uniqueFileName, file.getInputStream(), metadata);
+
+        } catch (IOException e) {
+            log.info("디지털 추모관 S3에 사진 저장 실패");
             e.printStackTrace();
         }
     }
@@ -59,6 +82,20 @@ public class AwsS3Service {
     // 사진 url 불러오기
     public String getPhotoFromS3(String fileName) {
         return amazonS3.getUrl(photoBucketName, fileName).toString();
+    }
+
+    // 동영상 업로드
+    public void uploadVideo(MultipartFile file, String uniqueFileName) {
+        try {
+            ObjectMetadata metadata = new ObjectMetadata();
+            metadata.setContentType(file.getContentType());
+            metadata.setContentLength(file.getSize());
+
+            amazonS3.putObject(videoBucketName, uniqueFileName, file.getInputStream(), metadata);
+        } catch (IOException e) {
+            log.info("디지털 추모관 S3에 동영상 저장 실패");
+            e.printStackTrace();
+        }
     }
 
     // 동영상 url 불러오기

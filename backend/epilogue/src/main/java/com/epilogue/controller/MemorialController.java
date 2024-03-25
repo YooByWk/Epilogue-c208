@@ -1,6 +1,7 @@
 package com.epilogue.controller;
 
 import com.amazonaws.Response;
+import com.epilogue.dto.request.memorial.MemorialMediaRequestDto;
 import com.epilogue.dto.response.memorial.GraveDto;
 import com.epilogue.dto.response.memorial.GraveResponseDto;
 import com.epilogue.dto.response.memorial.MemorialResponseDto;
@@ -40,11 +41,35 @@ public class MemorialController {
         return new ResponseEntity<>(memorialResponseDto, HttpStatus.OK);
     }
 
-    @GetMapping("/{memorialSeq}")
+    @GetMapping("/visit/{memorialSeq}")
     @ApiResponse(responseCode = "200", description = "성공")
     public ResponseEntity<GraveResponseDto> viewMemorial(@Parameter(description = "디지털 추모관 식별키") @PathVariable int memorialSeq) {
         GraveResponseDto graveResponseDto = memorialService.viewMemorial(memorialSeq);
         return new ResponseEntity<>(graveResponseDto, HttpStatus.OK);
     }
+
+    @PostMapping("/media/{memorialSeq}")
+    @ApiResponse(responseCode = "200", description = "성공")
+    @ApiResponse(responseCode = "400", description = "파일명 또는 파일 확장자 에러")
+    @ApiResponse(responseCode = "403", description = "로그인 에러")
+    public ResponseEntity<Void> saveMedia(@Parameter(description = "디지털 추모관 식별키") @PathVariable int memorialSeq, MemorialMediaRequestDto memorialMediaRequestDto, Principal principal) throws Exception {
+        if(principal != null) {
+            String loginUserId = principal.getName();
+
+            // url 형식 검사
+            String[] urlCheck = memorialMediaRequestDto.getMultipartFile().getOriginalFilename().split(".");
+            if(urlCheck.length > 1) {
+                log.error("{ error = 파일명에 .을 사용할 수 없습니다. }");
+                return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+            }
+
+            memorialService.saveMedia(loginUserId, memorialSeq, memorialMediaRequestDto);
+        } else {
+            log.error("{ error = 회원가입 후 이용해주세요. }");
+            return new ResponseEntity<>(HttpStatus.FORBIDDEN);
+        }
+        return new ResponseEntity<>(HttpStatus.OK);
+    }
+
 
 }
