@@ -1,9 +1,7 @@
 package com.epilogue.service;
 
 import com.epilogue.domain.user.User;
-import com.epilogue.dto.request.user.JoinRequestDto;
-import com.epilogue.dto.request.user.SmsCertificationRequest;
-import com.epilogue.dto.request.user.UpdateInfoRequestDto;
+import com.epilogue.dto.request.user.*;
 import com.epilogue.dto.response.user.UserDTO;
 import com.epilogue.repository.SmsCertificationRepository;
 import com.epilogue.repository.user.UserRepository;
@@ -35,12 +33,12 @@ public class UserService {
         userRepository.save(user);
     }
 
-    public Boolean check(String userId) {
-        return userRepository.existsByUserId(userId);
+    public Boolean check(IdCheckRequestDto idCheckRequestDto) {
+        return userRepository.existsByUserId(idCheckRequestDto.getUserId());
     }
 
-    public void updatePassword(String loginUserId, String password) {
-        userRepository.updatePassword(loginUserId, password);
+    public void updatePassword(String loginUserId, UpdatePasswordRequestDto updatePasswordRequestDto) {
+        userRepository.updatePassword(loginUserId, updatePasswordRequestDto.getPassword());
     }
 
     public UserDTO userInfo(String loginUserId) {
