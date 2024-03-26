@@ -47,8 +47,7 @@ public class User {
     @OneToOne
     private Will will;
 
-    @Schema(description = "회원 상태")
-    @OneToOne
+    @Enumerated(EnumType.STRING)
     private UserStatus userStatus;
 
     @Schema(description = "리프레시 토큰")

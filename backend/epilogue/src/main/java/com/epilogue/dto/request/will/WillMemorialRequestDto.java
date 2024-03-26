@@ -12,7 +12,7 @@ import lombok.Getter;
 public class WillMemorialRequestDto {
     @NotNull(message = "디지털 추모관 사용 여부는 Null일 수 없습니다.")
     @Schema(description = "디지털 추모관 사용 여부")
-    private Will.UseMemorial useMemorial;
+    private boolean useMemorial;
 
     @Schema(description = "묘비명")
     private String graveName;
