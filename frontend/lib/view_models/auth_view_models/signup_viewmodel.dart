@@ -10,15 +10,17 @@ class SignupViewModel extends ChangeNotifier {
   bool _isLoading = false;
   String? _errorMessage;
   String? _confirmPassword;
+  String? _userIdExists;
 
   SignupModel get signupData => _signupData;
 
   bool get isLoading => _isLoading;
   String? get errorMessage => _errorMessage;
   String? get confirmPassword => _confirmPassword;
+  String? get userIdExists => _userIdExists;
 
   // 비밀번호 유효성 검사
-  bool get isPasswordVaild {
+  bool get isPasswordValid {
     String pattern = r'^.*(?=^.{8,16}$)(?=.*\d)(?=.*[a-zA-Z])(?=.*[!@#$%^&+=]).*$';
     RegExp regex = RegExp(pattern);
     return regex.hasMatch(_signupData.password);
@@ -37,7 +39,7 @@ class SignupViewModel extends ChangeNotifier {
         _confirmPassword != null &&
         _confirmPassword!.isNotEmpty;
 
-    return isFieldNotEmpty && isPasswordSame && isPasswordVaild;
+    return isFieldNotEmpty && isPasswordSame && isPasswordValid;
   }
 
   void setConfirmPassword(String? value) {
@@ -96,8 +98,19 @@ class SignupViewModel extends ChangeNotifier {
   }
 
   ////////////////////////////////////////////////
-  Future<bool> checkUserId() async {
-    return await _authService.checkUserId(_signupData.userId);
+  Future<void> checkUserId() async {
+    _isLoading = true;
+    notifyListeners();
+
+    bool isAvailable = await _authService.checkUserId(_signupData.userId);
+    _isLoading = false;
+
+    if (!isAvailable) {
+      _userIdExists = '이미 사용 중인 아이디입니다.';
+    } else {
+      _userIdExists = null;
+    }
+    notifyListeners();
   }
 
 ///////////////////////////////////////////////////////
@@ -110,6 +123,13 @@ class SignupViewModel extends ChangeNotifier {
     debugPrint(_signupData.mobile);
     debugPrint(_signupData.birth);
     notifyListeners();
+
+    if (_userIdExists != null) {
+      _isLoading = false;
+      _errorMessage = _userIdExists;
+      notifyListeners();
+      return;
+    }
 
     await _authService.delToken();
 
