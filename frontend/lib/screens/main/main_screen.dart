@@ -11,44 +11,49 @@ class MainScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     // final MainViewModel viewModel = Provider.of<MainViewModel>(context);
 
-    return ChangeNotifierProvider(
-        create: (context) => MainViewModel(),
-        child: Consumer<MainViewModel>(builder: (context, viewModel, child) {
-          return Scaffold(
-            body: IndexedStack(
-              index: viewModel.currentIndex,
-              children: [
-                MainBodyScreen(),
-                MemorialScreen(),
-                MypageScreen(),
-              ],
-            ),
-            bottomNavigationBar: BottomNavigationBar(
-              currentIndex: viewModel.currentIndex,
-              onTap: (newIndex) {
-                viewModel.setCurrentIndex(newIndex);
-              },
-              showSelectedLabels: false,
-              showUnselectedLabels: false,
-              type: BottomNavigationBarType.fixed,
-              backgroundColor: Colors.grey[800],
-              items: [
-                BottomNavigationBarItem(
-                  icon: _customMenu(0, '홈으로', viewModel),
-                  label: '',
-                ),
-                BottomNavigationBarItem(
-                  icon: _customMenu(1, '디지털 추모관', viewModel),
-                  label: '',
-                ),
-                BottomNavigationBarItem(
-                  icon: _customMenu(2, '내 정보', viewModel),
-                  label: '',
-                ),
-              ],
-            ),
-          );
-        }));
+    return WillPopScope(
+      onWillPop: () {
+        return Future(() => false);
+      },
+      child: ChangeNotifierProvider(
+          create: (context) => MainViewModel(),
+          child: Consumer<MainViewModel>(builder: (context, viewModel, child) {
+            return Scaffold(
+              body: IndexedStack(
+                index: viewModel.currentIndex,
+                children: [
+                  MainBodyScreen(),
+                  MemorialScreen(),
+                  MypageScreen(),
+                ],
+              ),
+              bottomNavigationBar: BottomNavigationBar(
+                currentIndex: viewModel.currentIndex,
+                onTap: (newIndex) {
+                  viewModel.setCurrentIndex(newIndex);
+                },
+                showSelectedLabels: false,
+                showUnselectedLabels: false,
+                type: BottomNavigationBarType.fixed,
+                backgroundColor: Colors.grey[800],
+                items: [
+                  BottomNavigationBarItem(
+                    icon: _customMenu(0, '홈으로', viewModel),
+                    label: '',
+                  ),
+                  BottomNavigationBarItem(
+                    icon: _customMenu(1, '디지털 추모관', viewModel),
+                    label: '',
+                  ),
+                  BottomNavigationBarItem(
+                    icon: _customMenu(2, '내 정보', viewModel),
+                    label: '',
+                  ),
+                ],
+              ),
+            );
+          })),
+    );
   }
 
   Widget _customMenu(int index, String text, MainViewModel viewModel) {

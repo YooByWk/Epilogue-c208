@@ -13,6 +13,7 @@ class InputFormWidget extends StatelessWidget {
   final EdgeInsets contentPadding;
   final ValueChanged<String> onChanged;
   final bool obscureText;
+  final String? Function(String?)? validator;
   final TextInputType keyboardType;
   final TextInputAction textInputAction;
 
@@ -21,6 +22,7 @@ class InputFormWidget extends StatelessWidget {
     this.textColor = Colors.black,
     this.backgroundColor,
     this.borderColor,
+    this.validator,
     this.height = 60.0,
     this.fontSize = 24.0,
     this.padding = const EdgeInsets.only(left: 10),
@@ -64,6 +66,7 @@ class InputFormWidget extends StatelessWidget {
               obscureText: obscureText,
               keyboardType: keyboardType,
               textInputAction: textInputAction,
+              validator: validator,
               style: TextStyle(
                 color: textColor,
                 fontSize: fontSize,

@@ -7,7 +7,6 @@ class SignupViewModel extends ChangeNotifier {
 
   SignupModel _signupData =
       SignupModel(userId: '', password: '', name: '', mobile: '', birth: '');
-  String _confirmPassword = '';
   bool _isLoading = false;
   String? _errorMessage;
 
@@ -17,11 +16,6 @@ class SignupViewModel extends ChangeNotifier {
 
   // 비밀번호 유효성 검사
   bool validateSignupData() {
-    if (!validatePassword(_signupData.password)) {
-      _errorMessage = '비밀번호는 8~16자리 영문 대소문자, 숫자, 특수문자를 포함해야 합니다.';
-      notifyListeners();
-      return false;
-    }
 
     // 비밀번호 확인과 일치 여부 판단
     if (_signupData.password != _confirmPassword) {
@@ -32,18 +26,18 @@ class SignupViewModel extends ChangeNotifier {
     return true;
   }
 
-  // 비밀번호 유효성 검사 함수
-  bool validatePassword(String password) {
-    Pattern pattern =
-        r'^(?=.*[a-zA-Z])(?=.*[!@#$%^&*(),.?":{}|<>])(?=.*\d).{8,16}$';
-    RegExp regex = RegExp(pattern as String);
-    return !regex.hasMatch(password);
-  }
-
-  void setConfirmPassword(String value) {
-    _confirmPassword = value;
-    notifyListeners();
-  }
+  // // 비밀번호 유효성 검사 함수
+  // bool validatePassword(String password) {
+  //   Pattern pattern =
+  //       r'^(?=.*[a-zA-Z])(?=.*[!@#$%^&*(),.?":{}|<>])(?=.*\d).{8,16}$';
+  //   RegExp regex = RegExp(pattern as String);
+  //   return !regex.hasMatch(password);
+  // }
+  //
+  // void setConfirmPassword(String value) {
+  //   _confirmPassword = value;
+  //   notifyListeners();
+  // }
 
   void setUserId(String value) {
     _signupData = SignupModel(
@@ -95,11 +89,16 @@ class SignupViewModel extends ChangeNotifier {
     notifyListeners();
   }
 
+  ////////////////////////////////////////////////
+  Future<bool> checkUserId() async {
+    return await _authService.checkUserId(_signupData.userId);
+  }
+
 ///////////////////////////////////////////////////////
   Future<void> signup() async {
-    if (!validateSignupData()) {
-      return;
-    }
+    // if (!validateSignupData()) {
+    //   return;
+    // }
     _isLoading = true;
     _errorMessage = null;
     debugPrint(_signupData.name);
@@ -108,6 +107,8 @@ class SignupViewModel extends ChangeNotifier {
     debugPrint(_signupData.mobile);
     debugPrint(_signupData.birth);
     notifyListeners();
+
+    await _authService.delToken();
 
     final result = await _authService.signup(_signupData);
     _isLoading = false;

@@ -2,7 +2,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:frontend/screens/login/login_input_field_widget.dart';
 import 'package:frontend/screens/will/recording_test.dart';
-import 'package:frontend/view_models/login_view_models/login_viewmodel.dart';
+import 'package:frontend/view_models/auth_view_models/login_viewmodel.dart';
 import 'package:frontend/screens/login/social_button_widget.dart';
 import 'package:frontend/screens/signup/signup_screen.dart';
 import 'package:frontend/screens/will/will_select_type_screen.dart';
@@ -92,7 +92,8 @@ class LoginScreen extends StatelessWidget {
                                 if (viewModel.errorMessage != null) {
                                   ScaffoldMessenger.of(context).showSnackBar(
                                     SnackBar(
-                                        content: Text(viewModel.errorMessage!)),
+                                      content: Text(viewModel.errorMessage!),
+                                    ),
                                   );
                                 }
                               }
