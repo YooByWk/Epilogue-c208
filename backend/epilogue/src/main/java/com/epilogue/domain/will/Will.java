@@ -29,6 +29,10 @@ public class Will {
     @Enumerated(EnumType.STRING)
     private SustainCare sustainCare;
 
+    public enum SustainCare {
+        True, False
+    }
+
     @Schema(description = "희망 장례 방식")
     private String funeralType;
 
@@ -39,9 +43,17 @@ public class Will {
     @Enumerated(EnumType.STRING)
     private OrganDonation organDonation;
 
+    public enum OrganDonation {
+        True, False
+    }
+
     @Schema(description = "디지털 추모관 사용 여부")
     @Enumerated(EnumType.STRING)
     private UseMemorial useMemorial;
+
+    public enum UseMemorial {
+        True, False
+    }
 
     @Schema(description = "묘비명")
     private String graveName;
