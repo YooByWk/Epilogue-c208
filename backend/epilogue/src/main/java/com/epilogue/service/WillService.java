@@ -30,7 +30,7 @@ public class WillService {
 
     public void saveMemorial(WillMemorialRequestDto willMemorialRequestDto, Principal principal) {
         User user = userRepository.findByUserId(principal.getName());
-        Will will = willRepository.findById(user.getWill().getWillSeq()).get();
+        Will will = user.getWill();
 
         will.updateMemorial(willMemorialRequestDto.isUseMemorial(), willMemorialRequestDto.getGraveName());
     }
