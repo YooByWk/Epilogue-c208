@@ -56,10 +56,9 @@ public class Will {
     @Schema(description = "유언장 링크")
     private String willLink;
 
-    public void updateMemorial(boolean useMemorial, String graveName, String graveImageAddress) {
+    public void updateMemorial(boolean useMemorial, String graveName) {
         this.useMemorial = useMemorial;
         this.graveName = graveName;
-        this.graveImageAddress = graveImageAddress;
     }
 
     public void updateAdditionalInformation(boolean sustainCare, String funeralType, String graveType, boolean organDonation) {
@@ -67,6 +66,14 @@ public class Will {
         this.graveType = graveType;
         this.funeralType = funeralType;
         this.organDonation = organDonation;
+    }
+
+    public void updateGraveImageAddress(String graveImageAddress) {
+        this.graveImageAddress = graveImageAddress;
+    }
+
+    public void updateWillFileAddress(String willFileAddress) {
+        this.willFileAddress = willFileAddress;
     }
 }
 

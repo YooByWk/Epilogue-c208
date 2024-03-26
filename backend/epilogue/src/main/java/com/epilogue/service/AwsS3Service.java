@@ -12,7 +12,6 @@ import java.security.Principal;
 
 import com.epilogue.domain.user.User;
 import com.epilogue.domain.will.Will;
-import com.epilogue.exception.S3Exception;
 import com.epilogue.repository.user.UserRepository;
 import com.epilogue.repository.will.WillRepository;
 import lombok.RequiredArgsConstructor;
@@ -36,6 +35,8 @@ public class AwsS3Service {
     private String photoBucketName;
     @Value("${cloud.aws.s3.videoBucketName}")
     private String videoBucketName;
+    @Value("${cloud.aws.s3.graveBucketName}")
+    private String graveBucketName;
 
     public void upload(MultipartFile file, Principal principal) {
         try {
@@ -47,7 +48,28 @@ public class AwsS3Service {
 
             // 유언 파일 주소 업데이트
             User user = userRepository.findByUserId(principal.getName());
-            willRepository.updateWillFileAddress(user.getWill().getWillSeq(), willFileAddress);
+            Will will = user.getWill();
+            will.updateWillFileAddress(willFileAddress);
+
+            amazonS3.putObject(bucketName, fileName, file.getInputStream(), metadata);
+
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
+    public void uploadGraveImage(MultipartFile file, Principal principal) {
+        try {
+            String fileName = file.getOriginalFilename();
+            String graveImageAddress = "https://" + graveBucketName + "/will" + fileName;
+            ObjectMetadata metadata = new ObjectMetadata();
+            metadata.setContentType(file.getContentType());
+            metadata.setContentLength(file.getSize());
+
+            // 묘비 사진 주소 업데이트
+            User user = userRepository.findByUserId(principal.getName());
+            Will will = user.getWill();
+            will.updateGraveImageAddress(graveImageAddress);
 
             amazonS3.putObject(bucketName, fileName, file.getInputStream(), metadata);
 
@@ -109,7 +131,6 @@ public class AwsS3Service {
         String key = getKeyFromAddress(will.getWillFileAddress());
         amazonS3.deleteObject(new DeleteObjectRequest(bucketName, key));
     }
-
 
 
     private String getKeyFromAddress(String fileAddress) throws MalformedURLException, UnsupportedEncodingException {
