@@ -9,12 +9,14 @@ import com.epilogue.repository.user.UserRepository;
 import com.epilogue.repository.will.WillRepository;
 import com.epilogue.repository.witness.WitnessRepository;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 
 import java.security.Principal;
 import java.util.List;
 import java.util.UUID;
 
+@Slf4j
 @Service
 @RequiredArgsConstructor
 public class WitnessService {
@@ -44,6 +46,8 @@ public class WitnessService {
 
         // 회원에 유언 insert
         User user = userRepository.findByUserId(principal.getName());
+        log.info("user id = {}", user.getName());
         user.updateWill(will);
+        log.info("will Seq 업데이트 완료!");
     }
 }
