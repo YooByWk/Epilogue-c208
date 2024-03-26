@@ -24,4 +24,11 @@ public class UserStatus {
     @Schema(description = "회원 상태(생사 및 유언장 전송 상태) : live(생존), deadAndSend(사망 및 전송 o), deadAndNotSend(사망 및 전송 x)")
     @Enumerated(EnumType.STRING)
     private Status status;
+
+    public enum Status {
+        Live,
+        DeadAndSend,
+        DeadAndNotSend
+    }
+
 }
