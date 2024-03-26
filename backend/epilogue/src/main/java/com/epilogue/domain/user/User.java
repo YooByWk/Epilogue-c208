@@ -5,8 +5,10 @@ import io.swagger.v3.oas.annotations.media.Schema;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotNull;
 import lombok.*;
+import lombok.extern.slf4j.Slf4j;
 import org.hibernate.annotations.ColumnDefault;
 
+@Slf4j
 @Entity
 @Builder
 @Getter
@@ -62,6 +64,7 @@ public class User {
     }
 
     public void updateWill(Will will) {
+        log.info("찐 will update 완료!");
         this.will = will;
     }
 }
