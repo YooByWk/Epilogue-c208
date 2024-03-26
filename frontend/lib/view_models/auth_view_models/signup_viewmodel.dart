@@ -9,35 +9,41 @@ class SignupViewModel extends ChangeNotifier {
       SignupModel(userId: '', password: '', name: '', mobile: '', birth: '');
   bool _isLoading = false;
   String? _errorMessage;
+  String? _confirmPassword;
 
   SignupModel get signupData => _signupData;
+
   bool get isLoading => _isLoading;
   String? get errorMessage => _errorMessage;
+  String? get confirmPassword => _confirmPassword;
 
   // 비밀번호 유효성 검사
-  bool validateSignupData() {
-
-    // 비밀번호 확인과 일치 여부 판단
-    if (_signupData.password != _confirmPassword) {
-      _errorMessage = '비밀번호가 일치하지 않습니다.';
-      notifyListeners();
-      return false;
-    }
-    return true;
+  bool get isPasswordVaild {
+    String pattern = r'^.*(?=^.{8,16}$)(?=.*\d)(?=.*[a-zA-Z])(?=.*[!@#$%^&+=]).*$';
+    RegExp regex = RegExp(pattern);
+    return regex.hasMatch(_signupData.password);
   }
 
-  // // 비밀번호 유효성 검사 함수
-  // bool validatePassword(String password) {
-  //   Pattern pattern =
-  //       r'^(?=.*[a-zA-Z])(?=.*[!@#$%^&*(),.?":{}|<>])(?=.*\d).{8,16}$';
-  //   RegExp regex = RegExp(pattern as String);
-  //   return !regex.hasMatch(password);
-  // }
-  //
-  // void setConfirmPassword(String value) {
-  //   _confirmPassword = value;
-  //   notifyListeners();
-  // }
+  // 비밀번호 확인 일치 여부
+  bool get isPasswordSame => _signupData.password == _confirmPassword;
+
+  // 폼 유효성 검사 로직
+  bool get isFormValid {
+    bool isFieldNotEmpty = signupData.userId.isNotEmpty &&
+        _signupData.password.isNotEmpty &&
+        _signupData.name.isNotEmpty &&
+        _signupData.mobile.isNotEmpty &&
+        _signupData.birth.isNotEmpty &&
+        _confirmPassword != null &&
+        _confirmPassword!.isNotEmpty;
+
+    return isFieldNotEmpty && isPasswordSame && isPasswordVaild;
+  }
+
+  void setConfirmPassword(String? value) {
+    _confirmPassword = value;
+    notifyListeners();
+  }
 
   void setUserId(String value) {
     _signupData = SignupModel(
@@ -96,9 +102,6 @@ class SignupViewModel extends ChangeNotifier {
 
 ///////////////////////////////////////////////////////
   Future<void> signup() async {
-    // if (!validateSignupData()) {
-    //   return;
-    // }
     _isLoading = true;
     _errorMessage = null;
     debugPrint(_signupData.name);

@@ -37,12 +37,6 @@ class _MainBannerWidgetState extends State<MainBannerWidget> {
       buttonText: '유언장 기록하기',
     ),
     BannerItem(
-      imagePath: 'assets/images/banner2.jpg',
-      description: '사랑하는 가족, 친구들에게 마음을 전하세요.',
-      routeName: '/letter',
-      buttonText: '편지 남기기',
-    ),
-    BannerItem(
       imagePath: 'assets/images/banner3.jpg',
       description: '문자, 메일로 전달 받은 코드를 통해\n유언장을 열람할 수 있습니다.',
       routeName: '',

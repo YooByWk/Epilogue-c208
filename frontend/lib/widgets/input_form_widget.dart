@@ -13,16 +13,16 @@ class InputFormWidget extends StatelessWidget {
   final EdgeInsets contentPadding;
   final ValueChanged<String> onChanged;
   final bool obscureText;
-  final String? Function(String?)? validator;
   final TextInputType keyboardType;
   final TextInputAction textInputAction;
+  final String? hintText;
+  final TextStyle? hintTextStyle;
 
   InputFormWidget({
     required this.label,
     this.textColor = Colors.black,
     this.backgroundColor,
     this.borderColor,
-    this.validator,
     this.height = 60.0,
     this.fontSize = 24.0,
     this.padding = const EdgeInsets.only(left: 10),
@@ -31,6 +31,8 @@ class InputFormWidget extends StatelessWidget {
     this.obscureText = false,
     this.keyboardType = TextInputType.number,
     this.textInputAction = TextInputAction.next,
+    this.hintText,
+    this.hintTextStyle,
   });
 
   @override
@@ -66,7 +68,6 @@ class InputFormWidget extends StatelessWidget {
               obscureText: obscureText,
               keyboardType: keyboardType,
               textInputAction: textInputAction,
-              validator: validator,
               style: TextStyle(
                 color: textColor,
                 fontSize: fontSize,
@@ -74,6 +75,8 @@ class InputFormWidget extends StatelessWidget {
               decoration: InputDecoration(
                 border: InputBorder.none,
                 contentPadding: contentPadding,
+                hintText: hintText,
+                hintStyle: hintTextStyle,
               ),
             ),
           ],
