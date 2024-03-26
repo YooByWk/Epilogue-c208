@@ -1,5 +1,6 @@
 package com.epilogue.dto.request.will;
 
+import com.epilogue.domain.will.Will;
 import io.swagger.v3.oas.annotations.media.Schema;
 import jakarta.validation.constraints.NotNull;
 import lombok.AllArgsConstructor;

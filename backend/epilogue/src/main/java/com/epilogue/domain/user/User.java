@@ -5,8 +5,10 @@ import io.swagger.v3.oas.annotations.media.Schema;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotNull;
 import lombok.*;
+import lombok.extern.slf4j.Slf4j;
 import org.hibernate.annotations.ColumnDefault;
 
+@Slf4j
 @Entity
 @Builder
 @Getter
@@ -45,8 +47,7 @@ public class User {
     @OneToOne
     private Will will;
 
-    @Schema(description = "회원 상태")
-    @OneToOne
+    @Enumerated(EnumType.STRING)
     private UserStatus userStatus;
 
     @Schema(description = "리프레시 토큰")
@@ -63,5 +64,6 @@ public class User {
 
     public void updateWill(Will will) {
         this.will = will;
+        log.info("찐 will update 완료!");
     }
 }

@@ -2,10 +2,7 @@ package com.epilogue.domain.will;
 
 
 import io.swagger.v3.oas.annotations.media.Schema;
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
+import jakarta.persistence.*;
 import jakarta.validation.constraints.NotNull;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -29,6 +26,7 @@ public class Will {
     private int willSeq;
 
     @Schema(description = "연명 치료 여부")
+    @Column(columnDefinition = "TINYINT(1)")
     private boolean sustainCare;
 
     @Schema(description = "희망 장례 방식")
@@ -38,9 +36,11 @@ public class Will {
     private String graveType;
 
     @Schema(description = "장기 기증 여부")
+    @Column(columnDefinition = "TINYINT(1)")
     private boolean organDonation;
 
     @Schema(description = "디지털 추모관 사용 여부")
+    @Column(columnDefinition = "TINYINT(1)")
     private boolean useMemorial;
 
     @Schema(description = "묘비명")
