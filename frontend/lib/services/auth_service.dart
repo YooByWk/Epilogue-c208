@@ -28,12 +28,11 @@ class AuthService {
   ///////////////////////// 로그인 //////////////////////////////////
   Future<Map<String, dynamic>> login(LoginModel loginModel) async {
     try {
-      Dio.Response response = await _dio.post(
-              baseUrl + '/login',
-              options: Dio.Options(
-                contentType: Dio.Headers.formUrlEncodedContentType,
-              ),
-              queryParameters: loginModel.toJson());
+      Dio.Response response = await _dio.post('$baseUrl/login',
+          options: Dio.Options(
+            contentType: Dio.Headers.formUrlEncodedContentType,
+          ),
+          queryParameters: loginModel.toJson());
 
       if (response.statusCode == 200) {
         String? token = response.headers.value('Access_Token');
@@ -47,11 +46,16 @@ class AuthService {
     }
   }
 
+  ////////////////////////// 토큰 삭제 /////////////////////////////////
+  Future<void> delToken() async {
+    await _storage.delete(key: 'token');
+  }
+
   //////////////////////////// 회원가입 ///////////////////////////////
   Future<Map<String, dynamic>> signup(SignupModel signupModel) async {
     try {
-      Dio.Response response = await _dio.post(baseUrl + '/api/user/join',
-          data: signupModel.toJson());
+      Dio.Response response =
+          await _dio.post('$baseUrl/api/user/join', data: signupModel.toJson());
 
       if (response.statusCode == 200) {
         return {'success': true};
@@ -65,32 +69,31 @@ class AuthService {
   }
 
 /////////////////////// 아이디 중복체크 ////////////////////////////////
-// Future<bool> checkUserId(String userId) async {
-//   try {
-//     Response response = await _dio.get(
-//         '$baseUrl/api/user/id/check', queryParameters: {'userId': userId});
-//
-//     if (response.statusCode == 200) {
-//       return;
-//     } else {
-//       return;
-//     }
-//   } on DioError catch (e) {
-//     print(e);
-//     return false;
-//   }
-// }
+  Future<bool> checkUserId(String userId) async {
+    try {
+      Dio.Response response = await _dio
+          .post('$baseUrl/api/user/id/check', data: {'userId': userId});
+
+      debugPrint('아이디 중복 체크!!');
+      return response.data; // true면 중복 없음, false면 중복 있음
+    } on Dio.DioError catch (e) {
+      debugPrint(e.toString());
+      return false;
+    }
+  }
 }
 
 class LoggingInterceptor extends Dio.Interceptor {
   @override
-  void onRequest(Dio.RequestOptions options, Dio.RequestInterceptorHandler handler) {
+  void onRequest(
+      Dio.RequestOptions options, Dio.RequestInterceptorHandler handler) {
     debugPrint("REQUEST[${options.method}] => PATH: ${options.path}");
     super.onRequest(options, handler);
   }
 
   @override
-  void onResponse(Dio.Response response, Dio.ResponseInterceptorHandler handler) {
+  void onResponse(
+      Dio.Response response, Dio.ResponseInterceptorHandler handler) {
     debugPrint(
         "RESPONSE[${response.statusCode}] => PATH: ${response.requestOptions.path}");
     super.onResponse(response, handler);

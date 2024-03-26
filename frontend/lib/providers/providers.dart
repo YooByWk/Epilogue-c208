@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:frontend/view_models/login_view_models/login_viewmodel.dart';
-import 'package:frontend/view_models/signup_view_models/signup_viewmodel.dart';
+import 'package:frontend/view_models/auth_view_models/login_viewmodel.dart';
+import 'package:frontend/view_models/auth_view_models/signup_viewmodel.dart';
 import 'package:provider/provider.dart';
 import 'package:frontend/view_models/memorial_view_models/memorial_list_viewmodel.dart';
 import 'package:frontend/view_models/memorial_view_models/memorial_detail_viewmodel.dart';
