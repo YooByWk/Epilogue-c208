@@ -1,15 +1,20 @@
 import 'package:flutter/material.dart';
 import 'package:frontend/models/block_chain_model.dart';
+import 'package:frontend/view_models/block_chain/block_chain_wallet_viewmodel.dart';
 import 'package:provider/provider.dart';
 import 'package:frontend/view_models/block_chain/block_chain_viewmodel.dart';
+import 'package:frontend/view_models/block_chain/block_chain_wallet_viewmodel.dart';
+import 'package:frontend/models/block_chain_wallet_model.dart'; 
+import 'package:frontend/view_models/block_chain/block_chain_will_viewmodel.dart';
 
+final walletViewModel = BlockChainWalletViewModel(BlockChainWalletModel());
+final audioHashViewModel = AudioHashViewModel();
 class BlockChainTest extends StatelessWidget {
   const BlockChainTest({Key? key}) : super(key: key);
-
   @override
   Widget build(BuildContext context) {
     return ChangeNotifierProvider(
-        create: (context) => BlockChainViewModel(BlockChainModel()),
+        create: (context) => BlockChainViewModel(BlockChainModel(), ),
         child: Consumer<BlockChainViewModel>(
           builder: (context, viewModel, child) {
             return Scaffold(
@@ -27,20 +32,67 @@ class BlockChainTest extends StatelessWidget {
                       },
                       child: Text('컨트랙트 배포'),
                     ),
+                    Text('값: ${viewModel.num}'),
+                    TextFormField(
+                      decoration: InputDecoration(labelText: '값 입력'),
+                      onChanged: (value) {viewModel.setNum(int.parse(value));
+                      debugPrint('입력값: $value');}
+                    ),
                     ElevatedButton(
                       onPressed: () async {
-                        final response = await viewModel.sendTransaction('store', [BigInt.from(35)]);
-                        debugPrint('store 함수 호출 결과: $response');
+                         await viewModel.sendTransaction('store', [BigInt.from(viewModel.num *3)]).then((res) async{
+                          await viewModel.retrieve();
+                          debugPrint('retrieve 함수 호출 결과: ${viewModel.newNum}, $res');
+                        });
+                        // debugPrint('store 함수 호출 결과: $response');
+                        
                       },
                       child: Text('store 함수 호출'),
                     ),
+                    Text('Current value : ${viewModel.newNum}'),
+                    
                     ElevatedButton(
                       onPressed: () async {
                         final response = await viewModel.retrieve();
-                        debugPrint('retrieve 함수 호출 결과: $response');
+                        debugPrint('retrieve 함수 호출 결과: ${viewModel.newNum}, $response');
                       },
                       child: Text('retrieve 함수 호출'),
                     ),
+                    ElevatedButton(
+                      onPressed: () async{
+                        await walletViewModel.createWallet();
+                        debugPrint('지갑 생성 완료');
+                      },
+                      child : Text('지갑 생성')
+                    ),
+                    ElevatedButton(
+                      onPressed: ()  async {
+                        // walletViewModel.checkWallet();
+                      },
+                      child : Text('지갑 확인')
+                    ),
+                    ElevatedButton(
+                      onPressed: ()  async {
+                        // walletViewModel.readPrivateKey();
+                      },
+                      child : Text('스토리지 확인')
+                    ),
+                    ElevatedButton(
+                      onPressed: ()  async {
+                        Navigator.pushNamed(context, '/mnemonic');
+                      },
+                      child : Text('니모닉 복구')
+                    ),
+                    ElevatedButton(
+                      onPressed : () {audioHashViewModel.createAudioHash();},
+                      child : Text('테스트 파일 해싱')
+                    ),
+                    ElevatedButton(
+                      onPressed : () {audioHashViewModel.checkHash();},
+                      child : Text('테스트 파일 해싱')
+                    ),
+
+                    
                   ],
                 ),
               ),
