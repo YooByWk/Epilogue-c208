@@ -41,7 +41,7 @@ public class AwsS3Service {
     public void upload(MultipartFile file, Principal principal) {
         try {
             String fileName = file.getOriginalFilename();
-            String willFileAddress = "https://" + bucketName + "/will" + fileName;
+            String willFileAddress = "https://" + bucketName + "/will/" + fileName;
             ObjectMetadata metadata = new ObjectMetadata();
             metadata.setContentType(file.getContentType());
             metadata.setContentLength(file.getSize());
@@ -61,7 +61,7 @@ public class AwsS3Service {
     public void uploadGraveImage(MultipartFile file, Principal principal) {
         try {
             String fileName = file.getOriginalFilename();
-            String graveImageAddress = "https://" + graveBucketName + "/will" + fileName;
+            String graveImageAddress = "https://" + graveBucketName + "/grave/" + fileName;
             ObjectMetadata metadata = new ObjectMetadata();
             metadata.setContentType(file.getContentType());
             metadata.setContentLength(file.getSize());
@@ -69,9 +69,10 @@ public class AwsS3Service {
             // 묘비 사진 주소 업데이트
             User user = userRepository.findByUserId(principal.getName());
             Will will = user.getWill();
+            log.info("willSeq = {}", will.getWillSeq());
             will.updateGraveImageAddress(graveImageAddress);
 
-            amazonS3.putObject(bucketName, fileName, file.getInputStream(), metadata);
+            amazonS3.putObject(graveBucketName, fileName, file.getInputStream(), metadata);
 
         } catch (IOException e) {
             e.printStackTrace();

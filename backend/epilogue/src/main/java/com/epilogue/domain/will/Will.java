@@ -2,10 +2,7 @@ package com.epilogue.domain.will;
 
 
 import io.swagger.v3.oas.annotations.media.Schema;
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
+import jakarta.persistence.*;
 import jakarta.validation.constraints.NotNull;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -29,7 +26,8 @@ public class Will {
     private int willSeq;
 
     @Schema(description = "연명 치료 여부")
-    private boolean sustainCare;
+    @Enumerated(EnumType.STRING)
+    private SustainCare sustainCare;
 
     @Schema(description = "희망 장례 방식")
     private String funeralType;
@@ -38,10 +36,12 @@ public class Will {
     private String graveType;
 
     @Schema(description = "장기 기증 여부")
-    private boolean organDonation;
+    @Enumerated(EnumType.STRING)
+    private OrganDonation organDonation;
 
     @Schema(description = "디지털 추모관 사용 여부")
-    private boolean useMemorial;
+    @Enumerated(EnumType.STRING)
+    private UseMemorial useMemorial;
 
     @Schema(description = "묘비명")
     private String graveName;
@@ -58,12 +58,12 @@ public class Will {
     @Schema(description = "유언장 링크")
     private String willLink;
 
-    public void updateMemorial(boolean useMemorial, String graveName) {
+    public void updateMemorial(UseMemorial useMemorial, String graveName) {
         this.useMemorial = useMemorial;
         this.graveName = graveName;
     }
 
-    public void updateAdditionalInformation(boolean sustainCare, String funeralType, String graveType, boolean organDonation) {
+    public void updateAdditionalInformation(SustainCare sustainCare, String funeralType, String graveType, OrganDonation organDonation) {
         this.sustainCare = sustainCare;
         this.graveType = graveType;
         this.funeralType = funeralType;
