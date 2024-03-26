@@ -73,7 +73,11 @@ public class WillController {
     @Operation(summary = "디지털 추모관 정보 저장 API", description = "디지털 추모관 정보를 저장합니다.")
     @ApiResponse(responseCode = "200", description = "성공")
     @PostMapping("/memorial")
-    public ResponseEntity<Void> saveMemorial(@Parameter(description = "디지털 추모관 정보 요청 DTO") @ModelAttribute WillMemorialRequestDto willMemorialRequestDto, Principal principal) {
+        public ResponseEntity<Void> saveMemorial(@Parameter(description = "묘비 사진 파일 (multipart/form-data 타입)") @RequestPart MultipartFile multipartFile,
+                                                 @Parameter(description = "디지털 추모관 정보 요청 DTO (application/json 타입)")  @RequestPart WillMemorialRequestDto willMemorialRequestDto, Principal principal) {
+        // 묘비 사진 S3 저장
+        awsS3Service.uploadGraveImage(multipartFile, principal);
+
         // 디지털 추모관 정보 저장
         willService.saveMemorial(willMemorialRequestDto, principal);
         return new ResponseEntity<>(HttpStatus.OK);
