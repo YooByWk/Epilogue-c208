@@ -73,8 +73,7 @@ class AuthService {
     try {
       Dio.Response response = await _dio
           .post('$baseUrl/api/user/id/check', data: {'userId': userId});
-
-      debugPrint('아이디 중복 체크!!');
+      debugPrint(response.data);
       return response.data; // true면 중복 없음, false면 중복 있음
     } on Dio.DioError catch (e) {
       debugPrint(e.toString());

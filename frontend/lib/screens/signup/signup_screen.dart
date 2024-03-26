@@ -62,20 +62,7 @@ class SignUpScreen extends StatelessWidget {
                             height: 50,
                             fontSize: 24,
                             backgroundColor: themeColour3,
-                            onPressed: () async {
-                              String userId = viewModel.signupData.userId;
-                              bool isUnique = await viewModel.checkUserId();
-                              if (isUnique) {
-                                ScaffoldMessenger.of(context)
-                                    .showSnackBar(SnackBar(
-                                  content: Text('사용 가능한 아이디입니다.'),
-                                ));
-                              } else {
-                                ScaffoldMessenger.of(context)
-                                    .showSnackBar(SnackBar(
-                                  content: Text('이미 사용 중인 아이디입니다.'),
-                                ));
-                              }
+                            onPressed: () {
                             })
                       ],
                     ),
@@ -102,7 +89,20 @@ class SignUpScreen extends StatelessWidget {
                             height: 50,
                             fontSize: 20,
                             backgroundColor: themeColour3,
-                            onPressed: () {})
+                            onPressed: () async {
+                              await viewModel.checkUserId();
+                              if (viewModel.userIdExists == null) {
+                                ScaffoldMessenger.of(context)
+                                    .showSnackBar(SnackBar(
+                                  content: Text('사용 가능한 아이디입니다.'),
+                                ));
+                              } else {
+                                ScaffoldMessenger.of(context)
+                                    .showSnackBar(SnackBar(
+                                  content: Text(viewModel.userIdExists!),
+                                ));
+                              }
+                            })
                       ],
                     ),
                   ),
