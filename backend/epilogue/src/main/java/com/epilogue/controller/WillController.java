@@ -46,8 +46,6 @@ public class WillController {
         Will will = new Will();
         willService.saveWill(will);
 
-        log.info("will 저장 완료! will={}", will);
-
         // 증인 리스트 저장
         witnessService.saveWitness(will, witnessList, principal);
 
@@ -58,8 +56,6 @@ public class WillController {
 
         // 유언 파일 S3 저장 (원본 파일, 초기 영수증)
         awsS3Service.upload(multipartFile, principal);
-
-        log.info("유언 파일 저장 완료!");
 
         // 프론트에 알림 (200 보내기)
         return new ResponseEntity<>(HttpStatus.OK);
