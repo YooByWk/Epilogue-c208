@@ -71,10 +71,12 @@ public class WillService {
         User user = userRepository.findByUserId(loginUserId);
         Will will = user.getWill();
 
+        log.info("will={}", will.getWillSeq());
+
         witnessRepository.deleteAllByWillWillSeq(will.getWillSeq());
+//        willRepository.deleteByWillSeq(will.getWillSeq());
         viewerRepository.deleteAllByWillWillSeq(will.getWillSeq());
-        willRepository.deleteByWillSeq(will.getWillSeq());
-        user.updateWill(will);
+//        user.updateWillNuill();
     }
 
     public boolean applyWill(WillApplyRequestDto willApplyRequestDto) {
