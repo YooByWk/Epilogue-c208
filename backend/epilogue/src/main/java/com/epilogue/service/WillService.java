@@ -14,7 +14,6 @@ import jakarta.persistence.EntityManager;
 import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.security.core.parameters.P;
 import org.springframework.stereotype.Service;
 
 import java.io.UnsupportedEncodingException;
@@ -74,13 +73,9 @@ public class WillService {
 
         witnessRepository.deleteAllByWillWillSeq(will.getWillSeq());
         viewerRepository.deleteAllByWillWillSeq(will.getWillSeq());
-        System.out.println("================");
-        System.out.println(will.getWillSeq());
-//        willRepository.deleteByWillSeq(will.getWillSeq());
+        user.updateWillNull();
         willRepository.delete(will);
-        System.out.println("================");
 
-//        user.updateWillNuill();
     }
 
     public boolean applyWill(WillApplyRequestDto willApplyRequestDto) {

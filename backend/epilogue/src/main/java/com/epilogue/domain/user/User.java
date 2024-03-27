@@ -6,8 +6,6 @@ import jakarta.persistence.*;
 import jakarta.validation.constraints.NotNull;
 import lombok.*;
 import lombok.extern.slf4j.Slf4j;
-import org.hibernate.annotations.ColumnDefault;
-import org.springframework.boot.context.properties.bind.DefaultValue;
 
 @Slf4j
 @Entity
@@ -67,7 +65,7 @@ public class User {
         this.will = will;
     }
 
-    public void updateWillNuill() {
+    public void updateWillNull() {
         this.will = null;
     }
 }
