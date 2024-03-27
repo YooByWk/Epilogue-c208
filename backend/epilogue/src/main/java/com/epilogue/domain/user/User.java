@@ -64,6 +64,7 @@ public class User {
 
     public void updateWill(Will will) {
         this.will = will;
+        log.info("Will={}", will.getWillSeq());
         log.info("찐 will update 완료!");
     }
 }
