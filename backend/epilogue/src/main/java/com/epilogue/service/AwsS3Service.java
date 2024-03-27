@@ -26,6 +26,7 @@ import org.springframework.web.multipart.MultipartFile;
 @Slf4j
 @RequiredArgsConstructor
 @Component
+@Transactional
 public class AwsS3Service {
 
     private final AmazonS3 amazonS3;
@@ -137,7 +138,6 @@ public class AwsS3Service {
         return amazonS3.getUrl(videoBucketName, fileName).toString();
     }
 
-    @Transactional
     public void deleteFromS3(Principal principal) throws MalformedURLException, UnsupportedEncodingException {
         Will will = userRepository.findByUserId(principal.getName()).getWill();
 
