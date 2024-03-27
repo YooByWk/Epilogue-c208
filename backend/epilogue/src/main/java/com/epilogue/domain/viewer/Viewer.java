@@ -21,7 +21,7 @@ public class Viewer {
 
     @NotNull(message = "유언 식별키는 Null일 수 없습니다.")
     @Schema(description = "유언 식별키")
-    @ManyToOne(fetch = FetchType.LAZY, cascade = CascadeType.REMOVE)
+    @ManyToOne(fetch = FetchType.LAZY)
     private Will will;
 
     @NotNull(message = "열람인 이름은 Null일 수 없습니다.")

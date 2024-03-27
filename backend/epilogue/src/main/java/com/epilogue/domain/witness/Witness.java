@@ -25,7 +25,7 @@ public class Witness {
 
     @NotNull(message = "유언 식별키는 Null일 수 없습니다.")
     @Schema(description = "유언 식별키")
-    @ManyToOne(fetch = FetchType.LAZY, cascade = CascadeType.REMOVE)
+    @ManyToOne
     private Will will;
 
     @NotNull(message = "증인 이름은 Null일 수 없습니다.")
