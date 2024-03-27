@@ -10,6 +10,7 @@ import com.epilogue.repository.user.UserRepository;
 import com.epilogue.repository.viewer.ViewerRepository;
 import com.epilogue.repository.will.WillRepository;
 import com.epilogue.repository.witness.WitnessRepository;
+import jakarta.persistence.EntityManager;
 import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -29,6 +30,7 @@ public class WillService {
     private final WitnessRepository witnessRepository;
     private final AwsS3Service awsS3Service;
     private final ViewerRepository viewerRepository;
+    private final EntityManager entityManager;
 
     public void saveWill(Will will) {
         willRepository.save(will);
@@ -58,7 +60,6 @@ public class WillService {
         return awsS3Service.getWillFromS3(will.getWillFileAddress());
     }
 
-    @Transactional
     public void deleteMyWill(Principal principal) throws MalformedURLException, UnsupportedEncodingException {
         String loginUserId = principal.getName();
 
@@ -71,11 +72,14 @@ public class WillService {
         User user = userRepository.findByUserId(loginUserId);
         Will will = user.getWill();
 
-        log.info("will={}", will.getWillSeq());
-
         witnessRepository.deleteAllByWillWillSeq(will.getWillSeq());
-//        willRepository.deleteByWillSeq(will.getWillSeq());
         viewerRepository.deleteAllByWillWillSeq(will.getWillSeq());
+        System.out.println("================");
+        System.out.println(will.getWillSeq());
+//        willRepository.deleteByWillSeq(will.getWillSeq());
+        willRepository.delete(will);
+        System.out.println("================");
+
 //        user.updateWillNuill();
     }
 

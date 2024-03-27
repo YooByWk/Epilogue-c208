@@ -45,7 +45,7 @@ public class User {
     private String birth;
 
     @Schema(description = "유언")
-    @OneToOne(fetch = FetchType.LAZY)
+    @OneToOne(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
     private Will will;
 
     @Enumerated(EnumType.STRING)

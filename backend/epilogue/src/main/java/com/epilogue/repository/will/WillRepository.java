@@ -7,6 +7,6 @@ import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;
 
 public interface WillRepository extends JpaRepository<Will, Integer> {
-    @Transactional
-    void deleteByWillSeq(int willSeq);
+//    @Transactional
+//    void deleteByWillSeq(int willSeq);
 }
