@@ -1,17 +1,14 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/widgets.dart';
 import 'package:frontend/main.dart';
 import 'package:frontend/widgets//input_form_widget.dart';
-import 'package:frontend/view_models/signup_view_models/signup_viewmodel.dart';
+import 'package:frontend/view_models/auth_view_models/signup_viewmodel.dart';
 import 'package:frontend/widgets/common_button.dart';
 import 'package:provider/provider.dart';
 
 class SignUpScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-    // final viewModel = Provider.of<SignupViewModel>(context, listen: false);
-
     return ChangeNotifierProvider(
       create: (context) => SignupViewModel(),
       child: Consumer<SignupViewModel>(
@@ -54,9 +51,8 @@ class SignUpScreen extends StatelessWidget {
                             label: '휴대폰 번호',
                             textColor: Colors.white,
                             contentPadding:
-                                EdgeInsets.only(bottom: 5, left: 130),
+                            EdgeInsets.only(bottom: 5, left: 130),
                             onChanged: (value) => viewModel.setMobile(value),
-
                           ),
                         ),
                         SizedBox(width: 10),
@@ -66,7 +62,8 @@ class SignUpScreen extends StatelessWidget {
                             height: 50,
                             fontSize: 24,
                             backgroundColor: themeColour3,
-                            onPressed: () {})
+                            onPressed: () {
+                            })
                       ],
                     ),
                   ),
@@ -81,7 +78,8 @@ class SignUpScreen extends StatelessWidget {
                               label: '아이디',
                               textColor: Colors.white,
                               keyboardType: TextInputType.text,
-                              contentPadding: EdgeInsets.only(bottom: 5, left: 90),
+                              contentPadding:
+                              EdgeInsets.only(bottom: 5, left: 90),
                               onChanged: (value) => viewModel.setUserId(value)),
                         ),
                         SizedBox(width: 10),
@@ -91,7 +89,20 @@ class SignUpScreen extends StatelessWidget {
                             height: 50,
                             fontSize: 20,
                             backgroundColor: themeColour3,
-                            onPressed: () {})
+                            onPressed: () async {
+                              await viewModel.checkUserId();
+                              if (viewModel.userIdExists == null) {
+                                ScaffoldMessenger.of(context)
+                                    .showSnackBar(SnackBar(
+                                  content: Text('사용 가능한 아이디입니다.'),
+                                ));
+                              } else {
+                                ScaffoldMessenger.of(context)
+                                    .showSnackBar(SnackBar(
+                                  content: Text(viewModel.userIdExists!),
+                                ));
+                              }
+                            })
                       ],
                     ),
                   ),
@@ -99,6 +110,11 @@ class SignUpScreen extends StatelessWidget {
                   InputFormWidget(
                       label: '비밀번호',
                       textColor: Colors.white,
+                      hintText: '8~16자 영어 대/소문자,숫자,특수문자 조합',
+                      hintTextStyle: TextStyle(
+                        fontSize: 16,
+                        color: Colors.grey[400]
+                      ),
                       keyboardType: TextInputType.text,
                       onChanged: (value) => viewModel.setPassword(value),
                       obscureText: true),
@@ -111,26 +127,42 @@ class SignUpScreen extends StatelessWidget {
                       textInputAction: TextInputAction.done,
                       onChanged: (value) => viewModel.setConfirmPassword(value),
                       obscureText: true),
+                  if (!viewModel.isPasswordSame)
+                    Padding(
+                      padding: const EdgeInsets.only(top: 10),
+                      child: Text(
+                        '비밀번호가 일치하지 않습니다.',
+                        style: TextStyle(
+                            color: Colors.red,
+                        fontSize: 20),
+                      ),
+                    ),
                   SizedBox(height: 20),
                   CommonButtonWidget(
                       text: '회원가입',
                       fontSize: 30,
-                      width: MediaQuery.of(context).size.width * 0.9,
+                      width: MediaQuery
+                          .of(context)
+                          .size
+                          .width * 0.9,
                       height: 50,
                       backgroundColor: themeColour3,
                       onPressed: () async {
-                        await viewModel.signup();
-                        if (viewModel.errorMessage == null) {
-                          ScaffoldMessenger.of(context).showSnackBar(
-                            SnackBar(content: Text('회원가입 성공')),
-                          );
-                          Navigator.pop(context);
+                        if (viewModel.isFormValid) {
+                          await viewModel.signup();
+                          if (viewModel.errorMessage == null) {
+                            ScaffoldMessenger.of(context).showSnackBar(
+                              SnackBar(content: Text('회원가입 성공')),
+                            );
+                            Navigator.pop(context);
+                          } else {
+                            ScaffoldMessenger.of(context).showSnackBar(
+                              SnackBar(content: Text(viewModel.errorMessage!)),
+                            );
+                          }
                         } else {
-                          ScaffoldMessenger.of(context).showSnackBar(
-                            SnackBar(
-                                content:
-                                    Text(viewModel.errorMessage!)),
-                          );
+                          ScaffoldMessenger.of(context).showSnackBar(SnackBar(
+                              content: Text('입력 정보를 확인해주세요.')));
                         }
                       }),
                 ],

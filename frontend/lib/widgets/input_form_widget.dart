@@ -15,6 +15,8 @@ class InputFormWidget extends StatelessWidget {
   final bool obscureText;
   final TextInputType keyboardType;
   final TextInputAction textInputAction;
+  final String? hintText;
+  final TextStyle? hintTextStyle;
 
   InputFormWidget({
     required this.label,
@@ -29,6 +31,8 @@ class InputFormWidget extends StatelessWidget {
     this.obscureText = false,
     this.keyboardType = TextInputType.number,
     this.textInputAction = TextInputAction.next,
+    this.hintText,
+    this.hintTextStyle,
   });
 
   @override
@@ -71,6 +75,8 @@ class InputFormWidget extends StatelessWidget {
               decoration: InputDecoration(
                 border: InputBorder.none,
                 contentPadding: contentPadding,
+                hintText: hintText,
+                hintStyle: hintTextStyle,
               ),
             ),
           ],
