@@ -7,7 +7,8 @@ import './user_contract.sol';
 contract WillContract {
     UserContract userContract;
     mapping(string => string[]) public userIdToWills;
-
+    mapping(address => string) public addressToUserId;
+    
     constructor(address _userContractAddress) {
         userContract = UserContract(_userContractAddress);
     }
@@ -18,5 +19,8 @@ contract WillContract {
         _;
     }
 
+    function createWill(string memory _userId, string memory _willHash) public (_userId) {
+      
+    }
     
 }
