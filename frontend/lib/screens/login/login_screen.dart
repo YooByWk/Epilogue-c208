@@ -111,14 +111,24 @@ class LoginScreen extends StatelessWidget {
                         mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                         children: [
                           SocialButtonWidget(
-                            imagePath: 'assets/images/kakao.png',
-                            onPressed: () =>
-                                debugPrint('Kakao login button clicked!'),
-                          ),
+                              imagePath: 'assets/images/kakao.png',
+                              onPressed: () {
+                                ScaffoldMessenger.of(context).showSnackBar(
+                                  SnackBar(content: Text('서비스 준비 중입니다.')),
+                                );
+                              }),
                           SocialButtonWidget(
                             imagePath: 'assets/images/naver.png',
-                            onPressed: () =>
-                                debugPrint('Naver login button clicked!'),
+                            onPressed: () async {
+                              await viewModel.loginWithNaver();
+                              if (viewModel.isLoginSuccess) {
+                                Navigator.pushReplacementNamed(
+                                    context, '/home');
+                              } else {
+                                ScaffoldMessenger.of(context).showSnackBar(
+                                    SnackBar(content: Text('로그인 실패')));
+                              }
+                            },
                           ),
                         ],
                       ),

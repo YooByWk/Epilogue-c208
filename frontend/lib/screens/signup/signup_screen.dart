@@ -32,12 +32,22 @@ class SignUpScreen extends StatelessWidget {
                   InputFormWidget(
                       label: '이름',
                       textColor: Colors.white,
+                      hintText: '예시)   홍길동',
+                      hintTextStyle: TextStyle(
+                          fontSize: 20,
+                          color: Colors.grey[400]
+                      ),
                       keyboardType: TextInputType.text,
                       onChanged: (value) => viewModel.setName(value)),
                   SizedBox(height: 10),
                   InputFormWidget(
                       label: '생년월일',
                       textColor: Colors.white,
+                      hintText: '예시) 19950308',
+                      hintTextStyle: TextStyle(
+                          fontSize: 20,
+                          color: Colors.grey[400]
+                      ),
                       contentPadding: EdgeInsets.only(bottom: 5, left: 100),
                       onChanged: (value) => viewModel.setBirth(value)),
                   SizedBox(height: 10),
@@ -50,6 +60,11 @@ class SignUpScreen extends StatelessWidget {
                           child: InputFormWidget(
                             label: '휴대폰 번호',
                             textColor: Colors.white,
+                            hintText: '예시) 01012345678',
+                            hintTextStyle: TextStyle(
+                                fontSize: 18,
+                                color: Colors.grey[400]
+                            ),
                             contentPadding:
                             EdgeInsets.only(bottom: 5, left: 130),
                             onChanged: (value) => viewModel.setMobile(value),
@@ -62,7 +77,8 @@ class SignUpScreen extends StatelessWidget {
                             height: 50,
                             fontSize: 24,
                             backgroundColor: themeColour3,
-                            onPressed: () {
+                            onPressed: () async {
+                              await viewModel.mobileCertificationSend();
                             })
                       ],
                     ),
@@ -122,6 +138,11 @@ class SignUpScreen extends StatelessWidget {
                   InputFormWidget(
                       label: '비밀번호 확인',
                       textColor: Colors.white,
+                      hintText: '비밀번호를 한 번 더 입력해주세요',
+                      hintTextStyle: TextStyle(
+                          fontSize: 16,
+                          color: Colors.grey[400]
+                      ),
                       contentPadding: EdgeInsets.only(bottom: 5, left: 140),
                       keyboardType: TextInputType.text,
                       textInputAction: TextInputAction.done,

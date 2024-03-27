@@ -26,6 +26,18 @@ class SignupViewModel extends ChangeNotifier {
     return regex.hasMatch(_signupData.password);
   }
 
+  // 핸드폰 번호 유효성 검사
+  bool get isMobileValid {
+    RegExp regex = RegExp(r'^010?([1-9]{4})?([0-9]{4})$');
+    return regex.hasMatch(_signupData.mobile);
+  }
+  
+  // 생년월일 유효성 검사
+  bool get isBirthValid {
+    RegExp regex = RegExp(r'^(19|20|21)\d{2}(0[1-9]|1[0-2])(0[1-9]|[12][0-9]|3[01])$');
+    return regex.hasMatch(_signupData.birth);
+  }
+      
   // 비밀번호 확인 일치 여부
   bool get isPasswordSame => _signupData.password == _confirmPassword;
 
@@ -39,9 +51,9 @@ class SignupViewModel extends ChangeNotifier {
         _confirmPassword != null &&
         _confirmPassword!.isNotEmpty;
 
-    return isFieldNotEmpty && isPasswordSame && isPasswordValid;
+    return isFieldNotEmpty && isPasswordSame && isPasswordValid && isMobileValid && isBirthValid;
   }
-
+  
   void setConfirmPassword(String? value) {
     _confirmPassword = value;
     notifyListeners();
@@ -97,7 +109,24 @@ class SignupViewModel extends ChangeNotifier {
     notifyListeners();
   }
 
-  ////////////////////////////////////////////////
+  ////////////////////////////////////////////////휴대폰 인증
+  Future<void> mobileCertificationSend() async {
+    _isLoading = true;
+    notifyListeners();
+
+    Map<String, dynamic> response = await _authService.mobileCertificationSend(_signupData.mobile);
+
+    // if (response) {
+    //
+    // } else {
+    //
+    // }
+
+    _isLoading = false;
+    notifyListeners();
+  }
+
+  ////////////////////////////////////////////////아이디 중복체크
   Future<void> checkUserId() async {
     _isLoading = true;
     notifyListeners();
@@ -105,7 +134,7 @@ class SignupViewModel extends ChangeNotifier {
     bool isAvailable = await _authService.checkUserId(_signupData.userId);
     _isLoading = false;
 
-    if (!isAvailable) {
+    if (isAvailable) {
       _userIdExists = '이미 사용 중인 아이디입니다.';
     } else {
       _userIdExists = null;
@@ -113,7 +142,7 @@ class SignupViewModel extends ChangeNotifier {
     notifyListeners();
   }
 
-///////////////////////////////////////////////////////
+///////////////////////////////////////////////////////회원가입
   Future<void> signup() async {
     _isLoading = true;
     _errorMessage = null;
