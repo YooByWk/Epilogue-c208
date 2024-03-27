@@ -56,7 +56,7 @@ public class WillController {
 
 
         // 유언 파일 S3 저장 (원본 파일, 초기 영수증)
-        awsS3Service.upload(multipartFile, principal);
+        awsS3Service.uploadWill(multipartFile, principal);
 
         // 프론트에 알림 (200 보내기)
         return new ResponseEntity<>(HttpStatus.OK);
@@ -96,10 +96,9 @@ public class WillController {
     @Operation(summary = "나의 유언 조회 API", description = "내가 작성한 유언을 조회합니다.")
     @ApiResponse(responseCode = "200", description = "성공")
     @GetMapping
-    public ResponseEntity<Void> viewMyWill(Principal principal) {
+    public ResponseEntity<String> viewMyWill(Principal principal) {
         // S3에서 가져온 유언 파일 반환
-        willService.viewMyWill(principal);
-        return new ResponseEntity<>(HttpStatus.OK);
+        return new ResponseEntity<>(willService.viewMyWill(principal), HttpStatus.OK);
     }
 
     @Operation(summary = "나의 유언 삭제 API", description = "내가 작성한 유언을 삭제합니다.")
@@ -107,9 +106,6 @@ public class WillController {
     @DeleteMapping
     public ResponseEntity<Void> deleteMyWill(Principal principal) throws MalformedURLException, UnsupportedEncodingException {
         willService.deleteMyWill(principal);
-
-        // S3에서 유언 원본 파일 삭제
-        awsS3Service.deleteFromS3(principal);
         return new ResponseEntity<>(HttpStatus.OK);
     }
 

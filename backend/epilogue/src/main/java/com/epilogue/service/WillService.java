@@ -15,6 +15,8 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.security.core.parameters.P;
 import org.springframework.stereotype.Service;
 
+import java.io.UnsupportedEncodingException;
+import java.net.MalformedURLException;
 import java.security.Principal;
 
 @Slf4j
@@ -24,6 +26,7 @@ public class WillService {
     private final WillRepository willRepository;
     private final UserRepository userRepository;
     private final WitnessRepository witnessRepository;
+    private final AwsS3Service awsS3Service;
 
     public void saveWill(Will will) {
         willRepository.save(will);
@@ -45,17 +48,20 @@ public class WillService {
         will.updateAdditionalInformation(willAdditionalRequestDto.isSustainCare(), willAdditionalRequestDto.getFuneralType(), willAdditionalRequestDto.getGraveType(), willAdditionalRequestDto.isOrganDonation());
     }
 
-    public void viewMyWill(Principal principal) {
+    public String viewMyWill(Principal principal) {
         String loginUserId = principal.getName();
+        Will will = userRepository.findByUserId(loginUserId).getWill();
 
         // S3에서 녹음 파일 가져오기
-
+        return awsS3Service.getWillFromS3(will.getWillFileAddress());
     }
 
-    public void deleteMyWill(Principal principal) {
+    @Transactional
+    public void deleteMyWill(Principal principal) throws MalformedURLException, UnsupportedEncodingException {
         String loginUserId = principal.getName();
 
         // S3에서 유언 파일 삭제
+        awsS3Service.deleteFromS3(principal);
 
         // 블록체인에서 유언 파일 url 삭제
 
