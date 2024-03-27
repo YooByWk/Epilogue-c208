@@ -14,6 +14,7 @@ import com.epilogue.repository.user.UserRepository;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.text.DateFormat;
@@ -218,6 +219,7 @@ public class MemorialService {
                 .mediaSeq(memorialPhoto.get().getMemorialPhotoSeq())
                 .S3url(awsS3Service.getPhotoFromS3(memorialPhoto.get().getUniquePhotoUrl()))
                 .content(memorialPhoto.get().getContent())
+                .reportCount(memorialPhoto.get().getReportCount())
                 .build();
         return memorialMediaResponseDto;
     }
@@ -228,6 +230,7 @@ public class MemorialService {
                 .mediaSeq(memorialVideo.get().getMemorialVideoSeq())
                 .S3url(awsS3Service.getVideoFromS3(memorialVideo.get().getUniqueVideoUrl()))
                 .content(memorialVideo.get().getContent())
+                .reportCount(memorialVideo.get().getReportCount())
                 .build();
         return memorialMediaResponseDto;
     }
@@ -266,6 +269,8 @@ public class MemorialService {
                 .user(userRepository.findByUserId(loginUserId))
                 .memorial(memorialRepository.findById(memorialSeq).get())
                 .build();
+        log.info("======================================");
+        log.info("favorite/memorialSeq = {}", favorite.getMemorial().getMemorialSeq());
         favoriteRepository.save(favorite);
     }
 
@@ -280,14 +285,14 @@ public class MemorialService {
                     .birth(favorite.getMemorial().getUser().getBirth())
                     .goneDate(favorite.getMemorial().getGoneDate())
                     .graveName(favorite.getMemorial().getGraveName())
-//                    =========================================================
-//                    .graveImg(favorite.getMemorial().getGraveImg())
+                    .graveImg(awsS3Service.getGraveImageFromS3(favorite.getMemorial().getGraveImg()))
                     .build();
             graveDtoList.add(graveDto);
         }
         return graveDtoList;
     }
 
+    @Transactional
     public void report(String type, int mediaSeq) {
         if(type.equals("photo")) {
             Optional<MemorialPhoto> memorialPhoto = memorialPhotoRepository.findById(mediaSeq);
