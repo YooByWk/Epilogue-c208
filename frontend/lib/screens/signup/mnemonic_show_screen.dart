@@ -20,12 +20,13 @@ class _MnemonicShowScreenState extends State<MnemonicShowScreen> {
       canPop: false,
       onPopInvoked: (didPop) {
         debugPrint(didPop.toString());
-        if (!didPop) {
+        // if (didPop) {
           Future.delayed(Duration.zero, () {
             _showBackDialog();
-          });
+          // });
           // _showBackDialog();
-        }
+        });
+        
       },
       child: ChangeNotifierProvider.value(
         value: viewModel,
@@ -58,7 +59,14 @@ class _MnemonicShowScreenState extends State<MnemonicShowScreen> {
                                 color: themeColour1,
                                 border:
                                     Border.all(color: Colors.black, width: 1.0),
-                                borderRadius: BorderRadius.circular(10.0),
+                                borderRadius: BorderRadius.circular(15.0),
+                                boxShadow: [
+                                BoxShadow(
+                                  color: themeColour4.withOpacity(0.5),
+                                  spreadRadius: 5,
+                                  blurRadius: 7,
+                                  offset: Offset(0, 1), 
+                                )]
                               ),
                               child: Column(
                                 mainAxisAlignment: MainAxisAlignment.center,

@@ -33,7 +33,7 @@ class MainScreen extends StatelessWidget {
             ],
           ),
         );
-        return shouldPop ?? false;
+        return shouldPop ?? false; // 사용자의 선택이 없다면 기본값은 false
         // return Future(() => false);
       },
       child: ChangeNotifierProvider(
