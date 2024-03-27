@@ -12,7 +12,7 @@ import lombok.Getter;
 public class WillAdditionalRequestDto {
     @NotNull(message = "연명 치료 여부는 Null일 수 없습니다.")
     @Schema(description = "연명 치료 여부")
-    private boolean sustainCare;
+    private String sustainCare;
 
     @NotNull(message = "희망 장례 방식은 Null일 수 없습니다.")
     @Schema(description = "희망 장례 방식")
@@ -24,5 +24,5 @@ public class WillAdditionalRequestDto {
 
     @NotNull(message = "장기 기증 여부는 Null일 수 없습니다.")
     @Schema(description = "장기 기증 여부")
-    private boolean organDonation;
+    private String organDonation;
 }

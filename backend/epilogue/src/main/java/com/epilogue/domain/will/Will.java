@@ -26,8 +26,7 @@ public class Will {
     private int willSeq;
 
     @Schema(description = "연명 치료 여부")
-    @Column(columnDefinition = "TINYINT(1)")
-    private boolean sustainCare;
+    private String sustainCare;
 
     @Schema(description = "희망 장례 방식")
     private String funeralType;
@@ -36,12 +35,10 @@ public class Will {
     private String graveType;
 
     @Schema(description = "장기 기증 여부")
-    @Column(columnDefinition = "TINYINT(1)")
-    private boolean organDonation;
+    private String organDonation;
 
     @Schema(description = "디지털 추모관 사용 여부")
-    @Column(columnDefinition = "TINYINT(1)")
-    private boolean useMemorial;
+    private String useMemorial;
 
     @Schema(description = "묘비명")
     private String graveName;
@@ -58,12 +55,12 @@ public class Will {
     @Schema(description = "유언장 링크")
     private String willLink;
 
-    public void updateMemorial(boolean useMemorial, String graveName) {
+    public void updateMemorial(String useMemorial, String graveName) {
         this.useMemorial = useMemorial;
         this.graveName = graveName;
     }
 
-    public void updateAdditionalInformation(boolean sustainCare, String funeralType, String graveType, boolean organDonation) {
+    public void updateAdditionalInformation(String sustainCare, String funeralType, String graveType, String organDonation) {
         this.sustainCare = sustainCare;
         this.graveType = graveType;
         this.funeralType = funeralType;
