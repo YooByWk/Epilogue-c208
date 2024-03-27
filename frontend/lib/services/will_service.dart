@@ -1,0 +1,116 @@
+import 'dart:io';
+
+import 'package:flutter_secure_storage/flutter_secure_storage.dart';
+import 'package:dio/dio.dart' as Dio;
+import 'package:flutter_dotenv/flutter_dotenv.dart';
+import 'package:flutter/material.dart';
+import 'package:frontend/models/will/additional_model.dart';
+import 'package:frontend/models/will/viewer_model.dart';
+
+
+class WillService {
+  final _dio = Dio.Dio();
+  final _storage = FlutterSecureStorage();
+  final baseUrl = dotenv.env['API_URL'] ?? '';
+
+  WillService() {
+    _dio.interceptors.add(Dio.InterceptorsWrapper(
+      onRequest: (options, handler) async {
+        // 저장된 토큰을 가져온다
+        String? token = await _storage.read(key: 'token');
+        if (token != null) {
+          // 요청 헤더에 토큰을 추가한다
+          options.headers['Access_Token'] = token;
+        }
+        return handler.next(options); // 요청을 계속 진행한다
+      },
+    ));
+    _dio.interceptors.add(LoggingInterceptor()); // console에 로깅
+
+  }
+
+  ///////////////////////// 열람인 //////////////////////////////////
+  Future<Map<String, dynamic>> sendViewer(List<ViewerModel> viewerList) async {
+    final viewers = viewerList.map((data) => data.toJson()).toList();
+    debugPrint('$viewers');
+    try {
+      Dio.Response response = await _dio.post(baseUrl + '/api/will/viewer',
+          data: viewers);
+      if (response.statusCode == 200) {
+        return {'success': true};
+      } else {
+        return {'success': false, 'statusCode': response.statusCode};
+      }
+    } on Dio.DioError catch (e) {
+      return {'success': false, 'statusCode': e.response?.statusCode};
+    }
+  }
+
+///////////////////////// 선택사항 //////////////////////////////////
+  Future<Map<String, dynamic>> additionalInfo(AdditionalModel additionalModel) async {
+    try {
+      Dio.Response response =
+      await _dio.post('$baseUrl/api/will/additional',
+          data: additionalModel.toJson(),
+          );
+
+      if (response.statusCode == 200) {
+        return {'success': true};
+      } else {
+        return {'success': false, 'statusCode': response.statusCode};
+      }
+    } on Dio.DioError catch (e) {
+      return {'success': false, 'statusCode': e.response?.statusCode};
+    }
+  }
+
+///////////////////////// 녹음 저장 //////////////////////////////////
+  Future<Map<String, dynamic>> recording(File audioFile) async {
+
+    var formData = Dio.FormData.fromMap({
+      'multipartFile': await Dio.MultipartFile.fromFile(audioFile.path, filename: 'will.mp4'),
+    });
+    // debugPrint(formData.toString());
+    // debugPrint(audioFile.toString());
+    try {
+      _dio.options.contentType = 'multipart/form-data';
+      Dio.Response response =
+      await _dio.post(baseUrl + '/api/will',
+          data: formData,
+        );
+
+      if (response.statusCode == 200) {
+        return {'success': true};
+      } else {
+        return {'success': false, 'statusCode': response.statusCode};
+      }
+    } on Dio.DioError catch (e) {
+      return {'success': false, 'statusCode': e.response?.statusCode};
+    }
+  }
+}
+
+class LoggingInterceptor extends Dio.Interceptor {
+  @override
+  void onRequest(
+      Dio.RequestOptions options, Dio.RequestInterceptorHandler handler) {
+    debugPrint("REQUEST[${options.method}] => PATH: ${options.path}");
+    super.onRequest(options, handler);
+  }
+
+  @override
+  void onResponse(
+      Dio.Response response, Dio.ResponseInterceptorHandler handler) {
+    debugPrint(
+        "RESPONSE[${response.statusCode}] => PATH: ${response.requestOptions.path}");
+    super.onResponse(response, handler);
+  }
+
+  @override
+  void onError(Dio.DioError err, Dio.ErrorInterceptorHandler handler) {
+    debugPrint(
+        "ERROR[${err.response?.statusCode}] => PATH: ${err.requestOptions.path}");
+    super.onError(err, handler);
+  }
+}
+
