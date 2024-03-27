@@ -12,8 +12,29 @@ class MainScreen extends StatelessWidget {
     // final MainViewModel viewModel = Provider.of<MainViewModel>(context);
 
     return WillPopScope(
-      onWillPop: () {
-        return Future(() => false);
+      onWillPop: () async {
+                final shouldPop = await showDialog(
+          context : context,
+          builder: (context) => AlertDialog(
+            title: Text('종료하시겠습니까?'),
+            actions: [
+              TextButton(
+                onPressed: () {
+                  Navigator.of(context).pop(true);
+                },
+                child: Text('예'),
+              ),
+              TextButton(
+                onPressed: () {
+                  Navigator.of(context).pop(false);
+                },
+                child: Text('아니요'),
+              ),
+            ],
+          ),
+        );
+        return shouldPop ?? false;
+        // return Future(() => false);
       },
       child: ChangeNotifierProvider(
           create: (context) => MainViewModel(),
