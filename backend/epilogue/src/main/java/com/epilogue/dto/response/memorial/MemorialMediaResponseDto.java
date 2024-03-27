@@ -18,4 +18,8 @@ public class MemorialMediaResponseDto {
 
     @Schema(description = "설명 내용")
     private String content;
+
+    @NotNull
+    @Schema(description = "신고수")
+    private int reportCount;
 }
