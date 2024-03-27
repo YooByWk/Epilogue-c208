@@ -14,6 +14,7 @@ import com.epilogue.domain.user.User;
 import com.epilogue.domain.will.Will;
 import com.epilogue.repository.user.UserRepository;
 import com.epilogue.repository.will.WillRepository;
+import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Value;
@@ -38,6 +39,7 @@ public class AwsS3Service {
     @Value("${cloud.aws.s3.graveBucketName}")
     private String graveBucketName;
 
+    @Transactional
     public void upload(MultipartFile file, Principal principal) {
         try {
             String fileName = file.getOriginalFilename();

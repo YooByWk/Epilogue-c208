@@ -9,6 +9,7 @@ import com.epilogue.dto.request.will.WillMemorialRequestDto;
 import com.epilogue.repository.user.UserRepository;
 import com.epilogue.repository.will.WillRepository;
 import com.epilogue.repository.witness.WitnessRepository;
+import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.security.core.parameters.P;
@@ -28,6 +29,7 @@ public class WillService {
         willRepository.save(will);
     }
 
+    @Transactional
     public void saveMemorial(WillMemorialRequestDto willMemorialRequestDto, Principal principal) {
         User user = userRepository.findByUserId(principal.getName());
         Will will = user.getWill();
@@ -35,6 +37,7 @@ public class WillService {
         will.updateMemorial(willMemorialRequestDto.isUseMemorial(), willMemorialRequestDto.getGraveName());
     }
 
+    @Transactional
     public void saveAdditionalInformation(WillAdditionalRequestDto willAdditionalRequestDto, Principal principal) {
         User user = userRepository.findByUserId(principal.getName());
         Will will = willRepository.findById(user.getWill().getWillSeq()).get();
