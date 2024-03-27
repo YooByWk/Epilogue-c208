@@ -17,10 +17,14 @@ class _MnemonicShowScreenState extends State<MnemonicShowScreen> {
   @override
   Widget build(BuildContext context) {
     return PopScope(
-      canPop: true,
+      canPop: false,
       onPopInvoked: (didPop) {
-        if (didPop) {
-          // Navigator.of(context).pop();
+        debugPrint(didPop.toString());
+        if (!didPop) {
+          Future.delayed(Duration.zero, () {
+            _showBackDialog();
+          });
+          // _showBackDialog();
         }
       },
       child: ChangeNotifierProvider.value(
@@ -32,8 +36,8 @@ class _MnemonicShowScreenState extends State<MnemonicShowScreen> {
               appBar: AppBar(
                 backgroundColor: themeColour2,
                 title: Text('유언장 복구 단어'),
-                automaticallyImplyLeading: snapshot.connectionState !=
-                    ConnectionState.done, // 로딩 완료 시 뒤로가기 버튼 제거
+                // automaticallyImplyLeading: snapshot.connectionState !=
+                    // ConnectionState.done, // 로딩 완료 시 뒤로가기 버튼 제거
               ),
               body: snapshot.connectionState == ConnectionState.done
                   ? Consumer<BlockChainWalletViewModel>(
@@ -99,4 +103,32 @@ class _MnemonicShowScreenState extends State<MnemonicShowScreen> {
       ),
     );
   }
+
+  void _showBackDialog() {
+    debugPrint('뒤로가기 버튼 클릭');
+    showDialog<void>(
+      context: context,
+      barrierDismissible: false, // user must tap button!
+      builder : (BuildContext context) {
+        return AlertDialog(
+          title : Text('경고'),
+          content : Text('유언장 단어 확인을 마치시겠습니까?'),
+          actions: [
+            TextButton(
+              onPressed: () => {Navigator.pushNamedAndRemoveUntil(context, '/home', (route) => false)},
+              style: TextButton.styleFrom(
+              ),
+              child: Text('네'),
+          ),TextButton(
+              onPressed: () => {Navigator.pop(context)},
+              style: TextButton.styleFrom(
+              ),
+              child: Text('아니요')
+          )
+          ],
+        );
+        
+      } 
+    );
+  } 
 }
