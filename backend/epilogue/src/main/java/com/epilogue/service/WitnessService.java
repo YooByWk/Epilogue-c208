@@ -8,6 +8,8 @@ import com.epilogue.dto.request.witness.WitnessRequestDto;
 import com.epilogue.repository.user.UserRepository;
 import com.epilogue.repository.will.WillRepository;
 import com.epilogue.repository.witness.WitnessRepository;
+import jakarta.persistence.EntityManager;
+import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
@@ -23,7 +25,9 @@ public class WitnessService {
     private final WitnessRepository witnessRepository;
     private final WillRepository willRepository;
     private final UserRepository userRepository;
+    private final EntityManager em;
 
+    @Transactional
     public void saveWitness(Will will, List<WitnessRequestDto> witnessList, Principal principal) {
         for (WitnessRequestDto w : witnessList) {
             System.out.println(w.getWitnessEmail());
@@ -46,8 +50,6 @@ public class WitnessService {
 
         // 회원에 유언 insert
         User user = userRepository.findByUserId(principal.getName());
-        log.info("user id = {}", user.getName());
         user.updateWill(will);
-        log.info("will Seq 업데이트 완료!");
     }
 }
