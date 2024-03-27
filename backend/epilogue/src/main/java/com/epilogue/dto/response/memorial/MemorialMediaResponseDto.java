@@ -9,6 +9,10 @@ import lombok.Getter;
 @Builder
 public class MemorialMediaResponseDto {
     @NotNull
+    @Schema(description = "사진/동영상 식별키")
+    private int mediaSeq;
+
+    @NotNull
     @Schema(description = "S3 url")
     private String S3url;
 
