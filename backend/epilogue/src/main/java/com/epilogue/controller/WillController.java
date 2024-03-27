@@ -41,7 +41,7 @@ public class WillController {
 
     @Operation(summary = "증인 저장 API", description = "증인 목록을 저장합니다.")
     @ApiResponse(responseCode = "200", description = "성공")
-    @PostMapping
+    @PostMapping("/witness")
     public ResponseEntity<Void> saveWitness(@Parameter(description = "증인 목록") @RequestBody List<WitnessRequestDto> witnessList, Principal principal) {
         // 임의 유언 생성
         Will will = new Will();
@@ -54,7 +54,7 @@ public class WillController {
 
     @Operation(summary = "유언 파일 저장 API", description = "유언 파일을 저장합니다.")
     @ApiResponse(responseCode = "200", description = "성공")
-    @PostMapping("/witness")
+    @PostMapping
     public ResponseEntity<Void> saveWill(@Parameter(description = "유언 열람 파일") @RequestPart MultipartFile multipartFile, Principal principal) {
         // 블록체인 트랜잭션 생성 (해시, 녹음 파일 url, 초기 영수증)
 
