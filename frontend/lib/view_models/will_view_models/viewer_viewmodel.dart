@@ -4,7 +4,7 @@ import 'package:frontend/services/will_service.dart';
 
 class ViewerViewModel extends ChangeNotifier {
   final WillService _willService = WillService();
-  List<ViewerModel> viewerList = [];
+  List<ViewerModel> _viewerList = [];
   ViewerModel _viewerData = ViewerModel(
       viewerName: '', viewerEmail: '', viewerMobile:'');
 
@@ -18,15 +18,11 @@ class ViewerViewModel extends ChangeNotifier {
   bool get isFocused => _isFocused;
   bool get isLoading => _isLoading;
   String? get errorMessage => _errorMessage;
+  List<ViewerModel> get viewerList => _viewerList;
 
-  void addViewer() {
-    viewerList.add(ViewerModel(viewerName: _viewerData.viewerName,
-        viewerEmail: _viewerData.viewerEmail,
-        viewerMobile: _viewerData.viewerMobile));
-  }
 
   void sendViewer() {
-    _willService.sendViewer(viewerList);
+    _willService.sendViewer(_viewerList);
   }
 
   void setViewerName(String value) {
@@ -55,12 +51,32 @@ class ViewerViewModel extends ChangeNotifier {
     notifyListeners();
   }
 
+  Future<void> addViewer() async {
+    debugPrint(_viewerData.viewerName);
+    // 새로운 ViewerModel 인스턴스를 생성하여 List에 추가
+    ViewerModel newViewer = ViewerModel(
+      viewerName: _viewerData.viewerName,
+      viewerEmail: _viewerData.viewerEmail,
+      viewerMobile: _viewerData.viewerMobile,
+    );
+    _viewerList.add(newViewer);
+
+    notifyListeners();
+
+    // 디버그 출력을 위해 새로운 인스턴스의 이름과 전체 리스트 출력
+    debugPrint(newViewer.viewerName);
+    for (var viewer in _viewerList) {
+      debugPrint('${viewer.viewerName}'); // 리스트 내의 각 Viewer 이름 출력
+    }
+  }
+
   Future<void> setViewer() async {
     _isLoading = true;
     _errorMessage = null;
     notifyListeners();
 
-    final result = await _willService.sendViewer(viewerList);
+    final result = await _willService.sendViewer(_viewerList);
+    // debugPrint('$viewerList');
     _isLoading = false;
 
     if (!result['success']) {

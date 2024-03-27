@@ -60,20 +60,10 @@ class _WillViewerScreenState extends State<WillViewerScreen> {
                 child: (counter < 5)
                     ? ElevatedButton(
                         onPressed: () {
-                          if (!viewModel.isLoading) {
-                            viewModel.setViewer().then((_) {
-                              if (viewModel.errorMessage == null) {
+                            viewModel.addViewer().then((_) {
                                 debugPrint('성공');
-                              } else {
-                                if (viewModel.errorMessage != null) {
-                                  ScaffoldMessenger.of(context).showSnackBar(
-                                    SnackBar(
-                                        content: Text(viewModel.errorMessage!)),
-                                  );
-                                }
-                              }
+                                increment();
                             });
-                          }
                         },
                         child: Text('추가'))
                     : null),
@@ -86,7 +76,35 @@ class _WillViewerScreenState extends State<WillViewerScreen> {
         child: TextButtonWidget(
           preText: '이전',
           nextText: '다음',
-          nextPage: WillSelectMemorialScreen(),
+          onPressed: () {
+            if (!viewModel.isLoading) {
+              Navigator.push(
+                context,
+                MaterialPageRoute(
+                  builder: (context) => WillSelectMemorialScreen(),
+                ),
+              );
+            }
+            //   viewModel.setViewer().then((_) {
+            //     if (viewModel.errorMessage == null) {
+            //       Navigator.push(
+            //         context,
+            //         MaterialPageRoute(
+            //           builder: (context) => WillSelectMemorialScreen(),
+            //         ),
+            //       );
+            //     } else {
+            //       if (viewModel.errorMessage != null) {
+            //         ScaffoldMessenger.of(context).showSnackBar(
+            //           SnackBar(
+            //             content: Text(viewModel.errorMessage!),
+            //           ),
+            //         );
+            //       }
+            //     }
+            //   });
+            // }
+          },
         ),
       ),
     );

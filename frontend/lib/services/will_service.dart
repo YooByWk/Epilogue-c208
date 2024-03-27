@@ -2,6 +2,7 @@ import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 import 'package:dio/dio.dart';
 import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:flutter/material.dart';
+import 'package:frontend/models/will/additional_model.dart';
 import 'package:frontend/models/will/viewer_model.dart';
 import 'package:frontend/view_models/will_view_models/viewer_viewmodel.dart';
 
@@ -29,9 +30,27 @@ class WillService {
   ///////////////////////// 열람인 //////////////////////////////////
   Future<Map<String, dynamic>> sendViewer(List<ViewerModel> viewerList) async {
     final viewers = viewerList.map((data) => data.toJson()).toList();
+    debugPrint('$viewers');
     try {
       Response response = await _dio.post(baseUrl + '/api/will/viewer',
           data: viewers);
+      if (response.statusCode == 200) {
+        return {'success': true};
+      } else {
+        return {'success': false, 'statusCode': response.statusCode};
+      }
+    } on DioError catch (e) {
+      return {'success': false, 'statusCode': e.response?.statusCode};
+    }
+  }
+
+///////////////////////// 선택사항 //////////////////////////////////
+  Future<Map<String, dynamic>> additionalInfo(AdditionalModel additionalModel) async {
+
+    try {
+      Response response =
+      await _dio.post(baseUrl + '/api/will/additional',
+          data: additionalModel.toJson());
 
       if (response.statusCode == 200) {
         return {'success': true};

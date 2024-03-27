@@ -90,21 +90,22 @@ class ChoiceButtonWidget extends StatefulWidget {
   _ChoiceButtonWidgetState createState() => _ChoiceButtonWidgetState();
 
   final String text;
+  final bool isSelected;
+  final VoidCallback onTap;
 
-  const ChoiceButtonWidget({required this.text});
+  const ChoiceButtonWidget({
+    required this.text,
+    required this.isSelected,
+    required this.onTap,
+  });
 }
 
 class _ChoiceButtonWidgetState extends State<ChoiceButtonWidget> {
-  bool checked = false;
 
   @override
   Widget build(BuildContext context) {
     return GestureDetector(
-      onTap: () {
-        setState(() {
-          checked = !checked;
-        });
-      },
+      onTap: widget.onTap,
       child: Padding(
         padding: const EdgeInsets.only(top: 10.0),
         child: Container(
@@ -113,7 +114,7 @@ class _ChoiceButtonWidgetState extends State<ChoiceButtonWidget> {
           decoration: BoxDecoration(
             color: Colors.white,
             border: Border.all(
-              color: (checked) ? themeColour5 : Colors.black26,
+              color: widget.isSelected ? themeColour5 : Colors.black26,
               width: 3,
             ),
             borderRadius: BorderRadius.circular(8),
@@ -123,7 +124,7 @@ class _ChoiceButtonWidgetState extends State<ChoiceButtonWidget> {
               SizedBox(width: 10,),
               Icon(
                 Icons.check_circle_outline,
-                color: (checked) ? themeColour5 : Colors.black26,
+                color: widget.isSelected ? themeColour5 : Colors.black26,
                 size: 35,
               ),
               SizedBox(width: 10,),
@@ -131,7 +132,7 @@ class _ChoiceButtonWidgetState extends State<ChoiceButtonWidget> {
                 widget.text,
                 textAlign: TextAlign.start,
                 style: TextStyle(
-                  color: (checked) ? themeColour5 : Colors.black26,
+                  color: widget.isSelected ? themeColour5 : Colors.black26,
                   fontFamily: 'Roboto Serif',
                   fontSize: 25,
                   fontWeight: FontWeight.w600,
@@ -201,12 +202,14 @@ class TextButtonWidget extends StatelessWidget {
   final String? preText;
   final Widget? nextPage;
   final Widget? prePage;
+  final VoidCallback? onPressed;
 
   const TextButtonWidget({
     this.nextText,
     this.preText,
     this.nextPage,
     this.prePage,
+    this.onPressed,
   });
 
   @override
@@ -246,14 +249,14 @@ class TextButtonWidget extends StatelessWidget {
                 ),
               if (nextText != null)
                 TextButton(
-                  onPressed: () {
+                  onPressed: onPressed == null ? () {
                     Navigator.push(
                       context,
                       MaterialPageRoute(
                         builder: (context) => nextPage!,
                       ),
                     );
-                  },
+                  } : onPressed,
                   child: Text(
                     nextText!,
                     style: TextStyle(
