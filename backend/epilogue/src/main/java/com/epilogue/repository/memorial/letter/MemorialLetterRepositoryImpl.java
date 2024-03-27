@@ -19,4 +19,11 @@ public class MemorialLetterRepositoryImpl implements MemorialLetterRepositoryCus
                 .setParameter("userSeq", userSeq)
                 .getResultList();
     }
+
+    @Override
+    public List<MemorialLetter> findAllByMemorialSeq(int memorialSeq) {
+        return entityManager.createQuery("SELECT ml FROM MemorialLetter ml WHERE ml.memorial.memorialSeq = :memorialSeq", MemorialLetter.class)
+                .setParameter("memorialSeq", memorialSeq)
+                .getResultList();
+    }
 }

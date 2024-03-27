@@ -10,4 +10,6 @@ public interface MemorialLetterRepositoryCustom {
 
     List<MemorialLetter> findAllByUserSeq(int userSeq);
 
+    List<MemorialLetter> findAllByMemorialSeq(int memorialSeq);
+
 }
