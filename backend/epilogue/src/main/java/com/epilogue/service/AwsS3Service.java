@@ -66,6 +66,7 @@ public class AwsS3Service {
             String graveImageAddress = "https://" + graveBucketName + "/grave/" + fileName;
             ObjectMetadata metadata = new ObjectMetadata();
             metadata.setContentType(file.getContentType());
+
             metadata.setContentLength(file.getSize());
 
             // 묘비 사진 주소 업데이트

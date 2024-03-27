@@ -3,9 +3,7 @@ package com.epilogue.service;
 import com.epilogue.domain.memorial.*;
 import com.epilogue.domain.user.User;
 import com.epilogue.dto.request.memorial.MemorialMediaRequestDto;
-import com.epilogue.dto.response.memorial.GraveDto;
-import com.epilogue.dto.response.memorial.GraveResponseDto;
-import com.epilogue.dto.response.memorial.MemorialResponseDto;
+import com.epilogue.dto.response.memorial.*;
 import com.epilogue.repository.memorial.MemorialRepository;
 import com.epilogue.repository.memorial.favorite.FavoriteRepository;
 import com.epilogue.repository.memorial.letter.MemorialLetterRepository;
@@ -124,19 +122,27 @@ public class MemorialService {
         // 고인의 사진 url 목록 불러오기
         List<MemorialPhoto> memorialPhotoList = memorialPhotoRepository.findAllByUserSeq(userSeq);
         // S3에 저장되어 있는 url 목록 불러오기
-        List<String> memorialS3PhotoList = new ArrayList<>(); // S3 url 목록
+        List<MemorialPhotoDto> memorialPhotoDtoList = new ArrayList<>();
         for(MemorialPhoto photo : memorialPhotoList) {
             String S3url = awsS3Service.getPhotoFromS3(photo.getUniquePhotoUrl());
-            memorialS3PhotoList.add(S3url);
+            MemorialPhotoDto memorialPhotoDto = MemorialPhotoDto.builder()
+                    .memorialPhotoSeq(photo.getMemorialPhotoSeq())
+                    .S3url(S3url)
+                    .build();
+            memorialPhotoDtoList.add(memorialPhotoDto);
         }
 
         // 고인의 동영상 url 목록 불러오기
         List<MemorialVideo> memorialVideoList = memorialVideoRepository.findAllByUserSeq(userSeq);
         // S3에 저장되어 있는 url 목록 불러오기
-        List<String> memorialS3VideoList = new ArrayList<>();
+        List<MemorialVideoDto> memorialVideoDtoList = new ArrayList<>();
         for(MemorialVideo video : memorialVideoList) {
             String S3url = awsS3Service.getVideoFromS3(video.getUniqueVideoUrl());
-            memorialS3VideoList.add(S3url);
+            MemorialVideoDto memorialVideoDto = MemorialVideoDto.builder()
+                    .memorialVideoSeq(video.getMemorialVideoSeq())
+                    .S3url(S3url)
+                    .build();
+            memorialVideoDtoList.add(memorialVideoDto);
         }
 
         // 고인의 편지 목록 불러오기
@@ -148,10 +154,10 @@ public class MemorialService {
                 .birth(memorial.get().getUser().getBirth())
                 .goneDate(memorial.get().getGoneDate())
                 .graveImg(awsS3Service.getGraveImageFromS3(memorial.get().getGraveImg()))
-                .memorialPhotoList(memorialS3PhotoList)
-                .photoCount(memorialS3PhotoList.size())
-                .memorialVideoList(memorialS3VideoList)
-                .videoCount(memorialS3VideoList.size())
+                .memorialPhotoList(memorialPhotoDtoList)
+                .photoCount(memorialPhotoDtoList.size())
+                .memorialVideoList(memorialVideoDtoList)
+                .videoCount(memorialVideoDtoList.size())
                 .memorialLetterList(memorialLetterList)
                 .letterCount(memorialLetterList.size())
                 .build();
@@ -202,6 +208,24 @@ public class MemorialService {
             throw new Exception();
         }
 
+    }
+
+    public MemorialMediaResponseDto viewMemorialPhoto(int memorialPhotoSeq) {
+        Optional<MemorialPhoto> memorialPhoto = memorialPhotoRepository.findById(memorialPhotoSeq);
+        MemorialMediaResponseDto memorialMediaResponseDto = MemorialMediaResponseDto.builder()
+                .S3url(awsS3Service.getPhotoFromS3(memorialPhoto.get().getUniquePhotoUrl()))
+                .content(memorialPhoto.get().getContent())
+                .build();
+        return memorialMediaResponseDto;
+    }
+
+    public MemorialMediaResponseDto viewMemorialVideo(int memorialVideoSeq) {
+        Optional<MemorialVideo> memorialVideo = memorialVideoRepository.findById(memorialVideoSeq);
+        MemorialMediaResponseDto memorialMediaResponseDto = MemorialMediaResponseDto.builder()
+                .S3url(awsS3Service.getVideoFromS3(memorialVideo.get().getUniqueVideoUrl()))
+                .content(memorialVideo.get().getContent())
+                .build();
+        return memorialMediaResponseDto;
     }
 
 }

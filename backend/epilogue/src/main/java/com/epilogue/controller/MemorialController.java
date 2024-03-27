@@ -2,10 +2,11 @@ package com.epilogue.controller;
 
 import com.amazonaws.Response;
 import com.epilogue.dto.request.memorial.MemorialMediaRequestDto;
-import com.epilogue.dto.response.memorial.GraveDto;
 import com.epilogue.dto.response.memorial.GraveResponseDto;
+import com.epilogue.dto.response.memorial.MemorialMediaResponseDto;
 import com.epilogue.dto.response.memorial.MemorialResponseDto;
 import com.epilogue.service.MemorialService;
+import io.lettuce.core.dynamic.annotation.Param;
 import io.swagger.v3.oas.annotations.Parameter;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.tags.Tag;
@@ -16,6 +17,7 @@ import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
+import retrofit2.http.Path;
 
 import java.security.Principal;
 
@@ -75,6 +77,20 @@ public class MemorialController {
             return new ResponseEntity<>(HttpStatus.FORBIDDEN);
         }
         return new ResponseEntity<>(HttpStatus.OK);
+    }
+
+    @GetMapping("/photo/{memorialPhotoSeq}")
+    @ApiResponse(responseCode = "200", description = "성공")
+    public ResponseEntity<MemorialMediaResponseDto> viewMemorialPhoto(@Parameter(description = "추모관 사진 식별키") @PathVariable int memorialPhotoSeq) {
+        MemorialMediaResponseDto memorialMediaResponseDto = memorialService.viewMemorialPhoto(memorialPhotoSeq);
+        return new ResponseEntity<>(memorialMediaResponseDto, HttpStatus.OK);
+    }
+
+    @GetMapping("/video/{memorialVideoSeq}")
+    @ApiResponse(responseCode = "200", description = "성공")
+    public ResponseEntity<MemorialMediaResponseDto> viewMemorialVideo(@Parameter(description = "추모관 동영상 식별키") @PathVariable int memorialVideoSeq) {
+        MemorialMediaResponseDto memorialMediaResponseDto = memorialService.viewMemorialVideo(memorialVideoSeq);
+        return new ResponseEntity<>(memorialMediaResponseDto, HttpStatus.OK);
     }
 
 

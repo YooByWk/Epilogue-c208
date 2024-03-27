@@ -35,14 +35,14 @@ public class GraveResponseDto {
     private String graveImg;
 
     @Schema(description = "디지털 추모관 사진 목록")
-    private List<String> memorialPhotoList;
+    private List<MemorialPhotoDto> memorialPhotoList;
 
     @NotNull
     @Schema(description = "디지털 추모관 사진 개수")
     private int photoCount;
 
     @Schema(description = "디지털 추모관 동영상 목록")
-    private List<String> memorialVideoList;
+    private List<MemorialVideoDto> memorialVideoList;
 
     @Schema(description = "디지털 추모관 동영상 개수")
     private int videoCount;
