@@ -2,6 +2,7 @@ package com.epilogue.service;
 
 import com.epilogue.domain.memorial.*;
 import com.epilogue.domain.user.User;
+import com.epilogue.dto.request.memorial.MemorialLetterRequestDto;
 import com.epilogue.dto.request.memorial.MemorialMediaRequestDto;
 import com.epilogue.dto.response.memorial.*;
 import com.epilogue.repository.memorial.MemorialRepository;
@@ -15,10 +16,9 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Optional;
-import java.util.UUID;
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
+import java.util.*;
 
 @Service
 @RequiredArgsConstructor
@@ -228,6 +228,35 @@ public class MemorialService {
                 .content(memorialVideo.get().getContent())
                 .build();
         return memorialMediaResponseDto;
+    }
+
+    public List<MemorialLetterDto> viewMemorialLetterList(int memorialSeq) {
+        List<MemorialLetterDto> memorialLetterDtoList = new ArrayList<>();
+
+        List<MemorialLetter> memorialLetterList = memorialLetterRepository.findAllByMemorialSeq(memorialSeq);
+        for(MemorialLetter letter : memorialLetterList) {
+            MemorialLetterDto memorialLetterDto = MemorialLetterDto.builder()
+                    .nickname(letter.getNickname())
+                    .content(letter.getContent())
+                    .writtenDate(letter.getWrittenDate())
+                    .build();
+            memorialLetterDtoList.add(memorialLetterDto);
+        }
+        return memorialLetterDtoList;
+    }
+
+    public void createMemorialLetter(int memorialSeq, MemorialLetterRequestDto memorialLetterRequestDto) {
+        Date date = new Date();
+        SimpleDateFormat sdf = new SimpleDateFormat("yyyy.MM.dd");
+
+        MemorialLetter memorialLetter = MemorialLetter.builder()
+                .nickname(memorialLetterRequestDto.getNickname())
+                .content(memorialLetterRequestDto.getContent())
+                .writtenDate(sdf.format(date))
+                .memorial(memorialRepository.findById(memorialSeq).get())
+                .build();
+
+        memorialLetterRepository.save(memorialLetter);
     }
 
 }
