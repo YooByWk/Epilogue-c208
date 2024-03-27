@@ -1,14 +1,17 @@
+import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:provider/provider.dart';
 import 'package:http/http.dart' as http;
+import 'package:dio/dio.dart';
+
 
 
 class PhotoTabViewModel extends ChangeNotifier {
   final baseURL = dotenv.env['API_URL'];
   List<String> _photos = [];
   int _nextItem = 0;
-
+  final dio = Dio();
   List<String> get photos => _photos;
 
   PhotoTabViewModel() {
@@ -44,8 +47,20 @@ class PhotoTabViewModel extends ChangeNotifier {
     } else {
       debugPrint('API 호출 실패');
     }
-    debugPrint(res.body);
+    // debugPrint('asdasd${res.body.pre?}');
 
     notifyListeners();
   }
+  
+  void testAPI4() async {
+    debugPrint('APi 호출 ');
+    Response response2 = await dio.get('http://j10c208.p.ssafy.io:8080/api/test'); 
+    Response response = await dio.get('http://j10c208.p.ssafy.io:8080/api/memorial/list');
+    debugPrint(response.data.toString());
+    debugPrint(response.statusMessage.toString());
+    debugPrint(response2.data.toString());
+    // print(response2.data.toString());
+    // debugPrint(response.data.toString());
+  }
+
 }

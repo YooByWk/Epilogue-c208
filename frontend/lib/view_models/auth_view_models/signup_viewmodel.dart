@@ -7,40 +7,42 @@ class SignupViewModel extends ChangeNotifier {
 
   SignupModel _signupData =
       SignupModel(userId: '', password: '', name: '', mobile: '', birth: '');
-  String _confirmPassword = '';
   bool _isLoading = false;
   String? _errorMessage;
+  String? _confirmPassword;
+  String? _userIdExists;
 
   SignupModel get signupData => _signupData;
+
   bool get isLoading => _isLoading;
   String? get errorMessage => _errorMessage;
+  String? get confirmPassword => _confirmPassword;
+  String? get userIdExists => _userIdExists;
 
   // 비밀번호 유효성 검사
-  bool validateSignupData() {
-    if (!validatePassword(_signupData.password)) {
-      _errorMessage = '비밀번호는 8~16자리 영문 대소문자, 숫자, 특수문자를 포함해야 합니다.';
-      notifyListeners();
-      return false;
-    }
-
-    // 비밀번호 확인과 일치 여부 판단
-    if (_signupData.password != _confirmPassword) {
-      _errorMessage = '비밀번호가 일치하지 않습니다.';
-      notifyListeners();
-      return false;
-    }
-    return true;
+  bool get isPasswordValid {
+    String pattern = r'^.*(?=^.{8,16}$)(?=.*\d)(?=.*[a-zA-Z])(?=.*[!@#$%^&+=]).*$';
+    RegExp regex = RegExp(pattern);
+    return regex.hasMatch(_signupData.password);
   }
 
-  // 비밀번호 유효성 검사 함수
-  bool validatePassword(String password) {
-    Pattern pattern =
-        r'^(?=.*[a-zA-Z])(?=.*[!@#$%^&*(),.?":{}|<>])(?=.*\d).{8,16}$';
-    RegExp regex = RegExp(pattern as String);
-    return !regex.hasMatch(password);
+  // 비밀번호 확인 일치 여부
+  bool get isPasswordSame => _signupData.password == _confirmPassword;
+
+  // 폼 유효성 검사 로직
+  bool get isFormValid {
+    bool isFieldNotEmpty = signupData.userId.isNotEmpty &&
+        _signupData.password.isNotEmpty &&
+        _signupData.name.isNotEmpty &&
+        _signupData.mobile.isNotEmpty &&
+        _signupData.birth.isNotEmpty &&
+        _confirmPassword != null &&
+        _confirmPassword!.isNotEmpty;
+
+    return isFieldNotEmpty && isPasswordSame && isPasswordValid;
   }
 
-  void setConfirmPassword(String value) {
+  void setConfirmPassword(String? value) {
     _confirmPassword = value;
     notifyListeners();
   }
@@ -95,11 +97,24 @@ class SignupViewModel extends ChangeNotifier {
     notifyListeners();
   }
 
+  ////////////////////////////////////////////////
+  Future<void> checkUserId() async {
+    _isLoading = true;
+    notifyListeners();
+
+    bool isAvailable = await _authService.checkUserId(_signupData.userId);
+    _isLoading = false;
+
+    if (!isAvailable) {
+      _userIdExists = '이미 사용 중인 아이디입니다.';
+    } else {
+      _userIdExists = null;
+    }
+    notifyListeners();
+  }
+
 ///////////////////////////////////////////////////////
   Future<void> signup() async {
-    if (!validateSignupData()) {
-      return;
-    }
     _isLoading = true;
     _errorMessage = null;
     debugPrint(_signupData.name);
@@ -108,6 +123,15 @@ class SignupViewModel extends ChangeNotifier {
     debugPrint(_signupData.mobile);
     debugPrint(_signupData.birth);
     notifyListeners();
+
+    if (_userIdExists != null) {
+      _isLoading = false;
+      _errorMessage = _userIdExists;
+      notifyListeners();
+      return;
+    }
+
+    await _authService.delToken();
 
     final result = await _authService.signup(_signupData);
     _isLoading = false;

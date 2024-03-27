@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:frontend/main.dart';
+import 'package:frontend/screens/login/login_screen.dart';
 import 'package:frontend/screens/mypage/mypage_modify_info_screen.dart';
 import 'package:frontend/screens/mypage/mypage_will_more_screen.dart';
 import 'package:frontend/widgets/common_button.dart';
@@ -8,6 +9,9 @@ import 'package:frontend/widgets/pin_memorial_widget.dart';
 
 class MypageScreen extends StatelessWidget {
   const MypageScreen({super.key});
+
+  /////// 나중에 수정 필요 //////////////
+
 
   @override
   Widget build(BuildContext context) {
@@ -47,7 +51,10 @@ class MypageScreen extends StatelessWidget {
                       text: '로그아웃',
                       width: 100,
                       backgroundColor: themeColour3,
-                      onPressed: () {}),
+                      onPressed: () {
+                        //////// ~~~~~~ 수정 해야 함~~~~ /////////
+                        Navigator.push(context, MaterialPageRoute(builder: (builder) => LoginScreen()));
+                      }),
                 ],
               ),
               Padding(

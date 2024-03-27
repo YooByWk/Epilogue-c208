@@ -52,6 +52,10 @@ dependencies:
   convert: ^3.1.1
   flutter_secure_storage: ^4.2.1  # 토큰 저장
   flutter_dotenv: ^5.0.2  # .env 파일 사용
+  bip39: ^1.0.6 # 니모닉 생성
+  bip32: ^2.0.0 # 계좌 생성
+  path_provider: ^2.1.2 # 파일 저장 / 불러오기
+  file_picker: ^8.0.0+1
 
 dev_dependencies:
   flutter_test:
