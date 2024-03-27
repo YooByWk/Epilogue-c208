@@ -32,17 +32,41 @@ class AuthService {
           options: Dio.Options(
             contentType: Dio.Headers.formUrlEncodedContentType,
           ),
-          queryParameters: loginModel.toJson());
+          data: loginModel.toJson());
 
       if (response.statusCode == 200) {
         String? token = response.headers.value('Access_Token');
-        await _storage.write(key: 'token', value: token);
-        return {'success': true};
+        if (token != null) {
+          _storage.deleteAll(); // 기존 토큰 삭제
+          await _storage.write(key: 'token', value: token);
+          return {'success': true};
+        } else {
+          return {'success': false};
+        }
       } else {
         return {'success': false, 'statusCode': response.statusCode};
       }
     } on Dio.DioError catch (e) {
+      debugPrint(e.message);
       return {'success': false, 'statusCode': e.response?.statusCode};
+    }
+  }
+
+  //////////////////////// 네이버 소셜 로그인 - 미완성 ////////////////////////////
+  Future<bool> naverLogin(String accessToken) async {
+    try {
+      Dio.Response response = await _dio.post(
+        '$baseUrl/api/auth/oauth2/naver',
+        data: {'accessToken': accessToken},
+      );
+      if (response.statusCode == 200) {
+        await _storage.write(key: 'token', value: response.data['accessToken']);
+        return true;
+      }
+      return false;
+    } on Dio.DioException catch (e) {
+      print(e);
+      return false;
     }
   }
 
@@ -57,12 +81,13 @@ class AuthService {
       Dio.Response response =
           await _dio.post('$baseUrl/api/user/join', data: signupModel.toJson());
 
+      ////////////// 회원가입 요청 성공 BC ///////////////////
       if (response.statusCode == 200) {
         return {'success': true};
       } else {
         return {'success': false, 'statusCode': response.statusCode};
       }
-    } on Dio.DioError catch (e) {
+    } on Dio.DioException catch (e) {
       print(e);
       return {'success': false, 'statusCode': e.response?.statusCode};
     }
@@ -73,10 +98,35 @@ class AuthService {
     try {
       Dio.Response response = await _dio
           .post('$baseUrl/api/user/id/check', data: {'userId': userId});
-      debugPrint(response.data);
-      return response.data; // true면 중복 없음, false면 중복 있음
-    } on Dio.DioError catch (e) {
+      debugPrint(response.data.toString());
+      return response.data; // true면 중복 있음, false면 중복 없음
+    } on Dio.DioException catch (e) {
       debugPrint(e.toString());
+      return false;
+    }
+  }
+
+/////////////////// 휴대폰 인증 ///////////////////////////////
+  Future<void> mobileCertificationSend(String mobile) async {
+    try {
+      Dio.Response response = await _dio
+          .post('$baseUrl/sms-certification/send', data: {'phone': mobile});
+    } on Dio.DioException catch (e) {
+      debugPrint(e.toString());
+    }
+  }
+
+  Future<bool> mobileCertificationConfirm(
+      String mobile, String certificationNumber) async {
+    try {
+      Dio.Response response =
+          await _dio.post('$baseUrl/sms-certification/confirm', data: {
+        'phone': mobile,
+        'certificationNumber': certificationNumber,
+      });
+      return response.data;  // true면 인증 성공
+    } catch (e) {
+      print(e);
       return false;
     }
   }

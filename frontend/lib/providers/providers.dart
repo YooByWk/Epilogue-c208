@@ -8,6 +8,7 @@ import 'package:provider/provider.dart';
 import 'package:frontend/view_models/memorial_view_models/memorial_list_viewmodel.dart';
 import 'package:frontend/view_models/memorial_view_models/memorial_detail_viewmodel.dart';
 import 'package:frontend/view_models/main_view_models/main_viewmodel.dart';
+import 'package:frontend/view_models/auth_view_models/user_viewmodel.dart';
 
 List<ChangeNotifierProvider> providers = [
   ChangeNotifierProvider(create: (context) => LoginViewModel()),
@@ -19,4 +20,5 @@ List<ChangeNotifierProvider> providers = [
   ChangeNotifierProvider(create: (context) => ViewerViewModel()),
   ChangeNotifierProvider(create: (context) => AdditionalViewModel()),
   ChangeNotifierProvider(create: (context) => RecordingViewModel()),
+  ChangeNotifierProvider(create: (context) => UserViewModel()),
 ];

@@ -5,8 +5,13 @@ import 'package:frontend/services/auth_service.dart';
 class SignupViewModel extends ChangeNotifier {
   final AuthService _authService = AuthService();
 
-  SignupModel _signupData =
-      SignupModel(userId: '', password: '', name: '', mobile: '', birth: '');
+  SignupModel _signupData = SignupModel(
+      userId: '',
+      password: '',
+      name: '',
+      mobile: '',
+      birth: '',
+      certificationNumber: '');
   bool _isLoading = false;
   String? _errorMessage;
   String? _confirmPassword;
@@ -15,15 +20,32 @@ class SignupViewModel extends ChangeNotifier {
   SignupModel get signupData => _signupData;
 
   bool get isLoading => _isLoading;
+
   String? get errorMessage => _errorMessage;
+
   String? get confirmPassword => _confirmPassword;
+
   String? get userIdExists => _userIdExists;
 
   // 비밀번호 유효성 검사
   bool get isPasswordValid {
-    String pattern = r'^.*(?=^.{8,16}$)(?=.*\d)(?=.*[a-zA-Z])(?=.*[!@#$%^&+=]).*$';
+    String pattern =
+        r'^.*(?=^.{8,16}$)(?=.*\d)(?=.*[a-zA-Z])(?=.*[!@#$%^&+=]).*$';
     RegExp regex = RegExp(pattern);
     return regex.hasMatch(_signupData.password);
+  }
+
+  // 핸드폰 번호 유효성 검사
+  bool get isMobileValid {
+    RegExp regex = RegExp(r'^010?([1-9]{4})?([0-9]{4})$');
+    return regex.hasMatch(_signupData.mobile);
+  }
+
+  // 생년월일 유효성 검사
+  bool get isBirthValid {
+    RegExp regex =
+        RegExp(r'^(19|20|21)\d{2}(0[1-9]|1[0-2])(0[1-9]|[12][0-9]|3[01])$');
+    return regex.hasMatch(_signupData.birth);
   }
 
   // 비밀번호 확인 일치 여부
@@ -35,11 +57,16 @@ class SignupViewModel extends ChangeNotifier {
         _signupData.password.isNotEmpty &&
         _signupData.name.isNotEmpty &&
         _signupData.mobile.isNotEmpty &&
+        _signupData.certificationNumber.isNotEmpty &&
         _signupData.birth.isNotEmpty &&
         _confirmPassword != null &&
         _confirmPassword!.isNotEmpty;
 
-    return isFieldNotEmpty && isPasswordSame && isPasswordValid;
+    return isFieldNotEmpty &&
+        isPasswordSame &&
+        isPasswordValid &&
+        isMobileValid &&
+        isBirthValid;
   }
 
   void setConfirmPassword(String? value) {
@@ -53,7 +80,8 @@ class SignupViewModel extends ChangeNotifier {
         password: _signupData.password,
         name: _signupData.name,
         mobile: _signupData.mobile,
-        birth: _signupData.birth);
+        birth: _signupData.birth,
+        certificationNumber: _signupData.certificationNumber);
     notifyListeners();
   }
 
@@ -63,7 +91,8 @@ class SignupViewModel extends ChangeNotifier {
         password: value,
         name: _signupData.name,
         mobile: _signupData.mobile,
-        birth: _signupData.birth);
+        birth: _signupData.birth,
+        certificationNumber: _signupData.certificationNumber);
     notifyListeners();
   }
 
@@ -73,7 +102,8 @@ class SignupViewModel extends ChangeNotifier {
         password: _signupData.password,
         name: value,
         mobile: _signupData.mobile,
-        birth: _signupData.birth);
+        birth: _signupData.birth,
+        certificationNumber: _signupData.certificationNumber);
     notifyListeners();
   }
 
@@ -83,7 +113,8 @@ class SignupViewModel extends ChangeNotifier {
         password: _signupData.password,
         name: _signupData.name,
         mobile: value,
-        birth: _signupData.birth);
+        birth: _signupData.birth,
+        certificationNumber: _signupData.certificationNumber);
     notifyListeners();
   }
 
@@ -93,11 +124,45 @@ class SignupViewModel extends ChangeNotifier {
         password: _signupData.password,
         name: _signupData.name,
         mobile: _signupData.mobile,
-        birth: value);
+        birth: value,
+        certificationNumber: _signupData.certificationNumber);
     notifyListeners();
   }
 
-  ////////////////////////////////////////////////
+  void setCertificationNumber(String value) {
+    _signupData = SignupModel(
+        userId: _signupData.userId,
+        password: _signupData.password,
+        name: _signupData.name,
+        mobile: _signupData.mobile,
+        birth: _signupData.birth,
+        certificationNumber: value);
+    notifyListeners();
+  }
+
+  ////////////////////////////////////////////////휴대폰 인증
+  Future<void> mobileCertificationSend() async {
+    _isLoading = true;
+    notifyListeners();
+
+    await _authService.mobileCertificationSend(_signupData.mobile);
+    _isLoading = false;
+    notifyListeners();
+  }
+
+  Future<bool> verifyCode() async {
+    _isLoading = true;
+    notifyListeners();
+
+    bool result = await _authService.mobileCertificationConfirm(
+        _signupData.mobile, _signupData.certificationNumber);
+
+    _isLoading = false;
+    notifyListeners();
+    return result;
+  }
+
+  ////////////////////////////////////////////////아이디 중복체크
   Future<void> checkUserId() async {
     _isLoading = true;
     notifyListeners();
@@ -105,7 +170,7 @@ class SignupViewModel extends ChangeNotifier {
     bool isAvailable = await _authService.checkUserId(_signupData.userId);
     _isLoading = false;
 
-    if (!isAvailable) {
+    if (isAvailable) {
       _userIdExists = '이미 사용 중인 아이디입니다.';
     } else {
       _userIdExists = null;
@@ -113,7 +178,7 @@ class SignupViewModel extends ChangeNotifier {
     notifyListeners();
   }
 
-///////////////////////////////////////////////////////
+///////////////////////////////////////////////////////회원가입
   Future<void> signup() async {
     _isLoading = true;
     _errorMessage = null;

@@ -4,6 +4,7 @@ class SignupModel {
   final String name; // 사용자의 이름
   final String mobile; // 사용자의 전화번호
   final String birth; // 사용자의 생년월일
+  final String certificationNumber; // 휴대폰 인증 번호
 
   SignupModel({
     required this.userId,
@@ -11,6 +12,7 @@ class SignupModel {
     required this.name,
     required this.mobile,
     required this.birth,
+    required this.certificationNumber,
   });
 
   factory SignupModel.fromJson(Map<String, dynamic> json) {
@@ -20,6 +22,7 @@ class SignupModel {
       name: json['name'],
       mobile: json['mobile'],
       birth: json['birth'],
+      certificationNumber: json['certification']
     );
   }
 
@@ -30,6 +33,7 @@ class SignupModel {
       'name': this.name,
       'mobile': this.mobile,
       'birth': this.birth,
+      'certificationNumber': this.certificationNumber,
     };
   }
 }
