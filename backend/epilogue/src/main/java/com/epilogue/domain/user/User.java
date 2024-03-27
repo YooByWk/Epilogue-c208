@@ -45,7 +45,7 @@ public class User {
     private String birth;
 
     @Schema(description = "유언")
-    @OneToOne
+    @OneToOne(cascade = CascadeType.REMOVE)
     private Will will;
 
     @Enumerated(EnumType.STRING)
