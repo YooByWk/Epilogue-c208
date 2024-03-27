@@ -213,6 +213,7 @@ public class MemorialService {
     public MemorialMediaResponseDto viewMemorialPhoto(int memorialPhotoSeq) {
         Optional<MemorialPhoto> memorialPhoto = memorialPhotoRepository.findById(memorialPhotoSeq);
         MemorialMediaResponseDto memorialMediaResponseDto = MemorialMediaResponseDto.builder()
+                .mediaSeq(memorialPhoto.get().getMemorialPhotoSeq())
                 .S3url(awsS3Service.getPhotoFromS3(memorialPhoto.get().getUniquePhotoUrl()))
                 .content(memorialPhoto.get().getContent())
                 .build();
@@ -222,6 +223,7 @@ public class MemorialService {
     public MemorialMediaResponseDto viewMemorialVideo(int memorialVideoSeq) {
         Optional<MemorialVideo> memorialVideo = memorialVideoRepository.findById(memorialVideoSeq);
         MemorialMediaResponseDto memorialMediaResponseDto = MemorialMediaResponseDto.builder()
+                .mediaSeq(memorialVideo.get().getMemorialVideoSeq())
                 .S3url(awsS3Service.getVideoFromS3(memorialVideo.get().getUniqueVideoUrl()))
                 .content(memorialVideo.get().getContent())
                 .build();
