@@ -19,4 +19,5 @@ public class MemorialPhotoRepositoryImpl implements MemorialPhotoRepositoryCusto
                 .setParameter("userSeq", userSeq)
                 .getResultList();
     }
+
 }

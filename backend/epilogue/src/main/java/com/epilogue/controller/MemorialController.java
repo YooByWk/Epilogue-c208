@@ -4,10 +4,7 @@ import com.amazonaws.Response;
 import com.epilogue.domain.memorial.MemorialLetter;
 import com.epilogue.dto.request.memorial.MemorialLetterRequestDto;
 import com.epilogue.dto.request.memorial.MemorialMediaRequestDto;
-import com.epilogue.dto.response.memorial.GraveResponseDto;
-import com.epilogue.dto.response.memorial.MemorialLetterDto;
-import com.epilogue.dto.response.memorial.MemorialMediaResponseDto;
-import com.epilogue.dto.response.memorial.MemorialResponseDto;
+import com.epilogue.dto.response.memorial.*;
 import com.epilogue.service.MemorialService;
 import io.lettuce.core.dynamic.annotation.Param;
 import io.swagger.v3.oas.annotations.Parameter;
@@ -20,6 +17,7 @@ import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
+import retrofit2.http.HTTP;
 import retrofit2.http.Path;
 
 import java.security.Principal;
@@ -116,5 +114,50 @@ public class MemorialController {
         }
     }
 
+    @PostMapping("/favorite/{memorialSeq}")
+    @ApiResponse(responseCode = "200", description = "성공")
+    @ApiResponse(responseCode = "403", description = "로그인 에러")
+    public ResponseEntity<Void> createMemorialFavorite(@Parameter(description = "디지털 추모관 식별키") @PathVariable int memorialSeq, Principal principal) {
+        if(principal != null) {
+            String loginUserId = principal.getName();
+            memorialService.createMemorialFavorite(loginUserId, memorialSeq);
+            return new ResponseEntity<>(HttpStatus.OK);
+        } else {
+            return new ResponseEntity<>(HttpStatus.FORBIDDEN);
+        }
+    }
+
+    @GetMapping("/favorite")
+    @ApiResponse(responseCode = "200", description = "성공")
+    @ApiResponse(responseCode = "403", description = "로그인 에러")
+    public ResponseEntity<List<GraveDto>> viewMyFavoriteGraveList(Principal principal) {
+        if(principal != null) {
+            String loginUserId = principal.getName();
+            List<GraveDto> graveDtoList = memorialService.viewMyFavoriteGraveList(loginUserId);
+            return new ResponseEntity<>(graveDtoList, HttpStatus.OK);
+        } else {
+            return new ResponseEntity<>(HttpStatus.FORBIDDEN);
+        }
+
+    }
+
+    @PostMapping("/report/{type}/{mediaSeq}")
+    @ApiResponse(responseCode = "200", description = "성공")
+    @ApiResponse(responseCode = "403", description = "로그인 에러")
+    public ResponseEntity<Void> report(@Parameter(description = "콘텐츠 타입(photo/video)") @PathVariable String type, @Parameter(description = "추모관 사진/동영상 식별키") @PathVariable int mediaSeq, Principal principal) {
+        if(principal != null) {
+            memorialService.report(type, mediaSeq);
+            return new ResponseEntity<>(HttpStatus.OK);
+        } else {
+            return new ResponseEntity<>(HttpStatus.FORBIDDEN);
+        }
+    }
+
+//    @GetMapping("/search/{searchWord}")
+//    @ApiResponse(responseCode = "200", description = "성공")
+//    public ResponseEntity<List<GraveDto>> viewSearchedMemorialList(@Parameter(description = "검색어") @PathVariable String searchWord) {
+//        memorialService.viewSearchedMemorialList();
+//        return new ResponseEntity<>();
+//    }
 
 }

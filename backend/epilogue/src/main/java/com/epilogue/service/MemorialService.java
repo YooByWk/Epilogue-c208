@@ -180,6 +180,7 @@ public class MemorialService {
                     .memorial(memorialRepository.findById(memorialSeq).get())
                     .user(userRepository.findByUserId(loginUserId))
                     .content(memorialMediaRequestDto.getContent())
+                    .reportCount(0)
                     .build();
             memorialPhotoRepository.save(memorialPhoto);
 
@@ -196,6 +197,7 @@ public class MemorialService {
                     .memorial(memorialRepository.findById(memorialSeq).get())
                     .user(userRepository.findByUserId(loginUserId))
                     .content(memorialMediaRequestDto.getContent())
+                    .reportCount(0)
                     .build();
             memorialVideoRepository.save(memorialVideo);
 
@@ -257,6 +259,55 @@ public class MemorialService {
                 .build();
 
         memorialLetterRepository.save(memorialLetter);
+    }
+
+    public void createMemorialFavorite(String loginUserId, int memorialSeq) {
+        Favorite favorite = Favorite.builder()
+                .user(userRepository.findByUserId(loginUserId))
+                .memorial(memorialRepository.findById(memorialSeq).get())
+                .build();
+        favoriteRepository.save(favorite);
+    }
+
+    public List<GraveDto> viewMyFavoriteGraveList(String loginUserId) {
+        List<GraveDto> graveDtoList = new ArrayList<>();
+
+        List<Favorite> myFavoriteList = favoriteRepository.findByUserId(loginUserId);
+        for(Favorite favorite : myFavoriteList) {
+            GraveDto graveDto = GraveDto.builder()
+                    .graveSeq(favorite.getMemorial().getMemorialSeq())
+                    .name(favorite.getMemorial().getUser().getName())
+                    .birth(favorite.getMemorial().getUser().getBirth())
+                    .goneDate(favorite.getMemorial().getGoneDate())
+                    .graveName(favorite.getMemorial().getGraveName())
+//                    =========================================================
+//                    .graveImg(favorite.getMemorial().getGraveImg())
+                    .build();
+            graveDtoList.add(graveDto);
+        }
+        return graveDtoList;
+    }
+
+    public void report(String type, int mediaSeq) {
+        if(type.equals("photo")) {
+            Optional<MemorialPhoto> memorialPhoto = memorialPhotoRepository.findById(mediaSeq);
+            int updatedReportCount = memorialPhoto.get().getReportCount() + 1;
+            memorialPhoto.get().setReportCount(updatedReportCount);
+
+            // 신고수 10개 이상이면 사진 삭제
+            if(updatedReportCount >= 10) {
+                memorialPhotoRepository.deleteById(memorialPhoto.get().getMemorialPhotoSeq());
+            }
+        } else if(type.equals("video")) {
+            Optional<MemorialVideo> memorialVideo = memorialVideoRepository.findById(mediaSeq);
+            int updatedReportCount = memorialVideo.get().getReportCount() + 1;
+            memorialVideo.get().setReportCount(updatedReportCount);
+
+            // 신고수 10개 이상이면 사진 삭제
+            if(updatedReportCount >= 10) {
+                memorialVideoRepository.deleteById(memorialVideo.get().getMemorialVideoSeq());
+            }
+        }
     }
 
 }

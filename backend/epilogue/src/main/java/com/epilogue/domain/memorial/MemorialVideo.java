@@ -4,13 +4,12 @@ import com.epilogue.domain.user.User;
 import io.swagger.v3.oas.annotations.media.Schema;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotNull;
-import lombok.AllArgsConstructor;
-import lombok.Builder;
-import lombok.Getter;
-import lombok.RequiredArgsConstructor;
+import lombok.*;
+import org.hibernate.annotations.ColumnDefault;
 
 @Entity
 @Getter
+@Setter
 @Builder
 @RequiredArgsConstructor
 @AllArgsConstructor
@@ -40,4 +39,8 @@ public class MemorialVideo {
 
     @Schema(description = "설명 내용")
     private String content;
+
+    @NotNull
+    @Schema(description = "신고수")
+    private int reportCount;
 }

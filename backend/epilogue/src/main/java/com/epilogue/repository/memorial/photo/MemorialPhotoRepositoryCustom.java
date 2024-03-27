@@ -8,4 +8,5 @@ import java.util.List;
 @Repository
 public interface MemorialPhotoRepositoryCustom {
     public List<MemorialPhoto> findAllByUserSeq(int userSeq);
+
 }
