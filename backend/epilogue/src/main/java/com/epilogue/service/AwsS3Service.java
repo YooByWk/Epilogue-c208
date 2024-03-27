@@ -73,6 +73,7 @@ public class AwsS3Service {
 
             ObjectMetadata metadata = new ObjectMetadata();
             metadata.setContentType(file.getContentType());
+
             metadata.setContentLength(file.getSize());
 
             // 묘비 사진 주소 업데이트
