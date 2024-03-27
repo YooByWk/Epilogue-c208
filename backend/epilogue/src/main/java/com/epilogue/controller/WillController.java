@@ -19,6 +19,7 @@ import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.core.parameters.P;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
@@ -38,22 +39,26 @@ public class WillController {
     private final ViewerService viewerService;
     private final AwsS3Service awsS3Service;
 
-    @Operation(summary = "유언 파일 및 증인 저장 API", description = "유언 파일 및 증인을 저장합니다.")
+    @Operation(summary = "증인 저장 API", description = "증인 목록을 저장합니다.")
     @ApiResponse(responseCode = "200", description = "성공")
-    @PostMapping(value = "/willAndWitness")
-    public ResponseEntity<Void> saveWillAndWitness(@Parameter(description = "유언 열람 파일 (multipart/form-data 타입)") @RequestPart MultipartFile multipartFile,
-                                                   @Parameter(description = "증인 목록 (application/json 타입)") @RequestPart List<WitnessRequestDto> witnessList, Principal principal) {
+    @PostMapping
+    public ResponseEntity<Void> saveWitness(@Parameter(description = "증인 목록") @RequestBody List<WitnessRequestDto> witnessList, Principal principal) {
         // 임의 유언 생성
         Will will = new Will();
         willService.saveWill(will);
 
         // 증인 리스트 저장
         witnessService.saveWitness(will, witnessList, principal);
+        return new ResponseEntity<>(HttpStatus.OK);
+    }
 
+    @Operation(summary = "유언 파일 저장 API", description = "유언 파일을 저장합니다.")
+    @ApiResponse(responseCode = "200", description = "성공")
+    @PostMapping("/witness")
+    public ResponseEntity<Void> saveWill(@Parameter(description = "유언 열람 파일") @RequestPart MultipartFile multipartFile, Principal principal) {
         // 블록체인 트랜잭션 생성 (해시, 녹음 파일 url, 초기 영수증)
 
         // 블록체인 생성이 성공적으로 됐을 경우
-
 
         // 유언 파일 S3 저장 (원본 파일, 초기 영수증)
         awsS3Service.uploadWill(multipartFile, principal);
@@ -71,14 +76,20 @@ public class WillController {
         return new ResponseEntity<>(HttpStatus.OK);
     }
 
-    @Operation(summary = "디지털 추모관 정보 저장 API", description = "디지털 추모관 정보를 저장합니다.")
+    @Operation(summary = "묘비 사진 저장 API", description = "묘비 사진을 저장합니다.")
     @ApiResponse(responseCode = "200", description = "성공")
-    @PostMapping("/memorial")
-        public ResponseEntity<Void> saveMemorial(@Parameter(description = "묘비 사진 파일 (multipart/form-data 타입)") @RequestPart MultipartFile multipartFile,
-                                                 @Parameter(description = "디지털 추모관 정보 요청 DTO (application/json 타입)")  @RequestPart WillMemorialRequestDto willMemorialRequestDto, Principal principal) {
+    @PostMapping("/graveImage")
+    public ResponseEntity<Void> saveGraveImage(@Parameter(description = "묘비 사진 파일") @RequestPart MultipartFile multipartFile, Principal principal) {
         // 묘비 사진 S3 저장
         awsS3Service.uploadGraveImage(multipartFile, principal);
 
+        return new ResponseEntity<>(HttpStatus.OK);
+    }
+
+    @Operation(summary = "디지털 추모관 사용 여부 및 묘비 이름 저장 API", description = "디지털 추모관 사용 여부 및 묘비 이름을 저장합니다.")
+    @ApiResponse(responseCode = "200", description = "성공")
+    @PostMapping("/memorialAndGraveName")
+    public ResponseEntity<Void> saveMemorial(@Parameter(description = "디지털 추모관 정보 요청 DTO")  @RequestPart WillMemorialRequestDto willMemorialRequestDto, Principal principal) {
         // 디지털 추모관 정보 저장
         willService.saveMemorial(willMemorialRequestDto, principal);
         return new ResponseEntity<>(HttpStatus.OK);

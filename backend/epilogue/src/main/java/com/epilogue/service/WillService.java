@@ -7,6 +7,7 @@ import com.epilogue.dto.request.will.WillAdditionalRequestDto;
 import com.epilogue.dto.request.will.WillApplyRequestDto;
 import com.epilogue.dto.request.will.WillMemorialRequestDto;
 import com.epilogue.repository.user.UserRepository;
+import com.epilogue.repository.viewer.ViewerRepository;
 import com.epilogue.repository.will.WillRepository;
 import com.epilogue.repository.witness.WitnessRepository;
 import jakarta.transaction.Transactional;
@@ -27,6 +28,7 @@ public class WillService {
     private final UserRepository userRepository;
     private final WitnessRepository witnessRepository;
     private final AwsS3Service awsS3Service;
+    private final ViewerRepository viewerRepository;
 
     public void saveWill(Will will) {
         willRepository.save(will);
@@ -68,7 +70,11 @@ public class WillService {
         // DB에서 유언 삭제
         User user = userRepository.findByUserId(loginUserId);
         Will will = user.getWill();
+
+        witnessRepository.deleteAllByWillWillSeq(will.getWillSeq());
+        viewerRepository.deleteAllByWillWillSeq(will.getWillSeq());
         willRepository.deleteByWillSeq(will.getWillSeq());
+        user.updateWill(will);
     }
 
     public boolean applyWill(WillApplyRequestDto willApplyRequestDto) {
