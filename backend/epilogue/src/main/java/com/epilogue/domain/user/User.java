@@ -45,7 +45,7 @@ public class User {
     private String birth;
 
     @Schema(description = "유언")
-    @OneToOne(cascade = CascadeType.REMOVE)
+    @OneToOne(fetch = FetchType.LAZY, cascade = CascadeType.REMOVE)
     private Will will;
 
     @Enumerated(EnumType.STRING)
@@ -65,7 +65,5 @@ public class User {
 
     public void updateWill(Will will) {
         this.will = will;
-        log.info("Will={}", will.getWillSeq());
-        log.info("찐 will update 완료!");
     }
 }
