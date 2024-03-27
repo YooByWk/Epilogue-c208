@@ -26,7 +26,7 @@ class BlockChainTest extends StatelessWidget {
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [
                     ElevatedButton(
-                      onPressed: () async {
+                      onPressed: () async {    
                         final response = await viewModel.deployContract();
                         debugPrint('컨트랙트 배포 결과: $response');
                       },
@@ -60,8 +60,12 @@ class BlockChainTest extends StatelessWidget {
                     ),
                     ElevatedButton(
                       onPressed: () async{
-                        await walletViewModel.createWallet();
-                        debugPrint('지갑 생성 완료');
+                        debugPrint('지갑 생성 버튼 클릭');
+                        // await walletViewModel.createWallet();
+                        Navigator.pushNamed(context, '/myMnemonic');
+
+                        // await walletViewModel.createWallet();
+                        // debugPrint('지갑 생성 완료');
                       },
                       child : Text('지갑 생성')
                     ),

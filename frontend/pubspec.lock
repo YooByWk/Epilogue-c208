@@ -312,6 +312,14 @@ packages:
     description: flutter
     source: sdk
     version: "0.0.0"
+  flutter_widget_to_image:
+    dependency: "direct main"
+    description:
+      name: flutter_widget_to_image
+      sha256: "83d1e654b1b9bbf6842395da11d18aea171b6829eb44b1d72508c27d9e495d6f"
+      url: "https://pub.dev"
+    source: hosted
+    version: "0.0.1"
   hex:
     dependency: transitive
     description:

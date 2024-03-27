@@ -16,9 +16,20 @@ class BlockChainWalletViewModel extends ChangeNotifier {
   final BlockChainWalletModel _model;
   final storage = FlutterSecureStorage();
   final _mnemonicControllers = List.generate(12, (index) => TextEditingController());
+
+  List<String> get mnemonicList => _model.mnemonicList;
+
+ 
+
   List<TextEditingController> get mnemonicControllers => _mnemonicControllers;
 
   BlockChainWalletViewModel (this._model);
+  // final _mnemonicList = _model.mnemonicList;
+
+  // Future<void> init() async {
+  //   await createWallet();
+  // }
+
 
   Future<void> createWallet() async{
     debugPrint('createWallet() called ');
@@ -31,7 +42,7 @@ class BlockChainWalletViewModel extends ChangeNotifier {
 
     // 니모닉 구문 생성
     String mnemonic = bip39.generateMnemonic();
-    // debugPrint('mnemonic $mnemonic');
+    
 
     // 니모닉 구문을 통한 시드 생성
     Uint8List seed = bip39.mnemonicToSeed(mnemonic);
@@ -64,7 +75,10 @@ class BlockChainWalletViewModel extends ChangeNotifier {
     bip32.BIP32 child2 = root2.derivePath("m/44'/60'/0'/0/0");
     var privateKeyHex2 = child2.privateKey!.map((byte) => byte.toRadixString(16).padLeft(2, '0')).join('');
     var privateKey2 = EthPrivateKey.fromHex(privateKeyHex2);
-    
+    var arrMne = wrtienMnemonic.split(' ');
+    _model.setMnemonicList(arrMne);
+    debugPrint(_model.mnemonicList.toString());
+
     debugPrint('복구된 개인키 : $privateKeyHex2');
     debugPrint('복구된 주소 : ${privateKey2.address}');
     debugPrint(privateKey == privateKey2 ? '복구 성공' : '복구 실패');
@@ -131,7 +145,8 @@ int validateMnemonic() {
     var writenKey = (await storage.read(key: 'privateKey')); // 저장된 키 값 확인
     var writenAddress = (await storage.read(key : 'walletAddress'));
     var wrtienMnemonic = (await storage.read(key : 'mnemonic'));
-    debugPrint('저장된 개인키 : $writenKey, 저장된 주소 : $writenAddress');
+    debugPrint('asdasdasdasd저장된 개인키 : $writenKey, 저장된 주소 : $writenAddress');
+    debugPrint(wrtienMnemonic.runtimeType.toString());
     debugPrint('저장된 니모닉 : $wrtienMnemonic');
   } 
 

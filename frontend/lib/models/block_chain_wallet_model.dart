@@ -5,6 +5,12 @@ class BlockChainWalletModel {
   late String _walletAddress; // 지갑 주소
   // late EthPrivateKey _privateKey;
   late String _privateKey;
+  List<String> mnemonicList = [];
+
+  void setMnemonicList(List<String> mnemonicList) {
+    this.mnemonicList = mnemonicList;
+  }
+
   // late String _key;
   final storage = FlutterSecureStorage();
   bool hasWallet = false;
