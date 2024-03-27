@@ -39,7 +39,7 @@ public class WillService {
         User user = userRepository.findByUserId(principal.getName());
         Will will = user.getWill();
 
-        will.updateMemorial(willMemorialRequestDto.isUseMemorial(), willMemorialRequestDto.getGraveName());
+        will.updateMemorial(willMemorialRequestDto.getUseMemorial(), willMemorialRequestDto.getGraveName());
     }
 
     @Transactional
@@ -47,7 +47,7 @@ public class WillService {
         User user = userRepository.findByUserId(principal.getName());
         Will will = willRepository.findById(user.getWill().getWillSeq()).get();
 
-        will.updateAdditionalInformation(willAdditionalRequestDto.isSustainCare(), willAdditionalRequestDto.getFuneralType(), willAdditionalRequestDto.getGraveType(), willAdditionalRequestDto.isOrganDonation());
+        will.updateAdditionalInformation(willAdditionalRequestDto.getSustainCare(), willAdditionalRequestDto.getFuneralType(), willAdditionalRequestDto.getGraveType(), willAdditionalRequestDto.getOrganDonation());
     }
 
     public String viewMyWill(Principal principal) {

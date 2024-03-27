@@ -15,7 +15,7 @@ import java.util.List;
 @Schema(description = "유언 요청 DTO")
 public class WillRequestDto {
     @Schema(description = "연명 치료 여부")
-    private boolean sustainCare;
+    private String sustainCare;
 
     @Schema(description = "희망 장례 방식")
     private String funeralType;
@@ -24,7 +24,7 @@ public class WillRequestDto {
     private String graveType;
 
     @Schema(description = "장기 기증 여부")
-    private boolean organDonation;
+    private String organDonation;
 
     @NotNull(message = "유언 파일 주소는 Null일 수 없습니다.")
     @Schema(description = "유언 파일 주소")
