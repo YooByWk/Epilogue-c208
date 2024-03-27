@@ -15,7 +15,7 @@ public class MemorialLetterRepositoryImpl implements MemorialLetterRepositoryCus
 
     @Override
     public List<MemorialLetter> findAllByUserSeq(int userSeq) {
-        return entityManager.createQuery("SELECT ml FROM MemorialLetter ml JOIN FETCH ml.memorial.user.userSeq = :userSeq", MemorialLetter.class)
+        return entityManager.createQuery("SELECT ml FROM MemorialLetter ml JOIN FETCH ml.memorial WHERE ml.memorial.user.userSeq = :userSeq", MemorialLetter.class)
                 .setParameter("userSeq", userSeq)
                 .getResultList();
     }

@@ -121,23 +121,23 @@ public class MemorialService {
         Optional<Memorial> memorial = memorialRepository.findById(memorialSeq);
         int userSeq = memorial.get().getUser().getUserSeq(); // 고인 식별키
 
-//        // 고인의 사진 url 목록 불러오기
-//        List<MemorialPhoto> memorialPhotoList = memorialPhotoRepository.findAllByUserSeq(userSeq);
-//        // S3에 저장되어 있는 url 목록 불러오기
-//        List<String> memorialS3PhotoList = new ArrayList<>(); // S3 url 목록
-//        for(MemorialPhoto photo : memorialPhotoList) {
-//            String S3url = awsS3Service.getPhotoFromS3(photo.getPhotoUrl());
-//            memorialS3PhotoList.add(S3url);
-//        }
-//
-//        // 고인의 동영상 url 목록 불러오기
-//        List<MemorialVideo> memorialVideoList = memorialVideoRepository.findAllByUserSeq(userSeq);
-//        // S3에 저장되어 있는 url 목록 불러오기
-//        List<String> memorialS3VideoList = new ArrayList<>();
-//        for(MemorialVideo video : memorialVideoList) {
-//            String S3url = awsS3Service.getVideoFromS3(video.getVideoUrl());
-//            memorialS3VideoList.add(S3url);
-//        }
+        // 고인의 사진 url 목록 불러오기
+        List<MemorialPhoto> memorialPhotoList = memorialPhotoRepository.findAllByUserSeq(userSeq);
+        // S3에 저장되어 있는 url 목록 불러오기
+        List<String> memorialS3PhotoList = new ArrayList<>(); // S3 url 목록
+        for(MemorialPhoto photo : memorialPhotoList) {
+            String S3url = awsS3Service.getPhotoFromS3(photo.getUniquePhotoUrl());
+            memorialS3PhotoList.add(S3url);
+        }
+
+        // 고인의 동영상 url 목록 불러오기
+        List<MemorialVideo> memorialVideoList = memorialVideoRepository.findAllByUserSeq(userSeq);
+        // S3에 저장되어 있는 url 목록 불러오기
+        List<String> memorialS3VideoList = new ArrayList<>();
+        for(MemorialVideo video : memorialVideoList) {
+            String S3url = awsS3Service.getVideoFromS3(video.getUniqueVideoUrl());
+            memorialS3VideoList.add(S3url);
+        }
 
         // 고인의 편지 목록 불러오기
         List<MemorialLetter> memorialLetterList = memorialLetterRepository.findAllByUserSeq(userSeq);
@@ -147,11 +147,11 @@ public class MemorialService {
                 .name(memorial.get().getUser().getName())
                 .birth(memorial.get().getUser().getBirth())
                 .goneDate(memorial.get().getGoneDate())
-                .graveImg(awsS3Service.getPhotoFromS3(memorial.get().getGraveImg()))
-//                .memorialPhotoList(memorialS3PhotoList)
-//                .photoCount(memorialS3PhotoList.size())
-//                .memorialVideoList(memorialS3VideoList)
-//                .videoCount(memorialS3VideoList.size())
+                .graveImg(awsS3Service.getGraveImageFromS3(memorial.get().getGraveImg()))
+                .memorialPhotoList(memorialS3PhotoList)
+                .photoCount(memorialS3PhotoList.size())
+                .memorialVideoList(memorialS3VideoList)
+                .videoCount(memorialS3VideoList.size())
                 .memorialLetterList(memorialLetterList)
                 .letterCount(memorialLetterList.size())
                 .build();
