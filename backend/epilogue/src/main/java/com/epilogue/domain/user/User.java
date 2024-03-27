@@ -5,8 +5,11 @@ import io.swagger.v3.oas.annotations.media.Schema;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotNull;
 import lombok.*;
+import lombok.extern.slf4j.Slf4j;
 import org.hibernate.annotations.ColumnDefault;
+import org.springframework.boot.context.properties.bind.DefaultValue;
 
+@Slf4j
 @Entity
 @Builder
 @Getter
@@ -42,11 +45,10 @@ public class User {
     private String birth;
 
     @Schema(description = "유언")
-    @OneToOne
+    @OneToOne(cascade = CascadeType.REMOVE)
     private Will will;
 
-    @Schema(description = "회원 상태")
-    @OneToOne
+    @Enumerated(EnumType.STRING)
     private UserStatus userStatus;
 
     @Schema(description = "리프레시 토큰")
@@ -63,5 +65,7 @@ public class User {
 
     public void updateWill(Will will) {
         this.will = will;
+        log.info("Will={}", will.getWillSeq());
+        log.info("찐 will update 완료!");
     }
 }

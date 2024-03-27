@@ -1,6 +1,7 @@
 package com.epilogue.service;
 
 import com.epilogue.domain.user.User;
+import com.epilogue.domain.user.UserStatus;
 import com.epilogue.dto.request.user.*;
 import com.epilogue.dto.response.user.UserDTO;
 import com.epilogue.repository.SmsCertificationRepository;
@@ -28,6 +29,7 @@ public class UserService {
                 .name(joinRequestDto.getName())
                 .mobile(joinRequestDto.getMobile())
                 .birth(joinRequestDto.getBirth())
+                .userStatus(UserStatus.LIVE)
                 .build();
 
         userRepository.save(user);

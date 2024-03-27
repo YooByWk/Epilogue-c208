@@ -3,9 +3,7 @@ package com.epilogue.service;
 import com.epilogue.domain.memorial.*;
 import com.epilogue.domain.user.User;
 import com.epilogue.dto.request.memorial.MemorialMediaRequestDto;
-import com.epilogue.dto.response.memorial.GraveDto;
-import com.epilogue.dto.response.memorial.GraveResponseDto;
-import com.epilogue.dto.response.memorial.MemorialResponseDto;
+import com.epilogue.dto.response.memorial.*;
 import com.epilogue.repository.memorial.MemorialRepository;
 import com.epilogue.repository.memorial.favorite.FavoriteRepository;
 import com.epilogue.repository.memorial.letter.MemorialLetterRepository;
@@ -15,6 +13,7 @@ import com.epilogue.repository.user.UserRepository;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
+import org.springframework.web.multipart.MultipartFile;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -120,23 +119,31 @@ public class MemorialService {
         Optional<Memorial> memorial = memorialRepository.findById(memorialSeq);
         int userSeq = memorial.get().getUser().getUserSeq(); // 고인 식별키
 
-//        // 고인의 사진 url 목록 불러오기
-//        List<MemorialPhoto> memorialPhotoList = memorialPhotoRepository.findAllByUserSeq(userSeq);
-//        // S3에 저장되어 있는 url 목록 불러오기
-//        List<String> memorialS3PhotoList = new ArrayList<>(); // S3 url 목록
-//        for(MemorialPhoto photo : memorialPhotoList) {
-//            String S3url = awsS3Service.getPhotoFromS3(photo.getPhotoUrl());
-//            memorialS3PhotoList.add(S3url);
-//        }
-//
-//        // 고인의 동영상 url 목록 불러오기
-//        List<MemorialVideo> memorialVideoList = memorialVideoRepository.findAllByUserSeq(userSeq);
-//        // S3에 저장되어 있는 url 목록 불러오기
-//        List<String> memorialS3VideoList = new ArrayList<>();
-//        for(MemorialVideo video : memorialVideoList) {
-//            String S3url = awsS3Service.getVideoFromS3(video.getVideoUrl());
-//            memorialS3VideoList.add(S3url);
-//        }
+        // 고인의 사진 url 목록 불러오기
+        List<MemorialPhoto> memorialPhotoList = memorialPhotoRepository.findAllByUserSeq(userSeq);
+        // S3에 저장되어 있는 url 목록 불러오기
+        List<MemorialPhotoDto> memorialPhotoDtoList = new ArrayList<>();
+        for(MemorialPhoto photo : memorialPhotoList) {
+            String S3url = awsS3Service.getPhotoFromS3(photo.getUniquePhotoUrl());
+            MemorialPhotoDto memorialPhotoDto = MemorialPhotoDto.builder()
+                    .memorialPhotoSeq(photo.getMemorialPhotoSeq())
+                    .S3url(S3url)
+                    .build();
+            memorialPhotoDtoList.add(memorialPhotoDto);
+        }
+
+        // 고인의 동영상 url 목록 불러오기
+        List<MemorialVideo> memorialVideoList = memorialVideoRepository.findAllByUserSeq(userSeq);
+        // S3에 저장되어 있는 url 목록 불러오기
+        List<MemorialVideoDto> memorialVideoDtoList = new ArrayList<>();
+        for(MemorialVideo video : memorialVideoList) {
+            String S3url = awsS3Service.getVideoFromS3(video.getUniqueVideoUrl());
+            MemorialVideoDto memorialVideoDto = MemorialVideoDto.builder()
+                    .memorialVideoSeq(video.getMemorialVideoSeq())
+                    .S3url(S3url)
+                    .build();
+            memorialVideoDtoList.add(memorialVideoDto);
+        }
 
         // 고인의 편지 목록 불러오기
         List<MemorialLetter> memorialLetterList = memorialLetterRepository.findAllByUserSeq(userSeq);
@@ -146,11 +153,11 @@ public class MemorialService {
                 .name(memorial.get().getUser().getName())
                 .birth(memorial.get().getUser().getBirth())
                 .goneDate(memorial.get().getGoneDate())
-                .graveImg(awsS3Service.getPhotoFromS3(memorial.get().getGraveImg()))
-//                .memorialPhotoList(memorialS3PhotoList)
-//                .photoCount(memorialS3PhotoList.size())
-//                .memorialVideoList(memorialS3VideoList)
-//                .videoCount(memorialS3VideoList.size())
+                .graveImg(awsS3Service.getGraveImageFromS3(memorial.get().getGraveImg()))
+                .memorialPhotoList(memorialPhotoDtoList)
+                .photoCount(memorialPhotoDtoList.size())
+                .memorialVideoList(memorialVideoDtoList)
+                .videoCount(memorialVideoDtoList.size())
                 .memorialLetterList(memorialLetterList)
                 .letterCount(memorialLetterList.size())
                 .build();
@@ -158,11 +165,11 @@ public class MemorialService {
         return graveResponseDto;
     }
 
-    public void saveMedia(String loginUserId, int memorialSeq, MemorialMediaRequestDto memorialMediaRequestDto) throws Exception {
-        String[] url = memorialMediaRequestDto.getMultipartFile().getOriginalFilename().split(".");
+    public void saveMedia(String loginUserId, int memorialSeq, MultipartFile multipartFile, MemorialMediaRequestDto memorialMediaRequestDto) throws Exception {
+        String[] url = multipartFile.getOriginalFilename().split("\\.");
         String fileType = url[1]; // 파일 확장자
-        String originalFileName = memorialMediaRequestDto.getMultipartFile().getOriginalFilename(); // 원래 파일명
-        String uniqueFileName = UUID.randomUUID() + fileType; // 중복 방지를 위한 unique한 파일명
+        String originalFileName = multipartFile.getOriginalFilename(); // 원래 파일명
+        String uniqueFileName = UUID.randomUUID() + "." + fileType; // 중복 방지를 위한 unique한 파일명
 
         // 사진 저장
         if(fileType.equals("jpg") || fileType.equals("jpeg") || fileType.equals("png") || fileType.equals("gif")) {
@@ -172,11 +179,12 @@ public class MemorialService {
                     .uniquePhotoUrl(uniqueFileName)
                     .memorial(memorialRepository.findById(memorialSeq).get())
                     .user(userRepository.findByUserId(loginUserId))
+                    .content(memorialMediaRequestDto.getContent())
                     .build();
             memorialPhotoRepository.save(memorialPhoto);
 
             // S3
-            awsS3Service.uploadPhoto(memorialMediaRequestDto.getMultipartFile(), uniqueFileName);
+            awsS3Service.uploadPhoto(multipartFile, uniqueFileName);
         }
 
         // 동영상 저장
@@ -187,11 +195,12 @@ public class MemorialService {
                     .uniqueVideoUrl(uniqueFileName)
                     .memorial(memorialRepository.findById(memorialSeq).get())
                     .user(userRepository.findByUserId(loginUserId))
+                    .content(memorialMediaRequestDto.getContent())
                     .build();
             memorialVideoRepository.save(memorialVideo);
 
             // S3
-            awsS3Service.uploadVideo(memorialMediaRequestDto.getMultipartFile(), uniqueFileName);
+            awsS3Service.uploadVideo(multipartFile, uniqueFileName);
         }
 
         else {
@@ -199,6 +208,26 @@ public class MemorialService {
             throw new Exception();
         }
 
+    }
+
+    public MemorialMediaResponseDto viewMemorialPhoto(int memorialPhotoSeq) {
+        Optional<MemorialPhoto> memorialPhoto = memorialPhotoRepository.findById(memorialPhotoSeq);
+        MemorialMediaResponseDto memorialMediaResponseDto = MemorialMediaResponseDto.builder()
+                .mediaSeq(memorialPhoto.get().getMemorialPhotoSeq())
+                .S3url(awsS3Service.getPhotoFromS3(memorialPhoto.get().getUniquePhotoUrl()))
+                .content(memorialPhoto.get().getContent())
+                .build();
+        return memorialMediaResponseDto;
+    }
+
+    public MemorialMediaResponseDto viewMemorialVideo(int memorialVideoSeq) {
+        Optional<MemorialVideo> memorialVideo = memorialVideoRepository.findById(memorialVideoSeq);
+        MemorialMediaResponseDto memorialMediaResponseDto = MemorialMediaResponseDto.builder()
+                .mediaSeq(memorialVideo.get().getMemorialVideoSeq())
+                .S3url(awsS3Service.getVideoFromS3(memorialVideo.get().getUniqueVideoUrl()))
+                .content(memorialVideo.get().getContent())
+                .build();
+        return memorialMediaResponseDto;
     }
 
 }

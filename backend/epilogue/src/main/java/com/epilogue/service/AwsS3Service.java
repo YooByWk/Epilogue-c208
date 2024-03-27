@@ -9,14 +9,16 @@ import java.net.MalformedURLException;
 import java.net.URL;
 import java.net.URLDecoder;
 import java.security.Principal;
+import java.util.UUID;
 
 import com.epilogue.domain.user.User;
 import com.epilogue.domain.will.Will;
-import com.epilogue.exception.S3Exception;
 import com.epilogue.repository.user.UserRepository;
 import com.epilogue.repository.will.WillRepository;
+import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.hibernate.annotations.Type;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
 import org.springframework.web.multipart.MultipartFile;
@@ -36,43 +38,75 @@ public class AwsS3Service {
     private String photoBucketName;
     @Value("${cloud.aws.s3.videoBucketName}")
     private String videoBucketName;
+    @Value("${cloud.aws.s3.graveBucketName}")
+    private String graveBucketName;
 
-    public void upload(MultipartFile file, Principal principal) {
+    @Transactional
+    public void uploadWill(MultipartFile file, Principal principal) {
         try {
-            String fileName = file.getOriginalFilename();
-            String willFileAddress = "https://" + bucketName + "/will" + fileName;
+            String[] url = file.getOriginalFilename().split("\\.");
+            String fileType = url[1]; // 파일 확장자
+            String uniqueFileName = UUID.randomUUID() + "." + fileType; // 중복 방지를 위한 unique한 파일명
+
             ObjectMetadata metadata = new ObjectMetadata();
             metadata.setContentType(file.getContentType());
             metadata.setContentLength(file.getSize());
 
             // 유언 파일 주소 업데이트
             User user = userRepository.findByUserId(principal.getName());
-            willRepository.updateWillFileAddress(user.getWill().getWillSeq(), willFileAddress);
+            Will will = user.getWill();
+            will.updateWillFileAddress(uniqueFileName);
 
-            amazonS3.putObject(bucketName, fileName, file.getInputStream(), metadata);
+            amazonS3.putObject(bucketName, uniqueFileName, file.getInputStream(), metadata);
 
         } catch (IOException e) {
             e.printStackTrace();
         }
     }
 
+    @Transactional
+    public void uploadGraveImage(MultipartFile file, Principal principal) {
+        try {
+            String[] url = file.getOriginalFilename().split("\\.");
+            String fileType = url[1]; // 파일 확장자
+            String uniqueFileName = UUID.randomUUID() + "." + fileType; // 중복 방지를 위한 unique한 파일명
+
+            ObjectMetadata metadata = new ObjectMetadata();
+            metadata.setContentType(file.getContentType());
+
+            metadata.setContentLength(file.getSize());
+
+            // 묘비 사진 주소 업데이트
+            User user = userRepository.findByUserId(principal.getName());
+            Will will = user.getWill();
+            log.info("willSeq = {}", will.getWillSeq());
+            will.updateGraveImageAddress(uniqueFileName);
+
+            amazonS3.putObject(graveBucketName, uniqueFileName, file.getInputStream(), metadata);
+
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
+    // 유언 파일 url 불러오기
+    public String getWillFromS3(String fileName) {
+        return amazonS3.getUrl(bucketName, fileName).toString();
+    }
+
+    // 묘비 사진 url 불러오기
+    public String getGraveImageFromS3(String fileName) {
+        return amazonS3.getUrl(graveBucketName, fileName).toString();
+    }
+
     // 사진 업로드
     public void uploadPhoto(MultipartFile file, String uniqueFileName) {
         try {
-//            String fileName = file.getOriginalFilename();
-//            log.info("fileName = {}", fileName);
-
-//            String S3Url = "https://" + photoBucketName + "/" + uniqueFileName;
             ObjectMetadata metadata = new ObjectMetadata();
             metadata.setContentType(file.getContentType());
             metadata.setContentLength(file.getSize());
 
-            // 유언 파일 주소 업데이트
-//            User user = userRepository.findByUserId(principal.getName());
-//            willRepository.updateWillFileAddress(user.getWill().getWillSeq(), willFileAddress);
-
             amazonS3.putObject(photoBucketName, uniqueFileName, file.getInputStream(), metadata);
-
         } catch (IOException e) {
             log.info("디지털 추모관 S3에 사진 저장 실패");
             e.printStackTrace();
@@ -84,6 +118,7 @@ public class AwsS3Service {
         return amazonS3.getUrl(photoBucketName, fileName).toString();
     }
 
+    @Transactional
     // 동영상 업로드
     public void uploadVideo(MultipartFile file, String uniqueFileName) {
         try {
@@ -103,79 +138,11 @@ public class AwsS3Service {
         return amazonS3.getUrl(videoBucketName, fileName).toString();
     }
 
+    @Transactional
     public void deleteFromS3(Principal principal) throws MalformedURLException, UnsupportedEncodingException {
         Will will = userRepository.findByUserId(principal.getName()).getWill();
 
-        String key = getKeyFromAddress(will.getWillFileAddress());
+        String key = will.getWillFileAddress();
         amazonS3.deleteObject(new DeleteObjectRequest(bucketName, key));
     }
-
-
-
-    private String getKeyFromAddress(String fileAddress) throws MalformedURLException, UnsupportedEncodingException {
-        URL url = new URL(fileAddress);
-        String decodingKey = URLDecoder.decode(url.getPath(), "UTF-8");
-        return decodingKey.substring(1); // 맨 앞의 '/' 제거r
-    }
-
-
-//    public String upload(MultipartFile mp3) {
-//        if (mp3.isEmpty() || Objects.isNull(mp3.getOriginalFilename())){
-//            throw new S3Exception(ErrorCode.EMPTY_FILE_EXCEPTION);
-//        }
-//        return this.uploadMp3(mp3);
-//    }
-//
-//    private String uploadMp3(MultipartFile mp3) {
-//        this.validatemp3FileExtention(mp3.getOriginalFilename());
-//        try {
-//            return this.uploadMp3ToS3(mp3);
-//        } catch (IOException e) {
-//            throw new S3Exception(ErrorCode.IO_EXCEPTION_ON_MP3_UPLOAD);
-//        }
-//    }
-//
-//    private void validateMp3FileExtention(String filename) {
-//        int lastDotIndex = filename.lastIndexOf(".");
-//        if (lastDotIndex == -1) {
-////            throw new S3Exception(ErrorCode.NO_FILE_EXTENTION);
-//        }
-//
-//        String extention = filename.substring(lastDotIndex + 1).toLowerCase();
-//        List<String> allowedExtentionList = Arrays.asList("mp3");
-//
-//        if (!allowedExtentionList.contains(extention)) {
-//            throw new S3Exception(ErrorCode.INVALID_FILE_EXTENTION);
-//        }
-//    }
-//
-//    private String uploadMp3ToS3(MultipartFile mp3) throws IOException {
-//        String originalFilename = mp3.getOriginalFilename(); //원본 파일 명
-//        String extention = originalFilename.substring(originalFilename.lastIndexOf(".")); //확장자 명
-//
-//        String s3FileName = UUID.randomUUID().toString().substring(0, 10) + originalFilename; //변경된 파일 명
-//
-//        InputStream is = mp3.getInputStream();
-//        byte[] bytes = IOUtils.toByteArray(is);
-//
-//        ObjectMetadata metadata = new ObjectMetadata();
-//        metadata.setContentType("mp3/" + extention);
-//        metadata.setContentLength(bytes.length);
-//        ByteArrayInputStream byteArrayInputStream = new ByteArrayInputStream(bytes);
-//
-//        try{
-//            PutObjectRequest putObjectRequest =
-//                    new PutObjectRequest(bucketName, s3FileName, byteArrayInputStream, metadata)
-//                            .withCannedAcl(CannedAccessControlList.PublicRead);
-//            amazonS3.putObject(putObjectRequest); // put mp3 to S3
-//        }catch (Exception e){
-//            throw new S3Exception(ErrorCode.PUT_OBJECT_EXCEPTION);
-//        }finally {
-//            byteArrayInputStream.close();
-//            is.close();
-//        }
-//
-//        return amazonS3.getUrl(bucketName, s3FileName).toString();
-//    }
-//
 }

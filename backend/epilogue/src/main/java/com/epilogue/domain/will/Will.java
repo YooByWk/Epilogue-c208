@@ -2,18 +2,17 @@ package com.epilogue.domain.will;
 
 
 import io.swagger.v3.oas.annotations.media.Schema;
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
+import jakarta.persistence.*;
 import jakarta.validation.constraints.NotNull;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 
 import java.util.UUID;
 
+@Slf4j
 @Entity
 @Builder
 @Getter
@@ -27,6 +26,7 @@ public class Will {
     private int willSeq;
 
     @Schema(description = "연명 치료 여부")
+    @Column(columnDefinition = "TINYINT(1)")
     private boolean sustainCare;
 
     @Schema(description = "희망 장례 방식")
@@ -36,9 +36,11 @@ public class Will {
     private String graveType;
 
     @Schema(description = "장기 기증 여부")
+    @Column(columnDefinition = "TINYINT(1)")
     private boolean organDonation;
 
     @Schema(description = "디지털 추모관 사용 여부")
+    @Column(columnDefinition = "TINYINT(1)")
     private boolean useMemorial;
 
     @Schema(description = "묘비명")
@@ -56,10 +58,9 @@ public class Will {
     @Schema(description = "유언장 링크")
     private String willLink;
 
-    public void updateMemorial(boolean useMemorial, String graveName, String graveImageAddress) {
+    public void updateMemorial(boolean useMemorial, String graveName) {
         this.useMemorial = useMemorial;
         this.graveName = graveName;
-        this.graveImageAddress = graveImageAddress;
     }
 
     public void updateAdditionalInformation(boolean sustainCare, String funeralType, String graveType, boolean organDonation) {
@@ -67,6 +68,15 @@ public class Will {
         this.graveType = graveType;
         this.funeralType = funeralType;
         this.organDonation = organDonation;
+    }
+
+    public void updateGraveImageAddress(String graveImageAddress) {
+        log.info("graveImageAddress = {}", graveImageAddress);
+        this.graveImageAddress = graveImageAddress;
+    }
+
+    public void updateWillFileAddress(String willFileAddress) {
+        this.willFileAddress = willFileAddress;
     }
 }
 

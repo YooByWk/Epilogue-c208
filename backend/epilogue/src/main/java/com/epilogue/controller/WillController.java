@@ -13,6 +13,7 @@ import com.epilogue.service.WitnessService;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.Parameter;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
+import io.swagger.v3.oas.annotations.responses.ApiResponses;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -40,16 +41,14 @@ public class WillController {
     @Operation(summary = "유언 파일 및 증인 저장 API", description = "유언 파일 및 증인을 저장합니다.")
     @ApiResponse(responseCode = "200", description = "성공")
     @PostMapping(value = "/willAndWitness")
-    public ResponseEntity<Void> saveWillAndWitness(@Parameter(description = "유언 열람 파일") @RequestPart MultipartFile multipartFile, @RequestPart List<WitnessRequestDto> witnessList, Principal principal) {
+    public ResponseEntity<Void> saveWillAndWitness(@Parameter(description = "유언 열람 파일 (multipart/form-data 타입)") @RequestPart MultipartFile multipartFile,
+                                                   @Parameter(description = "증인 목록 (application/json 타입)") @RequestPart List<WitnessRequestDto> witnessList, Principal principal) {
         // 임의 유언 생성
         Will will = new Will();
         willService.saveWill(will);
 
-        log.info("will 저장 완료! will={}", will);
-
         // 증인 리스트 저장
         witnessService.saveWitness(will, witnessList, principal);
-        log.info("witness 저장 완료!");
 
         // 블록체인 트랜잭션 생성 (해시, 녹음 파일 url, 초기 영수증)
 
@@ -57,9 +56,7 @@ public class WillController {
 
 
         // 유언 파일 S3 저장 (원본 파일, 초기 영수증)
-        awsS3Service.upload(multipartFile, principal);
-
-        log.info("유언 파일 저장 완료!");
+        awsS3Service.uploadWill(multipartFile, principal);
 
         // 프론트에 알림 (200 보내기)
         return new ResponseEntity<>(HttpStatus.OK);
@@ -68,7 +65,7 @@ public class WillController {
     @Operation(summary = "열람인 저장 API", description = "열람인을 저장합니다.")
     @ApiResponse(responseCode = "200", description = "성공")
     @PostMapping("/viewer")
-    public ResponseEntity<Void> saveViewer(@Parameter(description = "열람인 요청 DTO") @RequestBody List<ViewerRequestDto> viewerList, Principal principal) {
+    public ResponseEntity<Void> saveViewer(@Parameter(description = "열람인 목록") @RequestBody List<ViewerRequestDto> viewerList, Principal principal) {
         // 열람인 리스트 저장
         viewerService.save(viewerList, principal);
         return new ResponseEntity<>(HttpStatus.OK);
@@ -77,7 +74,11 @@ public class WillController {
     @Operation(summary = "디지털 추모관 정보 저장 API", description = "디지털 추모관 정보를 저장합니다.")
     @ApiResponse(responseCode = "200", description = "성공")
     @PostMapping("/memorial")
-    public ResponseEntity<Void> saveMemorial(@Parameter(description = "디지털 추모관 정보 요청 DTO") @ModelAttribute WillMemorialRequestDto willMemorialRequestDto, Principal principal) {
+        public ResponseEntity<Void> saveMemorial(@Parameter(description = "묘비 사진 파일 (multipart/form-data 타입)") @RequestPart MultipartFile multipartFile,
+                                                 @Parameter(description = "디지털 추모관 정보 요청 DTO (application/json 타입)")  @RequestPart WillMemorialRequestDto willMemorialRequestDto, Principal principal) {
+        // 묘비 사진 S3 저장
+        awsS3Service.uploadGraveImage(multipartFile, principal);
+
         // 디지털 추모관 정보 저장
         willService.saveMemorial(willMemorialRequestDto, principal);
         return new ResponseEntity<>(HttpStatus.OK);
@@ -95,10 +96,9 @@ public class WillController {
     @Operation(summary = "나의 유언 조회 API", description = "내가 작성한 유언을 조회합니다.")
     @ApiResponse(responseCode = "200", description = "성공")
     @GetMapping
-    public ResponseEntity<Void> viewMyWill(Principal principal) {
-        willService.viewMyWill(principal);
+    public ResponseEntity<String> viewMyWill(Principal principal) {
         // S3에서 가져온 유언 파일 반환
-        return new ResponseEntity<>(HttpStatus.OK);
+        return new ResponseEntity<>(willService.viewMyWill(principal), HttpStatus.OK);
     }
 
     @Operation(summary = "나의 유언 삭제 API", description = "내가 작성한 유언을 삭제합니다.")
@@ -106,14 +106,14 @@ public class WillController {
     @DeleteMapping
     public ResponseEntity<Void> deleteMyWill(Principal principal) throws MalformedURLException, UnsupportedEncodingException {
         willService.deleteMyWill(principal);
-
-        // S3에서 유언 원본 파일 삭제
-        awsS3Service.deleteFromS3(principal);
         return new ResponseEntity<>(HttpStatus.OK);
     }
 
-    @Operation(summary = "유언 열람 신청 API", description = "유언 열람을 신청합니다. 인증에 성공할 경우 true, 실패할 경우 false를 반환합니다.")
-    @ApiResponse(responseCode = "200", description = "성공")
+    @Operation(summary = "유언 열람 신청 API", description = "유언 열람을 신청합니다.")
+    @ApiResponses(value = {
+            @ApiResponse(responseCode = "true", description = "인증 성공"),
+            @ApiResponse(responseCode = "false", description = "인증 실패"),
+    })
     @PostMapping("/apply")
     public ResponseEntity<Boolean> applyWill(@Parameter(description = "유언 열람 인증 요청 DTO") @RequestBody WillApplyRequestDto willApplyRequestDto) {
         return new ResponseEntity<>(willService.applyWill(willApplyRequestDto), HttpStatus.OK);

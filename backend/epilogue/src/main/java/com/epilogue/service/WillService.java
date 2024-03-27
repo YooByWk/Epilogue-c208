@@ -9,30 +9,38 @@ import com.epilogue.dto.request.will.WillMemorialRequestDto;
 import com.epilogue.repository.user.UserRepository;
 import com.epilogue.repository.will.WillRepository;
 import com.epilogue.repository.witness.WitnessRepository;
+import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.security.core.parameters.P;
 import org.springframework.stereotype.Service;
 
+import java.io.UnsupportedEncodingException;
+import java.net.MalformedURLException;
 import java.security.Principal;
 
+@Slf4j
 @Service
 @RequiredArgsConstructor
 public class WillService {
     private final WillRepository willRepository;
     private final UserRepository userRepository;
     private final WitnessRepository witnessRepository;
+    private final AwsS3Service awsS3Service;
 
     public void saveWill(Will will) {
         willRepository.save(will);
     }
 
+    @Transactional
     public void saveMemorial(WillMemorialRequestDto willMemorialRequestDto, Principal principal) {
         User user = userRepository.findByUserId(principal.getName());
-        Will will = willRepository.findById(user.getWill().getWillSeq()).get();
+        Will will = user.getWill();
 
-        will.updateMemorial(willMemorialRequestDto.isUseMemorial(), willMemorialRequestDto.getGraveName(), willMemorialRequestDto.getGraveImageAddress());
+        will.updateMemorial(willMemorialRequestDto.isUseMemorial(), willMemorialRequestDto.getGraveName());
     }
 
+    @Transactional
     public void saveAdditionalInformation(WillAdditionalRequestDto willAdditionalRequestDto, Principal principal) {
         User user = userRepository.findByUserId(principal.getName());
         Will will = willRepository.findById(user.getWill().getWillSeq()).get();
@@ -40,17 +48,20 @@ public class WillService {
         will.updateAdditionalInformation(willAdditionalRequestDto.isSustainCare(), willAdditionalRequestDto.getFuneralType(), willAdditionalRequestDto.getGraveType(), willAdditionalRequestDto.isOrganDonation());
     }
 
-    public void viewMyWill(Principal principal) {
+    public String viewMyWill(Principal principal) {
         String loginUserId = principal.getName();
+        Will will = userRepository.findByUserId(loginUserId).getWill();
 
         // S3에서 녹음 파일 가져오기
-
+        return awsS3Service.getWillFromS3(will.getWillFileAddress());
     }
 
-    public void deleteMyWill(Principal principal) {
+    @Transactional
+    public void deleteMyWill(Principal principal) throws MalformedURLException, UnsupportedEncodingException {
         String loginUserId = principal.getName();
 
         // S3에서 유언 파일 삭제
+        awsS3Service.deleteFromS3(principal);
 
         // 블록체인에서 유언 파일 url 삭제
 
