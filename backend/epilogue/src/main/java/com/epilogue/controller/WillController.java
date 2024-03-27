@@ -13,6 +13,7 @@ import com.epilogue.service.WitnessService;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.Parameter;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
+import io.swagger.v3.oas.annotations.responses.ApiResponses;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -112,8 +113,11 @@ public class WillController {
         return new ResponseEntity<>(HttpStatus.OK);
     }
 
-    @Operation(summary = "유언 열람 신청 API", description = "유언 열람을 신청합니다. 인증에 성공할 경우 true, 실패할 경우 false를 반환합니다.")
-    @ApiResponse(responseCode = "200", description = "성공")
+    @Operation(summary = "유언 열람 신청 API", description = "유언 열람을 신청합니다.")
+    @ApiResponses(value = {
+            @ApiResponse(responseCode = "true", description = "인증 성공"),
+            @ApiResponse(responseCode = "false", description = "인증 실패"),
+    })
     @PostMapping("/apply")
     public ResponseEntity<Boolean> applyWill(@Parameter(description = "유언 열람 인증 요청 DTO") @RequestBody WillApplyRequestDto willApplyRequestDto) {
         return new ResponseEntity<>(willService.applyWill(willApplyRequestDto), HttpStatus.OK);
