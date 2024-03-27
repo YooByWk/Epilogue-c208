@@ -79,7 +79,6 @@ public class AwsS3Service {
             // 묘비 사진 주소 업데이트
             User user = userRepository.findByUserId(principal.getName());
             Will will = user.getWill();
-            log.info("willSeq = {}", will.getWillSeq());
             will.updateGraveImageAddress(uniqueFileName);
 
             amazonS3.putObject(graveBucketName, uniqueFileName, file.getInputStream(), metadata);

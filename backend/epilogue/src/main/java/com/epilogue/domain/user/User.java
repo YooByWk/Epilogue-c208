@@ -66,4 +66,8 @@ public class User {
     public void updateWill(Will will) {
         this.will = will;
     }
+
+    public void updateWillNuill() {
+        this.will = null;
+    }
 }

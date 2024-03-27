@@ -30,13 +30,6 @@ public class WitnessService {
     @Transactional
     public void saveWitness(Will will, List<WitnessRequestDto> witnessList, Principal principal) {
         for (WitnessRequestDto w : witnessList) {
-            System.out.println(w.getWitnessEmail());
-            System.out.println(w.getWitnessName());
-            System.out.println(w.getWitnessMobile());
-
-        }
-
-        for (WitnessRequestDto w : witnessList) {
             Witness witness = Witness.builder()
                     .will(willRepository.findById(will.getWillSeq()).get())
                     .witnessName(w.getWitnessName())

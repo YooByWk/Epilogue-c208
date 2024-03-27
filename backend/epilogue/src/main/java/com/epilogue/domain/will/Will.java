@@ -71,7 +71,6 @@ public class Will {
     }
 
     public void updateGraveImageAddress(String graveImageAddress) {
-        log.info("graveImageAddress = {}", graveImageAddress);
         this.graveImageAddress = graveImageAddress;
     }
 
