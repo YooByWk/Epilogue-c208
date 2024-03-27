@@ -1,5 +1,7 @@
 import 'dart:async';
+import 'dart:io';
 
+import 'package:dio/dio.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
@@ -7,8 +9,11 @@ import 'package:frontend/main.dart';
 import 'package:flutter_sound/flutter_sound.dart';
 import 'package:frontend/screens/will/will_viewer_screen.dart';
 import 'package:frontend/screens/will/will_widgets.dart';
+import 'package:frontend/view_models/will_view_models/recording_viewmodel.dart';
+import 'package:path_provider/path_provider.dart';
 import 'package:permission_handler/permission_handler.dart';
 import 'package:flutter/foundation.dart' show kIsWeb;
+import 'package:provider/provider.dart';
 
 typedef _Fn = void Function();
 
@@ -83,6 +88,14 @@ class _WillRecordingScreenState extends State<WillRecordingScreen> {
     super.dispose();
   }
 
+  // 저장된 파일 불러오기
+  Future<File> getRecordedFile() async {
+    Directory cacheDir = await getTemporaryDirectory();
+    String filePath = '${cacheDir.path}/will.mp4';
+    File recordedFile = File(filePath);
+    return recordedFile;
+  }
+
   Future<void> openTheRecorder() async {
     if (!kIsWeb) {
       var status = await Permission.microphone.request();
@@ -132,18 +145,22 @@ class _WillRecordingScreenState extends State<WillRecordingScreen> {
     });
   }
 
+  File? audioFile;
 
   void stopRecorder() async {
-    await _mRecorder!.stopRecorder().then((value) {
+    await _mRecorder!.stopRecorder().then((value) async {
       setState(() {
-        //var url = value;
         _mplaybackReady = true;
       });
-    });
-    _stopwatch.reset();
-    _timer?.cancel();
-    setState(() {
-      _recordTime = '00:00';
+
+      audioFile = await getRecordedFile();
+
+      _stopwatch.reset();
+      _stopwatch.stop();
+      _timer?.cancel();
+      setState(() {
+        _recordTime = '00:00';
+      });
     });
   }
 
@@ -217,125 +234,150 @@ class _WillRecordingScreenState extends State<WillRecordingScreen> {
 
   @override
   Widget build(BuildContext context) {
-    Widget makeBody() {
-      return Column(
-        children: [
-          Center(
-            child: Column(
+    return ChangeNotifierProvider(
+        create: (context) => RecordingViewModel(),
+        child:
+            Consumer<RecordingViewModel>(builder: (context, viewModel, child) {
+          Widget makeBody() {
+            return Column(
               children: [
-                Ink(
-                  width: 100,
-                  height: 100,
-                  decoration: const ShapeDecoration(
-                    shape: CircleBorder(),
-                    color: themeColour3,
-                  ),
-                  child: _mRecorder!.isRecording
-                      ? IconButton(
-                    onPressed: getRecorderFn(),
-                    icon: const Icon(
-                      Icons.keyboard_voice_outlined,
-                      color: themeColour5,
-                      size: 50,
-                    ),
-                  )
-                      : IconButton(
-                    onPressed: getRecorderFn(),
-                    icon: const Icon(
-                      Icons.keyboard_voice,
-                      color: themeColour5,
-                      size: 50,
-                    ),
+                Center(
+                  child: Column(
+                    children: [
+                      Ink(
+                        width: 100,
+                        height: 100,
+                        decoration: const ShapeDecoration(
+                          shape: CircleBorder(),
+                          color: themeColour3,
+                        ),
+                        child: _mRecorder!.isRecording
+                            ? IconButton(
+                                onPressed: getRecorderFn(),
+                                icon: const Icon(
+                                  Icons.keyboard_voice_outlined,
+                                  color: themeColour5,
+                                  size: 50,
+                                ),
+                              )
+                            : IconButton(
+                                onPressed: getRecorderFn(),
+                                icon: const Icon(
+                                  Icons.keyboard_voice,
+                                  color: themeColour5,
+                                  size: 50,
+                                ),
+                              ),
+                      ),
+                      Text(_recordTime),
+                    ],
                   ),
                 ),
-                Text(_recordTime),
+                Center(
+                  child: _mPlayer!.isPlaying
+                      ? Column(
+                          children: [
+                            IconButton(
+                              onPressed: getPauseResumeFn(),
+                              icon: const Icon(
+                                Icons.pause_circle_filled_rounded,
+                                color: themeColour5,
+                                size: 100,
+                              ),
+                            ),
+                            Slider(
+                              value: _currentPosition,
+                              min: 0,
+                              max: _currentDuration,
+                              onChanged: (value) {
+                                // 재생 위치 조정
+                                _mPlayer!.seekToPlayer(
+                                    Duration(milliseconds: value.toInt()));
+                              },
+                            ),
+                            Row(
+                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                              children: [
+                                Text(_formatDuration(Duration(
+                                    milliseconds: _currentPosition.toInt()))),
+                                Text(_formatDuration(Duration(
+                                    milliseconds: _currentDuration.toInt()))),
+                              ],
+                            ),
+                          ],
+                        )
+                      : Column(
+                          children: [
+                            IconButton(
+                              onPressed: getPlaybackFn(),
+                              icon: const Icon(
+                                Icons.play_circle_fill_rounded,
+                                color: themeColour5,
+                                size: 100,
+                              ),
+                            ),
+                            Slider(
+                              value: _currentPosition,
+                              min: 0,
+                              max: _currentDuration,
+                              onChanged: (value) {
+                                // 재생 위치 조정
+                                _mPlayer!.seekToPlayer(
+                                    Duration(milliseconds: value.toInt()));
+                              },
+                            ),
+                            Row(
+                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                              children: [
+                                Text(_formatDuration(Duration(
+                                    milliseconds: _currentPosition.toInt()))),
+                                Text(_formatDuration(Duration(
+                                    milliseconds: _currentDuration.toInt()))),
+                              ],
+                            ),
+                          ],
+                        ),
+                ),
               ],
-            ),
-          ),
-          Center(
-            child: _mPlayer!.isPlaying
-                ? Column(
-              children: [
-                IconButton(
-                  onPressed: getPauseResumeFn(),
-                  icon: const Icon(
-                    Icons.pause_circle_filled_rounded,
-                    color: themeColour5,
-                    size: 100,
-                  ),
-                ),
-                Slider(
-                  value: _currentPosition,
-                  min: 0,
-                  max: _currentDuration,
-                  onChanged: (value) {
-                    // 재생 위치 조정
-                    _mPlayer!.seekToPlayer(
-                        Duration(milliseconds: value.toInt()));
-                  },
-                ),
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  children: [
-                    Text(_formatDuration(Duration(
-                        milliseconds: _currentPosition.toInt()))),
-                    Text(_formatDuration(Duration(
-                        milliseconds: _currentDuration.toInt()))),
-                  ],
-                ),
-              ],
-            )
-                : Column(
-              children: [
-                IconButton(
-                  onPressed: getPlaybackFn(),
-                  icon: const Icon(
-                    Icons.play_circle_fill_rounded,
-                    color: themeColour5,
-                    size: 100,
-                  ),
-                ),
-                Slider(
-                  value: _currentPosition,
-                  min: 0,
-                  max: _currentDuration,
-                  onChanged: (value) {
-                    // 재생 위치 조정
-                    _mPlayer!.seekToPlayer(
-                        Duration(milliseconds: value.toInt()));
-                  },
-                ),
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  children: [
-                    Text(_formatDuration(Duration(
-                        milliseconds: _currentPosition.toInt()))),
-                    Text(_formatDuration(Duration(
-                        milliseconds: _currentDuration.toInt()))),
-                  ],
-                ),
-              ],
-            ),
-          ),
-        ],
-      );
-    }
+            );
+          }
 
-    return Scaffold(
-      appBar: AppBar(
-        backgroundColor: themeColour2,
-        title: const Text('유언장 생성하기'),
-      ),
-      body: makeBody(),
-      bottomNavigationBar: Container(
-        width: double.infinity,
-        height: 100,
-        child: TextButtonWidget(
-          preText: '이전',
-          nextText: '기록하기',
-          nextPage: WillViewerScreen(),
-        ),
-      ),
-    );
+          return Scaffold(
+            appBar: AppBar(
+              backgroundColor: themeColour2,
+              title: const Text('유언장 생성하기'),
+            ),
+            body: makeBody(),
+            bottomNavigationBar: Container(
+              width: double.infinity,
+              height: 100,
+              child: TextButtonWidget(
+                preText: '이전',
+                nextText: '기록하기',
+                onPressed: () {
+                  viewModel.setFile(audioFile!);
+                  viewModel.setRecording().then((_) {
+                    if (viewModel.errorMessage == null) {
+                      Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                          builder: (context) => WillViewerScreen(),
+                        ),
+                      );
+                    } else {
+                      if (viewModel.errorMessage != null) {
+                        ScaffoldMessenger.of(context).showSnackBar(
+                          SnackBar(
+                            content: Text(viewModel.errorMessage!),
+                          ),
+                        );
+                      }
+                    }
+                  });
+                },
+              ),
+            ),
+          );
+        }));
   }
 }
