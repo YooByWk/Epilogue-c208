@@ -4,6 +4,7 @@ import com.epilogue.domain.user.User;
 import io.swagger.v3.oas.annotations.media.Schema;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotNull;
+import lombok.Builder;
 import lombok.Getter;
 
 import java.sql.Timestamp;
@@ -11,6 +12,7 @@ import java.util.UUID;
 
 @Entity
 @Getter
+@Builder
 @Schema(description = "디지털 추모관")
 public class Memorial {
     @Id

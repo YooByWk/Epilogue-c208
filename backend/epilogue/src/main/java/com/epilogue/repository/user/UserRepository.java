@@ -1,11 +1,15 @@
 package com.epilogue.repository.user;
 
 
+import com.epilogue.domain.memorial.Memorial;
 import com.epilogue.domain.user.User;
+import com.epilogue.domain.user.UserStatus;
 import jakarta.transaction.Transactional;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;
+
+import java.util.List;
 
 public interface UserRepository extends JpaRepository<User, Integer>, UserRepositoryCustom {
     Boolean existsByUserId(String userId);
@@ -20,4 +24,7 @@ public interface UserRepository extends JpaRepository<User, Integer>, UserReposi
     void updatePassword(String loginUserId, String password);
 
     User findByNameAndBirth(String name, String birth);
+
+    @Query("SELECT u FROM User u WHERE u.userStatus = :status")
+    List<User> findByUserStatus(UserStatus status);
 }
