@@ -81,23 +81,19 @@ public class AwsS3Service {
         }
     }
 
+    // 묘비 사진 url 불러오기
+    public String getGraveImageFromS3(String fileName) {
+        return amazonS3.getUrl(graveBucketName, fileName).toString();
+    }
+
     // 사진 업로드
     public void uploadPhoto(MultipartFile file, String uniqueFileName) {
         try {
-//            String fileName = file.getOriginalFilename();
-//            log.info("fileName = {}", fileName);
-
-//            String S3Url = "https://" + photoBucketName + "/" + uniqueFileName;
             ObjectMetadata metadata = new ObjectMetadata();
             metadata.setContentType(file.getContentType());
             metadata.setContentLength(file.getSize());
 
-            // 유언 파일 주소 업데이트
-//            User user = userRepository.findByUserId(principal.getName());
-//            willRepository.updateWillFileAddress(user.getWill().getWillSeq(), willFileAddress);
-
             amazonS3.putObject(photoBucketName, uniqueFileName, file.getInputStream(), metadata);
-
         } catch (IOException e) {
             log.info("디지털 추모관 S3에 사진 저장 실패");
             e.printStackTrace();
