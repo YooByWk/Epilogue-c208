@@ -52,7 +52,7 @@ class AuthService {
     }
   }
 
-  //////////////////////// 네이버 소셜 로그인 ////////////////////////////
+  //////////////////////// 네이버 소셜 로그인 - 미완성 ////////////////////////////
   Future<bool> naverLogin(String accessToken) async {
     try {
       Dio.Response response = await _dio.post(
@@ -62,7 +62,8 @@ class AuthService {
       if (response.statusCode == 200) {
         await _storage.write(key: 'token', value: response.data['accessToken']);
         return true;
-      } return false;
+      }
+      return false;
     } on Dio.DioException catch (e) {
       print(e);
       return false;
@@ -106,14 +107,27 @@ class AuthService {
   }
 
 /////////////////// 휴대폰 인증 ///////////////////////////////
-  Future<Map<String, dynamic>> mobileCertificationSend(String mobile) async {
+  Future<void> mobileCertificationSend(String mobile) async {
     try {
       Dio.Response response = await _dio
           .post('$baseUrl/sms-certification/send', data: {'phone': mobile});
-      return response.data;
     } on Dio.DioException catch (e) {
       debugPrint(e.toString());
-      return {'statusCode': e.response?.statusCode};
+    }
+  }
+
+  Future<bool> mobileCertificationConfirm(
+      String mobile, String certificationNumber) async {
+    try {
+      Dio.Response response =
+          await _dio.post('$baseUrl/sms-certification/confirm', data: {
+        'phone': mobile,
+        'certificationNumber': certificationNumber,
+      });
+      return response.data;  // true면 인증 성공
+    } catch (e) {
+      print(e);
+      return false;
     }
   }
 }
