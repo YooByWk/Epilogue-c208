@@ -1,6 +1,7 @@
 package com.epilogue.util;
 
 import com.epilogue.domain.user.User;
+import com.epilogue.domain.user.UserStatus;
 import com.epilogue.repository.user.UserRepository;
 import jakarta.annotation.PostConstruct;
 import lombok.RequiredArgsConstructor;
@@ -23,6 +24,7 @@ public class ProductInitializer {
                 .password(bCryptPasswordEncoder.encode("1234"))
                 .birth("980228")
                 .mobile("01012345678")
+                .userStatus(UserStatus.LIVE)
                 .build();
 
 
