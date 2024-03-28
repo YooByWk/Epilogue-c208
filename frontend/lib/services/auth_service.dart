@@ -4,6 +4,7 @@ import 'package:frontend/models/login_model.dart';
 import 'package:frontend/models/signup_model.dart';
 import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:flutter/material.dart';
+import 'package:frontend/screens/login/login_screen.dart';
 
 class AuthService {
   final _dio = Dio.Dio();
@@ -72,9 +73,10 @@ class AuthService {
     }
   }
 
-  ////////////////////////// 토큰 삭제 /////////////////////////////////
-  Future<void> delToken() async {
+  ///////////////////////// 로그아웃 /////////////////////////////////
+  Future<void> logout() async {
     await _storage.delete(key: 'token');
+    await _storage.delete(key: 'userInfo');
   }
 
   //////////////////////////// 회원가입 ///////////////////////////////
@@ -126,7 +128,7 @@ class AuthService {
         'phone': mobile,
         'certificationNumber': certificationNumber,
       });
-      return response.data;  // true면 인증 성공
+      return response.data; // true면 인증 성공
     } catch (e) {
       print(e);
       return false;
