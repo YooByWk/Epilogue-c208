@@ -1,43 +1,23 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:frontend/main.dart';
 import 'package:frontend/screens/main/main_body_screen.dart';
 import 'package:frontend/screens/memorial/memorial_main/memorial_screen.dart';
 import 'package:frontend/screens/mypage/mypage_screen.dart';
 import 'package:frontend/view_models/main_view_models/main_viewmodel.dart';
+import 'package:frontend/view_models/auth_view_models/user_viewmodel.dart';
 import 'package:provider/provider.dart';
 
 class MainScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-    // final MainViewModel viewModel = Provider.of<MainViewModel>(context);
-
-    return WillPopScope(
-      onWillPop: () async {
-                final shouldPop = await showDialog(
-          context : context,
-          builder: (context) => AlertDialog(
-            title: Text('종료하시겠습니까?'),
-            actions: [
-              TextButton(
-                onPressed: () {
-                  Navigator.of(context).pop(true);
-                },
-                child: Text('예'),
-              ),
-              TextButton(
-                onPressed: () {
-                  Navigator.of(context).pop(false);
-                },
-                child: Text('아니요'),
-              ),
-            ],
-          ),
-        );
-        return shouldPop ?? false; // 사용자의 선택이 없다면 기본값은 false
-        // return Future(() => false);
-      },
-      child: ChangeNotifierProvider(
-          create: (context) => MainViewModel(),
+    return PopScope(
+      canPop: false,
+      child: MultiProvider(
+        providers: [
+          ChangeNotifierProvider(create: (context) => MainViewModel()),
+          ChangeNotifierProvider(create: (context) => UserViewModel()),
+        ],
           child: Consumer<MainViewModel>(builder: (context, viewModel, child) {
             return Scaffold(
               body: IndexedStack(

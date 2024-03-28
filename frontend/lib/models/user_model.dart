@@ -3,12 +3,14 @@ class UserModel {
   final String name;
   final String mobile;
   final String birth;
+  final String? role;
 
   UserModel({
     required this.userId,
     required this.name,
     required this.mobile,
     required this.birth,
+    this.role,
   });
 
   UserModel copyWith({
@@ -32,6 +34,7 @@ class UserModel {
       name: json['name'],
       mobile: json['mobile'],
       birth: json['birth'],
+      role: json['role'],
     );
   }
 
@@ -42,6 +45,7 @@ class UserModel {
       'name': this.name,
       'mobile': this.mobile,
       'birth': this.birth,
+      'role': this.role,
     };
   }
 }
