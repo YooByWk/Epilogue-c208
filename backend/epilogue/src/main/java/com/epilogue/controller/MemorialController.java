@@ -153,11 +153,11 @@ public class MemorialController {
         }
     }
 
-//    @GetMapping("/search/{searchWord}")
-//    @ApiResponse(responseCode = "200", description = "성공")
-//    public ResponseEntity<List<GraveDto>> viewSearchedMemorialList(@Parameter(description = "검색어") @PathVariable String searchWord) {
-//        memorialService.viewSearchedMemorialList();
-//        return new ResponseEntity<>();
-//    }
+    @GetMapping("/search/{searchWord}")
+    @ApiResponse(responseCode = "200", description = "성공")
+    public ResponseEntity<List<GraveDto>> viewSearchedMemorialList(@Parameter(description = "검색어(고인이름 or 묘비명)") @PathVariable String searchWord) {
+        List<GraveDto> graveDtoList = memorialService.viewSearchedMemorialList(searchWord);
+        return new ResponseEntity<>(graveDtoList, HttpStatus.OK);
+    }
 
 }
