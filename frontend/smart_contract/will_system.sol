@@ -62,12 +62,16 @@ contract WillSystem {
     
     // 내 유언 조회
     function MyWill() public view returns (Will memory) {
+        require(bytes(addressToWill[msg.sender].userId).length != 0, unicode"유언이 존재하지 않습니다.");
         return addressToWill[msg.sender];
     }
     // 내 유언 이력 조회
-
+    function MyWillLogs(string memory _userId) public view returns(Will[] memory) {
+        require((userIdToWills[_userId]).length > 0, unicode"기록없음");
+        return userIdToWills[_userId];
+    }
     // 열람인 유언 조회
-
+    
     // 유언 유효성 조회
     
 }
