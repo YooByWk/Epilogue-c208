@@ -166,18 +166,4 @@ public class MemorialController {
         }
     }
 
-//    @GetMapping("/search/{searchWord}")
-//    @ApiResponse(responseCode = "200", description = "성공")
-//    public ResponseEntity<List<GraveDto>> viewSearchedMemorialList(@Parameter(description = "검색어(고인이름 or 묘비명)") @PathVariable String searchWord) {
-//        List<GraveDto> graveDtoList = memorialService.viewSearchedMemorialList(searchWord);
-//        return new ResponseEntity<>(graveDtoList, HttpStatus.OK);
-//    }
-
-    @PostMapping("사람이름으로 검색")
-    @ApiResponse(responseCode = "200", description = "성공")
-    public ResponseEntity<List<GraveDto>> findByName(@Parameter(description = "검색할 이름 요청 DTO") @RequestBody NameRequestDto nameRequestDto) {
-        List<GraveDto> findMemorials = memorialService.findMemorialByUserName(nameRequestDto);
-        return new ResponseEntity<>(findMemorials, HttpStatus.OK);
-
-    }
 }

@@ -11,5 +11,5 @@ public interface WitnessRepository extends JpaRepository<Witness, Integer> {
     @Transactional
     void deleteAllByWillWillSeq(int willSeq);
 
-    List<Witness> findAllByWillSeq(int willSeq);
+    List<Witness> findAllByWillWillSeq(int willSeq);
 }

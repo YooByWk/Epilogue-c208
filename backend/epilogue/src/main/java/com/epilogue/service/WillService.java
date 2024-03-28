@@ -57,7 +57,7 @@ public class WillService {
 
     public void sendWillApplyLink(Principal principal) {
         User user = userRepository.findByUserId(principal.getName());
-        List<Witness> witnessList = witnessRepository.findAllByWillSeq(user.getWill().getWillSeq());
+        List<Witness> witnessList = witnessRepository.findAllByWillWillSeq(user.getWill().getWillSeq());
 
         // 휴대폰 문자로 유언 열람 신청 링크 및 인증코드 전송
         for (Witness w : witnessList) {
