@@ -14,10 +14,6 @@ public interface MemorialRepository extends JpaRepository<Memorial, Integer>, Me
     @Query("SELECT m FROM Memorial m WHERE m.goneDate <= FUNCTION('TO_DATE', :dateStr, 'yyyy.MM.dd')")
     List<Memorial> findMemorialsOlderThanDate(String dateStr);
 
-//    List<Memorial> findByUserNameLike(String keyword);
-
-//    List<Memorial> findByUserNameIsContaining(String keyword);
-
     @Query("""
             SELECT m FROM Memorial m
             WHERE

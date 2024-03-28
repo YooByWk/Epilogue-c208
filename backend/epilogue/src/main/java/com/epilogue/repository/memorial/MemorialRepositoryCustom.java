@@ -12,6 +12,4 @@ public interface MemorialRepositoryCustom {
 
     public List<Memorial> findAllByDate();
 
-//    public List<Memorial> findBySearchWord(String searchWord);
-
 }
