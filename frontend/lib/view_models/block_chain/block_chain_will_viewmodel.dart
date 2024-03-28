@@ -40,9 +40,6 @@ Future<void> createAudioHash() async {
       hash: hash.toString().toUpperCase())); // Convert hash to uppercase
 }
 
-
-  
-
 Future<void> checkHash() async {
   FilePickerResult? downloadResult = await FilePicker.platform.pickFiles();
 
