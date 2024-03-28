@@ -17,12 +17,12 @@ public class EmailUtil {
 
     private final String SUBJECT = "[E:pilogue] 유언 열람 신청 메일입니다.";
 
-    public boolean sendWillApplyLink(String email, String name, String witnessCode) {
+    public boolean sendWillApplyLink(String email, String name, String willCode) {
         try {
             MimeMessage message = javaMailSender.createMimeMessage();
             MimeMessageHelper messageHelper = new MimeMessageHelper(message, true);
 
-            String htmlContent = getWillApplyMessage(name, witnessCode);
+            String htmlContent = getWillApplyMessage(name, willCode);
 
             messageHelper.setTo(email);
             messageHelper.setSubject(SUBJECT);
@@ -37,11 +37,11 @@ public class EmailUtil {
         return true;
     }
 
-    private String getWillApplyMessage(String name, String witnessCode) {
+    private String getWillApplyMessage(String name, String willCode) {
         String certificationMessage = "";
         certificationMessage += "<h1 style='text-align: center;'>[E:pilogue] 유언 열람 신청";
         certificationMessage += "<h3 style='text-align: center;'>" + name + "님의 유언 열람을 신청할 수 있습니다.<br>" + "유언 열람 신청 전, 사망진단서와 아래의 인증코드를 미리 준비해주세요.<br>" +
-                "유언 열람 신청 링크 : http://j10c208.p.ssafy.io/<br>인증코드 : " + witnessCode + "</h3>";
+                "유언 열람 신청 링크 : http://j10c208.p.ssafy.io/<br>인증코드 : " + willCode + "</h3>";
         return certificationMessage;
     }
 }
