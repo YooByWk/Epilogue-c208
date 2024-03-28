@@ -1,5 +1,8 @@
 import 'dart:io';
 import 'package:flutter/material.dart';
+import 'package:flutter_secure_storage/flutter_secure_storage.dart';
+import 'package:frontend/services/user_service.dart';
+import 'package:frontend/view_models/auth_view_models/user_viewmodel.dart';
 import 'package:web3dart/web3dart.dart';
 import 'package:crypto/crypto.dart';
 import 'package:provider/provider.dart';
@@ -67,4 +70,30 @@ Future<void> checkHash() async {
     debugPrint('User canceled the picker');
   }
 }
+}
+
+
+class BlockChainWillViewModel extends ChangeNotifier {
+  final BlockChainWillModel _model = BlockChainWillModel();
+  final storage = FlutterSecureStorage();
+  final UserViewModel _userViewModel = UserViewModel();
+  late Future<String> userId;
+  BlockChainWillViewModel() {
+    userId =  _userViewModel.fetchUserId();
+  }
+
+  Future<String> get pk => _model.pk;
+  Future<String> get address => _model.address;
+  Future<String> get ABI => _model.ABI;
+  
+  Future sendTransaction(String functionName, List<dynamic> params) async {
+    print('createWill() called');
+    print(userId);
+    print(pk);
+    print(address);
+    print(ABI);
+    final res = await _model.sendTransaction(functionName, params);
+    debugPrint(res);
+
+  }
 }

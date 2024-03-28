@@ -6,9 +6,12 @@ import 'package:frontend/view_models/block_chain/block_chain_viewmodel.dart';
 import 'package:frontend/view_models/block_chain/block_chain_wallet_viewmodel.dart';
 import 'package:frontend/models/block_chain_wallet_model.dart'; 
 import 'package:frontend/view_models/block_chain/block_chain_will_viewmodel.dart';
+import 'package:frontend/models/block_chain_will_model.dart';
+
 
 final walletViewModel = BlockChainWalletViewModel(BlockChainWalletModel());
 final audioHashViewModel = AudioHashViewModel();
+final willViewmodel = BlockChainWillViewModel();
 class BlockChainTest extends StatelessWidget {
   const BlockChainTest({Key? key}) : super(key: key);
   @override
@@ -32,9 +35,21 @@ class BlockChainTest extends StatelessWidget {
                       },
                       child: Text('컨트랙트 배포'),
                     ),
+                    ElevatedButton(
+                      onPressed: () async {    
+                        final response = await willViewmodel.sendTransaction('createWill', [willViewmodel.userId,'testHash']);
+                        debugPrint('컨트랙트 배포 결과: $response');
+                      },
+                      child: Text('꾸욱 배포'),
+                    ),
                     Text('값: ${viewModel.num}'),
                     TextFormField(
                       decoration: InputDecoration(labelText: '값 입력'),
+                      onChanged: (value) {viewModel.setNum(int.parse(value));
+                      debugPrint('입력값: $value');}
+                    ),
+                    TextFormField(
+                      decoration: InputDecoration(labelText: '유언써보기'),
                       onChanged: (value) {viewModel.setNum(int.parse(value));
                       debugPrint('입력값: $value');}
                     ),
