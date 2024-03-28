@@ -50,13 +50,6 @@ public class User {
     @Enumerated(EnumType.STRING)
     private UserStatus userStatus;
 
-    @Schema(description = "리프레시 토큰")
-    private String refreshToken;
-
-    public void updateRefreshToken(String refreshToken) {
-        this.refreshToken = refreshToken;
-    }
-
     public void updateUserInfo(String name, String mobile) {
         this.name = name;
         this.mobile = mobile;

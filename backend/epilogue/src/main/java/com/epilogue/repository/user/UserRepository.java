@@ -11,12 +11,10 @@ import org.springframework.data.jpa.repository.Query;
 
 import java.util.List;
 
-public interface UserRepository extends JpaRepository<User, Integer>, UserRepositoryCustom {
+public interface UserRepository extends JpaRepository<User, Integer> {
     Boolean existsByUserId(String userId);
 
     User findByUserId(String userId);
-
-    User findByUserSeq(int userSeq);
 
     @Query("UPDATE User u SET u.password = :password WHERE u.userId = :loginUserId")
     @Transactional
@@ -28,5 +26,4 @@ public interface UserRepository extends JpaRepository<User, Integer>, UserReposi
     @Query("SELECT u FROM User u WHERE u.userStatus = :status")
     List<User> findByUserStatus(UserStatus status);
 
-    User findByName(String name);
 }
