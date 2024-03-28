@@ -1,8 +1,8 @@
-import 'package:dio/dio.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:frontend/models/login_model.dart';
 import 'package:frontend/services/auth_service.dart';
+import 'package:flutter_naver_login/flutter_naver_login.dart';
 
 class LoginViewModel extends ChangeNotifier {
   final AuthService _authService = AuthService();
@@ -11,11 +11,17 @@ class LoginViewModel extends ChangeNotifier {
   bool _isFocused = false;
   bool _isLoading = false;
   String? _errorMessage;
+  bool _isLoginSuccess = false;
+  // 네이버 로그인 정보
+  String? accessToken;
+  String? tokenType;
+  String? refreshToken;
 
   String get password => _loginData.password;
   bool get isFocused => _isFocused;
   bool get isLoading => _isLoading;
   String? get errorMessage => _errorMessage;
+  bool get isLoginSuccess => _isLoginSuccess;
 
   void setUsername(String value) {
     _loginData = LoginModel(username: value, password: _loginData.password);
@@ -60,5 +66,42 @@ class LoginViewModel extends ChangeNotifier {
       _errorMessage = null;
     }
     notifyListeners();
+  }
+
+  ///// 네이버 소셜 로그인
+  Future<void> loginWithNaver() async {
+    _isLoginSuccess = false;
+    try {
+      final NaverLoginResult user = await FlutterNaverLogin.logIn();
+      final NaverAccessToken res = await FlutterNaverLogin.currentAccessToken;
+
+      accessToken = res.accessToken;
+      tokenType = res.tokenType;
+      refreshToken = res.refreshToken;
+
+      String id = user.account.id;
+      String name = user.account.name;
+      String mobile = user.account.mobile
+      .replaceAll('+82', '0')
+          .replaceAll('-', '')
+          .replaceAll(' ', '')
+          .replaceAll('+', '');
+      String birth = '${user.account.birthyear}${user.account.birthday}';
+      notifyListeners();
+      debugPrint(res.toString());
+      debugPrint(res.accessToken);
+
+      if (user.status == NaverLoginStatus.loggedIn) {
+        _isLoginSuccess = await _authService.naverLogin(res.accessToken);
+        if (_isLoginSuccess) {
+          print('네이버 로그인 성공');
+          debugPrint('accessToken = ${user.accessToken}');
+        } else {
+          print('네이버 로그인 실패');
+        }
+      }
+    } catch (e) {
+      debugPrint(e.toString());
+    }
   }
 }

@@ -35,7 +35,8 @@
     <application
         android:label="E:pilogue"
         android:name="${applicationName}"
-        android:icon="@mipmap/launcher_icon">
+        android:icon="@mipmap/launcher_icon"
+        android:usesCleartextTraffic="true">
         <activity
             android:name=".MainActivity"
             android:exported="true"
@@ -52,6 +53,17 @@
               android:name="io.flutter.embedding.android.NormalTheme"
               android:resource="@style/NormalTheme"
               />
+            <!-- 네이버 로그인 관련 -->
+            <meta-data
+                android:name="com.naver.sdk.clientId"
+                android:value="@string/client_id" />
+            <meta-data
+                android:name="com.naver.sdk.clientSecret"
+                android:value="@string/client_secret" />
+            <meta-data
+                android:name="com.naver.sdk.clientName"
+                android:value="@string/client_name" />
+            <!-- 네이버 로그인 관련 -->
             <intent-filter>
                 <action android:name="android.intent.action.MAIN"/>
                 <category android:name="android.intent.category.LAUNCHER"/>

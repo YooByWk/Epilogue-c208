@@ -57,6 +57,7 @@ dependencies:
   path_provider: ^2.1.2 # 파일 저장 / 불러오기
   file_picker: ^8.0.0+1
   flutter_widget_to_image: ^0.0.1
+  flutter_naver_login: ^1.8.0 # 네이버 소셜 로그인
 
 dev_dependencies:
   flutter_test:
