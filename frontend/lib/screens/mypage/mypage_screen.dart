@@ -1,39 +1,45 @@
 import 'package:flutter/material.dart';
 import 'package:frontend/main.dart';
-import 'package:frontend/screens/login/login_screen.dart';
+
 import 'package:frontend/screens/mypage/mypage_modify_info_screen.dart';
 import 'package:frontend/screens/mypage/mypage_will_more_screen.dart';
+import 'package:frontend/view_models/auth_view_models/user_viewmodel.dart';
 import 'package:frontend/widgets/common_button.dart';
 import 'package:frontend/widgets/common_text_widget.dart';
 import 'package:frontend/widgets/pin_memorial_widget.dart';
+import 'package:provider/provider.dart';
+import 'package:frontend/screens/login/login_screen.dart';
 
 class MypageScreen extends StatelessWidget {
-  const MypageScreen({super.key});
-
-  /////// 나중에 수정 필요 //////////////
-
-
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        title: CommonText(
-          text: '내 공간',
-          isBold: true,
-          fontSize: 40,
+        appBar: AppBar(
+          title: CommonText(
+            text: '내 공간',
+            isBold: true,
+            fontSize: 40,
+          ),
+          automaticallyImplyLeading: false,
         ),
-        automaticallyImplyLeading: false,
-      ),
-      body: Container(
-        child: SingleChildScrollView(
-          child: Column(
+        body: Consumer<UserViewModel>(builder: (context, viewModel, child) {
+          if (viewModel.isLoading) {
+            return Center(child: CircularProgressIndicator());
+          } else if (viewModel.errorMessage != null) {
+            return Center(child: Text(viewModel.errorMessage!));
+          } else if (viewModel.user == null) {
+            return Center(child: Text('사용자 정보를 불러올 수 없습니다.'));
+          }
+          final user = viewModel.user!;
+          return SingleChildScrollView(
+              child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               Row(
                 mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                 children: [
                   CommonText(
-                    text: 'username 님',
+                    text: '${user.name}님',
                     fontSize: 30,
                     isBold: true,
                   ),
@@ -44,16 +50,21 @@ class MypageScreen extends StatelessWidget {
                         Navigator.push(
                             context,
                             MaterialPageRoute(
-                                builder: (context) =>
-                                    MypageModifyInfoScreen()));
+                                builder: (context) => Provider<UserViewModel>(
+                                      create: (context) => UserViewModel(),
+                                      child: MypageModifyInfoScreen(),
+                                    )));
                       }),
                   CommonButtonWidget(
                       text: '로그아웃',
                       width: 100,
                       backgroundColor: themeColour3,
-                      onPressed: () {
-                        //////// ~~~~~~ 수정 해야 함~~~~ /////////
-                        Navigator.push(context, MaterialPageRoute(builder: (builder) => LoginScreen()));
+                      onPressed: () async {
+                        await viewModel.logout();
+                        Navigator.pushAndRemoveUntil(
+                            context,
+                            MaterialPageRoute(builder: (context) => LoginScreen()),
+                                (Route<dynamic> route) => false);
                       }),
                 ],
               ),
@@ -96,9 +107,7 @@ class MypageScreen extends StatelessWidget {
                 ),
               )
             ],
-          ),
-        ),
-      ),
-    );
+          ));
+        }));
   }
 }

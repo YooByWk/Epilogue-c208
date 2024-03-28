@@ -4,6 +4,7 @@ import 'package:frontend/models/login_model.dart';
 import 'package:frontend/models/signup_model.dart';
 import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:flutter/material.dart';
+import 'package:frontend/screens/login/login_screen.dart';
 
 class AuthService {
   final _dio = Dio.Dio();
@@ -17,7 +18,7 @@ class AuthService {
         String? token = await _storage.read(key: 'token');
         if (token != null) {
           // 요청 헤더에 토큰을 추가한다
-          options.headers['Authorization'] = 'Bearer $token';
+          options.headers['Access_Token'] = token;
         }
         return handler.next(options); // 요청을 계속 진행한다
       },
@@ -36,6 +37,8 @@ class AuthService {
 
       if (response.statusCode == 200) {
         String? token = response.headers.value('Access_Token');
+        debugPrint('토큰값: $token');
+
         if (token != null) {
           _storage.deleteAll(); // 기존 토큰 삭제
           await _storage.write(key: 'token', value: token);
@@ -70,9 +73,10 @@ class AuthService {
     }
   }
 
-  ////////////////////////// 토큰 삭제 /////////////////////////////////
-  Future<void> delToken() async {
+  ///////////////////////// 로그아웃 /////////////////////////////////
+  Future<void> logout() async {
     await _storage.delete(key: 'token');
+    await _storage.delete(key: 'userInfo');
   }
 
   //////////////////////////// 회원가입 ///////////////////////////////
@@ -124,7 +128,7 @@ class AuthService {
         'phone': mobile,
         'certificationNumber': certificationNumber,
       });
-      return response.data;  // true면 인증 성공
+      return response.data; // true면 인증 성공
     } catch (e) {
       print(e);
       return false;
@@ -137,6 +141,7 @@ class LoggingInterceptor extends Dio.Interceptor {
   void onRequest(
       Dio.RequestOptions options, Dio.RequestInterceptorHandler handler) {
     debugPrint("REQUEST[${options.method}] => PATH: ${options.path}");
+    debugPrint("Request Header: ${options.headers}");
     super.onRequest(options, handler);
   }
 

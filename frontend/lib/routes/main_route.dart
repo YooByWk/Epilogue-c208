@@ -1,12 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:frontend/screens/block_chain_test.dart';
 import 'package:frontend/screens/login/login_screen.dart';
-import 'package:frontend/screens/login/mnemonic_screen.dart';
+import 'package:frontend/screens/login/mnemonic_recovery_screen.dart';
 import 'package:frontend/screens/memorial/memorial_detail/memorial_detail_screen.dart';
 import 'package:frontend/screens/memorial/memorial_main/memorial_screen.dart';
 import 'package:frontend/screens/main/main_screen.dart';
 import 'package:frontend/screens/letter/letter_screen.dart';
-
+import 'package:frontend/screens/signup/mnemonic_show_screen.dart'; 
 final Map<String, WidgetBuilder> mainRoutes = {
   '/login': (context) => LoginScreen(),
   '/memorial': (context) => MemorialScreen(),
@@ -37,7 +37,14 @@ Route<dynamic> generateMainRoute(RouteSettings settings) {
       return MaterialPageRoute(builder: (context) => BlockChainTest());
 
     case '/mnemonic':
-      return MaterialPageRoute(builder: (context) => MnemonicScreen());
+      // return MaterialPageRoute(builder: (context) => MnemonicShowScreen());
+
+      return MaterialPageRoute(builder: (context) => MnemonicRecoveryScreen());
+
+    case '/myMnemonic':
+      return MaterialPageRoute(builder: (context) => MnemonicShowScreen());
+      // return MaterialPageRoute(builder: (context) => MnemonicRecoveryScreen());
+
     default:
       debugPrint('Route Error');
       return MaterialPageRoute(builder: (context) => LoginScreen());

@@ -3,7 +3,7 @@ import 'package:frontend/models/block_chain_wallet_model.dart';
 import 'package:frontend/view_models/block_chain/block_chain_wallet_viewmodel.dart';
 import 'package:provider/provider.dart';
 
-class MnemonicScreen extends StatelessWidget {
+class MnemonicRecoveryScreen extends StatelessWidget {
   final focusNodes = List.generate(12, (index) => FocusNode());
 
   @override
@@ -16,7 +16,7 @@ class MnemonicScreen extends StatelessWidget {
             title: Text('유언장 복구'),
           ),
           body: Padding(
-            padding: const EdgeInsets.only(top: 30.0), // 원하는 공백 크기로 조정
+            padding: const EdgeInsets.only(top: 30.0), 
             child: GridView.builder(
               padding: const EdgeInsets.all(8.0),
               gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(

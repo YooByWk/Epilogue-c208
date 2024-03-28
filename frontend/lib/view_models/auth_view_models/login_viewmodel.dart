@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:frontend/models/login_model.dart';
 import 'package:frontend/services/auth_service.dart';
 import 'package:flutter_naver_login/flutter_naver_login.dart';
+import 'package:frontend/screens/login/login_screen.dart';
 
 class LoginViewModel extends ChangeNotifier {
   final AuthService _authService = AuthService();
@@ -12,15 +13,20 @@ class LoginViewModel extends ChangeNotifier {
   bool _isLoading = false;
   String? _errorMessage;
   bool _isLoginSuccess = false;
+
   // 네이버 로그인 정보
   String? accessToken;
   String? tokenType;
   String? refreshToken;
 
   String get password => _loginData.password;
+
   bool get isFocused => _isFocused;
+
   bool get isLoading => _isLoading;
+
   String? get errorMessage => _errorMessage;
+
   bool get isLoginSuccess => _isLoginSuccess;
 
   void setUsername(String value) {
@@ -39,7 +45,7 @@ class LoginViewModel extends ChangeNotifier {
     notifyListeners();
   }
 
-/////////////////////////////////////////////
+///////////////////////////////////////////// 로그인
   Future<void> login() async {
     _isLoading = true;
     _errorMessage = null;
@@ -82,7 +88,7 @@ class LoginViewModel extends ChangeNotifier {
       String id = user.account.id;
       String name = user.account.name;
       String mobile = user.account.mobile
-      .replaceAll('+82', '0')
+          .replaceAll('+82', '0')
           .replaceAll('-', '')
           .replaceAll(' ', '')
           .replaceAll('+', '');
