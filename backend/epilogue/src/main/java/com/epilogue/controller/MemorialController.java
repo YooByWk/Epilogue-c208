@@ -3,7 +3,7 @@ package com.epilogue.controller;
 import com.amazonaws.Response;
 import com.epilogue.domain.memorial.Memorial;
 import com.epilogue.domain.memorial.MemorialLetter;
-import com.epilogue.dto.request.memorial.GraveNameRequestDto;
+import com.epilogue.dto.request.SearchRequestDto;
 import com.epilogue.dto.request.memorial.MemorialLetterRequestDto;
 import com.epilogue.dto.request.memorial.MemorialMediaRequestDto;
 import com.epilogue.dto.response.memorial.*;
@@ -164,6 +164,13 @@ public class MemorialController {
         } else {
             return new ResponseEntity<>(HttpStatus.FORBIDDEN);
         }
+    }
+
+    @PostMapping("/search")
+    @ApiResponse(responseCode = "200", description = "성공")
+    public ResponseEntity<List<GraveDto>> getSearchMemorialList(@Parameter(description = "검색어(고인이름 or 묘비명)") @RequestBody SearchRequestDto searchRequestDto) {
+        List<GraveDto> graveDtoList = memorialService.searchedMemorialList(searchRequestDto);
+        return new ResponseEntity<>(graveDtoList, HttpStatus.OK);
     }
 
 }
