@@ -5,7 +5,6 @@ import com.epilogue.domain.user.User;
 import com.epilogue.dto.request.SearchRequestDto;
 import com.epilogue.dto.request.memorial.MemorialLetterRequestDto;
 import com.epilogue.dto.request.memorial.MemorialMediaRequestDto;
-import com.epilogue.dto.request.memorial.NameRequestDto;
 import com.epilogue.dto.response.memorial.*;
 import com.epilogue.repository.memorial.MemorialRepository;
 import com.epilogue.repository.memorial.favorite.FavoriteRepository;
@@ -19,7 +18,6 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.multipart.MultipartFile;
 
-import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.*;
 

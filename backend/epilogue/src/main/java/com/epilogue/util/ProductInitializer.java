@@ -5,20 +5,18 @@ import com.epilogue.domain.user.User;
 import com.epilogue.domain.user.UserStatus;
 import com.epilogue.repository.memorial.MemorialRepository;
 import com.epilogue.repository.user.UserRepository;
-import com.epilogue.service.MemorialService;
 import jakarta.annotation.PostConstruct;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Component;
 
-//@Component
+@Component
 @RequiredArgsConstructor
 public class ProductInitializer {
 
     private final UserRepository userRepository;
     private final MemorialRepository memorialRepository;
     private final BCryptPasswordEncoder bCryptPasswordEncoder;
-    private final MemorialRepository memorialRepository;
 
     @PostConstruct
     public void init() {
@@ -38,15 +36,6 @@ public class ProductInitializer {
                 .password(bCryptPasswordEncoder.encode("1234"))
                 .birth("000921")
                 .mobile("01022222222")
-                .userStatus(UserStatus.LIVE)
-                .build();
-
-        User user2 = User.builder()
-                .name("한재현2")
-                .userId("ssafy2")
-                .password(bCryptPasswordEncoder.encode("1234"))
-                .birth("980228")
-                .mobile("01012345678")
                 .userStatus(UserStatus.LIVE)
                 .build();
 
@@ -81,20 +70,6 @@ public class ProductInitializer {
                 .goneDate("2024.01.01")
                 .graveName("유나")
                 .graveImg("img1")
-                .build();
-
-        Memorial memorial1 = Memorial.builder()
-                .user(user1)
-                .goneDate("2024-01-01")
-                .graveName("jaehyeon")
-                .graveImg("11")
-                .build();
-
-        Memorial memorial2 = Memorial.builder()
-                .user(user2)
-                .goneDate("2024-02-02")
-                .graveName("yuna")
-                .graveImg("22")
                 .build();
 
         // 더미 데이터 저장
