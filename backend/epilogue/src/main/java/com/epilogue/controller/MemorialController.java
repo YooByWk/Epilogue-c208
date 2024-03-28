@@ -1,13 +1,13 @@
 package com.epilogue.controller;
 
 import com.amazonaws.Response;
+import com.epilogue.domain.memorial.Memorial;
 import com.epilogue.domain.memorial.MemorialLetter;
+import com.epilogue.dto.request.memorial.GraveNameRequestDto;
 import com.epilogue.dto.request.memorial.MemorialLetterRequestDto;
 import com.epilogue.dto.request.memorial.MemorialMediaRequestDto;
-import com.epilogue.dto.response.memorial.GraveResponseDto;
-import com.epilogue.dto.response.memorial.MemorialLetterDto;
-import com.epilogue.dto.response.memorial.MemorialMediaResponseDto;
-import com.epilogue.dto.response.memorial.MemorialResponseDto;
+import com.epilogue.dto.request.memorial.NameRequestDto;
+import com.epilogue.dto.response.memorial.*;
 import com.epilogue.service.MemorialService;
 import io.lettuce.core.dynamic.annotation.Param;
 import io.swagger.v3.oas.annotations.Parameter;
@@ -39,7 +39,7 @@ public class MemorialController {
     public ResponseEntity<MemorialResponseDto> ViewMemorialList(Principal principal) {
         MemorialResponseDto memorialResponseDto = new MemorialResponseDto();
 
-        if(principal != null) { // 회원
+        if (principal != null) { // 회원
             String loginUserId = principal.getName();
             memorialResponseDto = memorialService.viewMemorialListByMember(loginUserId);
         } else { // 비회원
@@ -61,7 +61,7 @@ public class MemorialController {
     @ApiResponse(responseCode = "400", description = "파일명 또는 파일 확장자 에러")
     @ApiResponse(responseCode = "403", description = "로그인 에러")
     public ResponseEntity<Void> saveMedia(@Parameter(description = "디지털 추모관 식별키") @PathVariable int memorialSeq, @RequestPart(value = "multipartFile", required = true) MultipartFile multipartFile, @RequestPart(value = "memorialMediaRequestDto") MemorialMediaRequestDto memorialMediaRequestDto, Principal principal) throws Exception {
-        if(principal != null) {
+        if (principal != null) {
             String loginUserId = principal.getName();
 
             log.info("============================================");
@@ -70,7 +70,7 @@ public class MemorialController {
             // url 형식 검사
             String[] urlCheck = multipartFile.getOriginalFilename().split("\\.");
             log.info("url = {}", urlCheck[0] + " " + urlCheck[1]);
-            if(urlCheck.length > 2) {
+            if (urlCheck.length > 2) {
                 log.error("{ error = 파일명에 .을 사용할 수 없습니다. }");
                 return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
             }
@@ -108,7 +108,7 @@ public class MemorialController {
     @ApiResponse(responseCode = "200", description = "성공")
     @ApiResponse(responseCode = "403", description = "로그인 에러")
     public ResponseEntity<Integer> createMemorialLetter(@Parameter(description = "디지털 추모관 식별키") @PathVariable int memorialSeq, @Parameter(description = "추모관 편지 요청 DTO") @RequestBody MemorialLetterRequestDto memorialLetterRequestDto, Principal principal) {
-        if(principal != null) {
+        if (principal != null) {
             memorialService.createMemorialLetter(memorialSeq, memorialLetterRequestDto);
             return new ResponseEntity<>(memorialSeq, HttpStatus.OK);
         } else {
@@ -116,5 +116,18 @@ public class MemorialController {
         }
     }
 
+    @PostMapping("/묘지명으로 검색")
+    @ApiResponse(responseCode = "200", description = "성공")
+    public ResponseEntity<List<GraveDto>> findByGraveName(@Parameter(description = "검색할 묘비명 DTO") @RequestBody GraveNameRequestDto graveNameRequestDto) {
+        List<GraveDto> findMemorials = memorialService.findMemorialByGraveName(graveNameRequestDto);
+        return new ResponseEntity<>(findMemorials, HttpStatus.OK);
+    }
 
+    @PostMapping("사람이름으로 검색")
+    @ApiResponse(responseCode = "200", description = "성공")
+    public ResponseEntity<List<GraveDto>> findByName(@Parameter(description = "검색할 이름 요청 DTO") @RequestBody NameRequestDto nameRequestDto) {
+        List<GraveDto> findMemorials = memorialService.findMemorialByUserName(nameRequestDto);
+        return new ResponseEntity<>(findMemorials, HttpStatus.OK);
+
+    }
 }
