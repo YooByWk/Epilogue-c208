@@ -1,6 +1,7 @@
 package com.epilogue.repository.memorial;
 
 import com.epilogue.domain.memorial.Memorial;
+import com.epilogue.domain.user.User;
 import jakarta.transaction.Transactional;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;

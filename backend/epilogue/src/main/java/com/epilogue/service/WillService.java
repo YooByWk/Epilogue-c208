@@ -10,7 +10,8 @@ import com.epilogue.repository.user.UserRepository;
 import com.epilogue.repository.viewer.ViewerRepository;
 import com.epilogue.repository.will.WillRepository;
 import com.epilogue.repository.witness.WitnessRepository;
-import jakarta.persistence.EntityManager;
+import com.epilogue.util.EmailUtil;
+import com.epilogue.util.SmsCertificationUtil;
 import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -19,6 +20,7 @@ import org.springframework.stereotype.Service;
 import java.io.UnsupportedEncodingException;
 import java.net.MalformedURLException;
 import java.security.Principal;
+import java.util.List;
 
 @Slf4j
 @Service
@@ -29,7 +31,9 @@ public class WillService {
     private final WitnessRepository witnessRepository;
     private final AwsS3Service awsS3Service;
     private final ViewerRepository viewerRepository;
-    private final EntityManager entityManager;
+
+    private final SmsCertificationUtil smsUtil;
+    private final EmailUtil emailUtil;
 
     public void saveWill(Will will) {
         willRepository.save(will);
@@ -49,6 +53,23 @@ public class WillService {
         Will will = willRepository.findById(user.getWill().getWillSeq()).get();
 
         will.updateAdditionalInformation(willAdditionalRequestDto.getSustainCare(), willAdditionalRequestDto.getFuneralType(), willAdditionalRequestDto.getGraveType(), willAdditionalRequestDto.getOrganDonation());
+    }
+
+    public void sendWillApplyLink(Principal principal) {
+        User user = userRepository.findByUserId(principal.getName());
+        List<Witness> witnessList = witnessRepository.findAllByWillWillSeq(user.getWill().getWillSeq());
+
+        // 휴대폰 문자로 유언 열람 신청 링크 및 인증코드 전송
+        for (Witness w : witnessList) {
+            if (w.getWitnessMobile() == null) continue;
+            smsUtil.sendWillApplyLink(w.getWitnessMobile(), user.getName(), w.getWitnessCode());
+        }
+
+        // 이메일로 유언 열람 신청 링크 및 인증코드 전송
+        for (Witness w : witnessList) {
+            if (w.getWitnessEmail() == null) continue;
+            emailUtil.sendWillApplyLink(w.getWitnessEmail(), user.getName(), w.getWitnessCode());
+        }
     }
 
     public String viewMyWill(Principal principal) {

@@ -5,6 +5,7 @@ import com.epilogue.domain.user.User;
 import com.epilogue.dto.request.SearchRequestDto;
 import com.epilogue.dto.request.memorial.MemorialLetterRequestDto;
 import com.epilogue.dto.request.memorial.MemorialMediaRequestDto;
+import com.epilogue.dto.request.memorial.NameRequestDto;
 import com.epilogue.dto.response.memorial.*;
 import com.epilogue.repository.memorial.MemorialRepository;
 import com.epilogue.repository.memorial.favorite.FavoriteRepository;
@@ -47,7 +48,14 @@ public class MemorialService {
         int loginUserSeq = loginUser.getUserSeq();
         List<Favorite> favorites = favoriteRepository.findListById(loginUserSeq); // 내가 즐겨찾기 한 목록
         for (Favorite favorite : favorites) {
-            GraveDto graveDto = GraveDto.builder().graveSeq(favorite.getMemorial().getMemorialSeq()).name(favorite.getMemorial().getUser().getName()).birth(favorite.getMemorial().getUser().getBirth()).goneDate(favorite.getMemorial().getGoneDate()).graveName(favorite.getMemorial().getGraveName()).graveImg(awsS3Service.getPhotoFromS3(favorite.getMemorial().getGraveName())).build();
+            GraveDto graveDto = GraveDto.builder()
+                    .graveSeq(favorite.getMemorial().getMemorialSeq())
+                    .name(favorite.getMemorial().getUser().getName())
+                    .birth(favorite.getMemorial().getUser().getBirth())
+                    .goneDate(favorite.getMemorial().getGoneDate())
+                    .graveName(favorite.getMemorial().getGraveName())
+                    .graveImg(awsS3Service.getPhotoFromS3(favorite.getMemorial().getGraveName()))
+                    .build();
 
             favoriteMemorialList.add(graveDto);
         }
@@ -55,7 +63,14 @@ public class MemorialService {
         // 2. 즐겨찾기 목록 제외한 최신순 목록
         List<Memorial> memorials = memorialRepository.findAllByDate();
         for (Memorial memorial : memorials) {
-            GraveDto graveDto = GraveDto.builder().graveSeq(memorial.getMemorialSeq()).name(memorial.getUser().getName()).birth(memorial.getUser().getBirth()).goneDate(memorial.getGoneDate()).graveName(memorial.getGraveName()).graveImg(awsS3Service.getPhotoFromS3(memorial.getGraveImg())).build();
+            GraveDto graveDto = GraveDto.builder()
+                    .graveSeq(memorial.getMemorialSeq())
+                    .name(memorial.getUser().getName())
+                    .birth(memorial.getUser().getBirth())
+                    .goneDate(memorial.getGoneDate())
+                    .graveName(memorial.getGraveName())
+                    .graveImg(awsS3Service.getPhotoFromS3(memorial.getGraveImg()))
+                    .build();
 
             memorialList.add(graveDto);
         }
@@ -81,7 +96,14 @@ public class MemorialService {
 
         List<Memorial> list = memorialRepository.findAllByDate();
         for (Memorial memorial : list) {
-            GraveDto graveDto = GraveDto.builder().graveSeq(memorial.getMemorialSeq()).name(memorial.getUser().getName()).birth(memorial.getUser().getBirth()).goneDate(memorial.getGoneDate()).graveName(memorial.getGraveName()).graveImg(awsS3Service.getPhotoFromS3(memorial.getGraveImg())).build();
+            GraveDto graveDto = GraveDto.builder()
+                    .graveSeq(memorial.getMemorialSeq())
+                    .name(memorial.getUser().getName())
+                    .birth(memorial.getUser().getBirth())
+                    .goneDate(memorial.getGoneDate())
+                    .graveName(memorial.getGraveName())
+                    .graveImg(awsS3Service.getPhotoFromS3(memorial.getGraveImg()))
+                    .build();
 
             memorialList.add(graveDto);
         }
@@ -171,7 +193,11 @@ public class MemorialService {
 
         List<MemorialLetter> memorialLetterList = memorialLetterRepository.findAllByMemorialSeq(memorialSeq);
         for (MemorialLetter letter : memorialLetterList) {
-            MemorialLetterDto memorialLetterDto = MemorialLetterDto.builder().nickname(letter.getNickname()).content(letter.getContent()).writtenDate(letter.getWrittenDate()).build();
+            MemorialLetterDto memorialLetterDto = MemorialLetterDto.builder()
+                    .nickname(letter.getNickname())
+                    .content(letter.getContent())
+                    .writtenDate(letter.getWrittenDate())
+                    .build();
             memorialLetterDtoList.add(memorialLetterDto);
         }
         return memorialLetterDtoList;
