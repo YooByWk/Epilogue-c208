@@ -7,7 +7,7 @@ import org.springframework.data.jpa.repository.JpaRepository;
 import java.util.List;
 
 public interface WitnessRepository extends JpaRepository<Witness, Integer> {
-    Witness findByWitnessNameAndWitnessCode(String witnessName, String witnessCode);
+    Witness findByWitnessNameAndWillWillSeq(String witnessName, int willSeq);
     @Transactional
     void deleteAllByWillWillSeq(int willSeq);
 

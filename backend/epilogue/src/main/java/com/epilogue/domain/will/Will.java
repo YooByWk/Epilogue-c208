@@ -3,14 +3,11 @@ package com.epilogue.domain.will;
 
 import io.swagger.v3.oas.annotations.media.Schema;
 import jakarta.persistence.*;
-import jakarta.validation.constraints.NotNull;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-
-import java.util.UUID;
 
 @Slf4j
 @Entity
@@ -46,6 +43,7 @@ public class Will {
     @Schema(description = "묘비 사진")
     private String graveImageAddress;
 
+
     @Schema(description = "유언 파일 주소")
     private String willFileAddress;
 
@@ -54,6 +52,9 @@ public class Will {
 
     @Schema(description = "유언장 링크")
     private String willLink;
+
+    @Schema(description = "유언 코드")
+    private String willCode;
 
     public void updateMemorial(String useMemorial, String graveName) {
         this.useMemorial = useMemorial;
@@ -73,6 +74,10 @@ public class Will {
 
     public void updateWillFileAddress(String willFileAddress) {
         this.willFileAddress = willFileAddress;
+    }
+
+    public void updateWillCode(String willCode) {
+        this.willCode = willCode;
     }
 }
 

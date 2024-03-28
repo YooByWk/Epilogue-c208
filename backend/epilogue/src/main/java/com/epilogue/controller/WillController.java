@@ -19,7 +19,6 @@ import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.security.core.parameters.P;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
@@ -32,7 +31,7 @@ import java.util.List;
 @Tag(name = "Will Controller", description = "유언 관련 API")
 @RestController
 @RequiredArgsConstructor
-@RequestMapping("/api/will")
+@RequestMapping("/api")
 public class WillController {
     private final WillService willService;
     private final WitnessService witnessService;
@@ -41,7 +40,7 @@ public class WillController {
 
     @Operation(summary = "증인 저장 API", description = "증인 목록을 저장합니다.")
     @ApiResponse(responseCode = "200", description = "성공")
-    @PostMapping("/witness")
+    @PostMapping("/will/witness")
     public ResponseEntity<Void> saveWitness(@Parameter(description = "증인 목록") @RequestBody List<WitnessRequestDto> witnessList, Principal principal) {
         // 임의 유언 생성
         Will will = new Will();
@@ -54,7 +53,7 @@ public class WillController {
 
     @Operation(summary = "유언 파일 저장 API", description = "유언 파일을 저장합니다.")
     @ApiResponse(responseCode = "200", description = "성공")
-    @PostMapping
+    @PostMapping("/will")
     public ResponseEntity<Void> saveWill(@Parameter(description = "유언 열람 파일") @RequestPart MultipartFile multipartFile, Principal principal) {
         // 블록체인 트랜잭션 생성 (해시, 녹음 파일 url, 초기 영수증)
 
@@ -67,9 +66,9 @@ public class WillController {
         return new ResponseEntity<>(HttpStatus.OK);
     }
 
-    @Operation(summary = "열람인 저장 API", description = "열람인을 저장합니다.")
+    @Operation(summary = "열람인 저장 API", description = "열람인 목록을 저장합니다.")
     @ApiResponse(responseCode = "200", description = "성공")
-    @PostMapping("/viewer")
+    @PostMapping("/will/viewer")
     public ResponseEntity<Void> saveViewer(@Parameter(description = "열람인 목록") @RequestBody List<ViewerRequestDto> viewerList, Principal principal) {
         // 열람인 리스트 저장
         viewerService.save(viewerList, principal);
@@ -78,17 +77,16 @@ public class WillController {
 
     @Operation(summary = "묘비 사진 저장 API", description = "묘비 사진을 저장합니다.")
     @ApiResponse(responseCode = "200", description = "성공")
-    @PostMapping("/graveImage")
+    @PostMapping("/will/graveImage")
     public ResponseEntity<Void> saveGraveImage(@Parameter(description = "묘비 사진 파일") @RequestPart MultipartFile multipartFile, Principal principal) {
         // 묘비 사진 S3 저장
         awsS3Service.uploadGraveImage(multipartFile, principal);
-
         return new ResponseEntity<>(HttpStatus.OK);
     }
 
     @Operation(summary = "디지털 추모관 사용 여부 및 묘비 이름 저장 API", description = "디지털 추모관 사용 여부 및 묘비 이름을 저장합니다.")
     @ApiResponse(responseCode = "200", description = "성공")
-    @PostMapping("/memorialAndGraveName")
+    @PostMapping("/will/memorialAndGraveName")
     public ResponseEntity<Void> saveMemorial(@Parameter(description = "디지털 추모관 정보 요청 DTO")  @RequestBody WillMemorialRequestDto willMemorialRequestDto, Principal principal) {
         // 디지털 추모관 정보 저장
         willService.saveMemorial(willMemorialRequestDto, principal);
@@ -97,7 +95,7 @@ public class WillController {
 
     @Operation(summary = "추가 정보 저장 API", description = "추가 정보를 저장합니다.")
     @ApiResponse(responseCode = "200", description = "성공")
-    @PostMapping("/additional")
+    @PostMapping("/will/additional")
     public ResponseEntity<Void> saveAdditionalInformation(@Parameter(description = "추가 정보 요청 DTO") @RequestBody WillAdditionalRequestDto willAdditionalRequestDto, Principal principal) {
         // 추가 정보 저장
         willService.saveAdditionalInformation(willAdditionalRequestDto, principal);
@@ -108,7 +106,7 @@ public class WillController {
 
     @Operation(summary = "나의 유언 조회 API", description = "내가 작성한 유언을 조회합니다.")
     @ApiResponse(responseCode = "200", description = "성공")
-    @GetMapping
+    @GetMapping("/myWill")
     public ResponseEntity<String> viewMyWill(Principal principal) {
         // S3에서 가져온 유언 파일 반환
         return new ResponseEntity<>(willService.viewMyWill(principal), HttpStatus.OK);
@@ -116,7 +114,7 @@ public class WillController {
 
     @Operation(summary = "나의 유언 삭제 API", description = "내가 작성한 유언을 삭제합니다.")
     @ApiResponse(responseCode = "200", description = "성공")
-    @DeleteMapping
+    @DeleteMapping("/myWill")
     public ResponseEntity<Void> deleteMyWill(Principal principal) throws MalformedURLException, UnsupportedEncodingException {
         willService.deleteMyWill(principal);
         return new ResponseEntity<>(HttpStatus.OK);
@@ -127,8 +125,21 @@ public class WillController {
             @ApiResponse(responseCode = "true", description = "인증 성공"),
             @ApiResponse(responseCode = "false", description = "인증 실패"),
     })
-    @PostMapping("/apply")
+    @PostMapping("/will/apply")
     public ResponseEntity<Boolean> applyWill(@Parameter(description = "유언 열람 인증 요청 DTO") @RequestBody WillApplyRequestDto willApplyRequestDto) {
         return new ResponseEntity<>(willService.applyWill(willApplyRequestDto), HttpStatus.OK);
+    }
+
+    @Operation(summary = "인증 코드 확인 API", description = "열람인의 인증 코드를 확인합니다.")
+    @ApiResponses(value = {
+            @ApiResponse(responseCode = "200과 유언 파일 주소(String)", description = "인증 성공"),
+            @ApiResponse(responseCode = "404", description = "인증 실패"),
+    })
+    @PostMapping("/will/certificate")
+    public ResponseEntity<?> certificateCode(@Parameter(description = "유언 인증 코드") @RequestBody String willCode) {
+        Will will = willService.certificateCode(willCode);
+        
+        if (will != null) return new ResponseEntity<>(will.getWillFileAddress(), HttpStatus.OK);
+        return new ResponseEntity<>(HttpStatus.NOT_FOUND);
     }
 }

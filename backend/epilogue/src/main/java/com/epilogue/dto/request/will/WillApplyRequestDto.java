@@ -17,6 +17,6 @@ public class WillApplyRequestDto {
     @Schema(description = "증인 이름")
     private String witnessName;
 
-    @Schema(description = "증인 코드")
-    private String witnessCode;
+    @Schema(description = "유언 코드")
+    private String willCode;
 }
