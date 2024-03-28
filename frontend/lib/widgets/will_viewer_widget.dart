@@ -5,154 +5,148 @@ import 'package:frontend/main.dart';
 import 'package:frontend/view_models/will_view_models/viewer_viewmodel.dart';
 import 'package:provider/provider.dart';
 
-class WillViewerWidget extends StatefulWidget {
-  _WillViewerWidgetState createState() => _WillViewerWidgetState();
-}
+class WillViewerWidget extends StatelessWidget {
+  final bool isSaved;
+  final ViewerViewModel viewModel;
 
-class _WillViewerWidgetState extends State<WillViewerWidget> {
+  WillViewerWidget({required this.viewModel, required this.isSaved});
+
   @override
   Widget build(BuildContext context) {
-    return ChangeNotifierProvider(
-        create: (context) => ViewerViewModel(),
-        child: Consumer<ViewerViewModel>(builder: (context, viewModel, child) {
-          return Column(
+    return Column(
+      children: [
+        Container(
+          margin: EdgeInsets.only(
+            top: 10,
+          ),
+          height: MediaQuery.of(context).size.height * 0.22,
+          width: MediaQuery.of(context).size.width * 0.9,
+          alignment: Alignment.center,
+          decoration: BoxDecoration(
+            color: themeColour3.withOpacity(0.3),
+            borderRadius: BorderRadius.circular(20),
+          ),
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              Container(
-                margin: EdgeInsets.only(
-                  top: 10,
-                ),
-                height: MediaQuery
-                    .of(context)
-                    .size
-                    .height * 0.22,
-                width: MediaQuery
-                    .of(context)
-                    .size
-                    .width * 0.9,
-                alignment: Alignment.center,
-                decoration: BoxDecoration(
-                  color: themeColour3.withOpacity(0.3),
-                  borderRadius: BorderRadius.circular(20),
-                ),
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                      children: [
-                        SizedBox(width: 20),
-                        Text(
-                          '이름',
-                          style: TextStyle(
-                            fontSize: 20,
-                            color: themeColour4,
-                            fontWeight: FontWeight.bold,
-                          ),
-                        ),
-                        SizedBox(width: 20),
-                        Expanded(
-                          child: TextFormField(
-                            onChanged: (value) => viewModel.setViewerName(value),
-                            style: TextStyle(
-                              decorationThickness: 0,
-                              fontSize: 20,
-                              color: themeColour5,
-                            ),
-                            decoration: InputDecoration(
-                              hintText: '이싸피',
-                              hintStyle: TextStyle(color: themeColour5),
-                              enabledBorder: UnderlineInputBorder(
-                                borderSide: BorderSide(
-                                    color: Color(0xFFececec)),
-                              ),
-                              focusedBorder: UnderlineInputBorder(
-                                borderSide: BorderSide(
-                                    color: Color(0xFFececec)),
-                              ),
-                            ),
-                          ),
-                        ),
-                      ],
+              Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: [
+                  SizedBox(width: 20),
+                  Text(
+                    '이름',
+                    style: TextStyle(
+                      fontSize: 20,
+                      color: themeColour4,
+                      fontWeight: FontWeight.bold,
                     ),
-                    Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                      children: [
-                        SizedBox(width: 20),
-                        Text(
-                          '번호',
-                          style: TextStyle(
-                            fontSize: 20,
-                            color: themeColour4,
-                            fontWeight: FontWeight.bold,
-                          ),
+                  ),
+                  SizedBox(width: 20),
+                  Expanded(
+                    child: TextFormField(
+                      enabled: !isSaved,
+                      onChanged: (value) => viewModel.setViewerName(value),
+                      style: TextStyle(
+                        decorationThickness: 0,
+                        fontSize: 20,
+                        color: themeColour5,
+                      ),
+                      decoration: InputDecoration(
+                        hintText: isSaved ? null : '이싸피',
+                        hintStyle: TextStyle(color: themeColour5),
+                        border:
+                            isSaved ? InputBorder.none : UnderlineInputBorder(),
+                        enabledBorder: UnderlineInputBorder(
+                          borderSide: BorderSide(color: Color(0xFFececec)),
                         ),
-                        SizedBox(width: 20),
-                        Expanded(
-                          child: TextFormField(
-                            onChanged: (value) => viewModel.setViewerMobile(value),
-                            style: TextStyle(
-                              decorationThickness: 0,
-                              fontSize: 20,
-                              color: themeColour5,
-                            ),
-                            decoration: InputDecoration(
-                              hintText: '010-1234-5678',
-                              hintStyle: TextStyle(color: themeColour5),
-                              enabledBorder: UnderlineInputBorder(
-                                borderSide: BorderSide(
-                                    color: Color(0xFFececec)),
-                              ),
-                              focusedBorder: UnderlineInputBorder(
-                                borderSide: BorderSide(
-                                    color: Color(0xFFececec)),
-                              ),
-                            ),
-                          ),
+                        focusedBorder: UnderlineInputBorder(
+                          borderSide: BorderSide(color: Color(0xFFececec)),
                         ),
-                      ],
+                      ),
                     ),
-                    Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                      children: [
-                        SizedBox(width: 20),
-                        Text(
-                          '이메일',
-                          style: TextStyle(
-                            fontSize: 20,
-                            color: themeColour4,
-                            fontWeight: FontWeight.bold,
-                          ),
-                        ),
-                        SizedBox(width: 20),
-                        Expanded(
-                          child: TextFormField(
-                            onChanged: (value) => viewModel.setViewerEmail(value),
-                            style: TextStyle(
-                              decorationThickness: 0,
-                              fontSize: 20,
-                              color: themeColour5,
-                            ),
-                            decoration: InputDecoration(
-                              hintText: 'ssafy@samsung.com',
-                              hintStyle: TextStyle(color: themeColour5),
-                              enabledBorder: UnderlineInputBorder(
-                                borderSide: BorderSide(
-                                    color: Color(0xFFececec)),
-                              ),
-                              focusedBorder: UnderlineInputBorder(
-                                borderSide: BorderSide(
-                                    color: Color(0xFFececec)),
-                              ),
-                            ),
-                          ),
-                        ),
-                      ],
-                    )
-                  ],
-                ),
+                  ),
+                ],
               ),
+              Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: [
+                  SizedBox(width: 20),
+                  Text(
+                    '번호',
+                    style: TextStyle(
+                      fontSize: 20,
+                      color: themeColour4,
+                      fontWeight: FontWeight.bold,
+                    ),
+                  ),
+                  SizedBox(width: 20),
+                  Expanded(
+                    child: TextFormField(
+                      enabled: !isSaved,
+                      onChanged: (value) => viewModel.setViewerMobile(value),
+                      style: TextStyle(
+                        decorationThickness: 0,
+                        fontSize: 20,
+                        color: themeColour5,
+                      ),
+                      decoration: InputDecoration(
+                        hintText: isSaved ? null : '01012345678',
+                        hintStyle: TextStyle(color: themeColour5),
+                        border:
+                            isSaved ? InputBorder.none : UnderlineInputBorder(),
+                        enabledBorder: UnderlineInputBorder(
+                          borderSide: BorderSide(color: Color(0xFFececec)),
+                        ),
+                        focusedBorder: UnderlineInputBorder(
+                          borderSide: BorderSide(color: Color(0xFFececec)),
+                        ),
+                      ),
+                    ),
+                  ),
+                ],
+              ),
+              Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: [
+                  SizedBox(width: 20),
+                  Text(
+                    '이메일',
+                    style: TextStyle(
+                      fontSize: 20,
+                      color: themeColour4,
+                      fontWeight: FontWeight.bold,
+                    ),
+                  ),
+                  SizedBox(width: 20),
+                  Expanded(
+                    child: TextFormField(
+                      enabled: !isSaved,
+                      onChanged: (value) => viewModel.setViewerEmail(value),
+                      style: TextStyle(
+                        decorationThickness: 0,
+                        fontSize: 20,
+                        color: themeColour5,
+                      ),
+                      decoration: InputDecoration(
+                        hintText: isSaved ? null : 'ssafy@samsung.com',
+                        hintStyle: TextStyle(color: themeColour5),
+                        border:
+                            isSaved ? InputBorder.none : UnderlineInputBorder(),
+                        enabledBorder: UnderlineInputBorder(
+                          borderSide: BorderSide(color: Color(0xFFececec)),
+                        ),
+                        focusedBorder: UnderlineInputBorder(
+                          borderSide: BorderSide(color: Color(0xFFececec)),
+                        ),
+                      ),
+                    ),
+                  ),
+                ],
+              )
             ],
-          );
-        }));
+          ),
+        ),
+      ],
+    );
   }
 }

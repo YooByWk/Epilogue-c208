@@ -31,8 +31,8 @@ class WillService {
 
   ///////////////////////// 열람인 //////////////////////////////////
   Future<Map<String, dynamic>> sendViewer(List<ViewerModel> viewerList) async {
-    final viewers = viewerList.map((data) => data.toJson()).toList();
-    debugPrint('$viewers');
+    var viewers = viewerList.map((data) => data.toJson()).toList();
+    // debugPrint('$viewers');
     try {
       Dio.Response response = await _dio.post(baseUrl + '/api/will/viewer',
           data: viewers);

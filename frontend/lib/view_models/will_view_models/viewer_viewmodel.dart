@@ -6,7 +6,7 @@ class ViewerViewModel extends ChangeNotifier {
   final WillService _willService = WillService();
   List<ViewerModel> _viewerList = [];
   ViewerModel _viewerData = ViewerModel(
-      viewerName: '', viewerEmail: '', viewerMobile:'');
+      viewerName: '', viewerEmail: '', viewerMobile: '');
 
   bool _isFocused = false;
   bool _isLoading = false;
@@ -21,14 +21,12 @@ class ViewerViewModel extends ChangeNotifier {
   List<ViewerModel> get viewerList => _viewerList;
 
 
-  void sendViewer() {
-    _willService.sendViewer(_viewerList);
-  }
-
   void setViewerName(String value) {
     _viewerData = ViewerModel(viewerName: value,
         viewerEmail: _viewerData.viewerEmail,
         viewerMobile: _viewerData.viewerMobile);
+        debugPrint(_viewerData.viewerName);
+        debugPrint(_viewerData.viewerMobile);
     notifyListeners();
   }
 
@@ -52,7 +50,8 @@ class ViewerViewModel extends ChangeNotifier {
   }
 
   Future<void> addViewer() async {
-    debugPrint(_viewerData.viewerName);
+
+    // debugPrint(viewerMobile);
     // 새로운 ViewerModel 인스턴스를 생성하여 List에 추가
     ViewerModel newViewer = ViewerModel(
       viewerName: _viewerData.viewerName,
@@ -64,10 +63,10 @@ class ViewerViewModel extends ChangeNotifier {
     notifyListeners();
 
     // 디버그 출력을 위해 새로운 인스턴스의 이름과 전체 리스트 출력
-    debugPrint(newViewer.viewerName);
-    for (var viewer in _viewerList) {
-      debugPrint('${viewer.viewerName}'); // 리스트 내의 각 Viewer 이름 출력
-    }
+    // debugPrint(newViewer.viewerName);
+    // for (var viewer in _viewerList) {
+    //   debugPrint('${viewer.viewerName}'); // 리스트 내의 각 Viewer 이름 출력
+    // }
   }
 
   Future<void> setViewer() async {
@@ -76,7 +75,7 @@ class ViewerViewModel extends ChangeNotifier {
     notifyListeners();
 
     final result = await _willService.sendViewer(_viewerList);
-    // debugPrint('$viewerList');
+
     _isLoading = false;
 
     if (!result['success']) {
@@ -90,6 +89,7 @@ class ViewerViewModel extends ChangeNotifier {
       }
     } else {
       _errorMessage = null;
+      _viewerList = [];
     }
     notifyListeners();
   }
