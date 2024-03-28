@@ -28,7 +28,7 @@ public class SmsCertificationUtil {
     public SingleMessageSentResponse sendSms(String to, String verificationCode) {
         Message message = new Message();
         // 발신번호 및 수신번호는 반드시 01012345678 형태로 입력되어야 합니다.
-        message.setFrom("01057056540");
+        message.setFrom("01038620912");
         message.setTo(to);
         message.setText("[E:pilogue] 본인 확인 인증번호는 " + verificationCode + "입니다.");
 
