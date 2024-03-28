@@ -51,6 +51,7 @@ class ViewerViewModel extends ChangeNotifier {
 
   Future<void> addViewer() async {
 
+
     // debugPrint(viewerMobile);
     // 새로운 ViewerModel 인스턴스를 생성하여 List에 추가
     ViewerModel newViewer = ViewerModel(
@@ -59,8 +60,11 @@ class ViewerViewModel extends ChangeNotifier {
       viewerMobile: _viewerData.viewerMobile,
     );
     _viewerList.add(newViewer);
-
     notifyListeners();
+    _viewerData.viewerName = '';
+    _viewerData.viewerEmail = '';
+    _viewerData.viewerMobile = '';
+
   }
 
   Future<void> deleteViewer(int index) async {
@@ -88,7 +92,7 @@ class ViewerViewModel extends ChangeNotifier {
       }
     } else {
       _errorMessage = null;
-      _viewerList = [];
+      _viewerList.clear();
     }
     notifyListeners();
   }

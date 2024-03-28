@@ -7,11 +7,11 @@ import 'package:provider/provider.dart';
 
 class WillViewerWidget extends StatelessWidget {
   final ViewerViewModel viewModel;
-  bool isSaved;
+
 
   WillViewerWidget({
     required this.viewModel,
-    required this.isSaved,
+
   });
 
   @override
@@ -54,10 +54,8 @@ class WillViewerWidget extends StatelessWidget {
                         color: themeColour5,
                       ),
                       decoration: InputDecoration(
-                        hintText: isSaved ? null : '이싸피',
+                        hintText: '이싸피',
                         hintStyle: TextStyle(color: themeColour5),
-                        border:
-                            isSaved ? InputBorder.none : UnderlineInputBorder(),
                         enabledBorder: UnderlineInputBorder(
                           borderSide: BorderSide(color: Color(0xFFececec)),
                         ),
@@ -91,10 +89,8 @@ class WillViewerWidget extends StatelessWidget {
                         color: themeColour5,
                       ),
                       decoration: InputDecoration(
-                        hintText: isSaved ? null : '01012345678',
+                        hintText: '01012345678',
                         hintStyle: TextStyle(color: themeColour5),
-                        border:
-                            isSaved ? InputBorder.none : UnderlineInputBorder(),
                         enabledBorder: UnderlineInputBorder(
                           borderSide: BorderSide(color: Color(0xFFececec)),
                         ),
@@ -128,10 +124,8 @@ class WillViewerWidget extends StatelessWidget {
                         color: themeColour5,
                       ),
                       decoration: InputDecoration(
-                        hintText: isSaved ? null : 'ssafy@samsung.com',
+                        hintText: 'ssafy@samsung.com',
                         hintStyle: TextStyle(color: themeColour5),
-                        border:
-                            isSaved ? InputBorder.none : UnderlineInputBorder(),
                         enabledBorder: UnderlineInputBorder(
                           borderSide: BorderSide(color: Color(0xFFececec)),
                         ),

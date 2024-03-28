@@ -7,6 +7,7 @@ import 'package:frontend/main.dart';
 import 'package:frontend/screens/will/will_select_memorial_screen.dart';
 import 'package:frontend/screens/will/will_widgets.dart';
 import 'package:frontend/view_models/will_view_models/viewer_viewmodel.dart';
+import 'package:frontend/widgets/popup_widget.dart';
 import 'package:frontend/widgets/will_viewer_widget.dart';
 import 'package:provider/provider.dart';
 
@@ -39,15 +40,18 @@ class _WillViewerScreenState extends State<WillViewerScreen> {
                     fontWeight: FontWeight.w700,
                   ),
                 ),
-                Padding(
-                  padding: const EdgeInsets.only(right: 10.0),
-                  child: Text(
-                    '최대 5인 지정',
-                    textAlign: TextAlign.right,
-                    style: TextStyle(
-                        fontWeight: FontWeight.bold,
-                        fontSize: 20,
-                        color: Colors.grey),
+                Align(
+                  alignment: Alignment.centerRight,
+                  child: Padding(
+                    padding: const EdgeInsets.only(right: 20.0),
+                    child: Text(
+                      '최대 5인 지정 가능',
+                      style: TextStyle(
+                          color: Colors.grey,
+                          fontSize: 20,
+                          fontWeight: FontWeight.w500),
+                      textAlign: TextAlign.right,
+                    ),
                   ),
                 ),
                 Expanded(
@@ -132,7 +136,6 @@ class _WillViewerScreenState extends State<WillViewerScreen> {
                           children: [
                             WillViewerWidget(
                               viewModel: viewModel,
-                              isSaved: viewModel.viewerList.length > index,
                             ),
                             TextButton(
                               child: Text(
@@ -143,9 +146,25 @@ class _WillViewerScreenState extends State<WillViewerScreen> {
                                     color: themeColour5),
                               ),
                               onPressed: () {
-                                viewModel.addViewer().then((_) {
-                                  debugPrint('저장 완료');
-                                });
+                                debugPrint(viewModel.viewerName);
+                                (viewModel.viewerName == '')
+                                    ? PopupWidget(
+                                        text: '열람인 이름을 입력해 주세요!',
+                                        buttonText1: '확인',
+                                        onConfirm1: () {
+                                          Navigator.pop(context);
+                                        })
+                                    : (viewModel.viewerMobile == '' &&
+                                            viewModel.viewerEmail == '')
+                                        ? PopupWidget(
+                                    text: '열람인의 번호 혹은 이메일을 입력해 주세요!',
+                                    buttonText1: '확인',
+                                    onConfirm1: () {
+                                      Navigator.pop(context);
+                                    })
+                                        : viewModel.addViewer().then((_) {
+                                            debugPrint('저장 완료');
+                                          });
                               },
                             ),
                           ],
