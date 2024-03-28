@@ -44,17 +44,11 @@ public class User {
 
     @Schema(description = "유언")
     @OneToOne(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+//    @OneToOne(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
     private Will will;
 
     @Enumerated(EnumType.STRING)
     private UserStatus userStatus;
-
-    @Schema(description = "리프레시 토큰")
-    private String refreshToken;
-
-    public void updateRefreshToken(String refreshToken) {
-        this.refreshToken = refreshToken;
-    }
 
     public void updateUserInfo(String name, String mobile) {
         this.name = name;

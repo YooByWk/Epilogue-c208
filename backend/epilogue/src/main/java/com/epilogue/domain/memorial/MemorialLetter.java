@@ -1,6 +1,5 @@
 package com.epilogue.domain.memorial;
 
-import com.epilogue.domain.user.User;
 import io.swagger.v3.oas.annotations.media.Schema;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotNull;
@@ -28,7 +27,7 @@ public class MemorialLetter {
 
     @NotNull
     @Schema(description = "작성일")
-    private String writtenDate;
+    private Timestamp writtenDate;
 
     @ManyToOne
     @Schema(description = "디지털 추모관 식별키")
