@@ -24,11 +24,9 @@ class MypageScreen extends StatelessWidget {
         body: Consumer<UserViewModel>(builder: (context, viewModel, child) {
           if (viewModel.isLoading) {
             return Center(child: CircularProgressIndicator());
-          }
-          else if (viewModel.errorMessage != null) {
+          } else if (viewModel.errorMessage != null) {
             return Center(child: Text(viewModel.errorMessage!));
-          }
-          else if (viewModel.user == null) {
+          } else if (viewModel.user == null) {
             return Center(child: Text('사용자 정보를 불러올 수 없습니다.'));
           }
           final user = viewModel.user!;
@@ -51,8 +49,10 @@ class MypageScreen extends StatelessWidget {
                         Navigator.push(
                             context,
                             MaterialPageRoute(
-                                builder: (context) =>
-                                    MypageModifyInfoScreen()));
+                                builder: (context) => Provider<UserViewModel>(
+                                      create: (context) => UserViewModel(),
+                                      child: MypageModifyInfoScreen(),
+                                    )));
                       }),
                   CommonButtonWidget(
                       text: '로그아웃',
