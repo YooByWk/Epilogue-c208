@@ -166,6 +166,7 @@ public class MemorialController {
         }
     }
 
+    @Operation(summary = "디지털 추모관 검색 API")
     @PostMapping("/search")
     @ApiResponse(responseCode = "200", description = "성공")
     public ResponseEntity<List<GraveDto>> getSearchMemorialList(@Parameter(description = "검색어(고인이름 or 묘비명)") @RequestBody SearchRequestDto searchRequestDto) {
