@@ -6,6 +6,7 @@ import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:flutter/material.dart';
 import 'package:frontend/models/will/additional_model.dart';
 import 'package:frontend/models/will/viewer_model.dart';
+import 'package:frontend/models/will/witness_model.dart';
 
 
 class WillService {
@@ -31,8 +32,8 @@ class WillService {
 
   ///////////////////////// 열람인 //////////////////////////////////
   Future<Map<String, dynamic>> sendViewer(List<ViewerModel> viewerList) async {
-    final viewers = viewerList.map((data) => data.toJson()).toList();
-    debugPrint('$viewers');
+    var viewers = viewerList.map((data) => data.toJson()).toList();
+    // debugPrint('$viewers');
     try {
       Dio.Response response = await _dio.post(baseUrl + '/api/will/viewer',
           data: viewers);
@@ -79,6 +80,22 @@ class WillService {
           data: formData,
         );
 
+      if (response.statusCode == 200) {
+        return {'success': true};
+      } else {
+        return {'success': false, 'statusCode': response.statusCode};
+      }
+    } on Dio.DioError catch (e) {
+      return {'success': false, 'statusCode': e.response?.statusCode};
+    }
+  }
+
+  ///////////////////////// 증인 //////////////////////////////////
+  Future<Map<String, dynamic>> sendWitness(List<WitnessModel> witnessList) async {
+    var witnesses = witnessList.map((data) => data.toJson()).toList();
+    try {
+      Dio.Response response = await _dio.post(baseUrl + '/api/will/witness',
+          data: witnesses);
       if (response.statusCode == 200) {
         return {'success': true};
       } else {
