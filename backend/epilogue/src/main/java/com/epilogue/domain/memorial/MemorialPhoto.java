@@ -5,9 +5,11 @@ import io.swagger.v3.oas.annotations.media.Schema;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotNull;
 import lombok.*;
+import org.hibernate.annotations.ColumnDefault;
 
 @Entity
 @Getter
+@Setter
 @Builder
 @RequiredArgsConstructor
 @AllArgsConstructor
@@ -37,4 +39,8 @@ public class MemorialPhoto {
 
     @Schema(description = "설명 내용")
     private String content;
+
+    @NotNull
+    @Schema(description = "신고수")
+    private int reportCount;
 }

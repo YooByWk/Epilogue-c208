@@ -16,6 +16,7 @@ import com.epilogue.repository.user.UserRepository;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.text.DateFormat;
@@ -182,6 +183,7 @@ public class MemorialService {
                     .memorial(memorialRepository.findById(memorialSeq).get())
                     .user(userRepository.findByUserId(loginUserId))
                     .content(memorialMediaRequestDto.getContent())
+                    .reportCount(0)
                     .build();
             memorialPhotoRepository.save(memorialPhoto);
 
@@ -198,6 +200,7 @@ public class MemorialService {
                     .memorial(memorialRepository.findById(memorialSeq).get())
                     .user(userRepository.findByUserId(loginUserId))
                     .content(memorialMediaRequestDto.getContent())
+                    .reportCount(0)
                     .build();
             memorialVideoRepository.save(memorialVideo);
 
@@ -216,6 +219,7 @@ public class MemorialService {
                 .mediaSeq(memorialPhoto.get().getMemorialPhotoSeq())
                 .S3url(awsS3Service.getPhotoFromS3(memorialPhoto.get().getUniquePhotoUrl()))
                 .content(memorialPhoto.get().getContent())
+                .reportCount(memorialPhoto.get().getReportCount())
                 .build();
         return memorialMediaResponseDto;
     }
@@ -226,6 +230,7 @@ public class MemorialService {
                 .mediaSeq(memorialVideo.get().getMemorialVideoSeq())
                 .S3url(awsS3Service.getVideoFromS3(memorialVideo.get().getUniqueVideoUrl()))
                 .content(memorialVideo.get().getContent())
+                .reportCount(memorialVideo.get().getReportCount())
                 .build();
         return memorialMediaResponseDto;
     }
@@ -259,40 +264,55 @@ public class MemorialService {
         memorialLetterRepository.save(memorialLetter);
     }
 
-    public List<GraveDto> findMemorialByGraveName(GraveNameRequestDto graveNameRequestDto) {
-
-        List<Memorial> findMemorials = memorialRepository.findByGraveNameLike(graveNameRequestDto.getGraveName());
-        ArrayList<GraveDto> graveDtos = new ArrayList<>();
-        for (Memorial findMemorial : findMemorials) {
-            graveDtos.add(GraveDto.builder()
-                    .graveSeq(findMemorial.getMemorialSeq())
-                    .name(findMemorial.getUser().getName())
-                    .birth(findMemorial.getUser().getBirth())
-                    .goneDate(findMemorial.getGoneDate())
-                    .graveName(findMemorial.getGraveName())
-                    .graveImg(findMemorial.getGraveImg())
-                    .build());
-        }
-
-        return graveDtos;
+    public void createMemorialFavorite(String loginUserId, int memorialSeq) {
+        Favorite favorite = Favorite.builder()
+                .user(userRepository.findByUserId(loginUserId))
+                .memorial(memorialRepository.findById(memorialSeq).get())
+                .build();
+        log.info("======================================");
+        log.info("favorite/memorialSeq = {}", favorite.getMemorial().getMemorialSeq());
+        favoriteRepository.save(favorite);
     }
 
-    public List<GraveDto> findMemorialByUserName(NameRequestDto nameRequestDto) {
-        User findUser = userRepository.findByName(nameRequestDto.getName());
-        List<Memorial> findMemorials = memorialRepository.findByUser(findUser);
-        ArrayList<GraveDto> graveDtos = new ArrayList<>();
-        for (Memorial findMemorial : findMemorials) {
-            graveDtos.add(GraveDto.builder()
-                    .graveSeq(findMemorial.getMemorialSeq())
-                    .name(findMemorial.getUser().getName())
-                    .birth(findMemorial.getUser().getBirth())
-                    .goneDate(findMemorial.getGoneDate())
-                    .graveName(findMemorial.getGraveName())
-                    .graveImg(findMemorial.getGraveImg())
-                    .build());
-        }
+    public List<GraveDto> viewMyFavoriteGraveList(String loginUserId) {
+        List<GraveDto> graveDtoList = new ArrayList<>();
 
-        return graveDtos;
+        List<Favorite> myFavoriteList = favoriteRepository.findByUserId(loginUserId);
+        for(Favorite favorite : myFavoriteList) {
+            GraveDto graveDto = GraveDto.builder()
+                    .graveSeq(favorite.getMemorial().getMemorialSeq())
+                    .name(favorite.getMemorial().getUser().getName())
+                    .birth(favorite.getMemorial().getUser().getBirth())
+                    .goneDate(favorite.getMemorial().getGoneDate())
+                    .graveName(favorite.getMemorial().getGraveName())
+                    .graveImg(awsS3Service.getGraveImageFromS3(favorite.getMemorial().getGraveImg()))
+                    .build();
+            graveDtoList.add(graveDto);
+        }
+        return graveDtoList;
+    }
+
+    @Transactional
+    public void report(String type, int mediaSeq) {
+        if(type.equals("photo")) {
+            Optional<MemorialPhoto> memorialPhoto = memorialPhotoRepository.findById(mediaSeq);
+            int updatedReportCount = memorialPhoto.get().getReportCount() + 1;
+            memorialPhoto.get().setReportCount(updatedReportCount);
+
+            // 신고수 10개 이상이면 사진 삭제
+            if(updatedReportCount >= 10) {
+                memorialPhotoRepository.deleteById(memorialPhoto.get().getMemorialPhotoSeq());
+            }
+        } else if(type.equals("video")) {
+            Optional<MemorialVideo> memorialVideo = memorialVideoRepository.findById(mediaSeq);
+            int updatedReportCount = memorialVideo.get().getReportCount() + 1;
+            memorialVideo.get().setReportCount(updatedReportCount);
+
+            // 신고수 10개 이상이면 사진 삭제
+            if(updatedReportCount >= 10) {
+                memorialVideoRepository.deleteById(memorialVideo.get().getMemorialVideoSeq());
+            }
+        }
     }
 
 }
