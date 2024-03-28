@@ -2,6 +2,7 @@ package com.epilogue.service;
 
 import com.epilogue.domain.memorial.*;
 import com.epilogue.domain.user.User;
+import com.epilogue.dto.request.SearchRequestDto;
 import com.epilogue.dto.request.memorial.MemorialLetterRequestDto;
 import com.epilogue.dto.request.memorial.MemorialMediaRequestDto;
 import com.epilogue.dto.response.memorial.*;
@@ -45,46 +46,29 @@ public class MemorialService {
         User loginUser = userRepository.findByUserId(loginUserId);
         int loginUserSeq = loginUser.getUserSeq();
         List<Favorite> favorites = favoriteRepository.findListById(loginUserSeq); // 내가 즐겨찾기 한 목록
-        for(Favorite favorite : favorites) {
-            GraveDto graveDto = GraveDto.builder()
-                    .graveSeq(favorite.getMemorial().getMemorialSeq())
-                    .name(favorite.getMemorial().getUser().getName())
-                    .birth(favorite.getMemorial().getUser().getBirth())
-                    .goneDate(favorite.getMemorial().getGoneDate())
-                    .graveName(favorite.getMemorial().getGraveName())
-                    .graveImg(awsS3Service.getPhotoFromS3(favorite.getMemorial().getGraveName()))
-                    .build();
+        for (Favorite favorite : favorites) {
+            GraveDto graveDto = GraveDto.builder().graveSeq(favorite.getMemorial().getMemorialSeq()).name(favorite.getMemorial().getUser().getName()).birth(favorite.getMemorial().getUser().getBirth()).goneDate(favorite.getMemorial().getGoneDate()).graveName(favorite.getMemorial().getGraveName()).graveImg(awsS3Service.getPhotoFromS3(favorite.getMemorial().getGraveName())).build();
 
             favoriteMemorialList.add(graveDto);
         }
 
         // 2. 즐겨찾기 목록 제외한 최신순 목록
         List<Memorial> memorials = memorialRepository.findAllByDate();
-        for(Memorial memorial : memorials) {
-            GraveDto graveDto = GraveDto.builder()
-                    .graveSeq(memorial.getMemorialSeq())
-                    .name(memorial.getUser().getName())
-                    .birth(memorial.getUser().getBirth())
-                    .goneDate(memorial.getGoneDate())
-                    .graveName(memorial.getGraveName())
-                    .graveImg(awsS3Service.getPhotoFromS3(memorial.getGraveImg()))
-                    .build();
+        for (Memorial memorial : memorials) {
+            GraveDto graveDto = GraveDto.builder().graveSeq(memorial.getMemorialSeq()).name(memorial.getUser().getName()).birth(memorial.getUser().getBirth()).goneDate(memorial.getGoneDate()).graveName(memorial.getGraveName()).graveImg(awsS3Service.getPhotoFromS3(memorial.getGraveImg())).build();
 
             memorialList.add(graveDto);
         }
 
-        for(int i=0; i<memorialList.size(); i++) {
-            for(int j=0; j<favoriteMemorialList.size(); j++) {
-                if(memorialList.get(i).getGraveSeq() == favoriteMemorialList.get(j).getGraveSeq()) {
+        for (int i = 0; i < memorialList.size(); i++) {
+            for (int j = 0; j < favoriteMemorialList.size(); j++) {
+                if (memorialList.get(i).getGraveSeq() == favoriteMemorialList.get(j).getGraveSeq()) {
                     memorialList.remove(i);
                 }
             }
         }
 
-        dto = MemorialResponseDto.builder()
-                .favoriteMemorialList(favoriteMemorialList)
-                .memorialList(memorialList)
-                .build();
+        dto = MemorialResponseDto.builder().favoriteMemorialList(favoriteMemorialList).memorialList(memorialList).build();
 
         return dto;
     }
@@ -96,22 +80,13 @@ public class MemorialService {
         List<GraveDto> memorialList = new ArrayList<>();
 
         List<Memorial> list = memorialRepository.findAllByDate();
-        for(Memorial memorial : list) {
-            GraveDto graveDto = GraveDto.builder()
-                    .graveSeq(memorial.getMemorialSeq())
-                    .name(memorial.getUser().getName())
-                    .birth(memorial.getUser().getBirth())
-                    .goneDate(memorial.getGoneDate())
-                    .graveName(memorial.getGraveName())
-                    .graveImg(awsS3Service.getPhotoFromS3(memorial.getGraveImg()))
-                    .build();
+        for (Memorial memorial : list) {
+            GraveDto graveDto = GraveDto.builder().graveSeq(memorial.getMemorialSeq()).name(memorial.getUser().getName()).birth(memorial.getUser().getBirth()).goneDate(memorial.getGoneDate()).graveName(memorial.getGraveName()).graveImg(awsS3Service.getPhotoFromS3(memorial.getGraveImg())).build();
 
             memorialList.add(graveDto);
         }
 
-        dto = MemorialResponseDto.builder()
-                .memorialList(memorialList)
-                .build();
+        dto = MemorialResponseDto.builder().memorialList(memorialList).build();
 
         return dto;
     }
@@ -124,12 +99,9 @@ public class MemorialService {
         List<MemorialPhoto> memorialPhotoList = memorialPhotoRepository.findAllByUserSeq(userSeq);
         // S3에 저장되어 있는 url 목록 불러오기
         List<MemorialPhotoDto> memorialPhotoDtoList = new ArrayList<>();
-        for(MemorialPhoto photo : memorialPhotoList) {
+        for (MemorialPhoto photo : memorialPhotoList) {
             String S3url = awsS3Service.getPhotoFromS3(photo.getUniquePhotoUrl());
-            MemorialPhotoDto memorialPhotoDto = MemorialPhotoDto.builder()
-                    .memorialPhotoSeq(photo.getMemorialPhotoSeq())
-                    .S3url(S3url)
-                    .build();
+            MemorialPhotoDto memorialPhotoDto = MemorialPhotoDto.builder().memorialPhotoSeq(photo.getMemorialPhotoSeq()).S3url(S3url).build();
             memorialPhotoDtoList.add(memorialPhotoDto);
         }
 
@@ -137,31 +109,16 @@ public class MemorialService {
         List<MemorialVideo> memorialVideoList = memorialVideoRepository.findAllByUserSeq(userSeq);
         // S3에 저장되어 있는 url 목록 불러오기
         List<MemorialVideoDto> memorialVideoDtoList = new ArrayList<>();
-        for(MemorialVideo video : memorialVideoList) {
+        for (MemorialVideo video : memorialVideoList) {
             String S3url = awsS3Service.getVideoFromS3(video.getUniqueVideoUrl());
-            MemorialVideoDto memorialVideoDto = MemorialVideoDto.builder()
-                    .memorialVideoSeq(video.getMemorialVideoSeq())
-                    .S3url(S3url)
-                    .build();
+            MemorialVideoDto memorialVideoDto = MemorialVideoDto.builder().memorialVideoSeq(video.getMemorialVideoSeq()).S3url(S3url).build();
             memorialVideoDtoList.add(memorialVideoDto);
         }
 
         // 고인의 편지 목록 불러오기
         List<MemorialLetter> memorialLetterList = memorialLetterRepository.findAllByUserSeq(userSeq);
 
-        GraveResponseDto graveResponseDto = GraveResponseDto.builder()
-                .graveSeq(memorialSeq)
-                .name(memorial.get().getUser().getName())
-                .birth(memorial.get().getUser().getBirth())
-                .goneDate(memorial.get().getGoneDate())
-                .graveImg(awsS3Service.getGraveImageFromS3(memorial.get().getGraveImg()))
-                .memorialPhotoList(memorialPhotoDtoList)
-                .photoCount(memorialPhotoDtoList.size())
-                .memorialVideoList(memorialVideoDtoList)
-                .videoCount(memorialVideoDtoList.size())
-                .memorialLetterList(memorialLetterList)
-                .letterCount(memorialLetterList.size())
-                .build();
+        GraveResponseDto graveResponseDto = GraveResponseDto.builder().graveSeq(memorialSeq).name(memorial.get().getUser().getName()).birth(memorial.get().getUser().getBirth()).goneDate(memorial.get().getGoneDate()).graveImg(awsS3Service.getGraveImageFromS3(memorial.get().getGraveImg())).memorialPhotoList(memorialPhotoDtoList).photoCount(memorialPhotoDtoList.size()).memorialVideoList(memorialVideoDtoList).videoCount(memorialVideoDtoList.size()).memorialLetterList(memorialLetterList).letterCount(memorialLetterList.size()).build();
 
         return graveResponseDto;
     }
@@ -173,16 +130,9 @@ public class MemorialService {
         String uniqueFileName = UUID.randomUUID() + "." + fileType; // 중복 방지를 위한 unique한 파일명
 
         // 사진 저장
-        if(fileType.equals("jpg") || fileType.equals("jpeg") || fileType.equals("png") || fileType.equals("gif")) {
+        if (fileType.equals("jpg") || fileType.equals("jpeg") || fileType.equals("png") || fileType.equals("gif")) {
             // DB
-            MemorialPhoto memorialPhoto = MemorialPhoto.builder()
-                    .originalPhotoUrl(originalFileName)
-                    .uniquePhotoUrl(uniqueFileName)
-                    .memorial(memorialRepository.findById(memorialSeq).get())
-                    .user(userRepository.findByUserId(loginUserId))
-                    .content(memorialMediaRequestDto.getContent())
-                    .reportCount(0)
-                    .build();
+            MemorialPhoto memorialPhoto = MemorialPhoto.builder().originalPhotoUrl(originalFileName).uniquePhotoUrl(uniqueFileName).memorial(memorialRepository.findById(memorialSeq).get()).user(userRepository.findByUserId(loginUserId)).content(memorialMediaRequestDto.getContent()).reportCount(0).build();
             memorialPhotoRepository.save(memorialPhoto);
 
             // S3
@@ -190,23 +140,14 @@ public class MemorialService {
         }
 
         // 동영상 저장
-        else if(fileType.equals("mp4") || fileType.equals("mov")) {
+        else if (fileType.equals("mp4") || fileType.equals("mov")) {
             // DB
-            MemorialVideo memorialVideo = MemorialVideo.builder()
-                    .originalVideoUrl(originalFileName)
-                    .uniqueVideoUrl(uniqueFileName)
-                    .memorial(memorialRepository.findById(memorialSeq).get())
-                    .user(userRepository.findByUserId(loginUserId))
-                    .content(memorialMediaRequestDto.getContent())
-                    .reportCount(0)
-                    .build();
+            MemorialVideo memorialVideo = MemorialVideo.builder().originalVideoUrl(originalFileName).uniqueVideoUrl(uniqueFileName).memorial(memorialRepository.findById(memorialSeq).get()).user(userRepository.findByUserId(loginUserId)).content(memorialMediaRequestDto.getContent()).reportCount(0).build();
             memorialVideoRepository.save(memorialVideo);
 
             // S3
             awsS3Service.uploadVideo(multipartFile, uniqueFileName);
-        }
-
-        else {
+        } else {
             log.error("{ error = 지원하지 않는 확장자입니다. }");
             throw new Exception();
         }
@@ -215,23 +156,13 @@ public class MemorialService {
 
     public MemorialMediaResponseDto viewMemorialPhoto(int memorialPhotoSeq) {
         Optional<MemorialPhoto> memorialPhoto = memorialPhotoRepository.findById(memorialPhotoSeq);
-        MemorialMediaResponseDto memorialMediaResponseDto = MemorialMediaResponseDto.builder()
-                .mediaSeq(memorialPhoto.get().getMemorialPhotoSeq())
-                .S3url(awsS3Service.getPhotoFromS3(memorialPhoto.get().getUniquePhotoUrl()))
-                .content(memorialPhoto.get().getContent())
-                .reportCount(memorialPhoto.get().getReportCount())
-                .build();
+        MemorialMediaResponseDto memorialMediaResponseDto = MemorialMediaResponseDto.builder().mediaSeq(memorialPhoto.get().getMemorialPhotoSeq()).S3url(awsS3Service.getPhotoFromS3(memorialPhoto.get().getUniquePhotoUrl())).content(memorialPhoto.get().getContent()).reportCount(memorialPhoto.get().getReportCount()).build();
         return memorialMediaResponseDto;
     }
 
     public MemorialMediaResponseDto viewMemorialVideo(int memorialVideoSeq) {
         Optional<MemorialVideo> memorialVideo = memorialVideoRepository.findById(memorialVideoSeq);
-        MemorialMediaResponseDto memorialMediaResponseDto = MemorialMediaResponseDto.builder()
-                .mediaSeq(memorialVideo.get().getMemorialVideoSeq())
-                .S3url(awsS3Service.getVideoFromS3(memorialVideo.get().getUniqueVideoUrl()))
-                .content(memorialVideo.get().getContent())
-                .reportCount(memorialVideo.get().getReportCount())
-                .build();
+        MemorialMediaResponseDto memorialMediaResponseDto = MemorialMediaResponseDto.builder().mediaSeq(memorialVideo.get().getMemorialVideoSeq()).S3url(awsS3Service.getVideoFromS3(memorialVideo.get().getUniqueVideoUrl())).content(memorialVideo.get().getContent()).reportCount(memorialVideo.get().getReportCount()).build();
         return memorialMediaResponseDto;
     }
 
@@ -239,12 +170,8 @@ public class MemorialService {
         List<MemorialLetterDto> memorialLetterDtoList = new ArrayList<>();
 
         List<MemorialLetter> memorialLetterList = memorialLetterRepository.findAllByMemorialSeq(memorialSeq);
-        for(MemorialLetter letter : memorialLetterList) {
-            MemorialLetterDto memorialLetterDto = MemorialLetterDto.builder()
-                    .nickname(letter.getNickname())
-                    .content(letter.getContent())
-                    .writtenDate(letter.getWrittenDate())
-                    .build();
+        for (MemorialLetter letter : memorialLetterList) {
+            MemorialLetterDto memorialLetterDto = MemorialLetterDto.builder().nickname(letter.getNickname()).content(letter.getContent()).writtenDate(letter.getWrittenDate()).build();
             memorialLetterDtoList.add(memorialLetterDto);
         }
         return memorialLetterDtoList;
@@ -254,21 +181,13 @@ public class MemorialService {
         Date date = new Date();
         SimpleDateFormat sdf = new SimpleDateFormat("yyyy.MM.dd");
 
-        MemorialLetter memorialLetter = MemorialLetter.builder()
-                .nickname(memorialLetterRequestDto.getNickname())
-                .content(memorialLetterRequestDto.getContent())
-                .writtenDate(sdf.format(date))
-                .memorial(memorialRepository.findById(memorialSeq).get())
-                .build();
+        MemorialLetter memorialLetter = MemorialLetter.builder().nickname(memorialLetterRequestDto.getNickname()).content(memorialLetterRequestDto.getContent()).writtenDate(sdf.format(date)).memorial(memorialRepository.findById(memorialSeq).get()).build();
 
         memorialLetterRepository.save(memorialLetter);
     }
 
     public void createMemorialFavorite(String loginUserId, int memorialSeq) {
-        Favorite favorite = Favorite.builder()
-                .user(userRepository.findByUserId(loginUserId))
-                .memorial(memorialRepository.findById(memorialSeq).get())
-                .build();
+        Favorite favorite = Favorite.builder().user(userRepository.findByUserId(loginUserId)).memorial(memorialRepository.findById(memorialSeq).get()).build();
         log.info("======================================");
         log.info("favorite/memorialSeq = {}", favorite.getMemorial().getMemorialSeq());
         favoriteRepository.save(favorite);
@@ -278,15 +197,8 @@ public class MemorialService {
         List<GraveDto> graveDtoList = new ArrayList<>();
 
         List<Favorite> myFavoriteList = favoriteRepository.findByUserId(loginUserId);
-        for(Favorite favorite : myFavoriteList) {
-            GraveDto graveDto = GraveDto.builder()
-                    .graveSeq(favorite.getMemorial().getMemorialSeq())
-                    .name(favorite.getMemorial().getUser().getName())
-                    .birth(favorite.getMemorial().getUser().getBirth())
-                    .goneDate(favorite.getMemorial().getGoneDate())
-                    .graveName(favorite.getMemorial().getGraveName())
-                    .graveImg(awsS3Service.getGraveImageFromS3(favorite.getMemorial().getGraveImg()))
-                    .build();
+        for (Favorite favorite : myFavoriteList) {
+            GraveDto graveDto = GraveDto.builder().graveSeq(favorite.getMemorial().getMemorialSeq()).name(favorite.getMemorial().getUser().getName()).birth(favorite.getMemorial().getUser().getBirth()).goneDate(favorite.getMemorial().getGoneDate()).graveName(favorite.getMemorial().getGraveName()).graveImg(awsS3Service.getGraveImageFromS3(favorite.getMemorial().getGraveImg())).build();
             graveDtoList.add(graveDto);
         }
         return graveDtoList;
@@ -294,46 +206,37 @@ public class MemorialService {
 
     @Transactional
     public void report(String type, int mediaSeq) {
-        if(type.equals("photo")) {
+        if (type.equals("photo")) {
             Optional<MemorialPhoto> memorialPhoto = memorialPhotoRepository.findById(mediaSeq);
             int updatedReportCount = memorialPhoto.get().getReportCount() + 1;
             memorialPhoto.get().setReportCount(updatedReportCount);
 
             // 신고수 10개 이상이면 사진 삭제
-            if(updatedReportCount >= 10) {
+            if (updatedReportCount >= 10) {
                 memorialPhotoRepository.deleteById(memorialPhoto.get().getMemorialPhotoSeq());
             }
-        } else if(type.equals("video")) {
+        } else if (type.equals("video")) {
             Optional<MemorialVideo> memorialVideo = memorialVideoRepository.findById(mediaSeq);
             int updatedReportCount = memorialVideo.get().getReportCount() + 1;
             memorialVideo.get().setReportCount(updatedReportCount);
 
             // 신고수 10개 이상이면 사진 삭제
-            if(updatedReportCount >= 10) {
+            if (updatedReportCount >= 10) {
                 memorialVideoRepository.deleteById(memorialVideo.get().getMemorialVideoSeq());
             }
         }
     }
 
-//    public List<GraveDto> viewSearchedMemorialList(String searchWord) {
-//        List<GraveDto> graveDtoList = new ArrayList<>();
-//
-////        List<Memorial> memorialList = memorialRepository.findBySearchWord(searchWord);
-////        List<Memorial> memorialList = memorialRepository.findByUserNameLike("%" + searchWord + "%");
-//        List<Memorial> memorialList = memorialRepository.findByUserNameIsContaining("%" + searchWord + "%");
-//        log.info("이름 : {}", memorialList.get(0).getUser().getName());
-//        for(Memorial memorial : memorialList) {
-//            GraveDto graveDto = GraveDto.builder()
-//                    .graveSeq(memorial.getMemorialSeq())
-//                    .name(memorial.getUser().getName())
-//                    .birth(memorial.getUser().getBirth())
-//                    .goneDate(memorial.getGoneDate())
-//                    .graveName(memorial.getGraveName())
-//                    .graveImg(awsS3Service.getGraveImageFromS3(memorial.getGraveImg()))
-//                    .build();
-//            graveDtoList.add(graveDto);
-//        }
-//        return graveDtoList;
-//    }
+    public List<GraveDto> searchedMemorialList(SearchRequestDto searchRequestDto) {
+        List<GraveDto> graveDtoList = new ArrayList<>();
+        System.out.println(searchRequestDto.getSearchWord());
+        List<Memorial> memorialList = memorialRepository.findMemorialsByGraveNameOrUserName(searchRequestDto.getSearchWord());
+
+        for (Memorial memorial : memorialList) {
+            GraveDto graveDto = GraveDto.builder().graveSeq(memorial.getMemorialSeq()).name(memorial.getUser().getName()).birth(memorial.getUser().getBirth()).goneDate(memorial.getGoneDate()).graveName(memorial.getGraveName()).graveImg(awsS3Service.getGraveImageFromS3(memorial.getGraveImg())).build();
+            graveDtoList.add(graveDto);
+        }
+        return graveDtoList;
+    }
 
 }

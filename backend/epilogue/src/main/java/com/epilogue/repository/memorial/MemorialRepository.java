@@ -17,4 +17,10 @@ public interface MemorialRepository extends JpaRepository<Memorial, Integer>, Me
 
 //    List<Memorial> findByUserNameIsContaining(String keyword);
 
+    @Query("""
+            SELECT m FROM Memorial m
+            WHERE
+                m.user.name LIKE CONCAT('%', :searchWord, '%')
+                OR m.graveName LIKE CONCAT('%', :searchWord, '%')""")
+    List<Memorial> findMemorialsByGraveNameOrUserName(String searchWord);
 }
