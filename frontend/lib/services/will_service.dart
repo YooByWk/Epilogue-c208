@@ -4,6 +4,8 @@ import 'package:dio/dio.dart' as Dio;
 import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:flutter/material.dart';
 import 'package:frontend/models/will/additional_model.dart';
+import 'package:frontend/models/will/memorial_info_model.dart';
+import 'package:frontend/models/will/usememorial_model.dart';
 import 'package:frontend/models/will/viewer_model.dart';
 import 'package:frontend/models/will/witness_model.dart';
 
@@ -104,6 +106,49 @@ class WillService {
       return {'success': false, 'statusCode': e.response?.statusCode};
     }
   }
+
+///////////////////////// 추모관 정보 //////////////////////////////////
+  Future<Map<String, dynamic>> memorialInfo(MemorialInfoModel memorialInfoModel) async {
+    try {
+      Dio.Response response =
+      await _dio.post('$baseUrl/api/will/memorialAndGraveName',
+        data: memorialInfoModel.toJson(),
+      );
+
+      if (response.statusCode == 200) {
+        return {'success': true};
+      } else {
+        return {'success': false, 'statusCode': response.statusCode};
+      }
+    } on Dio.DioError catch (e) {
+      return {'success': false, 'statusCode': e.response?.statusCode};
+    }
+  }
+
+  ///////////////////////// 추모관 사진 저장 //////////////////////////////////
+  Future<Map<String, dynamic>> picture(File pictureFile) async {
+
+    var formData = Dio.FormData.fromMap({
+      'multipartFile': await Dio.MultipartFile.fromFile(pictureFile.path),
+    });
+
+    try {
+      _dio.options.contentType = 'multipart/form-data';
+      Dio.Response response =
+      await _dio.post(baseUrl + '/api/will/graveImage',
+        data: formData,
+      );
+
+      if (response.statusCode == 200) {
+        return {'success': true};
+      } else {
+        return {'success': false, 'statusCode': response.statusCode};
+      }
+    } on Dio.DioError catch (e) {
+      return {'success': false, 'statusCode': e.response?.statusCode};
+    }
+  }
+
 }
 
 class LoggingInterceptor extends Dio.Interceptor {

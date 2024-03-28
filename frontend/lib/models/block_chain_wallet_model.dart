@@ -24,6 +24,7 @@ class BlockChainWalletModel {
     _walletAddress = walletrAddress;
     // _key = key;
     hasWallet = true; 
+    
   }
 
 

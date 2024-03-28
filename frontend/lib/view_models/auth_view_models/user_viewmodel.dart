@@ -76,4 +76,12 @@ class UserViewModel extends ChangeNotifier {
     _user = null;
     notifyListeners();
   }
+    Future<String> fetchUserId() async {
+    String? userJson = await _storage.read(key: 'userInfo');
+    if (userJson == null) {
+      throw Exception('User info not found');
+    }
+    UserModel user = UserModel.fromJson(json.decode(userJson));
+    return user.userId;
+  }
 }
