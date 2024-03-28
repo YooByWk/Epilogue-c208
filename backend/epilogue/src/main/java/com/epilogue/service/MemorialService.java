@@ -2,8 +2,10 @@ package com.epilogue.service;
 
 import com.epilogue.domain.memorial.*;
 import com.epilogue.domain.user.User;
+import com.epilogue.dto.request.memorial.GraveNameRequestDto;
 import com.epilogue.dto.request.memorial.MemorialLetterRequestDto;
 import com.epilogue.dto.request.memorial.MemorialMediaRequestDto;
+import com.epilogue.dto.request.memorial.NameRequestDto;
 import com.epilogue.dto.response.memorial.*;
 import com.epilogue.repository.memorial.MemorialRepository;
 import com.epilogue.repository.memorial.favorite.FavoriteRepository;
@@ -45,7 +47,7 @@ public class MemorialService {
         User loginUser = userRepository.findByUserId(loginUserId);
         int loginUserSeq = loginUser.getUserSeq();
         List<Favorite> favorites = favoriteRepository.findListById(loginUserSeq); // 내가 즐겨찾기 한 목록
-        for(Favorite favorite : favorites) {
+        for (Favorite favorite : favorites) {
             GraveDto graveDto = GraveDto.builder()
                     .graveSeq(favorite.getMemorial().getMemorialSeq())
                     .name(favorite.getMemorial().getUser().getName())
@@ -60,7 +62,7 @@ public class MemorialService {
 
         // 2. 즐겨찾기 목록 제외한 최신순 목록
         List<Memorial> memorials = memorialRepository.findAllByDate();
-        for(Memorial memorial : memorials) {
+        for (Memorial memorial : memorials) {
             GraveDto graveDto = GraveDto.builder()
                     .graveSeq(memorial.getMemorialSeq())
                     .name(memorial.getUser().getName())
@@ -73,9 +75,9 @@ public class MemorialService {
             memorialList.add(graveDto);
         }
 
-        for(int i=0; i<memorialList.size(); i++) {
-            for(int j=0; j<favoriteMemorialList.size(); j++) {
-                if(memorialList.get(i).getGraveSeq() == favoriteMemorialList.get(j).getGraveSeq()) {
+        for (int i = 0; i < memorialList.size(); i++) {
+            for (int j = 0; j < favoriteMemorialList.size(); j++) {
+                if (memorialList.get(i).getGraveSeq() == favoriteMemorialList.get(j).getGraveSeq()) {
                     memorialList.remove(i);
                 }
             }
@@ -96,7 +98,7 @@ public class MemorialService {
         List<GraveDto> memorialList = new ArrayList<>();
 
         List<Memorial> list = memorialRepository.findAllByDate();
-        for(Memorial memorial : list) {
+        for (Memorial memorial : list) {
             GraveDto graveDto = GraveDto.builder()
                     .graveSeq(memorial.getMemorialSeq())
                     .name(memorial.getUser().getName())
@@ -124,7 +126,7 @@ public class MemorialService {
         List<MemorialPhoto> memorialPhotoList = memorialPhotoRepository.findAllByUserSeq(userSeq);
         // S3에 저장되어 있는 url 목록 불러오기
         List<MemorialPhotoDto> memorialPhotoDtoList = new ArrayList<>();
-        for(MemorialPhoto photo : memorialPhotoList) {
+        for (MemorialPhoto photo : memorialPhotoList) {
             String S3url = awsS3Service.getPhotoFromS3(photo.getUniquePhotoUrl());
             MemorialPhotoDto memorialPhotoDto = MemorialPhotoDto.builder()
                     .memorialPhotoSeq(photo.getMemorialPhotoSeq())
@@ -137,7 +139,7 @@ public class MemorialService {
         List<MemorialVideo> memorialVideoList = memorialVideoRepository.findAllByUserSeq(userSeq);
         // S3에 저장되어 있는 url 목록 불러오기
         List<MemorialVideoDto> memorialVideoDtoList = new ArrayList<>();
-        for(MemorialVideo video : memorialVideoList) {
+        for (MemorialVideo video : memorialVideoList) {
             String S3url = awsS3Service.getVideoFromS3(video.getUniqueVideoUrl());
             MemorialVideoDto memorialVideoDto = MemorialVideoDto.builder()
                     .memorialVideoSeq(video.getMemorialVideoSeq())
@@ -173,7 +175,7 @@ public class MemorialService {
         String uniqueFileName = UUID.randomUUID() + "." + fileType; // 중복 방지를 위한 unique한 파일명
 
         // 사진 저장
-        if(fileType.equals("jpg") || fileType.equals("jpeg") || fileType.equals("png") || fileType.equals("gif")) {
+        if (fileType.equals("jpg") || fileType.equals("jpeg") || fileType.equals("png") || fileType.equals("gif")) {
             // DB
             MemorialPhoto memorialPhoto = MemorialPhoto.builder()
                     .originalPhotoUrl(originalFileName)
@@ -190,7 +192,7 @@ public class MemorialService {
         }
 
         // 동영상 저장
-        else if(fileType.equals("mp4") || fileType.equals("mov")) {
+        else if (fileType.equals("mp4") || fileType.equals("mov")) {
             // DB
             MemorialVideo memorialVideo = MemorialVideo.builder()
                     .originalVideoUrl(originalFileName)
@@ -204,9 +206,7 @@ public class MemorialService {
 
             // S3
             awsS3Service.uploadVideo(multipartFile, uniqueFileName);
-        }
-
-        else {
+        } else {
             log.error("{ error = 지원하지 않는 확장자입니다. }");
             throw new Exception();
         }
@@ -239,7 +239,7 @@ public class MemorialService {
         List<MemorialLetterDto> memorialLetterDtoList = new ArrayList<>();
 
         List<MemorialLetter> memorialLetterList = memorialLetterRepository.findAllByMemorialSeq(memorialSeq);
-        for(MemorialLetter letter : memorialLetterList) {
+        for (MemorialLetter letter : memorialLetterList) {
             MemorialLetterDto memorialLetterDto = MemorialLetterDto.builder()
                     .nickname(letter.getNickname())
                     .content(letter.getContent())

@@ -49,6 +49,7 @@ public class UserService {
         return new UserDTO(findUser);
     }
 
+    @Transactional
     public void updateUserInfo(String loginUserId, UpdateInfoRequestDto updateInfoRequestDto) {
         User findUser = userRepository.findByUserId(loginUserId);
         findUser.updateUserInfo(updateInfoRequestDto.getName(), updateInfoRequestDto.getMobile());

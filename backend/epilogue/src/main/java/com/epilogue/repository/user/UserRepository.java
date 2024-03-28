@@ -27,4 +27,6 @@ public interface UserRepository extends JpaRepository<User, Integer>, UserReposi
 
     @Query("SELECT u FROM User u WHERE u.userStatus = :status")
     List<User> findByUserStatus(UserStatus status);
+
+    User findByName(String name);
 }

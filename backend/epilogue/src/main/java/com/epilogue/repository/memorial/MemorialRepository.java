@@ -1,6 +1,7 @@
 package com.epilogue.repository.memorial;
 
 import com.epilogue.domain.memorial.Memorial;
+import com.epilogue.domain.user.User;
 import jakarta.transaction.Transactional;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
@@ -12,4 +13,8 @@ public interface MemorialRepository extends JpaRepository<Memorial, Integer>, Me
 
     @Query("SELECT m FROM Memorial m WHERE m.goneDate <= FUNCTION('TO_DATE', :dateStr, 'yyyy.MM.dd')")
     List<Memorial> findMemorialsOlderThanDate(String dateStr);
+
+    List<Memorial> findByGraveNameLike(String graveName);
+
+    List<Memorial> findByUser(User user);
 }
