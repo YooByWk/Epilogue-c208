@@ -182,11 +182,6 @@ class SignupViewModel extends ChangeNotifier {
   Future<void> signup() async {
     _isLoading = true;
     _errorMessage = null;
-    debugPrint(_signupData.name);
-    debugPrint(_signupData.userId);
-    debugPrint(_signupData.password);
-    debugPrint(_signupData.mobile);
-    debugPrint(_signupData.birth);
     notifyListeners();
 
     if (_userIdExists != null) {
@@ -195,8 +190,6 @@ class SignupViewModel extends ChangeNotifier {
       notifyListeners();
       return;
     }
-
-    await _authService.delToken();
 
     final result = await _authService.signup(_signupData);
     _isLoading = false;

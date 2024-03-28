@@ -1,3 +1,4 @@
+import 'dart:convert';
 import 'package:dio/dio.dart' as Dio;
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 import 'package:frontend/models/user_model.dart';
@@ -29,9 +30,12 @@ class UserService {
   Future<UserModel> fetchUserData() async {
     try {
       Dio.Response response = await _dio.get('$baseUrl/api/user');
-      debugPrint('응답 상태 코드: ${response.statusCode}');
-      debugPrint('응답 데이터: ${response.data}');
-      return UserModel.fromJson(response.data);
+      UserModel user = UserModel.fromJson(response.data);
+
+      // 유저 정보 로컬에 저장
+      String userJson = json.encode(user.toJson());
+      await _storage.write(key: 'userInfo', value: userJson);
+      return user;
     } catch (e) {
       throw Exception('정보를 불러오는 데 실패했습니다.');
     }
