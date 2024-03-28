@@ -315,25 +315,25 @@ public class MemorialService {
         }
     }
 
-    public List<GraveDto> viewSearchedMemorialList(String searchWord) {
-        List<GraveDto> graveDtoList = new ArrayList<>();
-
-//        List<Memorial> memorialList = memorialRepository.findBySearchWord(searchWord);
-//        List<Memorial> memorialList = memorialRepository.findByUserNameLike("%" + searchWord + "%");
-        List<Memorial> memorialList = memorialRepository.findByUserNameIsContaining("%" + searchWord + "%");
-        log.info("이름 : {}", memorialList.get(0).getUser().getName());
-        for(Memorial memorial : memorialList) {
-            GraveDto graveDto = GraveDto.builder()
-                    .graveSeq(memorial.getMemorialSeq())
-                    .name(memorial.getUser().getName())
-                    .birth(memorial.getUser().getBirth())
-                    .goneDate(memorial.getGoneDate())
-                    .graveName(memorial.getGraveName())
-                    .graveImg(awsS3Service.getGraveImageFromS3(memorial.getGraveImg()))
-                    .build();
-            graveDtoList.add(graveDto);
-        }
-        return graveDtoList;
-    }
+//    public List<GraveDto> viewSearchedMemorialList(String searchWord) {
+//        List<GraveDto> graveDtoList = new ArrayList<>();
+//
+////        List<Memorial> memorialList = memorialRepository.findBySearchWord(searchWord);
+////        List<Memorial> memorialList = memorialRepository.findByUserNameLike("%" + searchWord + "%");
+//        List<Memorial> memorialList = memorialRepository.findByUserNameIsContaining("%" + searchWord + "%");
+//        log.info("이름 : {}", memorialList.get(0).getUser().getName());
+//        for(Memorial memorial : memorialList) {
+//            GraveDto graveDto = GraveDto.builder()
+//                    .graveSeq(memorial.getMemorialSeq())
+//                    .name(memorial.getUser().getName())
+//                    .birth(memorial.getUser().getBirth())
+//                    .goneDate(memorial.getGoneDate())
+//                    .graveName(memorial.getGraveName())
+//                    .graveImg(awsS3Service.getGraveImageFromS3(memorial.getGraveImg()))
+//                    .build();
+//            graveDtoList.add(graveDto);
+//        }
+//        return graveDtoList;
+//    }
 
 }

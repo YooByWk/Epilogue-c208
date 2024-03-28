@@ -7,6 +7,7 @@ import com.epilogue.dto.request.memorial.MemorialMediaRequestDto;
 import com.epilogue.dto.response.memorial.*;
 import com.epilogue.service.MemorialService;
 import io.lettuce.core.dynamic.annotation.Param;
+import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.Parameter;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.tags.Tag;
@@ -32,6 +33,7 @@ public class MemorialController {
 
     private final MemorialService memorialService;
 
+    @Operation(summary = "디지털 추모관 리스트 조회 API")
     @GetMapping("/list")
     @ApiResponse(responseCode = "200", description = "성공")
     public ResponseEntity<MemorialResponseDto> ViewMemorialList(Principal principal) {
@@ -47,6 +49,7 @@ public class MemorialController {
         return new ResponseEntity<>(memorialResponseDto, HttpStatus.OK);
     }
 
+    @Operation(summary = "디지털 추모관 방문 API")
     @GetMapping("/visit/{memorialSeq}")
     @ApiResponse(responseCode = "200", description = "성공")
     public ResponseEntity<GraveResponseDto> viewMemorial(@Parameter(description = "디지털 추모관 식별키") @PathVariable int memorialSeq) {
@@ -54,6 +57,7 @@ public class MemorialController {
         return new ResponseEntity<>(graveResponseDto, HttpStatus.OK);
     }
 
+    @Operation(summary = "디지털 추모관 사진 및 영상 업로드 API")
     @PostMapping(value = "/media/{memorialSeq}", consumes = {MediaType.APPLICATION_JSON_VALUE, MediaType.MULTIPART_FORM_DATA_VALUE})
     @ApiResponse(responseCode = "200", description = "성공")
     @ApiResponse(responseCode = "400", description = "파일명 또는 파일 확장자 에러")
@@ -81,6 +85,7 @@ public class MemorialController {
         return new ResponseEntity<>(HttpStatus.OK);
     }
 
+    @Operation(summary = "디지털 추모관 사진 조회 API")
     @GetMapping("/photo/{memorialPhotoSeq}")
     @ApiResponse(responseCode = "200", description = "성공")
     public ResponseEntity<MemorialMediaResponseDto> viewMemorialPhoto(@Parameter(description = "추모관 사진 식별키") @PathVariable int memorialPhotoSeq) {
@@ -88,6 +93,7 @@ public class MemorialController {
         return new ResponseEntity<>(memorialMediaResponseDto, HttpStatus.OK);
     }
 
+    @Operation(summary = "디지털 추모관 동영상 조회 API")
     @GetMapping("/video/{memorialVideoSeq}")
     @ApiResponse(responseCode = "200", description = "성공")
     public ResponseEntity<MemorialMediaResponseDto> viewMemorialVideo(@Parameter(description = "추모관 동영상 식별키") @PathVariable int memorialVideoSeq) {
@@ -95,6 +101,7 @@ public class MemorialController {
         return new ResponseEntity<>(memorialMediaResponseDto, HttpStatus.OK);
     }
 
+    @Operation(summary = "디지털 추모관 편지 목록 조회 API")
     @GetMapping("/letter/{memorialSeq}")
     @ApiResponse(responseCode = "200", description = "성공")
     public ResponseEntity<List<MemorialLetterDto>> viewMemorialLetterList(@Parameter(description = "디지털 추모관 식별키") @PathVariable int memorialSeq) {
@@ -102,6 +109,7 @@ public class MemorialController {
         return new ResponseEntity<>(memorialLetterDtoList, HttpStatus.OK);
     }
 
+    @Operation(summary = "디지털 추모관 편지 남기기 API")
     @PostMapping("/letter/{memorialSeq}")
     @ApiResponse(responseCode = "200", description = "성공")
     @ApiResponse(responseCode = "403", description = "로그인 에러")
@@ -114,6 +122,7 @@ public class MemorialController {
         }
     }
 
+    @Operation(summary = "디지털 추모관 즐겨찾기 추가 API")
     @PostMapping("/favorite/{memorialSeq}")
     @ApiResponse(responseCode = "200", description = "성공")
     @ApiResponse(responseCode = "403", description = "로그인 에러")
@@ -127,6 +136,7 @@ public class MemorialController {
         }
     }
 
+    @Operation(summary = "나의 즐겨찾기 묘비 목록 조회 API")
     @GetMapping("/favorite")
     @ApiResponse(responseCode = "200", description = "성공")
     @ApiResponse(responseCode = "403", description = "로그인 에러")
@@ -141,6 +151,7 @@ public class MemorialController {
 
     }
 
+    @Operation(summary = "디지털 추모관 컨텐츠 신고 API")
     @PostMapping("/report/{type}/{mediaSeq}")
     @ApiResponse(responseCode = "200", description = "성공")
     @ApiResponse(responseCode = "403", description = "로그인 에러")
@@ -153,11 +164,11 @@ public class MemorialController {
         }
     }
 
-    @GetMapping("/search/{searchWord}")
-    @ApiResponse(responseCode = "200", description = "성공")
-    public ResponseEntity<List<GraveDto>> viewSearchedMemorialList(@Parameter(description = "검색어(고인이름 or 묘비명)") @PathVariable String searchWord) {
-        List<GraveDto> graveDtoList = memorialService.viewSearchedMemorialList(searchWord);
-        return new ResponseEntity<>(graveDtoList, HttpStatus.OK);
-    }
+//    @GetMapping("/search/{searchWord}")
+//    @ApiResponse(responseCode = "200", description = "성공")
+//    public ResponseEntity<List<GraveDto>> viewSearchedMemorialList(@Parameter(description = "검색어(고인이름 or 묘비명)") @PathVariable String searchWord) {
+//        List<GraveDto> graveDtoList = memorialService.viewSearchedMemorialList(searchWord);
+//        return new ResponseEntity<>(graveDtoList, HttpStatus.OK);
+//    }
 
 }
