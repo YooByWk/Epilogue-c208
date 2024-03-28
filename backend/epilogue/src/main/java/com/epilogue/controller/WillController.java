@@ -101,6 +101,8 @@ public class WillController {
     public ResponseEntity<Void> saveAdditionalInformation(@Parameter(description = "추가 정보 요청 DTO") @RequestBody WillAdditionalRequestDto willAdditionalRequestDto, Principal principal) {
         // 추가 정보 저장
         willService.saveAdditionalInformation(willAdditionalRequestDto, principal);
+        willService.sendWillApplyLink(principal);
+
         return new ResponseEntity<>(HttpStatus.OK);
     }
 

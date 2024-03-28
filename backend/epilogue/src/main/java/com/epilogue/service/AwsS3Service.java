@@ -31,7 +31,6 @@ public class AwsS3Service {
 
     private final AmazonS3 amazonS3;
     private final UserRepository userRepository;
-    private final WillRepository willRepository;
 
     @Value("${cloud.aws.s3.bucketName}")
     private String bucketName;

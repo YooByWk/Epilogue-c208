@@ -17,8 +17,6 @@ public class UserDTO {
     private String mobile;
     private String birth;
 
-    private String role;
-
     public UserDTO(User user) {
         this.name = user.getName();
         this.userId = user.getUserId();
