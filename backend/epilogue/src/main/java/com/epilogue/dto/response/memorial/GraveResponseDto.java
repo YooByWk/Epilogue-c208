@@ -1,8 +1,6 @@
 package com.epilogue.dto.response.memorial;
 
 import com.epilogue.domain.memorial.MemorialLetter;
-import com.epilogue.domain.memorial.MemorialPhoto;
-import com.epilogue.domain.memorial.MemorialVideo;
 import io.swagger.v3.oas.annotations.media.Schema;
 import jakarta.validation.constraints.NotNull;
 import lombok.Builder;
@@ -48,7 +46,7 @@ public class GraveResponseDto {
     private int videoCount;
 
     @Schema(description = "디지털 추모관 편지 목록")
-    private List<MemorialLetter> memorialLetterList;
+    private List<MemorialLetterDto> memorialLetterList;
 
     @Schema(description = "디지털 추모관 편지 개수")
     private int letterCount;

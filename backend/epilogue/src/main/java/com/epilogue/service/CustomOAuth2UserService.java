@@ -7,7 +7,6 @@ import com.epilogue.dto.response.user.UserDTO;
 import com.epilogue.repository.user.UserRepository;
 import com.epilogue.util.CustomOAuth2User;
 import lombok.RequiredArgsConstructor;
-import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.oauth2.client.userinfo.DefaultOAuth2UserService;
 import org.springframework.security.oauth2.client.userinfo.OAuth2UserRequest;
 import org.springframework.security.oauth2.core.OAuth2AuthenticationException;
