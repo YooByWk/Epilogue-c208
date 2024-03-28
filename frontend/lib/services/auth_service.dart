@@ -17,7 +17,7 @@ class AuthService {
         String? token = await _storage.read(key: 'token');
         if (token != null) {
           // 요청 헤더에 토큰을 추가한다
-          options.headers['Authorization'] = 'Bearer $token';
+          options.headers['Access_Token'] = token;
         }
         return handler.next(options); // 요청을 계속 진행한다
       },
@@ -36,6 +36,8 @@ class AuthService {
 
       if (response.statusCode == 200) {
         String? token = response.headers.value('Access_Token');
+        debugPrint('토큰값: $token');
+
         if (token != null) {
           _storage.deleteAll(); // 기존 토큰 삭제
           await _storage.write(key: 'token', value: token);
@@ -137,6 +139,7 @@ class LoggingInterceptor extends Dio.Interceptor {
   void onRequest(
       Dio.RequestOptions options, Dio.RequestInterceptorHandler handler) {
     debugPrint("REQUEST[${options.method}] => PATH: ${options.path}");
+    debugPrint("Request Header: ${options.headers}");
     super.onRequest(options, handler);
   }
 
