@@ -1,12 +1,14 @@
 class WitnessModel {
   String witnessName;
   String? witnessEmail;
-  String? witnessMobile;
+  String witnessMobile;
+  String witnessCertificationNumber;
 
   WitnessModel({
     required this.witnessName,
     this.witnessEmail,
-    this.witnessMobile,
+    required this.witnessMobile,
+    required this.witnessCertificationNumber,
   });
 
   // 인스턴스 생성 (json을 dart객체로 변환)
@@ -15,6 +17,7 @@ class WitnessModel {
       witnessName: json['witnessName'],
       witnessEmail: json['witnessEmail'],
       witnessMobile: json['witnessMobile'],
+      witnessCertificationNumber: json['witnessCertificationNumber'],
     );
   }
 
@@ -23,6 +26,7 @@ class WitnessModel {
     'witnessName': witnessName,
     'witnessEmail': witnessEmail,
     'witnessMobile': witnessMobile,
+    'witnessCertificationNumber': witnessCertificationNumber,
   };
 }
 

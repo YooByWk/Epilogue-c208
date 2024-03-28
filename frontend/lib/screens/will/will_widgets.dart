@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:frontend/main.dart';
-import 'package:frontend/screens/main/main_body_screen.dart';
 import 'package:frontend/view_models/will_view_models/witness_viewmodel.dart';
+import 'package:frontend/widgets/common_button.dart';
 
 class WillEpitaphWidget extends StatelessWidget {
   const WillEpitaphWidget({super.key});
@@ -39,10 +39,10 @@ class WillEpitaphWidget extends StatelessWidget {
         decoration: InputDecoration(
           hintText: '묘비명 입력하기',
           hintStyle: TextStyle(
-          color: Colors.black,
-          fontSize: 30,
-          fontWeight: FontWeight.bold,
-        ),
+            color: Colors.black,
+            fontSize: 30,
+            fontWeight: FontWeight.bold,
+          ),
           enabledBorder: UnderlineInputBorder(
             borderSide: BorderSide(
               color: Colors.white,
@@ -87,6 +87,7 @@ class TextWidget extends StatelessWidget {
   }
 }
 
+////////////////////// 장례 외 추가 정보 선택 버튼 //////////////////////////
 class ChoiceButtonWidget extends StatefulWidget {
   _ChoiceButtonWidgetState createState() => _ChoiceButtonWidgetState();
 
@@ -102,7 +103,6 @@ class ChoiceButtonWidget extends StatefulWidget {
 }
 
 class _ChoiceButtonWidgetState extends State<ChoiceButtonWidget> {
-
   @override
   Widget build(BuildContext context) {
     return GestureDetector(
@@ -122,13 +122,17 @@ class _ChoiceButtonWidgetState extends State<ChoiceButtonWidget> {
           ),
           child: Row(
             children: [
-              SizedBox(width: 10,),
+              SizedBox(
+                width: 10,
+              ),
               Icon(
                 Icons.check_circle_outline,
                 color: widget.isSelected ? themeColour5 : Colors.black26,
                 size: 35,
               ),
-              SizedBox(width: 10,),
+              SizedBox(
+                width: 10,
+              ),
               Text(
                 widget.text,
                 textAlign: TextAlign.start,
@@ -147,6 +151,7 @@ class _ChoiceButtonWidgetState extends State<ChoiceButtonWidget> {
   }
 }
 
+//////////////// 유언 생성 중 선택 버튼 ///////////////////////////
 class WillCommonButtonWidget extends StatelessWidget {
   final String text;
   final Color? backgroundColor;
@@ -250,14 +255,16 @@ class TextButtonWidget extends StatelessWidget {
                 ),
               if (nextText != null)
                 TextButton(
-                  onPressed: onPressed == null ? () {
-                    Navigator.push(
-                      context,
-                      MaterialPageRoute(
-                        builder: (context) => nextPage!,
-                      ),
-                    );
-                  } : onPressed,
+                  onPressed: onPressed == null
+                      ? () {
+                          Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                              builder: (context) => nextPage!,
+                            ),
+                          );
+                        }
+                      : onPressed,
                   child: Text(
                     nextText!,
                     style: TextStyle(
@@ -276,6 +283,7 @@ class TextButtonWidget extends StatelessWidget {
   }
 }
 
+//////////////////// 녹음 중 스탑워치 ////////////////////////////////
 class StopwatchWidget extends StatefulWidget {
   @override
   _StopwatchWidgetState createState() => _StopwatchWidgetState();
@@ -291,6 +299,7 @@ class _StopwatchWidgetState extends State<StopwatchWidget> {
       _elapsedTime = _formatTime(_stopwatch.elapsedMilliseconds);
     });
   }
+
   void _stopTimer() {
     _stopwatch.reset();
     setState(() {
@@ -323,146 +332,209 @@ class _StopwatchWidgetState extends State<StopwatchWidget> {
   }
 }
 
-
-
 ////////////////////////////증인 위젯//////////////////////
 class WillWitnessWidget extends StatelessWidget {
   final WitnessViewModel viewModel;
 
   WillWitnessWidget({
     required this.viewModel,
-
   });
 
   @override
   Widget build(BuildContext context) {
-    return Column(
-      children: [
-        Container(
+    return Column(children: [
+      Container(
           margin: EdgeInsets.only(
             top: 10,
           ),
-          height: MediaQuery.of(context).size.height * 0.22,
+          height: MediaQuery.of(context).size.height * 0.25,
           width: MediaQuery.of(context).size.width * 0.9,
           alignment: Alignment.center,
           decoration: BoxDecoration(
             color: themeColour3.withOpacity(0.3),
             borderRadius: BorderRadius.circular(20),
           ),
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                children: [
-                  SizedBox(width: 20),
-                  Text(
-                    '이름',
-                    style: TextStyle(
-                      fontSize: 20,
-                      color: themeColour4,
-                      fontWeight: FontWeight.bold,
-                    ),
-                  ),
-                  SizedBox(width: 20),
-                  Expanded(
-                    child: TextFormField(
-                      onChanged: (value) => viewModel.setWitnessName(value),
-                      style: TextStyle(
-                        decorationThickness: 0,
-                        fontSize: 20,
-                        color: themeColour5,
-                      ),
-                      decoration: InputDecoration(
-                        hintText: '이싸피',
-                        hintStyle: TextStyle(color: themeColour5),
-                        enabledBorder: UnderlineInputBorder(
-                          borderSide: BorderSide(color: Color(0xFFececec)),
+          child: Padding(
+              padding: const EdgeInsets.only(right: 20.0),
+              child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      children: [
+                        SizedBox(width: 20),
+                        Text(
+                          '성함',
+                          style: TextStyle(
+                            fontSize: 20,
+                            color: themeColour4,
+                            fontWeight: FontWeight.bold,
+                          ),
                         ),
-                        focusedBorder: UnderlineInputBorder(
-                          borderSide: BorderSide(color: Color(0xFFececec)),
+                        SizedBox(width: 20),
+                        Expanded(
+                          child: TextFormField(
+                            onChanged: (value) =>
+                                viewModel.setWitnessName(value),
+                            style: TextStyle(
+                              decorationThickness: 0,
+                              fontSize: 20,
+                              color: themeColour5,
+                            ),
+                            decoration: InputDecoration(
+                              hintText: '이싸피',
+                              hintStyle: TextStyle(
+                                  color: themeColour4.withOpacity(0.8)),
+                              enabledBorder: UnderlineInputBorder(
+                                borderSide:
+                                    BorderSide(color: Colors.transparent),
+                              ),
+                              focusedBorder: UnderlineInputBorder(
+                                borderSide:
+                                    BorderSide(color: Colors.transparent),
+                              ),
+                            ),
+                          ),
                         ),
-                      ),
+                      ],
                     ),
-                  ),
-                ],
-              ),
-              Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                children: [
-                  SizedBox(width: 20),
-                  Text(
-                    '번호',
-                    style: TextStyle(
-                      fontSize: 20,
-                      color: themeColour4,
-                      fontWeight: FontWeight.bold,
-                    ),
-                  ),
-                  SizedBox(width: 20),
-                  Expanded(
-                    child: TextFormField(
-                      onChanged: (value) => viewModel.setWitnessMobile(value),
-                      style: TextStyle(
-                        decorationThickness: 0,
-                        fontSize: 20,
-                        color: themeColour5,
-                      ),
-                      decoration: InputDecoration(
-                        hintText: '01012345678',
-                        hintStyle: TextStyle(color: themeColour5),
-                        enabledBorder: UnderlineInputBorder(
-                          borderSide: BorderSide(color: Color(0xFFececec)),
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      children: [
+                        SizedBox(width: 20),
+                        Text(
+                          '번호',
+                          style: TextStyle(
+                            fontSize: 20,
+                            color: themeColour4,
+                            fontWeight: FontWeight.bold,
+                          ),
                         ),
-                        focusedBorder: UnderlineInputBorder(
-                          borderSide: BorderSide(color: Color(0xFFececec)),
+                        SizedBox(width: 20),
+                        Expanded(
+                          child: TextFormField(
+                            onChanged: (value) =>
+                                viewModel.setWitnessMobile(value),
+                            style: TextStyle(
+                              decorationThickness: 0,
+                              fontSize: 20,
+                              color: themeColour5,
+                            ),
+                            decoration: InputDecoration(
+                              hintText: '01012345678',
+                              hintStyle: TextStyle(
+                                  color: themeColour4.withOpacity(0.8)),
+                              enabledBorder: UnderlineInputBorder(
+                                borderSide:
+                                    BorderSide(color: Colors.transparent),
+                              ),
+                              focusedBorder: UnderlineInputBorder(
+                                borderSide:
+                                    BorderSide(color: Colors.transparent),
+                              ),
+                            ),
+                          ),
                         ),
-                      ),
+                        SizedBox(width: 20),
+                        CommonButtonWidget(
+                            text: '핸드폰 인증',
+                            width: 100,
+                            onPressed: () async {
+                              await viewModel.mobileCertificationSend();
+                            })
+                      ],
                     ),
-                  ),
-                  SizedBox(width: 20),
-                  TextButton(onPressed: () {}, child: Text('휴대폰 인증')),
-                ],
-              ),
-              Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                children: [
-                  SizedBox(width: 20),
-                  Text(
-                    '이메일',
-                    style: TextStyle(
-                      fontSize: 20,
-                      color: themeColour4,
-                      fontWeight: FontWeight.bold,
-                    ),
-                  ),
-                  SizedBox(width: 20),
-                  Expanded(
-                    child: TextFormField(
-                      onChanged: (value) => viewModel.setWitnessEmail(value),
-                      style: TextStyle(
-                        decorationThickness: 0,
-                        fontSize: 20,
-                        color: themeColour5,
-                      ),
-                      decoration: InputDecoration(
-                        hintText: 'ssafy@samsung.com',
-                        hintStyle: TextStyle(color: themeColour5),
-                        enabledBorder: UnderlineInputBorder(
-                          borderSide: BorderSide(color: Color(0xFFececec)),
-                        ),
-                        focusedBorder: UnderlineInputBorder(
-                          borderSide: BorderSide(color: Color(0xFFececec)),
-                        ),
-                      ),
-                    ),
-                  ),
-                ],
-              ),
-            ],
-          ),
-        ),
-      ],
-    );
+                    Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        children: [
+                          SizedBox(width: 20),
+                          Text(
+                            '인증번호',
+                            style: TextStyle(
+                              fontSize: 20,
+                              color: themeColour4,
+                              fontWeight: FontWeight.bold,
+                            ),
+                          ),
+                          SizedBox(width: 20),
+                          Expanded(
+                            child: TextFormField(
+                              onChanged: (value) =>
+                                  viewModel.setCertificationNumber(value),
+                              style: TextStyle(
+                                decorationThickness: 0,
+                                fontSize: 20,
+                                color: themeColour5,
+                              ),
+                              decoration: InputDecoration(
+                                hintText: '인증번호를 입력해주세요',
+                                hintStyle: TextStyle(
+                                    color: themeColour4.withOpacity(0.8)),
+                                enabledBorder: UnderlineInputBorder(
+                                  borderSide:
+                                      BorderSide(color: Colors.transparent),
+                                ),
+                                focusedBorder: UnderlineInputBorder(
+                                  borderSide:
+                                      BorderSide(color: Colors.transparent),
+                                ),
+                              ),
+                            ),
+                          ),
+                          CommonButtonWidget(
+                              text: '확인',
+                              width: 60,
+                              onPressed: () async {
+                                bool result = await viewModel.verifyCode();
+                                debugPrint(result.toString());
+                                if (result) {
+                                  ScaffoldMessenger.of(context).showSnackBar(
+                                      SnackBar(content: Text('인증에 성공했습니다.')));
+                                } else {
+                                  ScaffoldMessenger.of(context).showSnackBar(
+                                      SnackBar(content: Text('인증번호를 확인해주세요.')));
+                                }
+                              }),
+                        ]),
+                    Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        children: [
+                          SizedBox(width: 20),
+                          Text(
+                            '이메일',
+                            style: TextStyle(
+                              fontSize: 20,
+                              color: themeColour4,
+                              fontWeight: FontWeight.bold,
+                            ),
+                          ),
+                          SizedBox(width: 20),
+                          Expanded(
+                            child: TextFormField(
+                              onChanged: (value) =>
+                                  viewModel.setWitnessEmail(value),
+                              style: TextStyle(
+                                decorationThickness: 0,
+                                fontSize: 20,
+                                color: themeColour5,
+                              ),
+                              decoration: InputDecoration(
+                                hintText: 'ssafy@samsung.com',
+                                hintStyle: TextStyle(
+                                    color: themeColour4.withOpacity(0.8)),
+                                enabledBorder: UnderlineInputBorder(
+                                  borderSide:
+                                      BorderSide(color: Colors.transparent),
+                                ),
+                                focusedBorder: UnderlineInputBorder(
+                                  borderSide:
+                                      BorderSide(color: Colors.transparent),
+                                ),
+                              ),
+                            ),
+                          ),
+                        ]),
+                  ])))
+    ]);
   }
 }
