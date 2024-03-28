@@ -48,7 +48,7 @@ public class GraveResponseDto {
     private int videoCount;
 
     @Schema(description = "디지털 추모관 편지 목록")
-    private List<MemorialLetter> memorialLetterList;
+    private List<MemorialLetterDto> memorialLetterList;
 
     @Schema(description = "디지털 추모관 편지 개수")
     private int letterCount;

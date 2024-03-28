@@ -8,6 +8,9 @@ import lombok.Getter;
 @Getter
 @Builder
 public class MemorialLetterDto {
+    @Schema(description = "추모관 편지 식별키")
+    private int memorialLetterSeq;
+    
     @Schema(description = "작성자 닉네임")
     private String nickname;
 

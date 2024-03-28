@@ -7,6 +7,8 @@ import jakarta.validation.constraints.NotNull;
 import lombok.*;
 import org.hibernate.annotations.ColumnDefault;
 
+import java.sql.Timestamp;
+
 @Entity
 @Getter
 @Setter
@@ -39,6 +41,10 @@ public class MemorialVideo {
 
     @Schema(description = "설명 내용")
     private String content;
+
+    @NotNull
+    @Schema(description = "작성일")
+    private Timestamp writtenDate;
 
     @NotNull
     @Schema(description = "신고수")
