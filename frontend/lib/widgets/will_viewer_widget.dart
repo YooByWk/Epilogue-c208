@@ -6,10 +6,13 @@ import 'package:frontend/view_models/will_view_models/viewer_viewmodel.dart';
 import 'package:provider/provider.dart';
 
 class WillViewerWidget extends StatelessWidget {
-  final bool isSaved;
   final ViewerViewModel viewModel;
+  bool isSaved;
 
-  WillViewerWidget({required this.viewModel, required this.isSaved});
+  WillViewerWidget({
+    required this.viewModel,
+    required this.isSaved,
+  });
 
   @override
   Widget build(BuildContext context) {
@@ -20,7 +23,7 @@ class WillViewerWidget extends StatelessWidget {
             top: 10,
           ),
           height: MediaQuery.of(context).size.height * 0.22,
-          width: MediaQuery.of(context).size.width * 0.9,
+          width: MediaQuery.of(context).size.width * 0.8,
           alignment: Alignment.center,
           decoration: BoxDecoration(
             color: themeColour3.withOpacity(0.3),
@@ -44,7 +47,6 @@ class WillViewerWidget extends StatelessWidget {
                   SizedBox(width: 20),
                   Expanded(
                     child: TextFormField(
-                      enabled: !isSaved,
                       onChanged: (value) => viewModel.setViewerName(value),
                       style: TextStyle(
                         decorationThickness: 0,
@@ -82,7 +84,6 @@ class WillViewerWidget extends StatelessWidget {
                   SizedBox(width: 20),
                   Expanded(
                     child: TextFormField(
-                      enabled: !isSaved,
                       onChanged: (value) => viewModel.setViewerMobile(value),
                       style: TextStyle(
                         decorationThickness: 0,
@@ -120,7 +121,6 @@ class WillViewerWidget extends StatelessWidget {
                   SizedBox(width: 20),
                   Expanded(
                     child: TextFormField(
-                      enabled: !isSaved,
                       onChanged: (value) => viewModel.setViewerEmail(value),
                       style: TextStyle(
                         decorationThickness: 0,
@@ -142,7 +142,7 @@ class WillViewerWidget extends StatelessWidget {
                     ),
                   ),
                 ],
-              )
+              ),
             ],
           ),
         ),

@@ -25,8 +25,8 @@ class ViewerViewModel extends ChangeNotifier {
     _viewerData = ViewerModel(viewerName: value,
         viewerEmail: _viewerData.viewerEmail,
         viewerMobile: _viewerData.viewerMobile);
-        debugPrint(_viewerData.viewerName);
-        debugPrint(_viewerData.viewerMobile);
+        // debugPrint(_viewerData.viewerName);
+        // debugPrint(_viewerData.viewerMobile);
     notifyListeners();
   }
 
@@ -67,6 +67,11 @@ class ViewerViewModel extends ChangeNotifier {
     // for (var viewer in _viewerList) {
     //   debugPrint('${viewer.viewerName}'); // 리스트 내의 각 Viewer 이름 출력
     // }
+  }
+
+  Future<void> deleteViewer(int index) async {
+    _viewerList.removeAt(index);
+    notifyListeners();
   }
 
   Future<void> setViewer() async {

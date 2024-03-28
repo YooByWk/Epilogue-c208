@@ -4,7 +4,6 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 import 'package:frontend/main.dart';
-import 'package:frontend/screens/will/will_check_screen.dart';
 import 'package:frontend/screens/will/will_select_memorial_screen.dart';
 import 'package:frontend/screens/will/will_widgets.dart';
 import 'package:frontend/view_models/will_view_models/viewer_viewmodel.dart';
@@ -21,8 +20,9 @@ class _WillViewerScreenState extends State<WillViewerScreen> {
   @override
   Widget build(BuildContext context) {
     return ChangeNotifierProvider(
-        create: (context) => ViewerViewModel(),
-        child: Consumer<ViewerViewModel>(builder: (context, viewModel, child) {
+      create: (context) => ViewerViewModel(),
+      child: Consumer<ViewerViewModel>(
+        builder: (context, viewModel, child) {
           return Scaffold(
             appBar: AppBar(
               backgroundColor: themeColour2,
@@ -40,34 +40,53 @@ class _WillViewerScreenState extends State<WillViewerScreen> {
                       fontWeight: FontWeight.w700,
                     ),
                   ),
-                  Column(
-                    children: List.generate(counter, (index) {
-                      bool isSaved = index != counter - 1;
-                      return Column(
-                        children: [
-                          WillViewerWidget(viewModel: viewModel, isSaved: isSaved),
-                          Container(
-                              child: (index > 0)
-                                  ? ElevatedButton(
-                                      onPressed: () => delete(index),
-                                      child: Text('삭제'))
-                                  : null),
-                        ],
-                      );
-                    }),
-                  ),
-                  Padding(
-                      padding: const EdgeInsets.only(left: 20.0, top: 10.0),
-                      child: (counter < 5)
-                          ? ElevatedButton(
-                              onPressed: () {
-                                viewModel.addViewer().then((_) {
-                                  debugPrint('성공');
-                                  increment();
-                                });
-                              },
-                              child: Text('저장'))
-                          : null),
+                  // Column(
+                  SizedBox(
+                      height: MediaQuery.of(context).size.height,
+                      child: ListView.builder(
+                        scrollDirection: Axis.vertical,
+                        itemCount: min(5, viewModel.viewerList.length + 1),
+                        itemBuilder: (context, index) {
+                          if (viewModel.viewerList.length > index) {
+                            // 기존 열람인 정보 출력
+                            final item = viewModel.viewerList[index];
+                            return Row(
+                              children: [
+                                Text(item.viewerName),
+                                Text(item.viewerMobile!),
+                                Text(item.viewerEmail!),
+                                TextButton(
+                                  onPressed: () {
+                                    viewModel.deleteViewer(index).then((_) {
+                                      debugPrint('삭제 완료');
+                                    });
+                                  },
+                                  child: Text('삭제'),
+                                ),
+                              ],
+                            );
+                          } else if (index == 5) {
+                            return Text("열람인은 최대 5인까지ㄴㅇ 지정 가능합니다.");
+                          } else {
+                            return Row(
+                              children: [
+                                WillViewerWidget(
+                                  viewModel: viewModel,
+                                  isSaved: viewModel.viewerList.length > index,
+                                ),
+                                TextButton(
+                                  child: Text('저장'),
+                                  onPressed: () {
+                                    viewModel.addViewer().then((_) {
+                                      debugPrint('저장 완료');
+                                    });
+                                  },
+                                ),
+                              ],
+                            );
+                          }
+                        },
+                      ))
                 ],
               ),
             ),
@@ -102,25 +121,8 @@ class _WillViewerScreenState extends State<WillViewerScreen> {
               ),
             ),
           );
-        }));
-  }
-
-  void increment() {
-    setState(() {
-      if (counter < 5) {
-        counter++;
-      }
-    });
-  }
-
-  void delete(int index) {
-    setState(() {
-      if (counter > 1) {
-        counter--;
-        if (index > 0) {
-          (context as Element).markNeedsBuild();
-        }
-      }
-    });
+        },
+      ),
+    );
   }
 }
