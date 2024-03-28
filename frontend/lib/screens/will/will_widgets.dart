@@ -1,61 +1,70 @@
 import 'package:flutter/material.dart';
 import 'package:frontend/main.dart';
 import 'package:frontend/screens/main/main_body_screen.dart';
+import 'package:frontend/view_models/memorial_view_models/memorial_viewmodel.dart';
+import 'package:frontend/view_models/will_view_models/memorial_name_picture_viewmodel.dart';
 import 'package:frontend/view_models/will_view_models/witness_viewmodel.dart';
+import 'package:provider/provider.dart';
 
 class WillEpitaphWidget extends StatelessWidget {
-  const WillEpitaphWidget({super.key});
+  final MemorialNamePictureViewModel viewModel;
+
+
+  WillEpitaphWidget({
+    required this.viewModel,
+  });
 
   @override
   Widget build(BuildContext context) {
-    return Container(
-      margin: EdgeInsets.only(
-        top: 10,
-      ),
-      width: MediaQuery.of(context).size.width * 0.8,
-      height: MediaQuery.of(context).size.height * 0.11,
-      alignment: Alignment.center,
-      decoration: BoxDecoration(
-        color: Colors.white,
-        borderRadius: BorderRadius.circular(18),
-        border: Border.all(color: themeColour4),
-        boxShadow: [
-          BoxShadow(
-            color: themeColour4.withOpacity(0.5),
-            spreadRadius: 5,
-            blurRadius: 7,
-            offset: Offset(0, 3), // changes position of shadow
-          ),
-        ],
-      ),
-      child: TextFormField(
-        style: TextStyle(
-          decorationThickness: 0,
-          fontSize: 30,
-          color: themeColour5,
-          fontWeight: FontWeight.bold,
-        ),
-        textAlign: TextAlign.center,
-        decoration: InputDecoration(
-          hintText: '묘비명 입력하기',
-          hintStyle: TextStyle(
-          color: Colors.black,
-          fontSize: 30,
-          fontWeight: FontWeight.bold,
-        ),
-          enabledBorder: UnderlineInputBorder(
-            borderSide: BorderSide(
-              color: Colors.white,
+          return Container(
+            margin: EdgeInsets.only(
+              top: 10,
             ),
-          ),
-          focusedBorder: UnderlineInputBorder(
-            borderSide: BorderSide(
+            width: MediaQuery.of(context).size.width * 0.8,
+            height: MediaQuery.of(context).size.height * 0.11,
+            alignment: Alignment.center,
+            decoration: BoxDecoration(
               color: Colors.white,
+              borderRadius: BorderRadius.circular(18),
+              border: Border.all(color: themeColour4),
+              boxShadow: [
+                BoxShadow(
+                  color: themeColour4.withOpacity(0.5),
+                  spreadRadius: 5,
+                  blurRadius: 7,
+                  offset: Offset(0, 3), // changes position of shadow
+                ),
+              ],
             ),
-          ),
-        ),
-      ),
-    );
+            child: TextFormField(
+              onChanged: (value) => viewModel.setGraveName(value),
+              style: TextStyle(
+                decorationThickness: 0,
+                fontSize: 30,
+                color: themeColour5,
+                fontWeight: FontWeight.bold,
+              ),
+              textAlign: TextAlign.center,
+              decoration: InputDecoration(
+                hintText: '묘비명 입력하기',
+                hintStyle: TextStyle(
+                  color: Colors.black,
+                  fontSize: 30,
+                  fontWeight: FontWeight.bold,
+                ),
+                enabledBorder: UnderlineInputBorder(
+                  borderSide: BorderSide(
+                    color: Colors.white,
+                  ),
+                ),
+                focusedBorder: UnderlineInputBorder(
+                  borderSide: BorderSide(
+                    color: Colors.white,
+                  ),
+                ),
+              ),
+            ),
+          );
   }
 }
 
@@ -102,7 +111,6 @@ class ChoiceButtonWidget extends StatefulWidget {
 }
 
 class _ChoiceButtonWidgetState extends State<ChoiceButtonWidget> {
-
   @override
   Widget build(BuildContext context) {
     return GestureDetector(
@@ -122,13 +130,17 @@ class _ChoiceButtonWidgetState extends State<ChoiceButtonWidget> {
           ),
           child: Row(
             children: [
-              SizedBox(width: 10,),
+              SizedBox(
+                width: 10,
+              ),
               Icon(
                 Icons.check_circle_outline,
                 color: widget.isSelected ? themeColour5 : Colors.black26,
                 size: 35,
               ),
-              SizedBox(width: 10,),
+              SizedBox(
+                width: 10,
+              ),
               Text(
                 widget.text,
                 textAlign: TextAlign.start,
@@ -250,14 +262,16 @@ class TextButtonWidget extends StatelessWidget {
                 ),
               if (nextText != null)
                 TextButton(
-                  onPressed: onPressed == null ? () {
-                    Navigator.push(
-                      context,
-                      MaterialPageRoute(
-                        builder: (context) => nextPage!,
-                      ),
-                    );
-                  } : onPressed,
+                  onPressed: onPressed == null
+                      ? () {
+                          Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                              builder: (context) => nextPage!,
+                            ),
+                          );
+                        }
+                      : onPressed,
                   child: Text(
                     nextText!,
                     style: TextStyle(
@@ -291,6 +305,7 @@ class _StopwatchWidgetState extends State<StopwatchWidget> {
       _elapsedTime = _formatTime(_stopwatch.elapsedMilliseconds);
     });
   }
+
   void _stopTimer() {
     _stopwatch.reset();
     setState(() {
@@ -323,15 +338,12 @@ class _StopwatchWidgetState extends State<StopwatchWidget> {
   }
 }
 
-
-
 ////////////////////////////증인 위젯//////////////////////
 class WillWitnessWidget extends StatelessWidget {
   final WitnessViewModel viewModel;
 
   WillWitnessWidget({
     required this.viewModel,
-
   });
 
   @override
