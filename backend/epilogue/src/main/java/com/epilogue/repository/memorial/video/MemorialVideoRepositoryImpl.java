@@ -13,7 +13,7 @@ public class MemorialVideoRepositoryImpl implements MemorialVideoRepositoryCusto
 
     @Override
     public List<MemorialVideo> findAllByUserSeq(int userSeq) {
-        return entityManager.createQuery("SELECT mv FROM MemorialVideo mv JOIN FETCH mv.memorial WHERE mv.memorial.user.userSeq = :userSeq", MemorialVideo.class)
+        return entityManager.createQuery("SELECT mv FROM MemorialVideo mv JOIN FETCH mv.memorial WHERE mv.memorial.user.userSeq = :userSeq ORDER BY mv.writtenDate DESC", MemorialVideo.class)
                 .setParameter("userSeq", userSeq)
                 .getResultList();
     }

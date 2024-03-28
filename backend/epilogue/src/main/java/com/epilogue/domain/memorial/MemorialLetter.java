@@ -25,7 +25,7 @@ public class MemorialLetter {
 
     @NotNull
     @Schema(description = "작성일")
-    private String writtenDate;
+    private Timestamp writtenDate;
 
     @ManyToOne
     @Schema(description = "디지털 추모관 식별키")

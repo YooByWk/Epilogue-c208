@@ -15,15 +15,14 @@ import org.springframework.stereotype.Component;
 public class ProductInitializer {
 
     private final UserRepository userRepository;
-    private final MemorialRepository memorialRepository;
     private final BCryptPasswordEncoder bCryptPasswordEncoder;
 
     @PostConstruct
     public void init() {
         // 더미 데이터 작성
         User user1 = User.builder()
-                .name("한재현1")
-                .userId("ssafy1")
+                .name("한재현")
+                .userId("ssafy")
                 .password(bCryptPasswordEncoder.encode("1234"))
                 .birth("980228")
                 .mobile("01011111111")
@@ -75,10 +74,7 @@ public class ProductInitializer {
         // 더미 데이터 저장
         userRepository.save(user1);
         userRepository.save(user2);
-        userRepository.save(user3);
-
         memorialRepository.save(memorial1);
         memorialRepository.save(memorial2);
-        memorialRepository.save(memorial3);
     }
 }

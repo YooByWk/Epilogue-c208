@@ -44,6 +44,7 @@ public class User {
 
     @Schema(description = "유언")
     @OneToOne(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+//    @OneToOne(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
     private Will will;
 
     @Enumerated(EnumType.STRING)
