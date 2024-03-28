@@ -1,8 +1,6 @@
 package com.epilogue.dto.response.memorial;
 
 import com.epilogue.domain.memorial.MemorialLetter;
-import com.epilogue.domain.memorial.MemorialPhoto;
-import com.epilogue.domain.memorial.MemorialVideo;
 import io.swagger.v3.oas.annotations.media.Schema;
 import jakarta.validation.constraints.NotNull;
 import lombok.Builder;

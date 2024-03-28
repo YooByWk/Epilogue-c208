@@ -3,7 +3,6 @@ package com.epilogue.service;
 import com.epilogue.domain.user.User;
 import com.epilogue.domain.will.Will;
 import com.epilogue.domain.witness.Witness;
-import com.epilogue.dto.request.will.WillAndWitnessRequestDto;
 import com.epilogue.dto.request.witness.WitnessRequestDto;
 import com.epilogue.repository.user.UserRepository;
 import com.epilogue.repository.will.WillRepository;

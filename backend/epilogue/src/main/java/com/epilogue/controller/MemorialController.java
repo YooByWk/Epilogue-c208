@@ -1,14 +1,10 @@
 package com.epilogue.controller;
 
-import com.amazonaws.Response;
-import com.epilogue.domain.memorial.Memorial;
-import com.epilogue.domain.memorial.MemorialLetter;
 import com.epilogue.dto.request.SearchRequestDto;
 import com.epilogue.dto.request.memorial.MemorialLetterRequestDto;
 import com.epilogue.dto.request.memorial.MemorialMediaRequestDto;
 import com.epilogue.dto.response.memorial.*;
 import com.epilogue.service.MemorialService;
-import io.lettuce.core.dynamic.annotation.Param;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.Parameter;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
@@ -20,8 +16,6 @@ import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
-import retrofit2.http.HTTP;
-import retrofit2.http.Path;
 
 import java.security.Principal;
 import java.util.List;

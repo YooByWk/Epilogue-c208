@@ -5,7 +5,6 @@ import com.epilogue.domain.user.User;
 import com.epilogue.dto.request.SearchRequestDto;
 import com.epilogue.dto.request.memorial.MemorialLetterRequestDto;
 import com.epilogue.dto.request.memorial.MemorialMediaRequestDto;
-import com.epilogue.dto.request.memorial.NameRequestDto;
 import com.epilogue.dto.response.memorial.*;
 import com.epilogue.repository.memorial.MemorialRepository;
 import com.epilogue.repository.memorial.favorite.FavoriteRepository;
