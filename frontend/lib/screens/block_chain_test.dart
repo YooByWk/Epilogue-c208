@@ -37,8 +37,10 @@ class BlockChainTest extends StatelessWidget {
                     ),
                     ElevatedButton(
                       onPressed: () async {    
-                        final response = await willViewmodel.sendTransaction('createWill', [willViewmodel.userId,'testHash']);
-                        debugPrint('컨트랙트 배포 결과: $response');
+                        // final response = await willViewmodel.sendTransaction('createWill', [willViewmodel.userId,'testHash']);
+                        final res = await willViewmodel.createWill();
+                        // final response = await willViewmodel.test();
+                        // debugPrint('컨트랙트 배포 결과: $response');
                       },
                       child: Text('꾸욱 배포'),
                     ),

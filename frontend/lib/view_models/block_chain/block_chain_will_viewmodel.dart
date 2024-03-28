@@ -20,7 +20,7 @@ class AudioHashViewModel extends ChangeNotifier {
   }
 
   // /data/user/0/com.example.frontend/cache/will.mp4
-Future<void> createAudioHash() async {
+ createAudioHash() async {
   var filePath = '/data/user/0/com.example.frontend/cache/will.mp4';
   // var filePath = '/data/user/0/com.example.frontend/cache/will.mp4';
   var file = File(filePath);
@@ -41,6 +41,7 @@ Future<void> createAudioHash() async {
       fileName: filePath.split('/').last,
       date: DateTime.now(),
       hash: hash.toString().toUpperCase())); // Convert hash to uppercase
+  return hash.toString();
 }
 
 Future<void> checkHash() async {
@@ -78,22 +79,48 @@ class BlockChainWillViewModel extends ChangeNotifier {
   final storage = FlutterSecureStorage();
   final UserViewModel _userViewModel = UserViewModel();
   late Future<String> userId;
+
+
   BlockChainWillViewModel() {
+    init();
+    // userId =  _userViewModel.fetchUserId();
+  }
+
+  Future<void> init() async {
+    await _model.init();
+
     userId =  _userViewModel.fetchUserId();
   }
 
-  Future<String> get pk => _model.pk;
-  Future<String> get address => _model.address;
-  Future<String> get ABI => _model.ABI;
+  // Future<String> get pk => _model.pk;
+  // Future<String> get address => _model.address;
+  // Future<String> get ABI => _model.ABI;
   
   Future sendTransaction(String functionName, List<dynamic> params) async {
+    // await init();
     print('createWill() called');
-    print(userId);
-    print(pk);
-    print(address);
-    print(ABI);
+    // print()
+    // print(await userId);
+    // print(await pk);
+    // print(await address);
+    // print(await ABI);
+    print('ㅁㄴㅇㄹ ${await userId}');
     final res = await _model.sendTransaction(functionName, params);
-    debugPrint(res);
+    // return print(userId);
+    // debugPrint(res);
 
   }
+  
+  Future createWill() async {
+    // 함수 이름
+    // 넣을 값
+    String id = await userId;
+    String fileHash = await AudioHashViewModel().createAudioHash();
+    final params = await [id, fileHash];
+    final res = await _model.sendTransaction('createWill', params);
+    debugPrint(res);
+    return res;
+  }
+
+  
 }
