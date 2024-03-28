@@ -33,4 +33,7 @@ public class Viewer {
 
     @Schema(description = "열람인 휴대폰 번호")
     private String viewerMobile;
+
+    @Schema(description = "열람인 코드")
+    private String viewerCode;
 }

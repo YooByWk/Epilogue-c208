@@ -1,6 +1,7 @@
 package com.epilogue.service;
 
 import com.epilogue.domain.user.User;
+import com.epilogue.domain.user.UserStatus;
 import com.epilogue.domain.will.Will;
 import com.epilogue.domain.witness.Witness;
 import com.epilogue.dto.request.will.WillAdditionalRequestDto;
@@ -57,18 +58,19 @@ public class WillService {
 
     public void sendWillApplyLink(Principal principal) {
         User user = userRepository.findByUserId(principal.getName());
+        Will will = user.getWill();
         List<Witness> witnessList = witnessRepository.findAllByWillWillSeq(user.getWill().getWillSeq());
 
         // 휴대폰 문자로 유언 열람 신청 링크 및 인증코드 전송
         for (Witness w : witnessList) {
             if (w.getWitnessMobile() == null) continue;
-            smsUtil.sendWillApplyLink(w.getWitnessMobile(), user.getName(), w.getWitnessCode());
+            smsUtil.sendWillApplyLink(w.getWitnessMobile(), user.getName(), will.getWillCode());
         }
 
         // 이메일로 유언 열람 신청 링크 및 인증코드 전송
         for (Witness w : witnessList) {
             if (w.getWitnessEmail() == null) continue;
-            emailUtil.sendWillApplyLink(w.getWitnessEmail(), user.getName(), w.getWitnessCode());
+            emailUtil.sendWillApplyLink(w.getWitnessEmail(), user.getName(), will.getWillCode());
         }
     }
 
@@ -104,12 +106,15 @@ public class WillService {
         String deadName = willApplyRequestDto.getDeadName();
         String deadBirth = willApplyRequestDto.getDeadBirth();
         String witnessName = willApplyRequestDto.getWitnessName();
-        String witnessCode = willApplyRequestDto.getWitnessCode();
+        String willCode = willApplyRequestDto.getWillCode();
 
         User user = userRepository.findByNameAndBirth(deadName, deadBirth);
-        if (user == null) return false;
+        if (user == null || !user.getUserStatus().equals(UserStatus.DEADANDNOTSEND)) return false;
 
-        Witness witness = witnessRepository.findByWitnessNameAndWitnessCode(witnessName, witnessCode);
+        Will will = user.getWill();
+        if (!will.getWillCode().equals(willCode)) return false;
+
+        Witness witness = witnessRepository.findByWitnessNameAndWillWillSeq(witnessName, will.getWillSeq());
         if (witness == null) return false;
 
         int deadWillSeq = user.getWill().getWillSeq();
@@ -117,5 +122,9 @@ public class WillService {
 
         if (deadWillSeq == witnessWillSeq) return true;
         else return false;
+    }
+
+    public Will certificateCode(String willCode) {
+        return willRepository.findByWillCode(willCode);
     }
 }
