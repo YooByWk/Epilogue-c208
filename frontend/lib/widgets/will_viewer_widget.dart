@@ -23,7 +23,7 @@ class WillViewerWidget extends StatelessWidget {
             top: 10,
           ),
           height: MediaQuery.of(context).size.height * 0.22,
-          width: MediaQuery.of(context).size.width * 0.8,
+          width: MediaQuery.of(context).size.width * 0.9,
           alignment: Alignment.center,
           decoration: BoxDecoration(
             color: themeColour3.withOpacity(0.3),

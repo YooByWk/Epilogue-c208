@@ -61,12 +61,6 @@ class ViewerViewModel extends ChangeNotifier {
     _viewerList.add(newViewer);
 
     notifyListeners();
-
-    // 디버그 출력을 위해 새로운 인스턴스의 이름과 전체 리스트 출력
-    // debugPrint(newViewer.viewerName);
-    // for (var viewer in _viewerList) {
-    //   debugPrint('${viewer.viewerName}'); // 리스트 내의 각 Viewer 이름 출력
-    // }
   }
 
   Future<void> deleteViewer(int index) async {
