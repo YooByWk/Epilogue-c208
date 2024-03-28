@@ -19,4 +19,11 @@ public class MemorialRepositoryImpl implements MemorialRepositoryCustom {
                 .getResultList();
     }
 
+    @Override
+    public List<Memorial> findBySearchWord(String searchWord) {
+        return entityManager.createQuery("SELECT m FROM Memorial m WHERE m.user.name LIKE %:searchWord% OR m.graveName LIKE %:searchWord%", Memorial.class)
+                .setParameter("searchWord", searchWord)
+                .getResultList();
+    }
+
 }
