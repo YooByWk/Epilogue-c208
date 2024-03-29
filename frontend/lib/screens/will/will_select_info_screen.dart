@@ -1,10 +1,8 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:frontend/main.dart';
-import 'package:frontend/screens/main/main_body_screen.dart';
 import 'package:frontend/screens/will/will_additional_info_screen.dart';
 import 'package:frontend/screens/will/will_widgets.dart';
-import 'package:frontend/widgets/common_button.dart';
 import 'package:frontend/screens/main/main_screen.dart';
 
 class WillSelectInfoScreen extends StatefulWidget {

@@ -59,6 +59,7 @@ dependencies:
   flutter_widget_to_image: ^0.0.1
   flutter_naver_login: ^1.8.0 # 네이버 소셜 로그인
   overlay_support: ^2.1.0 # 배너 알람
+  webview_flutter: ^4.7.0 # 네이버 로그인 창 띄우기
 
 dev_dependencies:
   flutter_test:

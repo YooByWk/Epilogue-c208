@@ -1,7 +1,5 @@
 import 'dart:async';
 import 'dart:io';
-
-import 'package:dio/dio.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
@@ -10,6 +8,7 @@ import 'package:flutter_sound/flutter_sound.dart';
 import 'package:frontend/screens/will/will_viewer_screen.dart';
 import 'package:frontend/screens/will/will_widgets.dart';
 import 'package:frontend/view_models/will_view_models/recording_viewmodel.dart';
+import 'package:frontend/widgets/popup_widget.dart';
 import 'package:path_provider/path_provider.dart';
 import 'package:permission_handler/permission_handler.dart';
 import 'package:flutter/foundation.dart' show kIsWeb;
@@ -239,106 +238,184 @@ class _WillRecordingScreenState extends State<WillRecordingScreen> {
         child:
             Consumer<RecordingViewModel>(builder: (context, viewModel, child) {
           Widget makeBody() {
-            return Column(
-              children: [
-                Center(
-                  child: Column(
-                    children: [
-                      Ink(
-                        width: 100,
-                        height: 100,
-                        decoration: const ShapeDecoration(
-                          shape: CircleBorder(),
-                          color: themeColour3,
-                        ),
-                        child: _mRecorder!.isRecording
-                            ? IconButton(
-                                onPressed: getRecorderFn(),
-                                icon: const Icon(
-                                  Icons.keyboard_voice_outlined,
-                                  color: themeColour5,
-                                  size: 50,
+            return SingleChildScrollView(
+              child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Padding(
+                      padding: const EdgeInsets.only(left: 20.0, top: 30.0),
+                      child: Column(
+                        children: [
+                          Row(
+                            children: [
+                              TextWidget(
+                                text: "녹음",
+                                fontSize: 50,
+                                fontWeight: FontWeight.w900,
+                              ),
+                              TextWidget(
+                                text: "하기",
+                                fontSize: 50,
+                                fontWeight: FontWeight.w500,
+                              ),
+                            ],
+                          ),
+                          SizedBox(height: 15),
+                          _mRecorder!.isRecording
+                              ? Ink(
+                                  width: 100,
+                                  height: 100,
+                                  decoration: const ShapeDecoration(
+                                    shape: CircleBorder(),
+                                    color: Colors.grey,
+                                  ),
+                                  child: IconButton(
+                                    onPressed: getRecorderFn(),
+                                    icon: const Icon(
+                                      Icons.keyboard_voice_outlined,
+                                      color: Colors.white,
+                                      size: 50,
+                                    ),
+                                  ))
+                              : Ink(
+                                  width: 100,
+                                  height: 100,
+                                  decoration: const ShapeDecoration(
+                                    shape: CircleBorder(),
+                                    color: themeColour3,
+                                  ),
+                                  child: IconButton(
+                                    onPressed: getRecorderFn(),
+                                    icon: const Icon(
+                                      Icons.keyboard_voice,
+                                      color: themeColour5,
+                                      size: 50,
+                                    ),
+                                  ),
                                 ),
-                              )
-                            : IconButton(
-                                onPressed: getRecorderFn(),
-                                icon: const Icon(
-                                  Icons.keyboard_voice,
-                                  color: themeColour5,
-                                  size: 50,
+                          Text(
+                            _recordTime,
+                            style: TextStyle(fontSize: 18),
+                          ),
+                          SizedBox(
+                            height: 20,
+                          ),
+                          Padding(
+                            padding: const EdgeInsets.only(right: 100.0),
+                            child: Text(
+                              '※ 작성된 테스트는 녹음의 편의성을 위한 것으로,\n   법적 효력은 없음을 알려드립니다.',
+                              style: TextStyle(color: Colors.red),
+                            ),
+                          ),
+                          SizedBox(
+                            height: 10,
+                          ),
+                          Container(
+                            padding: EdgeInsets.only(right: 20.0),
+                            child: TextField(
+                              maxLines: null,
+                              minLines: 5,
+                              decoration: InputDecoration(
+                                contentPadding: EdgeInsets.symmetric(
+                                    horizontal: 15.0, vertical: 20.0),
+                                border: OutlineInputBorder(
+                                    borderRadius: const BorderRadius.all(
+                                      const Radius.circular(1.0),
+                                    ),
+                                    borderSide: BorderSide(
+                                        color: Colors.grey, width: 2.0)),
+                                focusedBorder: OutlineInputBorder(
+                                  // 포커스됐을 때 외곽선 설정
+                                  borderRadius: const BorderRadius.all(
+                                      Radius.circular(1.0)),
+                                  borderSide: BorderSide(
+                                      color: themeColour5,
+                                      width: 2.0), // 여기서 색깔 변경
                                 ),
                               ),
+                            ),
+                          ),
+                          _mPlayer!.isPlaying
+                              ? Column(
+                                  children: [
+                                    IconButton(
+                                      onPressed: getPauseResumeFn(),
+                                      icon: const Icon(
+                                        Icons.pause_circle_filled_rounded,
+                                        color: themeColour5,
+                                        size: 100,
+                                      ),
+                                    ),
+                                    Slider(
+                                      value: _currentPosition,
+                                      min: 0,
+                                      max: _currentDuration,
+                                      onChanged: (value) {
+                                        // 재생 위치 조정
+                                        _mPlayer!.seekToPlayer(Duration(
+                                            milliseconds: value.toInt()));
+                                      },
+                                    ),
+                                    Row(
+                                      mainAxisAlignment:
+                                          MainAxisAlignment.spaceBetween,
+                                      children: [
+                                        Text(_formatDuration(Duration(
+                                            milliseconds:
+                                                _currentPosition.toInt()))),
+                                        Padding(
+                                          padding: const EdgeInsets.only(
+                                              right: 20.0),
+                                          child: Text(_formatDuration(Duration(
+                                              milliseconds:
+                                                  _currentDuration.toInt()))),
+                                        ),
+                                      ],
+                                    ),
+                                  ],
+                                )
+                              : Column(
+                                  children: [
+                                    IconButton(
+                                      onPressed: getPlaybackFn(),
+                                      icon: const Icon(
+                                        Icons.play_circle_fill_rounded,
+                                        color: themeColour5,
+                                        size: 100,
+                                      ),
+                                    ),
+                                    Slider(
+                                      value: _currentPosition,
+                                      min: 0,
+                                      max: _currentDuration,
+                                      onChanged: (value) {
+                                        // 재생 위치 조정
+                                        _mPlayer!.seekToPlayer(Duration(
+                                            milliseconds: value.toInt()));
+                                      },
+                                    ),
+                                    Row(
+                                      mainAxisAlignment:
+                                          MainAxisAlignment.spaceBetween,
+                                      children: [
+                                        Text(_formatDuration(Duration(
+                                            milliseconds:
+                                                _currentPosition.toInt()))),
+                                        Padding(
+                                          padding: const EdgeInsets.only(
+                                              right: 20.0),
+                                          child: Text(_formatDuration(Duration(
+                                              milliseconds:
+                                                  _currentDuration.toInt()))),
+                                        ),
+                                      ],
+                                    ),
+                                  ],
+                                ),
+                        ],
                       ),
-                      Text(_recordTime),
-                    ],
-                  ),
-                ),
-                Center(
-                  child: _mPlayer!.isPlaying
-                      ? Column(
-                          children: [
-                            IconButton(
-                              onPressed: getPauseResumeFn(),
-                              icon: const Icon(
-                                Icons.pause_circle_filled_rounded,
-                                color: themeColour5,
-                                size: 100,
-                              ),
-                            ),
-                            Slider(
-                              value: _currentPosition,
-                              min: 0,
-                              max: _currentDuration,
-                              onChanged: (value) {
-                                // 재생 위치 조정
-                                _mPlayer!.seekToPlayer(
-                                    Duration(milliseconds: value.toInt()));
-                              },
-                            ),
-                            Row(
-                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                              children: [
-                                Text(_formatDuration(Duration(
-                                    milliseconds: _currentPosition.toInt()))),
-                                Text(_formatDuration(Duration(
-                                    milliseconds: _currentDuration.toInt()))),
-                              ],
-                            ),
-                          ],
-                        )
-                      : Column(
-                          children: [
-                            IconButton(
-                              onPressed: getPlaybackFn(),
-                              icon: const Icon(
-                                Icons.play_circle_fill_rounded,
-                                color: themeColour5,
-                                size: 100,
-                              ),
-                            ),
-                            Slider(
-                              value: _currentPosition,
-                              min: 0,
-                              max: _currentDuration,
-                              onChanged: (value) {
-                                // 재생 위치 조정
-                                _mPlayer!.seekToPlayer(
-                                    Duration(milliseconds: value.toInt()));
-                              },
-                            ),
-                            Row(
-                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                              children: [
-                                Text(_formatDuration(Duration(
-                                    milliseconds: _currentPosition.toInt()))),
-                                Text(_formatDuration(Duration(
-                                    milliseconds: _currentDuration.toInt()))),
-                              ],
-                            ),
-                          ],
-                        ),
-                ),
-              ],
+                    ),
+                  ]),
             );
           }
 
@@ -355,25 +432,37 @@ class _WillRecordingScreenState extends State<WillRecordingScreen> {
                 preText: '이전',
                 nextText: '기록하기',
                 onPressed: () {
-                  viewModel.setFile(audioFile!);
-                  viewModel.setRecording().then((_) {
-                    if (viewModel.errorMessage == null) {
-                      Navigator.push(
-                        context,
-                        MaterialPageRoute(
-                          builder: (context) => WillViewerScreen(),
-                        ),
-                      );
-                    } else {
-                      if (viewModel.errorMessage != null) {
-                        ScaffoldMessenger.of(context).showSnackBar(
-                          SnackBar(
-                            content: Text(viewModel.errorMessage!),
-                          ),
-                        );
-                      }
-                    }
-                  });
+                  showDialog(
+                      context: context,
+                      builder: (context) => PopupWidget(
+                            text: '기록된 유언은 \n블록 체인에 기록됩니다.\n정말 생성하시겠습니까?',
+                            buttonText1: '돌아가기',
+                            onConfirm1: () {
+                              Navigator.pop(context);
+                            },
+                            buttonText2: '생성하기',
+                            onConfirm2: () {
+                              viewModel.setFile(audioFile!);
+                              viewModel.setRecording().then((_) {
+                                if (viewModel.errorMessage == null) {
+                                  Navigator.push(
+                                    context,
+                                    MaterialPageRoute(
+                                      builder: (context) => WillViewerScreen(),
+                                    ),
+                                  );
+                                } else {
+                                  if (viewModel.errorMessage != null) {
+                                    ScaffoldMessenger.of(context).showSnackBar(
+                                      SnackBar(
+                                        content: Text(viewModel.errorMessage!),
+                                      ),
+                                    );
+                                  }
+                                }
+                              });
+                            },
+                          ));
                 },
               ),
             ),

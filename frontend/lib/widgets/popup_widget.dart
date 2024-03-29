@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:frontend/main.dart';
 import 'package:frontend/widgets/common_button.dart';
 
 class PopupWidget extends StatelessWidget {
@@ -27,10 +28,12 @@ class PopupWidget extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+
     List<Widget> actionWidgets = [
       CommonButtonWidget(
         text: buttonText1,
         onPressed: onConfirm1,
+        backgroundColor: (buttonText2 != null) ? Colors.grey : themeColour5,
       ),
     ];
 
@@ -40,20 +43,23 @@ class PopupWidget extends StatelessWidget {
         CommonButtonWidget(
           text: buttonText2!,
           onPressed: onConfirm2!,
-          backgroundColor: Colors.grey,
+          backgroundColor: (buttonText2 != null) ? themeColour5 : Colors.grey,
         ),
       );
     }
 
     return AlertDialog(
       content: SingleChildScrollView(
-        child: Text(
-          text,
-          style: TextStyle(
-            fontWeight: isBold ?  FontWeight.bold : FontWeight.normal,
-            fontSize: fontSize,
-            color: textColor,
-      ),
+        child: Center(
+          child: Text(
+            text,
+            textAlign: TextAlign.center,
+            style: TextStyle(
+              fontWeight: isBold ?  FontWeight.bold : FontWeight.normal,
+              fontSize: fontSize,
+              color: textColor,
+                ),
+          ),
         ),
       ),
       insetPadding: const EdgeInsets.symmetric(
