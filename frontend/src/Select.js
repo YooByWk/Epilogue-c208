@@ -7,6 +7,7 @@ function Select() {
     return (
         <>
         <button onClick={(event) => Navi('/witness')}>증인의 고인 정보 입력</button>
+        <button onClick={(event) => Navi('/viewer')}>열람인의 유언장 확인</button>
         </>
     )
 }
