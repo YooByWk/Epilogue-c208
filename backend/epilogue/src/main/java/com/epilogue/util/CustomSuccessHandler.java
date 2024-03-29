@@ -43,10 +43,10 @@ public class CustomSuccessHandler extends SimpleUrlAuthenticationSuccessHandler 
         // Bearer 인증 방식
         // 응답 헤더에 JWT 토큰 값을 넣어 응답
         // 응답 헤더에서 "Authorization" key 값에 "Bearer ~~" 값을 확인할 수 있음 (JWT)
-        response.addHeader(JWTUtil.ACCESS_TOKEN, "Bearer " + accessToken);
+//        response.addHeader(JWTUtil.ACCESS_TOKEN, "Bearer " + accessToken);
 
         // Redis refreshToken 저장
-        redisTemplate.opsForValue().set(JWTUtil.REFRESH_TOKEN, "Bearer " + refreshToken);
+//        redisTemplate.opsForValue().set(JWTUtil.REFRESH_TOKEN, "Bearer " + refreshToken);
 
     }
 
