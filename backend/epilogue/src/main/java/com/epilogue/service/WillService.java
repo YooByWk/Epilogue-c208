@@ -79,6 +79,7 @@ public class WillService {
     public WillResponseDto viewMyWill(Principal principal) {
         String loginUserId = principal.getName();
         Will will = userRepository.findByUserId(loginUserId).getWill();
+        String willFileAddress = awsS3Service.getWillFromS3(will.getWillFileAddress());
 
         return WillResponseDto.builder()
                 .sustainCare(will.getSustainCare())
@@ -88,7 +89,7 @@ public class WillService {
                 .useMemorial(will.getUseMemorial())
                 .graveName(will.getGraveName())
                 .graveImageAddress(will.getGraveImageAddress())
-                .graveImageAddress(will.getWillFileAddress())
+                .willFileAddress(willFileAddress)
                 .build();
     }
 
