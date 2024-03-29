@@ -64,7 +64,6 @@ class ViewerViewModel extends ChangeNotifier {
     _viewerData.viewerName = '';
     _viewerData.viewerEmail = '';
     _viewerData.viewerMobile = '';
-
   }
 
   Future<void> deleteViewer(int index) async {
