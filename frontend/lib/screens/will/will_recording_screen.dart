@@ -301,7 +301,7 @@ class _WillRecordingScreenState extends State<WillRecordingScreen> {
                             height: 20,
                           ),
                           Padding(
-                            padding: const EdgeInsets.only(right: 70.0),
+                            padding: const EdgeInsets.only(right: 100.0),
                             child: Text(
                               '※ 작성된 테스트는 녹음의 편의성을 위한 것으로,\n   법적 효력은 없음을 알려드립니다.',
                               style: TextStyle(color: Colors.red),
@@ -363,9 +363,13 @@ class _WillRecordingScreenState extends State<WillRecordingScreen> {
                                         Text(_formatDuration(Duration(
                                             milliseconds:
                                                 _currentPosition.toInt()))),
-                                        Text(_formatDuration(Duration(
-                                            milliseconds:
-                                                _currentDuration.toInt()))),
+                                        Padding(
+                                          padding: const EdgeInsets.only(
+                                              right: 20.0),
+                                          child: Text(_formatDuration(Duration(
+                                              milliseconds:
+                                                  _currentDuration.toInt()))),
+                                        ),
                                       ],
                                     ),
                                   ],
