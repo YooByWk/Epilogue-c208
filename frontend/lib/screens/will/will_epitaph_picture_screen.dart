@@ -7,8 +7,6 @@ import 'package:frontend/main.dart';
 import 'package:frontend/screens/will/will_select_info_screen.dart';
 import 'package:frontend/screens/will/will_widgets.dart';
 import 'package:frontend/view_models/will_view_models/memorial_name_picture_viewmodel.dart';
-import 'package:frontend/widgets/common_button.dart';
-import 'package:permission_handler/permission_handler.dart';
 import 'package:provider/provider.dart';
 
 class WillEpitaphPictureScreen extends StatefulWidget {
@@ -20,10 +18,6 @@ class _WillEpitaphPictureScreenState extends State<WillEpitaphPictureScreen> {
   File? picture;
 
   Future<void> _pickImage(BuildContext context) async {
-    var status = await Permission.storage.status;
-    if (!status.isGranted) {
-      final result = await Permission.storage.request();
-      if (result.isGranted) {
         FilePickerResult? result = await FilePicker.platform.pickFiles();
 
         if (result != null) {
@@ -31,17 +25,9 @@ class _WillEpitaphPictureScreenState extends State<WillEpitaphPictureScreen> {
         } else {
           debugPrint('사진 선택 취소');
         }
-      } else {
-        // 사용자가 권한을 거부한 경우
-        ScaffoldMessenger.of(context).showSnackBar(SnackBar(
-          content: Text('파일 액세스 권한을 허용해야 파일을 업로드할 수 있습니다.'),
-        ));
-      }
-    } else {
-      // 파일 선택 다이얼로그를 열고 사용자가 파일을 선택하면 해당 파일을 ViewModel에 전달
-      // 여기에 파일 선택 로직 추가
     }
-  }
+
+
 
   @override
   Widget build(BuildContext context) {
