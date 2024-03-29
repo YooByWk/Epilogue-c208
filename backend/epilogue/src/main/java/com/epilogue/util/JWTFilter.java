@@ -2,16 +2,19 @@ package com.epilogue.util;
 
 import com.epilogue.domain.user.User;
 import com.epilogue.dto.response.user.CustomUserDetails;
+import com.fasterxml.jackson.databind.ObjectMapper;
 import io.jsonwebtoken.ExpiredJwtException;
 import jakarta.servlet.FilterChain;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.web.filter.OncePerRequestFilter;
+import org.springframework.web.server.ResponseStatusException;
 
 import java.io.IOException;
 
@@ -41,27 +44,18 @@ public class JWTFilter extends OncePerRequestFilter {
         String token = accessToken.split(" ")[1];
 
 
-        // 토큰 소멸 시간 검증
-//        if (jwtUtil.isExpired(token)) {
-//        토큰 만료 되었으면 401 리턴
-//            response.setStatus(401);
-//            filterChain.doFilter(request, response);
-//
-//            return;
-//        }
-
         try {
             jwtUtil.isExpired(token);
         } catch (ExpiredJwtException exception) {
-//            ObjectMapper mapper = new ObjectMapper();
+            ObjectMapper mapper = new ObjectMapper();
             response.setStatus(401);
             response.setContentType(MediaType.APPLICATION_JSON_VALUE);
             response.setCharacterEncoding("UTF-8");
 
-//            ResponseStatusException responseStatusException = new ResponseStatusException(
-//                    HttpStatus.UNAUTHORIZED, "토큰이 만료되었습니다.");
-//
-//            mapper.writeValue(response.getWriter(), responseStatusException);
+            ResponseStatusException responseStatusException = new ResponseStatusException(
+                    HttpStatus.UNAUTHORIZED, "토큰이 만료되었습니다.");
+
+            mapper.writeValue(response.getWriter(), responseStatusException);
             return;
         }
 
