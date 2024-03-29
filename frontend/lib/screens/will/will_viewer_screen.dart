@@ -154,7 +154,14 @@ class _WillViewerScreenState extends State<WillViewerScreen> {
                               ),
                               onPressed: () async {
                                 await viewModel.addViewer();
+                                if (viewModel.errorMessage != null) {
+                                  ScaffoldMessenger.of(context).showSnackBar(
+                                      SnackBar(
+                                          content:
+                                          Text(viewModel.errorMessage!)));
+                                } else {
                                   debugPrint('저장 완료');
+                                }
                               },
                             ),
                           ],
