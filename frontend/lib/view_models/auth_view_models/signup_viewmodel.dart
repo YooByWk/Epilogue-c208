@@ -1,5 +1,5 @@
 import 'package:flutter/foundation.dart';
-import 'package:frontend/models/signup_model.dart';
+import 'package:frontend/models/user/signup_model.dart';
 import 'package:frontend/services/auth_service.dart';
 
 class SignupViewModel extends ChangeNotifier {

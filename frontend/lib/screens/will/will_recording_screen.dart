@@ -8,6 +8,7 @@ import 'package:flutter_sound/flutter_sound.dart';
 import 'package:frontend/screens/will/will_viewer_screen.dart';
 import 'package:frontend/screens/will/will_widgets.dart';
 import 'package:frontend/view_models/will_view_models/recording_viewmodel.dart';
+import 'package:frontend/widgets/popup_widget.dart';
 import 'package:path_provider/path_provider.dart';
 import 'package:permission_handler/permission_handler.dart';
 import 'package:flutter/foundation.dart' show kIsWeb;
@@ -427,25 +428,37 @@ class _WillRecordingScreenState extends State<WillRecordingScreen> {
                 preText: '이전',
                 nextText: '기록하기',
                 onPressed: () {
-                  viewModel.setFile(audioFile!);
-                  viewModel.setRecording().then((_) {
-                    if (viewModel.errorMessage == null) {
-                      Navigator.push(
-                        context,
-                        MaterialPageRoute(
-                          builder: (context) => WillViewerScreen(),
-                        ),
-                      );
-                    } else {
-                      if (viewModel.errorMessage != null) {
-                        ScaffoldMessenger.of(context).showSnackBar(
-                          SnackBar(
-                            content: Text(viewModel.errorMessage!),
-                          ),
-                        );
-                      }
-                    }
-                  });
+                  showDialog(
+                      context: context,
+                      builder: (context) => PopupWidget(
+                            text: '기록된 유언은 \n블록 체인에 기록됩니다.\n정말 생성하시겠습니까?',
+                            buttonText1: '돌아가기',
+                            onConfirm1: () {
+                              Navigator.pop(context);
+                            },
+                            buttonText2: '생성하기',
+                            onConfirm2: () {
+                              viewModel.setFile(audioFile!);
+                              viewModel.setRecording().then((_) {
+                                if (viewModel.errorMessage == null) {
+                                  Navigator.push(
+                                    context,
+                                    MaterialPageRoute(
+                                      builder: (context) => WillViewerScreen(),
+                                    ),
+                                  );
+                                } else {
+                                  if (viewModel.errorMessage != null) {
+                                    ScaffoldMessenger.of(context).showSnackBar(
+                                      SnackBar(
+                                        content: Text(viewModel.errorMessage!),
+                                      ),
+                                    );
+                                  }
+                                }
+                              });
+                            },
+                          ));
                 },
               ),
             ),

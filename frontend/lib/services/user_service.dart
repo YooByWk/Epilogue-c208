@@ -1,7 +1,7 @@
 import 'dart:convert';
 import 'package:dio/dio.dart' as Dio;
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
-import 'package:frontend/models/user_model.dart';
+import 'package:frontend/models/user/user_model.dart';
 import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:flutter/material.dart';
 import 'package:frontend/services/auth_service.dart';
