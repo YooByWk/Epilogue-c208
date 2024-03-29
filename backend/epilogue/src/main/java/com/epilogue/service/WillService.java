@@ -64,13 +64,14 @@ public class WillService {
         // 휴대폰 문자로 유언 열람 신청 링크 및 인증코드 전송
         for (Witness w : witnessList) {
             if (w.getWitnessMobile() == null) continue;
-            smsUtil.sendWillApplyLink(w.getWitnessMobile(), user.getName(), will.getWillCode());
+            log.info("전화번호={}", w.getWitnessMobile());
+            smsUtil.sendWillApplyLink(w.getWitnessMobile(), user.getName(), w.getWitnessName(), will.getWillCode());
         }
 
         // 이메일로 유언 열람 신청 링크 및 인증코드 전송
         for (Witness w : witnessList) {
             if (w.getWitnessEmail() == null) continue;
-            emailUtil.sendWillApplyLink(w.getWitnessEmail(), user.getName(), will.getWillCode());
+            emailUtil.sendWillApplyLink(w.getWitnessEmail(), user.getName(), w.getWitnessName(), will.getWillCode());
         }
     }
 
@@ -120,11 +121,11 @@ public class WillService {
         int deadWillSeq = user.getWill().getWillSeq();
         int witnessWillSeq = witness.getWill().getWillSeq();
 
-        if (deadWillSeq == witnessWillSeq) return true;
-        else return false;
+        return deadWillSeq == witnessWillSeq;
     }
 
     public Will certificateCode(String willCode) {
+        log.info("willCode = {}", willCode);
         return willRepository.findByWillCode(willCode);
     }
 }
