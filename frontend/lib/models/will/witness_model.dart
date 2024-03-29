@@ -1,12 +1,12 @@
 class WitnessModel {
   String witnessName;
-  String? witnessEmail;
+  String witnessEmail;
   String witnessMobile;
   String witnessCertificationNumber;
 
   WitnessModel({
     required this.witnessName,
-    this.witnessEmail,
+    required this.witnessEmail,
     required this.witnessMobile,
     required this.witnessCertificationNumber,
   });
