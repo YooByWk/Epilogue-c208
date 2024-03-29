@@ -6,6 +6,7 @@ import com.epilogue.dto.request.will.WillAdditionalRequestDto;
 import com.epilogue.dto.request.will.WillApplyRequestDto;
 import com.epilogue.dto.request.will.WillMemorialRequestDto;
 import com.epilogue.dto.request.witness.WitnessRequestDto;
+import com.epilogue.dto.response.WillResponseDto;
 import com.epilogue.service.AwsS3Service;
 import com.epilogue.service.ViewerService;
 import com.epilogue.service.WillService;
@@ -107,7 +108,7 @@ public class WillController {
     @Operation(summary = "나의 유언 조회 API", description = "내가 작성한 유언을 조회합니다.")
     @ApiResponse(responseCode = "200", description = "성공")
     @GetMapping("/myWill")
-    public ResponseEntity<String> viewMyWill(Principal principal) {
+    public ResponseEntity<WillResponseDto> viewMyWill(Principal principal) {
         // S3에서 가져온 유언 파일 반환
         return new ResponseEntity<>(willService.viewMyWill(principal), HttpStatus.OK);
     }

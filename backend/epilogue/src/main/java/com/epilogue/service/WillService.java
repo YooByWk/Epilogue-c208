@@ -7,6 +7,7 @@ import com.epilogue.domain.witness.Witness;
 import com.epilogue.dto.request.will.WillAdditionalRequestDto;
 import com.epilogue.dto.request.will.WillApplyRequestDto;
 import com.epilogue.dto.request.will.WillMemorialRequestDto;
+import com.epilogue.dto.response.WillResponseDto;
 import com.epilogue.repository.user.UserRepository;
 import com.epilogue.repository.viewer.ViewerRepository;
 import com.epilogue.repository.will.WillRepository;
@@ -75,12 +76,20 @@ public class WillService {
         }
     }
 
-    public String viewMyWill(Principal principal) {
+    public WillResponseDto viewMyWill(Principal principal) {
         String loginUserId = principal.getName();
         Will will = userRepository.findByUserId(loginUserId).getWill();
 
-        // S3에서 녹음 파일 가져오기
-        return awsS3Service.getWillFromS3(will.getWillFileAddress());
+        return WillResponseDto.builder()
+                .sustainCare(will.getSustainCare())
+                .funeralType(will.getFuneralType())
+                .graveType(will.getGraveType())
+                .organDonation(will.getOrganDonation())
+                .useMemorial(will.getUseMemorial())
+                .graveName(will.getGraveName())
+                .graveImageAddress(will.getGraveImageAddress())
+                .graveImageAddress(will.getWillFileAddress())
+                .build();
     }
 
     public void deleteMyWill(Principal principal) throws MalformedURLException, UnsupportedEncodingException {
