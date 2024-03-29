@@ -32,7 +32,8 @@ List<ChangeNotifierProvider> providers = [
   ChangeNotifierProvider(create: (context) => UserViewModel()),
   ChangeNotifierProvider(create: (context) => MemorialUseViewModel()),
   ChangeNotifierProvider(create: (context) => MemorialNamePictureViewModel()),
-  ChangeNotifierProvider(create: (context) => BlockChainWillViewModel())
+  ChangeNotifierProvider(create: (context) => BlockChainWillViewModel()),
+  // ChangeNotifierProvider(create :(context) => RecordingViewModel())
 ];
 
 

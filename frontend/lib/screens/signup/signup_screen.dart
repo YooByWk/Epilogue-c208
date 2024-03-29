@@ -193,22 +193,31 @@ class SignUpScreen extends StatelessWidget {
                       height: 50,
                       backgroundColor: themeColour3,
                       onPressed: () async {
-                        if (viewModel.isFormValid) {
-                          await viewModel.signup();
-                          if (viewModel.errorMessage == null) {
-                            ScaffoldMessenger.of(context).showSnackBar(
+                              // 지울것
+                              await viewModel.signup();
+                                          ScaffoldMessenger.of(context).showSnackBar(
                               SnackBar(content: Text('회원가입 성공')),
+                              // 지울것
                             );
-                            Navigator.pop(context);
-                          } else {
-                            ScaffoldMessenger.of(context).showSnackBar(
-                              SnackBar(content: Text(viewModel.errorMessage!)),
-                            );
-                          }
-                        } else {
-                          ScaffoldMessenger.of(context).showSnackBar(
-                              SnackBar(content: Text('입력 정보를 확인해주세요.')));
-                        }
+                            // Navigator.pop(context);
+                            Navigator.pushNamed(context, '/myMnemonic')     ; 
+                        // if (viewModel.isFormValid) {
+                        //   await viewModel.signup();
+                        //   if (viewModel.errorMessage == null) {
+                        //     ScaffoldMessenger.of(context).showSnackBar(
+                        //       SnackBar(content: Text('회원가입 성공')),
+                        //     );
+                        //     // Navigator.pop(context);
+                        //     Navigator.pushNamed(context, '/mnemonic')
+                        //   } else {
+                        //     ScaffoldMessenger.of(context).showSnackBar(
+                        //       SnackBar(content: Text(viewModel.errorMessage!)),
+                        //     );
+                        //   }
+                        // } else {
+                        //   ScaffoldMessenger.of(context).showSnackBar(
+                        //       SnackBar(content: Text('입력 정보를 확인해주세요.')));
+                        // }
                       }),
                 ],
               ),
