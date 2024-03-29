@@ -31,6 +31,20 @@ class BlockChainTest extends StatelessWidget {
                     ElevatedButton(
                       onPressed: ()  async {
                         // debugPrint(await willViewmodel.MyWill());
+                        debugPrint(await willViewmodel.SearchByHash());
+                      },
+                      child : Text('유언 유효성 검사')
+                    ),
+                    ElevatedButton(
+                      onPressed: ()  async {
+                        // debugPrint(await willViewmodel.MyWill());
+                        debugPrint(await willViewmodel.deleteWill());
+                      },
+                      child : Text('내 유언 삭제')
+                    ),
+                    ElevatedButton(
+                      onPressed: ()  async {
+                        // debugPrint(await willViewmodel.MyWill());
                         debugPrint(await willViewmodel.MyWill());
                       },
                       child : Text('내 유언 확인')

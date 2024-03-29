@@ -122,8 +122,10 @@ class BlockChainWillViewModel extends ChangeNotifier {
     String fileHash = await AudioHashViewModel().createAudioHash();
     var id = await storage.read(key: 'userId');
     final params = await [id, fileHash];
-    final res = await _model.sendTransaction('createWill', params);
+    final res = await _model.sendTransaction('유언장이 등록되었습니다.','createWill', params);
     debugPrint(res);
+
+
     return res;
   }
 
@@ -137,4 +139,22 @@ class BlockChainWillViewModel extends ChangeNotifier {
     return res.toString();
   }
   // Future
+
+  Future deleteWill () async {
+    await init();
+    final res = await _model.sendTransaction('유언장이 삭제되었습니다.','DeleteWill', [userId]);
+    return res;
+  }
+
+  Future SearchByHash () async {
+    await init();
+    // 다운로드 된 파일 해시를 불러온다.
+    var hashvalue = await AudioHashViewModel().createAudioHash();
+    // 해당 해시와 유저 아이디를 담아서 params로 만든다.
+    final params = await [ hashvalue, userId];
+    // 해당 params를 통해 함수를 실행한다.
+    final res = await _model.callFunction('SearchByHash', params);
+    // 결과를 반환한다.
+    return res.toString();
+  }
 }

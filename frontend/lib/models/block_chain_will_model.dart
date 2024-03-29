@@ -1,11 +1,13 @@
 import 'dart:io';
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
+import 'package:frontend/main.dart';
+import 'package:overlay_support/overlay_support.dart';
 import 'package:web3dart/web3dart.dart';
 import 'package:web3dart/web3dart.dart';
 import 'package:http/http.dart';
 import 'package:path/path.dart' as path;
 import 'package:flutter/services.dart' show rootBundle;
-
+import 'package:flutter/material.dart';
 class AudioHash {
   String filePath;
   String fileName;
@@ -90,7 +92,7 @@ class BlockChainWillModel {
 
   }
   // 트랜잭션 전송
-  Future<String> sendTransaction(String functionName, List<dynamic> params) async {
+  Future<String> sendTransaction(String txt, String functionName, List<dynamic> params) async {
     final function = _contract.function(functionName);
     final res = await _client.sendTransaction(
       _credentials,
@@ -106,12 +108,23 @@ class BlockChainWillModel {
     while (receipt == null) {
       receipt = await _client.getTransactionReceipt(res);
       await Future.delayed(Duration(milliseconds: 500));
+      
     }
 
     if (receipt.status == 0) {
+      showSimpleNotification(
+        Text('오류가 발생했습니다.', textAlign: TextAlign.center),
+        background: themeColour3,
+        duration: Duration(seconds: 2),
+      );
       throw Exception('Transaction failed');
     }
     // response = 
+    showSimpleNotification(
+      Text(txt),
+      background: themeColour3,
+      duration: Duration(seconds: 2),
+    );
     return res;
   }
 

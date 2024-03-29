@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 import 'package:frontend/screens/login/login_screen.dart';
+import 'package:overlay_support/overlay_support.dart';
 import 'package:provider/provider.dart';
 import 'package:frontend/routes/main_route.dart';
 import 'package:frontend/providers/providers.dart';
@@ -26,7 +27,7 @@ void main() async {
   debugPrint(await storage.read(key: 'walletAddress'));
   debugPrint(await storage.read(key: 'mnemonic'));
   // runApp(MyApp());
-  runApp(setupProvider());
+  runApp(OverlaySupport(child: setupProvider()));
 }
 
 class MyApp extends StatelessWidget {
