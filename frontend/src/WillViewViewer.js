@@ -1,22 +1,24 @@
 import React, { useState } from 'react';
 import axios from 'axios';
+import { useNavigate } from 'react-router-dom';
 
 function WillViewViewer() {
-  const [code, setCode] = useState('');
+    const Navi = useNavigate();
+    const [code, setCode] = useState('');
 
   const handleSubmit = async () => {
-    if (code.trim() === '') {
-      alert('코드를 입력해주세요.');
-      return;
-    }
+    // if (code.trim() === '') {
+    //   alert('코드를 입력해주세요.');
+    //   return;
+    // }
+    Navi('/will')
+    // try {
+    // //   const response = await axios.post('URL_HERE', { code });
 
-    try {
-      const response = await axios.post('URL_HERE', { code });
-
-      // Handle response as needed
-    } catch (error) {
-      console.error('Error:', error);
-    }
+    //   // Handle response as needed
+    // } catch (error) {
+    //   console.error('Error:', error);
+    // }
   };
 
   return (

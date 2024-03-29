@@ -3,6 +3,8 @@ import { BrowserRouter, Routes, Route } from "react-router-dom";
 import Select from "./Select";
 import WillApplyWitness from './WillApplyWitness';
 import WillViewViewer from './WillViewViewer';
+import Will from './Will';
+
 function App() {
   return (
     <>
@@ -12,6 +14,7 @@ function App() {
       <Route path="/" element={<Select />} />
       <Route path="/witness" element={<WillApplyWitness />} />
       <Route path='/viewer' element={<WillViewViewer />} />
+      <Route path='/will' element={<Will />} />
     </Routes>
     </BrowserRouter>
     </>
