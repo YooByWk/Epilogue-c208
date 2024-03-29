@@ -34,13 +34,13 @@ class AudioHashViewModel extends ChangeNotifier {
 
   // Generate SHA256 hash similar to PowerShell's Get-FileHash
   final hash = sha256.convert(bytes);
-  debugPrint('Hash: ${hash.toString().toUpperCase()}');
+  debugPrint('Hash: ${hash.toString()}');
 
   setAudioHash(AudioHash(
       filePath: filePath,
       fileName: filePath.split('/').last,
       date: DateTime.now(),
-      hash: hash.toString().toUpperCase())); // Convert hash to uppercase
+      hash: hash.toString())); // Convert hash to uppercase
   return hash.toString();
 }
 
@@ -78,7 +78,7 @@ class BlockChainWillViewModel extends ChangeNotifier {
   final BlockChainWillModel _model = BlockChainWillModel();
   final storage = FlutterSecureStorage();
   final UserViewModel _userViewModel = UserViewModel();
-  late Future<String> userId;
+  late String? userId;
 
 
   BlockChainWillViewModel() {
@@ -87,9 +87,13 @@ class BlockChainWillViewModel extends ChangeNotifier {
   }
 
   Future<void> init() async {
+    // print(storage.read(key: 'userId'));
+    // userId =  _userViewModel.fetchUserId();
+    // userId = await storage.read(key: 'userId');
     await _model.init();
+    // print('모델 id : $_model.userId');
+    userId = await storage.read(key: 'userId');
 
-    userId =  _userViewModel.fetchUserId();
   }
 
   // Future<String> get pk => _model.pk;
@@ -98,25 +102,33 @@ class BlockChainWillViewModel extends ChangeNotifier {
   
   Future sendTransaction(String functionName, List<dynamic> params) async {
     // await init();
-    print('createWill() called');
+    // print('createWill() called');
     // print()
     // print(await userId);
     // print(await pk);
     // print(await address);
     // print(await ABI);
-    print('ㅁㄴㅇㄹ ${await userId}');
-    final res = await _model.sendTransaction(functionName, params);
+    // print('ㅁㄴㅇㄹ ${await userId}');
+    // final res = await _model.sendTransaction(functionName, params);
     // return print(userId);
     // debugPrint(res);
 
   }
   
   Future createWill() async {
+    // init();
     // 함수 이름
     // 넣을 값
-    String id = await userId;
+    // print(await storage.read(key: 'userId'));
+    // print('모델 id : ${_model.userId.toString()}');
+    // print('');
+    print(userId);
+    // print(await _model.pk);
+    // String? id =  userId;
+    // String id =  _model.userId;
+    
     String fileHash = await AudioHashViewModel().createAudioHash();
-    final params = await [id, fileHash];
+    final params = await [userId, fileHash];
     final res = await _model.sendTransaction('createWill', params);
     debugPrint(res);
     return res;

@@ -41,6 +41,8 @@ class UserViewModel extends ChangeNotifier {
         // 서버에서 불러온 유저 정보를 로컬 저장소에 저장
         String newUserJson = json.encode(_user!.toJson());
         await _storage.write(key: 'userInfo', value: newUserJson);
+        // 유저 아이디만 따로 저장
+        await _storage.write(key: 'userId', value:  _user!.userId);
       }
     } catch (e) {
       _errorMessage = '유저 정보 불러오기 실패';
@@ -76,12 +78,17 @@ class UserViewModel extends ChangeNotifier {
     _user = null;
     notifyListeners();
   }
+
+
     Future<String> fetchUserId() async {
+      print('fetchUserId() called ${_storage.read(key: 'userInfo')}');
     String? userJson = await _storage.read(key: 'userInfo');
     if (userJson == null) {
       throw Exception('User info not found');
     }
+    
     UserModel user = UserModel.fromJson(json.decode(userJson));
+    print('유저 : $user.userId');
     return user.userId;
   }
 }

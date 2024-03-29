@@ -48,9 +48,21 @@ class BlockChainWillModel {
     return value;
   }
 
+  static Future<String?> get _userId async {
+    String? value = await storage.read(key: 'userId');
+    if (value == null) {
+      throw Exception('userId not found');
+    }
+
+    return value;
+  } 
+
+
   late Future<String> pk;
   late Future<String> address;
   late Future<String> ABI;
+
+  late Future<String?> userId;
 
   late Web3Client _client;
   late Credentials _credentials;
@@ -60,6 +72,8 @@ class BlockChainWillModel {
     init();
   }
   Future<void> init() async {
+  userId = BlockChainWillModel._userId;
+  print('userId : $userId');
   pk = BlockChainWillModel._pk;
   var value = await BlockChainWillModel._pk;
   _credentials = EthPrivateKey.fromHex(value);
