@@ -138,7 +138,6 @@ public class WillController {
     @PostMapping("/will/certificate")
     public ResponseEntity<?> certificateCode(@Parameter(description = "유언 인증 코드") @RequestBody String willCode) {
         Will will = willService.certificateCode(willCode);
-        
         if (will != null) return new ResponseEntity<>(will.getWillFileAddress(), HttpStatus.OK);
         return new ResponseEntity<>(HttpStatus.NOT_FOUND);
     }
