@@ -1,6 +1,6 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:frontend/models/login_model.dart';
+import 'package:frontend/models/user/login_model.dart';
 import 'package:frontend/services/auth_service.dart';
 import 'package:flutter_naver_login/flutter_naver_login.dart';
 import 'package:frontend/screens/login/login_screen.dart';

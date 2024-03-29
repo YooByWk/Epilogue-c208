@@ -58,6 +58,7 @@ dependencies:
   file_picker: ^8.0.0+1
   flutter_widget_to_image: ^0.0.1
   flutter_naver_login: ^1.8.0 # 네이버 소셜 로그인
+  webview_flutter: ^4.7.0 # 네이버 로그인 창 띄우기
 
 dev_dependencies:
   flutter_test:
@@ -90,7 +91,7 @@ flutter:
   #   - images/a_dot_ham.jpeg
     - assets/config/
     - smart_contract/
-    - assets/blockchain/wiil.json
+    - assets/blockchain/will.json
   # An image asset can refer to one or more resolution-specific "variants", see
   # https://flutter.dev/assets-and-images/#resolution-aware
 

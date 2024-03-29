@@ -1,10 +1,9 @@
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 import 'package:dio/dio.dart' as Dio;
-import 'package:frontend/models/login_model.dart';
-import 'package:frontend/models/signup_model.dart';
+import 'package:frontend/models/user/login_model.dart';
+import 'package:frontend/models/user/signup_model.dart';
 import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:flutter/material.dart';
-import 'package:frontend/screens/login/login_screen.dart';
 
 class AuthService {
   final _dio = Dio.Dio();
@@ -60,10 +59,10 @@ class AuthService {
     try {
       Dio.Response response = await _dio.post(
         '$baseUrl/api/auth/oauth2/naver',
-        data: {'accessToken': accessToken},
+        // data: {'accessToken': accessToken},
       );
       if (response.statusCode == 200) {
-        await _storage.write(key: 'token', value: response.data['accessToken']);
+        await _storage.write(key: 'token', value: response.data['Access_Token']);
         return true;
       }
       return false;
