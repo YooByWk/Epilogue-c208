@@ -27,12 +27,6 @@ class MainBodyScreen extends StatelessWidget {
               MainBannerWidget(),
               SizedBox(height: 30),
               MainDescriptionWidget(
-                text: '만들어진 유언장',
-                fontSize: 24,
-                fontWeight: FontWeight.w700,
-              ),
-              SizedBox(height: 30),
-              MainDescriptionWidget(
                 text: '당신의 삶을 \n오랫동안 기념할 수 있는 플랫폼',
                 fontSize: 24,
                 fontWeight: FontWeight.w700,
