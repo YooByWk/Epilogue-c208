@@ -1,5 +1,8 @@
 import 'dart:io';
 import 'package:flutter/material.dart';
+import 'package:flutter_secure_storage/flutter_secure_storage.dart';
+import 'package:frontend/services/user_service.dart';
+import 'package:frontend/view_models/auth_view_models/user_viewmodel.dart';
 import 'package:web3dart/web3dart.dart';
 import 'package:crypto/crypto.dart';
 import 'package:provider/provider.dart';
@@ -17,7 +20,7 @@ class AudioHashViewModel extends ChangeNotifier {
   }
 
   // /data/user/0/com.example.frontend/cache/will.mp4
-Future<void> createAudioHash() async {
+ createAudioHash() async {
   var filePath = '/data/user/0/com.example.frontend/cache/will.mp4';
   // var filePath = '/data/user/0/com.example.frontend/cache/will.mp4';
   var file = File(filePath);
@@ -38,10 +41,8 @@ Future<void> createAudioHash() async {
       fileName: filePath.split('/').last,
       date: DateTime.now(),
       hash: hash.toString().toUpperCase())); // Convert hash to uppercase
+  return hash.toString();
 }
-
-
-  
 
 Future<void> checkHash() async {
   FilePickerResult? downloadResult = await FilePicker.platform.pickFiles();
@@ -70,4 +71,56 @@ Future<void> checkHash() async {
     debugPrint('User canceled the picker');
   }
 }
+}
+
+
+class BlockChainWillViewModel extends ChangeNotifier {
+  final BlockChainWillModel _model = BlockChainWillModel();
+  final storage = FlutterSecureStorage();
+  final UserViewModel _userViewModel = UserViewModel();
+  late Future<String> userId;
+
+
+  BlockChainWillViewModel() {
+    init();
+    // userId =  _userViewModel.fetchUserId();
+  }
+
+  Future<void> init() async {
+    await _model.init();
+
+    userId =  _userViewModel.fetchUserId();
+  }
+
+  // Future<String> get pk => _model.pk;
+  // Future<String> get address => _model.address;
+  // Future<String> get ABI => _model.ABI;
+  
+  Future sendTransaction(String functionName, List<dynamic> params) async {
+    // await init();
+    print('createWill() called');
+    // print()
+    // print(await userId);
+    // print(await pk);
+    // print(await address);
+    // print(await ABI);
+    print('ㅁㄴㅇㄹ ${await userId}');
+    final res = await _model.sendTransaction(functionName, params);
+    // return print(userId);
+    // debugPrint(res);
+
+  }
+  
+  Future createWill() async {
+    // 함수 이름
+    // 넣을 값
+    String id = await userId;
+    String fileHash = await AudioHashViewModel().createAudioHash();
+    final params = await [id, fileHash];
+    final res = await _model.sendTransaction('createWill', params);
+    debugPrint(res);
+    return res;
+  }
+
+  
 }

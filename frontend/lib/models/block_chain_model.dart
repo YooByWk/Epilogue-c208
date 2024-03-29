@@ -75,7 +75,7 @@ Future<String> deployContract() async {
   return _newAddress;
 }
 
-
+///////////////////////////////////////
 
   Future<String> sendTransaction(String functionName, List<dynamic> params) async {
     final function = _contract.function(functionName);

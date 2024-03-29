@@ -9,10 +9,38 @@ import 'package:frontend/view_models/auth_view_models/user_viewmodel.dart';
 import 'package:provider/provider.dart';
 
 class MainScreen extends StatelessWidget {
+  // int alpha = 0;
+  DateTime? _currentBackPressTime;
+  void showSnackBar(BuildContext context) {
+    final snackBar = SnackBar(
+      content: Text('한번 더 누르면 종료됩니다.'),
+      duration: Duration(seconds: 1),
+    );
+    ScaffoldMessenger.of(context).showSnackBar(snackBar);
+  }
+
+  DateTime? _lastPressedAt;
+
+void handleBackPress(BuildContext context) {
+  if (_lastPressedAt == null || DateTime.now().difference(_lastPressedAt!) > Duration(seconds: 2)) {
+    _lastPressedAt = DateTime.now();
+    showSnackBar(context);
+    return;
+  }
+
+  if (DateTime.now().difference(_lastPressedAt!) < Duration(seconds: 2)) {
+    debugPrint('종료됩니다');
+    SystemNavigator.pop();
+  }
+}
   @override
   Widget build(BuildContext context) {
     return PopScope(
       canPop: false,
+      onPopInvoked: (didPop) async {
+        handleBackPress(context);
+      
+      },
       child: MultiProvider(
         providers: [
           ChangeNotifierProvider(create: (context) => MainViewModel()),

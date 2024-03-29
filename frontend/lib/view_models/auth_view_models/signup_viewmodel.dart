@@ -18,13 +18,9 @@ class SignupViewModel extends ChangeNotifier {
   String? _userIdExists;
 
   SignupModel get signupData => _signupData;
-
   bool get isLoading => _isLoading;
-
   String? get errorMessage => _errorMessage;
-
   String? get confirmPassword => _confirmPassword;
-
   String? get userIdExists => _userIdExists;
 
   // 비밀번호 유효성 검사
