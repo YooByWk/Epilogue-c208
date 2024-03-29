@@ -225,6 +225,7 @@ class _WillAdditionalInfoScreenState extends State<WillAdditionalInfoScreen> {
                       isSelected: graveOption == "기타",
                       onTap: () => updateGrave('기타'),
                     ),
+                    SizedBox(height: 40,),
                   ],
                 ),
               ),

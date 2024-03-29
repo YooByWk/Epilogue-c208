@@ -41,6 +41,7 @@ class MemorialNamePictureViewModel extends ChangeNotifier {
 
   void setFile(File value) {
     _pictureData = MemorialPictureModel(pictureFile: value);
+    // debugPrint('$_pictureData');
     notifyListeners();
   }
 
