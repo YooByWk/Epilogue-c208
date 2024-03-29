@@ -5,6 +5,8 @@ import 'package:frontend/view_models/auth_view_models/login_viewmodel.dart';
 import 'package:frontend/view_models/auth_view_models/signup_viewmodel.dart';
 import 'package:frontend/view_models/block_chain/block_chain_wallet_viewmodel.dart';
 import 'package:frontend/view_models/will_view_models/additional_viewmodel.dart';
+import 'package:frontend/view_models/will_view_models/memorial_name_picture_viewmodel.dart';
+import 'package:frontend/view_models/will_view_models/memorial_use_viewmodel.dart';
 import 'package:frontend/view_models/will_view_models/recording_viewmodel.dart';
 import 'package:frontend/view_models/will_view_models/viewer_viewmodel.dart';
 import 'package:provider/provider.dart';
@@ -22,10 +24,12 @@ List<ChangeNotifierProvider> providers = [
   ChangeNotifierProvider(create: (context) => MainViewModel()),
   ChangeNotifierProvider(create: (context) => SignupViewModel()),
   ChangeNotifierProvider(create :(context) => BlockChainWalletViewModel(BlockChainWalletModel())),
-    ChangeNotifierProvider(create: (context) => ViewerViewModel()),
+  ChangeNotifierProvider(create: (context) => ViewerViewModel()),
   ChangeNotifierProvider(create: (context) => AdditionalViewModel()),
   ChangeNotifierProvider(create: (context) => RecordingViewModel()),
   ChangeNotifierProvider(create: (context) => UserViewModel()),
+  ChangeNotifierProvider(create: (context) => MemorialUseViewModel()),
+  ChangeNotifierProvider(create: (context) => MemorialNamePictureViewModel()),
 ];
 
 
