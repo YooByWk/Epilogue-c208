@@ -20,7 +20,7 @@ class WitnessViewModel extends ChangeNotifier {
 
   String get witnessName => _witnessData.witnessName;
 
-  String? get witnessEmail => _witnessData.witnessEmail;
+  String get witnessEmail => _witnessData.witnessEmail;
 
   String get witnessMobile => _witnessData.witnessMobile;
 
@@ -76,6 +76,7 @@ class WitnessViewModel extends ChangeNotifier {
   bool get isFormValid {
     bool isFieldNotEmpty = _witnessData.witnessName.isNotEmpty &&
         _witnessData.witnessMobile.isNotEmpty &&
+        _witnessData.witnessEmail.isNotEmpty &&
         _witnessData.witnessCertificationNumber.isNotEmpty;
     return isFieldNotEmpty && isEmailValid && isMobileValid;
   }
@@ -85,6 +86,7 @@ class WitnessViewModel extends ChangeNotifier {
     _witnessData = WitnessModel(
         witnessName: _witnessData.witnessName,
         witnessMobile: _witnessData.witnessMobile,
+        witnessEmail: _witnessData.witnessEmail,
         witnessCertificationNumber: value);
   }
 
@@ -149,6 +151,9 @@ class WitnessViewModel extends ChangeNotifier {
     _witnessList.add(newWitness);
     _errorMessage = null;
     _isLoading = false;
+    _witnessData.witnessName = '';
+    _witnessData.witnessEmail = '';
+    _witnessData.witnessMobile = '';
     notifyListeners();
   }
 
