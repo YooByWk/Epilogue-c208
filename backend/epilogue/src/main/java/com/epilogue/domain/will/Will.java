@@ -43,7 +43,6 @@ public class Will {
     @Schema(description = "묘비 사진")
     private String graveImageAddress;
 
-
     @Schema(description = "유언 파일 주소")
     private String willFileAddress;
 
