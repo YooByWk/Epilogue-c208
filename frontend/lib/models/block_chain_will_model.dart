@@ -28,7 +28,7 @@ class BlockChainWillModel {
   // static final Future<String> _ABI = File('/smart_contract/will_system.json').readAsString();
   // print(_ABI);
   static const String _contractAddress =
-      '0x174fBE3C2E97081155c1ef7E44E20337A8F380aA';
+      '0xed2e8aac38bcddd780bc046f1223296e9ca1d00c';
   final String _rpcUrl = 'https://rpc.ssafy-blockchain.com'; // RPC 주소
 
   static Future<String> get _pk async {
@@ -73,45 +73,21 @@ class BlockChainWillModel {
   }
   Future<void> init() async {
   userId = BlockChainWillModel._userId;
-  print('userId : $userId');
+  // print('userId : $userId');
   pk = BlockChainWillModel._pk;
   var value = await BlockChainWillModel._pk;
   _credentials = EthPrivateKey.fromHex(value);
+  ABI = BlockChainWillModel._ABI;
+
 
   value = await BlockChainWillModel._ABI;
   _client = Web3Client(_rpcUrl, Client());
   _contract = DeployedContract(
       ContractAbi.fromJson(value, 'WillSystem'),
       EthereumAddress.fromHex(_contractAddress));
-
+  address = BlockChainWillModel._address;
   value = await BlockChainWillModel._address;
-  // print('walletAddress????: $value');
-  // print('contract : $_contract');
-  
-    // pk = BlockChainWillModel._pk;
 
-    // address = BlockChainWillModel._address;
-    // ABI = BlockChainWillModel._ABI;
-
-    // // 유효한 키를 설정하자
-    // pk.then((value) { 
-    //   _credentials = EthPrivateKey.fromHex(value);
-    // });
-    // // ABI를 설정하자
-    // ABI.then((value) {
-    // _client = Web3Client(_rpcUrl, Client());
-    // _contract = DeployedContract(
-    //     ContractAbi.fromJson(value, 'WillSystem'),
-    //     EthereumAddress.fromHex(_contractAddress));
-    // // print('contract : $_contract');
-    // });
-
-    // address.then((value) => print('walletAddress????: $value'));
-
-    // // _client = Web3Client(_rpcUrl, Client());
-    // // _contract = DeployedContract(
-    // //     ContractAbi.fromJson(ABI.toString(), 'WillSystem'),
-    // //     EthereumAddress.fromHex(_contractAddress));
   }
   // 트랜잭션 전송
   Future<String> sendTransaction(String functionName, List<dynamic> params) async {
@@ -149,4 +125,5 @@ class BlockChainWillModel {
     );
     return result;
   }
+
 }

@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 import 'package:frontend/screens/login/login_screen.dart';
 import 'package:provider/provider.dart';
 import 'package:frontend/routes/main_route.dart';
@@ -15,9 +16,15 @@ const Color whiteText = Color(0xFFFFFFFF);
 const Color blackText = Color(0xFF121212);
 const Color backgroundColour = Color(0xFFF8F6F2);
 
+const storage = FlutterSecureStorage();
+
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
   await dotenv.load(fileName: 'assets/config/.env');
+  debugPrint(await storage.read(key: 'privateKey'));
+  debugPrint(await storage.read(key: 'userId'));
+  debugPrint(await storage.read(key: 'walletAddress'));
+  debugPrint(await storage.read(key: 'mnemonic'));
   // runApp(MyApp());
   runApp(setupProvider());
 }

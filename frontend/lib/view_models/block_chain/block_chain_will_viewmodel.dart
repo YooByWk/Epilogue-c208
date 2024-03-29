@@ -116,23 +116,25 @@ class BlockChainWillViewModel extends ChangeNotifier {
   }
   
   Future createWill() async {
-    // init();
     // 함수 이름
     // 넣을 값
-    // print(await storage.read(key: 'userId'));
-    // print('모델 id : ${_model.userId.toString()}');
-    // print('');
-    print(userId);
-    // print(await _model.pk);
-    // String? id =  userId;
-    // String id =  _model.userId;
-    
+    init();
     String fileHash = await AudioHashViewModel().createAudioHash();
-    final params = await [userId, fileHash];
+    var id = await storage.read(key: 'userId');
+    final params = await [id, fileHash];
     final res = await _model.sendTransaction('createWill', params);
     debugPrint(res);
     return res;
   }
 
   
+  Future MyWill () async {
+    await init();
+    var test = await _model.address;
+    EthereumAddress address = EthereumAddress.fromHex(test);
+    // print(test);
+    final res = await _model.callFunction('addressToWill', [address]);
+    return res.toString();
+  }
+  // Future
 }

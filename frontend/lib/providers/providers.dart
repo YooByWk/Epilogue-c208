@@ -1,9 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:frontend/models/block_chain_wallet_model.dart';
+import 'package:frontend/models/block_chain_will_model.dart';
 import 'package:frontend/screens/login/login_screen.dart';
 import 'package:frontend/view_models/auth_view_models/login_viewmodel.dart';
 import 'package:frontend/view_models/auth_view_models/signup_viewmodel.dart';
 import 'package:frontend/view_models/block_chain/block_chain_wallet_viewmodel.dart';
+import 'package:frontend/view_models/block_chain/block_chain_will_viewmodel.dart';
 import 'package:frontend/view_models/will_view_models/additional_viewmodel.dart';
 import 'package:frontend/view_models/will_view_models/memorial_name_picture_viewmodel.dart';
 import 'package:frontend/view_models/will_view_models/memorial_use_viewmodel.dart';
@@ -30,6 +32,7 @@ List<ChangeNotifierProvider> providers = [
   ChangeNotifierProvider(create: (context) => UserViewModel()),
   ChangeNotifierProvider(create: (context) => MemorialUseViewModel()),
   ChangeNotifierProvider(create: (context) => MemorialNamePictureViewModel()),
+  ChangeNotifierProvider(create: (context) => BlockChainWillViewModel())
 ];
 
 
