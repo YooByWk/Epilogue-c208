@@ -281,16 +281,6 @@ class TextButtonWidget extends StatelessWidget {
                           );
                         }
                       : onPressed,
-                  onPressed: onPressed == null
-                      ? () {
-                          Navigator.push(
-                            context,
-                            MaterialPageRoute(
-                              builder: (context) => nextPage!,
-                            ),
-                          );
-                        }
-                      : onPressed,
                   child: Text(
                     nextText!,
                     style: TextStyle(
