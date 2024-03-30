@@ -27,4 +27,19 @@ public class MemorialLetterRepositoryImpl implements MemorialLetterRepositoryCus
                 .setParameter("memorialSeq", memorialSeq)
                 .getResultList();
     }
+
+    @Override
+    public List<MemorialLetter> find20ByMemorialSeq(int memorialSeq) {
+        return entityManager.createQuery("SELECT ml FROM MemorialLetter ml WHERE ml.memorial.memorialSeq = :memorialSeq ORDER BY ml.writtenDate DESC LIMIT 20", MemorialLetter.class)
+                .setParameter("memorialSeq", memorialSeq)
+                .getResultList();
+    }
+
+    @Override
+    public List<MemorialLetter> find20ByMemorialSeqAndLastLetterSeq(int memorialSeq, int lastLetterSeq) {
+        return entityManager.createQuery("SELECT ml FROM MemorialLetter ml WHERE ml.memorial.memorialSeq = :memorialSeq AND ml.memorialLetterSeq < :lastLetterSeq ORDER BY ml.writtenDate DESC LIMIT 20", MemorialLetter.class)
+                .setParameter("memorialSeq", memorialSeq)
+                .setParameter("lastLetterSeq", lastLetterSeq)
+                .getResultList();
+    }
 }

@@ -8,8 +8,12 @@ import java.util.List;
 @Repository
 public interface MemorialLetterRepositoryCustom {
 
-    List<MemorialLetter> findAllByUserSeq(int userSeq);
+    public List<MemorialLetter> findAllByUserSeq(int userSeq);
 
-    List<MemorialLetter> findAllByMemorialSeq(int memorialSeq);
+    public List<MemorialLetter> findAllByMemorialSeq(int memorialSeq);
+
+    public List<MemorialLetter> find20ByMemorialSeq(int memorialSeq);
+
+    public List<MemorialLetter> find20ByMemorialSeqAndLastLetterSeq(int memorialSeq, int lastLetterSeq);
 
 }
