@@ -1,6 +1,5 @@
 package com.epilogue.service;
 
-import com.amazonaws.services.s3.AmazonS3;
 import com.epilogue.domain.user.User;
 import com.epilogue.domain.user.UserStatus;
 import com.epilogue.domain.will.Will;
@@ -38,7 +37,6 @@ public class WillService {
 
     private final SmsCertificationUtil smsUtil;
     private final EmailUtil emailUtil;
-    private final AmazonS3 amazonS3;
 
     public void saveWill(Will will) {
         willRepository.save(will);

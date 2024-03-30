@@ -6,7 +6,6 @@ import com.amazonaws.services.s3.model.ObjectMetadata;
 import java.io.IOException;
 import java.io.UnsupportedEncodingException;
 import java.net.MalformedURLException;
-import java.net.URL;
 import java.security.Principal;
 import java.util.UUID;
 
@@ -48,6 +47,7 @@ public class AwsS3Service {
             ObjectMetadata metadata = new ObjectMetadata();
             metadata.setContentType(file.getContentType());
             metadata.setContentLength(file.getSize());
+            metadata.setContentDisposition("inline");
 
             // 유언 파일 주소 업데이트
             User user = userRepository.findByUserId(principal.getName());
@@ -70,8 +70,8 @@ public class AwsS3Service {
 
             ObjectMetadata metadata = new ObjectMetadata();
             metadata.setContentType(file.getContentType());
-
             metadata.setContentLength(file.getSize());
+            metadata.setContentDisposition("inline");
 
             // 묘비 사진 주소 업데이트
             User user = userRepository.findByUserId(principal.getName());
@@ -101,6 +101,7 @@ public class AwsS3Service {
             ObjectMetadata metadata = new ObjectMetadata();
             metadata.setContentType(file.getContentType());
             metadata.setContentLength(file.getSize());
+            metadata.setContentDisposition("inline");
 
             amazonS3.putObject(photoBucketName, uniqueFileName, file.getInputStream(), metadata);
         } catch (IOException e) {
@@ -121,6 +122,7 @@ public class AwsS3Service {
             ObjectMetadata metadata = new ObjectMetadata();
             metadata.setContentType(file.getContentType());
             metadata.setContentLength(file.getSize());
+            metadata.setContentDisposition("inline");
 
             amazonS3.putObject(videoBucketName, uniqueFileName, file.getInputStream(), metadata);
         } catch (IOException e) {
