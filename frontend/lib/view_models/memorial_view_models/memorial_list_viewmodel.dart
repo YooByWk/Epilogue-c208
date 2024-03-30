@@ -4,7 +4,10 @@ import 'package:frontend/services/memorial_service.dart';
 
 class MemorialListViewModel extends ChangeNotifier {
   // int _nextItem = 0;
-
+  MemorialListViewModel() {
+    // loadInitialData();
+    getLists();
+  }
   // void loadMore() {
   //   // Add more items to the list
   //     debugPrint('Added item $_nextItem');
@@ -46,11 +49,7 @@ class MemorialListViewModel extends ChangeNotifier {
       }
     } else {
       _favoriteMemorialList = result['favoriteMemorialList'];
-          // .map((item) => MemorialGraveModel.fromJson(item))
-          // .toList();
       _memorialList = result['memorialList'];
-          // .map((item) => MemorialGraveModel.fromJson(item))
-          // .toList();
     }
 
     _isLoading = false;

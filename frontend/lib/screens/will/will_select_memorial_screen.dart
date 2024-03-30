@@ -5,9 +5,7 @@ import 'package:frontend/screens/will/will_epitaph_picture_screen.dart';
 import 'package:frontend/screens/will/will_select_info_screen.dart';
 import 'package:frontend/screens/will/will_viewer_screen.dart';
 import 'package:frontend/screens/will/will_widgets.dart';
-import 'package:frontend/view_models/will_view_models/memorial_name_picture_viewmodel.dart';
 import 'package:frontend/view_models/will_view_models/memorial_use_viewmodel.dart';
-import 'package:frontend/widgets/common_button.dart';
 import 'package:provider/provider.dart';
 
 class WillSelectMemorialScreen extends StatefulWidget {

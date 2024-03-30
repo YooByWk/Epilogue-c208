@@ -6,6 +6,8 @@ import 'package:dio/dio.dart' as Dio;
 import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:flutter/material.dart';
 import 'package:frontend/models/memorial/memorial_grave_model.dart';
+import 'package:frontend/models/memorial/memorial_photo_list_model.dart';
+import 'package:frontend/models/memorial_detail_model.dart';
 
 class MemorialService {
   final _dio = Dio.Dio();
@@ -33,7 +35,7 @@ class MemorialService {
       Dio.Response response = await _dio.get(
         baseUrl + '/api/memorial/list',
       );
-      debugPrint('리스트 불러오기');
+      // debugPrint('리스트 불러오기');
       if (response.statusCode == 200) {
         // final Map<String, dynamic> responseData = response.data;
 
@@ -45,7 +47,7 @@ class MemorialService {
             );
           }
         }
-        debugPrint('$favoriteMemorialList');
+        // debugPrint('$favoriteMemorialList');
         List<MemorialGraveModel> memorialList = [];
         if (response.data['memorialList'] != []) {
           for (var item in response.data['memorialList']) {
@@ -54,7 +56,7 @@ class MemorialService {
             );
           }
         }
-        debugPrint('$memorialList');
+        // debugPrint('$memorialList');
         // debugPrint(response.data);
 
         return {
@@ -70,9 +72,44 @@ class MemorialService {
     }
   }
 
+  ////////////////// 추모관 디테일 ///////////////////////
+  Future<Map<String, dynamic>> getDetail() async {
+    String? memorialSeq = await _storage.read(key: 'graveSeq');
+    try {
+      Dio.Response response = await _dio.get(
+        baseUrl + '/api/memorial/visit/$memorialSeq',
+      );
+
+      // debugPrint('디테일!');
+      if (response.statusCode == 200) {
+        List<MemorialPhotoListModel> memorialPhotoList = [];
+        if (response.data['memorialPhotoList'] != []) {
+          for (var item in response.data['memorialPhotoList']) {
+            memorialPhotoList.add(
+              MemorialPhotoListModel.fromJson(item),
+            );
+          }
+        }
+
+        MemorialDetailModel memorialDetailModel =
+            MemorialDetailModel.fromJson(response.data);
+
+        return {
+          'success': true,
+          'memorialPhotoList': memorialPhotoList,
+          'memorialDetailModel': memorialDetailModel,
+        };
+      } else {
+        return {'success': false, 'statusCode': response.statusCode};
+      }
+    } on Dio.DioError catch (e) {
+      return {'success': false, 'statusCode': e.response?.statusCode};
+    }
+  }
+
   ////////////////// 추모관 사진 업로드 ///////////////////////
-  Future<Map<String, dynamic>> photo(
-      File photoFile, String? content, int memorialSeq) async {
+  Future<Map<String, dynamic>> photo(File photoFile, String? content) async {
+    String? memorialSeq = await _storage.read(key: 'graveSeq');
     String contentJson = jsonEncode(content);
 
     var formData = Dio.FormData.fromMap({
@@ -83,7 +120,7 @@ class MemorialService {
     try {
       _dio.options.contentType = 'multipart/form-data';
       Dio.Response response = await _dio.post(
-        baseUrl + '/api/memorial/media/${memorialSeq}',
+        '$baseUrl/api/memorial/media/$memorialSeq',
         data: formData,
       );
 
