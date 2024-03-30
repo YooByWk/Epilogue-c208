@@ -1,5 +1,6 @@
 package com.epilogue.service;
 
+import com.amazonaws.services.s3.AmazonS3;
 import com.epilogue.domain.user.User;
 import com.epilogue.domain.user.UserStatus;
 import com.epilogue.domain.will.Will;
@@ -21,6 +22,7 @@ import org.springframework.stereotype.Service;
 
 import java.io.UnsupportedEncodingException;
 import java.net.MalformedURLException;
+import java.net.URL;
 import java.security.Principal;
 import java.util.List;
 
@@ -36,6 +38,7 @@ public class WillService {
 
     private final SmsCertificationUtil smsUtil;
     private final EmailUtil emailUtil;
+    private final AmazonS3 amazonS3;
 
     public void saveWill(Will will) {
         willRepository.save(will);
@@ -79,6 +82,9 @@ public class WillService {
     public WillResponseDto viewMyWill(Principal principal) {
         String loginUserId = principal.getName();
         Will will = userRepository.findByUserId(loginUserId).getWill();
+
+        if (will == null) return null;
+
         String willFileAddress = awsS3Service.getWillFromS3(will.getWillFileAddress());
 
         return WillResponseDto.builder()

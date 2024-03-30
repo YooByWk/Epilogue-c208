@@ -109,7 +109,7 @@ public class WillController {
     @ApiResponse(responseCode = "200", description = "성공")
     @GetMapping("/myWill")
     public ResponseEntity<WillResponseDto> viewMyWill(Principal principal) {
-        // S3에서 가져온 유언 파일 반환
+        if (willService.viewMyWill(principal) == null) return new ResponseEntity<>(HttpStatus.NO_CONTENT);
         return new ResponseEntity<>(willService.viewMyWill(principal), HttpStatus.OK);
     }
 

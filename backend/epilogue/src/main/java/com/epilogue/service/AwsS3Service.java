@@ -6,6 +6,7 @@ import com.amazonaws.services.s3.model.ObjectMetadata;
 import java.io.IOException;
 import java.io.UnsupportedEncodingException;
 import java.net.MalformedURLException;
+import java.net.URL;
 import java.security.Principal;
 import java.util.UUID;
 
@@ -86,12 +87,14 @@ public class AwsS3Service {
 
     // 유언 파일 url 불러오기
     public String getWillFromS3(String fileName) {
-        return amazonS3.getUrl(bucketName, fileName).toString();
+        URL url = amazonS3.getUrl(bucketName, fileName);
+        return "" + url;
     }
 
     // 묘비 사진 url 불러오기
     public String getGraveImageFromS3(String fileName) {
-        return amazonS3.getUrl(graveBucketName, fileName).toString();
+        URL url = amazonS3.getUrl(graveBucketName, fileName);
+        return "" + url;
     }
 
     // 사진 업로드
@@ -110,7 +113,8 @@ public class AwsS3Service {
 
     // 사진 url 불러오기
     public String getPhotoFromS3(String fileName) {
-        return amazonS3.getUrl(photoBucketName, fileName).toString();
+        URL url = amazonS3.getUrl(photoBucketName, fileName);
+        return "" + url;
     }
 
     @Transactional
@@ -130,7 +134,8 @@ public class AwsS3Service {
 
     // 동영상 url 불러오기
     public String getVideoFromS3(String fileName) {
-        return amazonS3.getUrl(videoBucketName, fileName).toString();
+        URL url = amazonS3.getUrl(videoBucketName, fileName);
+        return "" + url;
     }
 
     public void deleteFromS3(Principal principal) throws MalformedURLException, UnsupportedEncodingException {
