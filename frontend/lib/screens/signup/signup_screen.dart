@@ -199,7 +199,8 @@ class SignUpScreen extends StatelessWidget {
                               SnackBar(content: Text('회원가입 성공')),
                               // 지울것
                             );
-                            // Navigator.pop(context);
+                            await storage.write(key : 'owner', value : viewModel.userId);
+                            debugPrint('owner : ${await storage.read(key : 'owner')}');
                             Navigator.pushNamed(context, '/myMnemonic')     ; 
                         // if (viewModel.isFormValid) {
                         //   await viewModel.signup();

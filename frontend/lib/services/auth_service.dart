@@ -48,7 +48,7 @@ class AuthService {
       } else {
         return {'success': false, 'statusCode': response.statusCode};
       }
-    } on Dio.DioError catch (e) {
+    } on Dio.DioException catch (e) {
       debugPrint(e.message);
       return {'success': false, 'statusCode': e.response?.statusCode};
     }

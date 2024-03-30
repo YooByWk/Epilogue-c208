@@ -87,6 +87,7 @@ class UserViewModel extends ChangeNotifier {
       throw Exception('User info not found');
     }
     
+    
     UserModel user = UserModel.fromJson(json.decode(userJson));
     print('유저 : $user.userId');
     return user.userId;
