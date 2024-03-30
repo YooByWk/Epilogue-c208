@@ -18,4 +18,19 @@ public class MemorialVideoRepositoryImpl implements MemorialVideoRepositoryCusto
                 .setParameter("userSeq", userSeq)
                 .getResultList();
     }
+
+    @Override
+    public List<MemorialVideo> find20ByMemorialSeq(int memorialSeq) {
+        return entityManager.createQuery("SELECT mv FROM MemorialVideo mv WHERE mv.memorial.memorialSeq = :memorialSeq ORDER BY mv.writtenDate DESC LIMIT 20", MemorialVideo.class)
+                .setParameter("memorialSeq", memorialSeq)
+                .getResultList();
+    }
+
+    @Override
+    public List<MemorialVideo> find20ByMemorialSeqAndLastVideoSeq(int memorialSeq, int lastVideoSeq) {
+        return entityManager.createQuery("SELECT mv FROM MemorialVideo mv WHERE mv.memorial.memorialSeq = :memorialSeq AND mv.memorialVideoSeq < :lastVideoSeq ORDER BY mv.writtenDate DESC LIMIT 20", MemorialVideo.class)
+                .setParameter("memorialSeq", memorialSeq)
+                .setParameter("lastVideoSeq", lastVideoSeq)
+                .getResultList();
+    }
 }

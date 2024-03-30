@@ -29,14 +29,16 @@ public class MemorialPhotoRepositoryImpl implements MemorialPhotoRepositoryCusto
     }
 
     @Override
-    public List<MemorialPhoto> find20() {
-        return entityManager.createQuery("SELECT mp FROM MemorialPhoto mp ORDER BY mp.memorialPhotoSeq DESC LIMIT 20", MemorialPhoto.class)
+    public List<MemorialPhoto> find20ByMemorialSeq(int memorialSeq) {
+        return entityManager.createQuery("SELECT mp FROM MemorialPhoto mp WHERE mp.memorial.memorialSeq = :memorialSeq ORDER BY mp.writtenDate DESC LIMIT 20", MemorialPhoto.class)
+                .setParameter("memorialSeq", memorialSeq)
                 .getResultList();
     }
 
     @Override
-    public List<MemorialPhoto> find20ByLastPhotoSeq(int lastPhotoSeq) {
-        return entityManager.createQuery("SELECT mp FROM MemorialPhoto mp WHERE mp.memorialPhotoSeq < :lastPhotoSeq ORDER BY mp.memorialPhotoSeq DESC LIMIT 20", MemorialPhoto.class)
+    public List<MemorialPhoto> find20ByMemorialSeqAndLastPhotoSeq(int memorialSeq, int lastPhotoSeq) {
+        return entityManager.createQuery("SELECT mp FROM MemorialPhoto mp WHERE mp.memorial.memorialSeq = :memorialSeq AND mp.memorialPhotoSeq < :lastPhotoSeq ORDER BY mp.writtenDate DESC LIMIT 20", MemorialPhoto.class)
+                .setParameter("memorialSeq", memorialSeq)
                 .setParameter("lastPhotoSeq", lastPhotoSeq)
                 .getResultList();
     }

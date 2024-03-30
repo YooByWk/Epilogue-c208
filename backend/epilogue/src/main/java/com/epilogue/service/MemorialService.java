@@ -219,18 +219,18 @@ public class MemorialService {
         return graveResponseDto;
     }
 
-    public List<MemorialPhotoDto> viewMemorialPhotoList(int lastPhotoSeq) {
+    public List<MemorialPhotoDto> viewMemorialPhotoList(int memorialSeq, int lastPhotoSeq) {
         List<MemorialPhotoDto> memorialPhotoDtoList = new ArrayList<>();
 
         List<MemorialPhoto> memorialPhotoList = new ArrayList<>();
 
         // 사진 처음 로드시
         if(lastPhotoSeq == 0) {
-            memorialPhotoList = memorialPhotoRepository.find20();
+            memorialPhotoList = memorialPhotoRepository.find20ByMemorialSeq(memorialSeq);
         }
         // 추가 로드시 (lastPhotoSeq 있는 경우)
         else {
-            memorialPhotoList = memorialPhotoRepository.find20ByLastPhotoSeq(lastPhotoSeq);
+            memorialPhotoList = memorialPhotoRepository.find20ByMemorialSeqAndLastPhotoSeq(memorialSeq, lastPhotoSeq);
         }
 
         for(MemorialPhoto photo : memorialPhotoList) {
@@ -241,6 +241,30 @@ public class MemorialService {
             memorialPhotoDtoList.add(memorialPhotoDto);
         }
         return memorialPhotoDtoList;
+    }
+
+    public List<MemorialVideoDto> viewMemorialVideoList(int memorialSeq, int lastVideoSeq) {
+        List<MemorialVideoDto> memorialVideoDtoList = new ArrayList<>();
+
+        List<MemorialVideo> memorialVideoList = new ArrayList<>();
+
+        // 동영상 처음 로드시
+        if(lastVideoSeq == 0) {
+            memorialVideoList = memorialVideoRepository.find20ByMemorialSeq(memorialSeq);
+        }
+        // 추가 로드시 (lastVideoSeq 있는 경우)
+        else {
+            memorialVideoList = memorialVideoRepository.find20ByMemorialSeqAndLastVideoSeq(memorialSeq, lastVideoSeq);
+        }
+
+        for(MemorialVideo video : memorialVideoList) {
+            MemorialVideoDto memorialVideoDto = MemorialVideoDto.builder()
+                    .memorialVideoSeq(video.getMemorialVideoSeq())
+                    .S3url(awsS3Service.getVideoFromS3(video.getUniqueVideoUrl()))
+                    .build();
+            memorialVideoDtoList.add(memorialVideoDto);
+        }
+        return memorialVideoDtoList;
     }
 
     public void saveMedia(String loginUserId, int memorialSeq, MultipartFile multipartFile, MemorialMediaRequestDto memorialMediaRequestDto) throws Exception {
@@ -302,14 +326,21 @@ public class MemorialService {
         return memorialMediaResponseDto;
     }
 
-    public List<MemorialLetterDto> viewMemorialLetterList(int memorialSeq) {
+    public List<MemorialLetterDto> viewMemorialLetterList(int memorialSeq, int lastLetterSeq) {
         List<MemorialLetterDto> memorialLetterDtoList = new ArrayList<>();
 
         SimpleDateFormat sdf = new SimpleDateFormat("yyyy.MM.dd");
+        List<MemorialLetter> memorialLetterList = new ArrayList<>();
 
-        List<MemorialLetter> memorialLetterList = memorialLetterRepository.findAllByMemorialSeq(memorialSeq);
+        if(lastLetterSeq == 0) {
+            memorialLetterList = memorialLetterRepository.find20ByMemorialSeq(memorialSeq);
+        } else {
+            memorialLetterList = memorialLetterRepository.find20ByMemorialSeqAndLastLetterSeq(memorialSeq, lastLetterSeq);
+        }
+
         for (MemorialLetter letter : memorialLetterList) {
             MemorialLetterDto memorialLetterDto = MemorialLetterDto.builder()
+                    .memorialLetterSeq(letter.getMemorialLetterSeq())
                     .nickname(letter.getNickname())
                     .content(letter.getContent())
                     .writtenDate(sdf.format(letter.getWrittenDate()))
