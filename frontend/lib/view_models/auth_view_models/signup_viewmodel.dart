@@ -1,6 +1,8 @@
 import 'package:flutter/foundation.dart';
+import 'package:frontend/models/user/login_model.dart';
 import 'package:frontend/models/user/signup_model.dart';
 import 'package:frontend/services/auth_service.dart';
+import 'package:frontend/view_models/auth_view_models/user_viewmodel.dart';
 
 class SignupViewModel extends ChangeNotifier {
   final AuthService _authService = AuthService();
@@ -23,6 +25,7 @@ class SignupViewModel extends ChangeNotifier {
   String? get confirmPassword => _confirmPassword;
   String? get userIdExists => _userIdExists;
   String get userId => _signupData.userId;
+  String get password => _signupData.password;
   // 비밀번호 유효성 검사
   bool get isPasswordValid {
     String pattern =
@@ -207,7 +210,28 @@ class SignupViewModel extends ChangeNotifier {
       }
     } else {
       _errorMessage = null;
+      debugPrint('회원가입 성공, 로그인 시도');
+      final loginResult = await _authService.login(
+        LoginModel(username: _signupData.userId, password: _signupData.password),
+      );
+      if (loginResult['success']) {
+        await UserViewModel().fetchUserData().then((_)=> { debugPrint('로그인 후 유저 정보 불러오기 성공') });
+      }
+      if (!loginResult['success']) {
+        int statusCode = loginResult['statusCode'];
+        switch (statusCode) {
+          case 401:
+            _errorMessage = '로그인 정보가 잘못되었습니다.';
+            break;
+          case 500:
+            _errorMessage = '서버 오류가 발생했습니다. 잠시 후 다시 시도해주세요.';
+            break;
+          default:
+            _errorMessage = '알 수 없는 오류가 발생했습니다. 관리자에게 문의해주세요.';
+        }
+      }
     }
     notifyListeners();
   }
+
 }

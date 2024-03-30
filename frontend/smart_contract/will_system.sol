@@ -30,12 +30,12 @@ contract WillSystem {
 
     History[] public logs;
 
-    mapping(address => string) private addressToUserId; // 하나의 주소는 하나의 아이디
-    mapping(address => Will) private addressToWill; // 하나의 주소는 하나의 유언장
-    mapping(string => Will[]) private userIdToWills; // 하나의 유저 아이디는 여러개의 유언장 이력을 가진다. 이 부분은 계속해서 남는다.
-    mapping(string => Will) private hashToWill; // 하나의 해시값은 하나의 유언장
-    mapping(string => History[]) private userToHistroy; // 한 유저는 여러 이력
-    mapping(string => address) private userIdToaddress; // 유저 아이디로 주소를 찾음
+    mapping(address => string) public addressToUserId; // 하나의 주소는 하나의 아이디
+    mapping(address => Will) public addressToWill; // 하나의 주소는 하나의 유언장
+    mapping(string => Will[]) public userIdToWills; // 하나의 유저 아이디는 여러개의 유언장 이력을 가진다. 이 부분은 계속해서 남는다.
+    mapping(string => Will) public hashToWill; // 하나의 해시값은 하나의 유언장
+    mapping(string => History[]) public userToHistroy; // 한 유저는 여러 이력
+    mapping(string => address) public userIdToaddress; // 유저 아이디로 주소를 찾음
 
     function createWill(string memory userId, string memory fileHash) public {
         // 0. 유언장 정보 등록
