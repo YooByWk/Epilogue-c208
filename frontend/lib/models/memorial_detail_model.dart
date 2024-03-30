@@ -1,29 +1,35 @@
 class MemorialDetailModel {
-  final String memorialName;
-  String imagePath;
-  final DateTime birthDate;
-  final DateTime deathDate;
-  // final String profileImage;
-  final String userId;
+  final int graveSeq;
+  final String name;
+  final String birth;
+  final String goneDate;
+  final String? graveImg;
+
 
   MemorialDetailModel({
-    required this.memorialName,
-    this.imagePath = '',
-    required this.birthDate,
-    required this.deathDate,
-    // required this.profileImage,
-    required this.userId,
+    required this.graveSeq,
+    required this.name,
+    required this.birth,
+    required this.goneDate,
+    this.graveImg,
   });
 
   Map<String, dynamic> toJson() => {
-        'memorialName': memorialName,
-        'imagePath': imagePath,
-        'birthDate': birthDate,
-        'deathDate': deathDate,
-        // 'profileImage': profileImage,
-        'userId': userId,
+        'name': name,
+        'birth': birth,
+        'goneDate': goneDate,
+        'graveIma': graveImg,
       };
 
+  factory MemorialDetailModel.fromJson(Map<String, dynamic> json) {
+    return MemorialDetailModel(
+      graveSeq: json['graveSeq'] as int,
+      name: json['name'] as String,
+      birth: json['birth'] as String,
+      goneDate: json['goneDate'] as String,
+      graveImg: json['graveImg'] as String,
+    );
+  }
   
 
 
