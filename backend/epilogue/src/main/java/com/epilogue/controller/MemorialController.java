@@ -1,5 +1,7 @@
 package com.epilogue.controller;
 
+import com.amazonaws.Response;
+import com.epilogue.domain.memorial.MemorialPhoto;
 import com.epilogue.dto.request.SearchRequestDto;
 import com.epilogue.dto.request.memorial.MemorialLetterRequestDto;
 import com.epilogue.dto.request.memorial.MemorialMediaRequestDto;
@@ -51,6 +53,14 @@ public class MemorialController {
     public ResponseEntity<GraveResponseDto> viewMemorial(@Parameter(description = "디지털 추모관 식별키") @PathVariable int memorialSeq) {
         GraveResponseDto graveResponseDto = memorialService.viewMemorial(memorialSeq);
         return new ResponseEntity<>(graveResponseDto, HttpStatus.OK);
+    }
+
+    @Operation(summary = "디지털 추모관 사진 목록 조회 API", description = "사진을 최근순으로 20개씩 불러옵니다. 마지막 사진이 없을 시 즉, 처음 사진을 로드하는 경우 lastPhotoSeq 안넘겨줘도 됩니다. 자동으로 null 처리됩니다.")
+    @GetMapping("/photo-list/{lastPhotoSeq}")
+    @ApiResponse(responseCode = "200", description = "성공")
+    public ResponseEntity<List<MemorialPhotoDto>> viewMemorialPhotoList(@Parameter(description = "마지막 사진의 식별키") @PathVariable(required = false) int lastPhotoSeq) {
+        List<MemorialPhotoDto> memorialPhotoDtoList = memorialService.viewMemorialPhotoList(lastPhotoSeq);
+        return new ResponseEntity<>(memorialPhotoDtoList, HttpStatus.OK);
     }
 
     @Operation(summary = "디지털 추모관 사진 및 영상 업로드 API")
