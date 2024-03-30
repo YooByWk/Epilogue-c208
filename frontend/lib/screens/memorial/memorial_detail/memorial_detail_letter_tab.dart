@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:frontend/screens/memorial/memorial_letter_upload.dart';
 import 'package:frontend/view_models/dio_api_request_examples.dart';
 import 'package:frontend/view_models/memorial_view_models/memorial_detail_letterTab_viewmodel.dart';
 import 'package:provider/provider.dart';
@@ -7,18 +8,19 @@ class LetterTab extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return ChangeNotifierProvider(
-        create: (context) => LetterViewModel(),
-        child: Consumer<LetterViewModel>(
+        create: (context) => LetterTabViewModel(),
+        child: Consumer<LetterTabViewModel>(
           builder: (context, viewModel, child) {
             return NotificationListener<ScrollNotification>(
                 onNotification: (scroll) {
                   if (scroll.metrics.pixels >=
                       scroll.metrics.maxScrollExtent - 50) {
-                    viewModel.loadMore();
+                    // viewModel.loadMore();
                     debugPrint('더 불러오기');
-                    debugPrint(viewModel.letters.length.toString());
+                    // debugPrint(viewModel.letters.length.toString());
                   } else {
-                    debugPrint('스크롤 위치 ${scroll.metrics.pixels}');}
+                    debugPrint('스크롤 위치 ${scroll.metrics.pixels}');
+                  }
                   return false;
                 },
                 child: CustomScrollView(
@@ -36,13 +38,18 @@ class LetterTab extends StatelessWidget {
                           return Card(
                               child: InkWell(
                             onTap: () => {
-                              DioExamples().GetRequest(),
-                              debugPrint('dio를 통한 호출입니다. $index')},
+                              Navigator.push(
+                                context,
+                                MaterialPageRoute(
+                                  builder: (context) => MemorialLetterUpload(),
+                                ),
+                              )
+                            },
                             child: Column(
                                 children: [Icon(Icons.add), Text('편지 추가')]),
                           ));
                         } else {
-                          debugPrint(viewModel.letters.length.toString());
+                          // debugPrint(viewModel.letters.length.toString());
                           return Letter(
                             key: ValueKey(index),
                             title: '제목' + viewModel.letters[index].title,
@@ -53,8 +60,8 @@ class LetterTab extends StatelessWidget {
                           );
                         }
                       }
-                      // ,childCount: viewModel.letters.length,
-                      ),
+                          // ,childCount: viewModel.letters.length,
+                          ),
                     )
                   ],
                 ));

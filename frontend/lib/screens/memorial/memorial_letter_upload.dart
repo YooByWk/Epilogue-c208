@@ -1,0 +1,135 @@
+import 'dart:io';
+
+import 'package:file_picker/file_picker.dart';
+import 'package:flutter/cupertino.dart';
+import 'package:flutter/material.dart';
+import 'package:frontend/main.dart';
+import 'package:frontend/screens/memorial/memorial_app_bar.dart';
+import 'package:frontend/view_models/memorial_view_models/memorial_detail_letterTab_viewmodel.dart';
+import 'package:frontend/view_models/memorial_view_models/memorial_detail_phototab_viewmodel.dart';
+import 'package:provider/provider.dart';
+
+class MemorialLetterUpload extends StatefulWidget {
+  _MemorialLetterUploadState createState() => _MemorialLetterUploadState();
+}
+
+class _MemorialLetterUploadState extends State<MemorialLetterUpload> {
+  @override
+  Widget build(BuildContext context) {
+    return ChangeNotifierProvider(
+        create: (context) => LetterTabViewModel(),
+        child:
+            Consumer<LetterTabViewModel>(builder: (context, viewModel, child) {
+          return Scaffold(
+            appBar: MemorialAppBar(
+              screenName: '편지 남기기',
+              isMenu: true,
+              items: ['회원가입', '로그인', '로그아웃'],
+              onSelected: (value) {
+                debugPrint('$value 선택됨');
+              },
+              // screenName: '추모관상세',
+            ),
+            body: SingleChildScrollView(
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                // mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                children: [
+                  Text("편지 남기기"),
+                  SizedBox(
+                    height: 30,
+                  ),
+                  Center(
+                      child: Column(
+                    children: [
+                      TextField(
+                        onChanged: (value) {
+                          viewModel.setNickname(value);
+                        },
+                        maxLines: null,
+                        minLines: 5,
+                        decoration: InputDecoration(
+                          contentPadding: EdgeInsets.symmetric(
+                              horizontal: 15.0, vertical: 20.0),
+                          border: OutlineInputBorder(
+                              borderRadius: const BorderRadius.all(
+                                const Radius.circular(1.0),
+                              ),
+                              borderSide:
+                                  BorderSide(color: Colors.grey, width: 2.0)),
+                          focusedBorder: OutlineInputBorder(
+                            // 포커스됐을 때 외곽선 설정
+                            borderRadius:
+                                const BorderRadius.all(Radius.circular(1.0)),
+                            borderSide: BorderSide(
+                                color: themeColour5, width: 2.0), // 여기서 색깔 변경
+                          ),
+                        ),
+                      ),
+                      TextField(
+                        onChanged: (value) {
+                          viewModel.setContent(value);
+                        },
+                        maxLines: null,
+                        minLines: 5,
+                        decoration: InputDecoration(
+                          contentPadding: EdgeInsets.symmetric(
+                              horizontal: 15.0, vertical: 20.0),
+                          border: OutlineInputBorder(
+                              borderRadius: const BorderRadius.all(
+                                const Radius.circular(1.0),
+                              ),
+                              borderSide:
+                                  BorderSide(color: Colors.grey, width: 2.0)),
+                          focusedBorder: OutlineInputBorder(
+                            // 포커스됐을 때 외곽선 설정
+                            borderRadius:
+                                const BorderRadius.all(Radius.circular(1.0)),
+                            borderSide: BorderSide(
+                                color: themeColour5, width: 2.0), // 여기서 색깔 변경
+                          ),
+                        ),
+                      ),
+                    ],
+                  )),
+                  SizedBox(
+                    height: 30,
+                  ),
+                ],
+              ),
+            ),
+            bottomNavigationBar: Container(
+              color: themeColour3,
+              height: 80,
+              child: InkWell(
+                onTap: () {
+                  viewModel.uploadLetter().then((_) {
+                    if (viewModel.errorMessage == null) {
+                      Navigator.pop(context);
+                    } else {
+                      if (viewModel.errorMessage != null) {
+                        ScaffoldMessenger.of(context).showSnackBar(
+                          SnackBar(
+                            content: Text(viewModel.errorMessage!),
+                          ),
+                        );
+                      }
+                    }
+                  });
+                },
+                child: Center(
+                  child: Text(
+                    "업로드 하기",
+                    style: TextStyle(
+                      color: Colors.white,
+                      fontSize: 33,
+                      fontWeight: FontWeight.bold,
+                    ),
+                  ),
+                ),
+              ),
+            ),
+          );
+        }));
+  }
+}

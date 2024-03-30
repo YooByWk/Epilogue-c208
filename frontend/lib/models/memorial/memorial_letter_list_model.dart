@@ -11,4 +11,4 @@ class LetterModel {
     required this.date,
     this.userId = '편지실험 아이디'
   });
-  }
+}

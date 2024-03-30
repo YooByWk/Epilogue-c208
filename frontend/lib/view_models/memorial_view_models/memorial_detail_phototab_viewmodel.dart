@@ -32,6 +32,7 @@ class PhotoTabViewModel extends ChangeNotifier {
     photoFile: null,
     content: null,
   );
+
   bool _isFocused = false;
   bool _isLoading = false;
   String? _errorMessage;
@@ -66,7 +67,7 @@ class PhotoTabViewModel extends ChangeNotifier {
     _errorMessage = null;
     notifyListeners();
 
-    final result = await _memorialService.photo(
+    final result = await _memorialService.photoUpload(
         _photoData.photoFile!, _photoData.content!);
     if (!result['success']) {
       int statusCode = result['statusCode'];
