@@ -21,7 +21,6 @@ import org.springframework.stereotype.Service;
 
 import java.io.UnsupportedEncodingException;
 import java.net.MalformedURLException;
-import java.net.URL;
 import java.security.Principal;
 import java.util.List;
 
@@ -84,6 +83,7 @@ public class WillService {
         if (will == null) return null;
 
         String willFileAddress = awsS3Service.getWillFromS3(will.getWillFileAddress());
+        String graveImageAddress = awsS3Service.getGraveImageFromS3(will.getGraveImageAddress());
 
         return WillResponseDto.builder()
                 .sustainCare(will.getSustainCare())
@@ -92,7 +92,7 @@ public class WillService {
                 .organDonation(will.getOrganDonation())
                 .useMemorial(will.getUseMemorial())
                 .graveName(will.getGraveName())
-                .graveImageAddress(will.getGraveImageAddress())
+                .graveImageAddress(graveImageAddress)
                 .willFileAddress(willFileAddress)
                 .build();
     }
