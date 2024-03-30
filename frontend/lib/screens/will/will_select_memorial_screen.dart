@@ -37,14 +37,6 @@ class _WillSelectMemorialScreenState extends State<WillSelectMemorialScreen> {
                             Column(
                               crossAxisAlignment: CrossAxisAlignment.start,
                               children: [
-                                TextWidget(
-                                  text: "유언을 안전하게 기록 중입니다 . . .",
-                                  fontSize: 25,
-                                  fontWeight: FontWeight.w500,
-                                ),
-                                SizedBox(
-                                  height: 30,
-                                ),
                                 Row(
                                   children: [
                                     TextWidget(

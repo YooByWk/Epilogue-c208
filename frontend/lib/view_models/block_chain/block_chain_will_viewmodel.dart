@@ -34,13 +34,13 @@ class AudioHashViewModel extends ChangeNotifier {
 
   // Generate SHA256 hash similar to PowerShell's Get-FileHash
   final hash = sha256.convert(bytes);
-  debugPrint('Hash: ${hash.toString().toUpperCase()}');
+  debugPrint('Hash: ${hash.toString()}');
 
   setAudioHash(AudioHash(
       filePath: filePath,
       fileName: filePath.split('/').last,
       date: DateTime.now(),
-      hash: hash.toString().toUpperCase())); // Convert hash to uppercase
+      hash: hash.toString())); // Convert hash to uppercase
   return hash.toString();
 }
 
@@ -78,7 +78,7 @@ class BlockChainWillViewModel extends ChangeNotifier {
   final BlockChainWillModel _model = BlockChainWillModel();
   final storage = FlutterSecureStorage();
   final UserViewModel _userViewModel = UserViewModel();
-  late Future<String> userId;
+  late String? userId;
 
 
   BlockChainWillViewModel() {
@@ -87,9 +87,13 @@ class BlockChainWillViewModel extends ChangeNotifier {
   }
 
   Future<void> init() async {
+    // print(storage.read(key: 'userId'));
+    // userId =  _userViewModel.fetchUserId();
+    // userId = await storage.read(key: 'userId');
     await _model.init();
+    // print('모델 id : $_model.userId');
+    userId = await storage.read(key: 'userId');
 
-    userId =  _userViewModel.fetchUserId();
   }
 
   // Future<String> get pk => _model.pk;
@@ -98,14 +102,14 @@ class BlockChainWillViewModel extends ChangeNotifier {
   
   Future sendTransaction(String functionName, List<dynamic> params) async {
     // await init();
-    print('createWill() called');
+    // print('createWill() called');
     // print()
     // print(await userId);
     // print(await pk);
     // print(await address);
     // print(await ABI);
-    print('ㅁㄴㅇㄹ ${await userId}');
-    final res = await _model.sendTransaction(functionName, params);
+    // print('ㅁㄴㅇㄹ ${await userId}');
+    // final res = await _model.sendTransaction(functionName, params);
     // return print(userId);
     // debugPrint(res);
 
@@ -114,13 +118,43 @@ class BlockChainWillViewModel extends ChangeNotifier {
   Future createWill() async {
     // 함수 이름
     // 넣을 값
-    String id = await userId;
+    init();
     String fileHash = await AudioHashViewModel().createAudioHash();
+    var id = await storage.read(key: 'userId');
     final params = await [id, fileHash];
-    final res = await _model.sendTransaction('createWill', params);
+    final res = await _model.sendTransaction('유언장이 등록되었습니다.','createWill', params);
     debugPrint(res);
+
+
     return res;
   }
 
   
+  Future MyWill () async {
+    await init();
+    var test = await _model.address;
+    EthereumAddress address = EthereumAddress.fromHex(test);
+    // print(test);
+    final res = await _model.callFunction('addressToWill', [address]);
+    return res.toString();
+  }
+  // Future
+
+  Future deleteWill () async {
+    await init();
+    final res = await _model.sendTransaction('유언장이 삭제되었습니다.','DeleteWill', [userId]);
+    return res;
+  }
+
+  Future SearchByHash () async {
+    await init();
+    // 다운로드 된 파일 해시를 불러온다.
+    var hashvalue = await AudioHashViewModel().createAudioHash();
+    // 해당 해시와 유저 아이디를 담아서 params로 만든다.
+    final params = await [ hashvalue, userId];
+    // 해당 params를 통해 함수를 실행한다.
+    final res = await _model.callFunction('SearchByHash', params);
+    // 결과를 반환한다.
+    return res.toString();
+  }
 }

@@ -161,27 +161,6 @@ class _WillWitnessScreenState extends State<WillWitnessScreen> {
                                   debugPrint('저장 완료');
                                 }
                               },
-                              // onPressed: () {
-                              //   // debugPrint(viewModel.witnessName);
-                              //   (viewModel.witnessName == '')
-                              //       ? PopupWidget(
-                              //       text: '증인 이름을 입력해 주세요!',
-                              //       buttonText1: '확인',
-                              //       onConfirm1: () {
-                              //         Navigator.pop(context);
-                              //       })
-                              //       : (viewModel.witnessMobile == '' &&
-                              //       viewModel.witnessEmail == '')
-                              //       ? PopupWidget(
-                              //       text: '증인의 번호 혹은 이메일을 입력해 주세요!',
-                              //       buttonText1: '확인',
-                              //       onConfirm1: () {
-                              //         Navigator.pop(context);
-                              //       })
-                              //       : viewModel.addWitness().then((_) {
-                              //     // debugPrint('저장 완료');
-                              //   });
-                              // },
                             ),
                           ],
                         );

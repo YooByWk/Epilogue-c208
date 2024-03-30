@@ -22,7 +22,7 @@ class SignupViewModel extends ChangeNotifier {
   String? get errorMessage => _errorMessage;
   String? get confirmPassword => _confirmPassword;
   String? get userIdExists => _userIdExists;
-
+  String get userId => _signupData.userId;
   // 비밀번호 유효성 검사
   bool get isPasswordValid {
     String pattern =

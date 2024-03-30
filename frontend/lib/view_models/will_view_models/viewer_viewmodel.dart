@@ -20,13 +20,30 @@ class ViewerViewModel extends ChangeNotifier {
   String? get errorMessage => _errorMessage;
   List<ViewerModel> get viewerList => _viewerList;
 
+  // 핸드폰 번호 유효성 검사
+  bool get isMobileValid {
+    RegExp regex = RegExp(r'^010?([1-9]{4})?([0-9]{4})$');
+    return regex.hasMatch(_viewerData.viewerMobile ?? '');
+  }
+
+  // 이메일 유효성 검사
+  bool get isEmailValid {
+    RegExp regex = RegExp(
+        r"^[a-zA-Z0-9.a-zA-Z0-9.!#$%&'*+-/=?^_`{|}~]+@[a-zA-Z0-9]+\.[a-zA-Z]+");
+    return regex.hasMatch(_viewerData.viewerEmail ?? '');
+  }
+
+  // 폼 유효성 검사
+  bool get isFormValid {
+    bool isMobileOrEmailValid = isEmailValid || isMobileValid;
+    bool isNameNotEmpty = _viewerData.viewerName.isNotEmpty;
+    return isNameNotEmpty && isMobileOrEmailValid;
+  }
 
   void setViewerName(String value) {
     _viewerData = ViewerModel(viewerName: value,
         viewerEmail: _viewerData.viewerEmail,
         viewerMobile: _viewerData.viewerMobile);
-        // debugPrint(_viewerData.viewerName);
-        // debugPrint(_viewerData.viewerMobile);
     notifyListeners();
   }
 
@@ -50,9 +67,10 @@ class ViewerViewModel extends ChangeNotifier {
   }
 
   Future<void> addViewer() async {
+    _isLoading = true;
+    _errorMessage = null;
+    notifyListeners();
 
-
-    // debugPrint(viewerMobile);
     // 새로운 ViewerModel 인스턴스를 생성하여 List에 추가
     ViewerModel newViewer = ViewerModel(
       viewerName: _viewerData.viewerName,
@@ -60,6 +78,8 @@ class ViewerViewModel extends ChangeNotifier {
       viewerMobile: _viewerData.viewerMobile,
     );
     _viewerList.add(newViewer);
+    _errorMessage = null;
+    _isLoading = false;
     notifyListeners();
     _viewerData.viewerName = '';
     _viewerData.viewerEmail = '';
