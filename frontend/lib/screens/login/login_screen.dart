@@ -9,6 +9,7 @@ import 'package:frontend/screens/will/will_select_type_screen.dart';
 import 'package:frontend/widgets/common_button.dart';
 import 'package:frontend/widgets/memorial_enter_button.dart';
 import 'package:provider/provider.dart';
+import 'package:webview_flutter/webview_flutter.dart';
 
 class LoginScreen extends StatelessWidget {
   @override

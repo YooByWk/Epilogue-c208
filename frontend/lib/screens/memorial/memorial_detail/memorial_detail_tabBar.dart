@@ -13,7 +13,7 @@ class MemorialDetailTabBar extends StatelessWidget {
   ];
 
   final List<Widget> tabViews = [
-    PhotoTab(),
+    // PhotoTab(),
     // Text('동영상탭입니다.'),
     // VideoTabCard(index: index, onFocus: onFocus)
     VideoTab(), // VideoTab 위젯을 구현해야 합니다.
