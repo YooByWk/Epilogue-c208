@@ -1,4 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:frontend/services/will_service.dart';
+import 'package:frontend/view_models/block_chain/block_chain_will_viewmodel.dart';
+import 'package:frontend/view_models/will_view_models/my_will_viewmodel.dart';
 import 'package:frontend/widgets/common_text_widget.dart';
 import 'package:frontend/widgets/common_button.dart';
 import 'package:frontend/widgets/popup_widget.dart';
@@ -69,6 +72,11 @@ class MypageWillMoreScreen extends StatelessWidget {
                 ],
               ),
               WillAdditionalInfo(),
+              SizedBox(height: 20),
+              CommonButtonWidget(width: 250,text: '저장된 유언 진위여부 확인', onPressed: () async =>{
+                await BlockChainWillViewModel().WillCheck(),
+                await MyWillViewModel().fetchMyWillData(),
+              })
             ],
           ),
         ),

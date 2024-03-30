@@ -8,7 +8,7 @@ import 'package:frontend/models/will/memorial_info_model.dart';
 import 'package:frontend/models/will/usememorial_model.dart';
 import 'package:frontend/models/will/viewer_model.dart';
 import 'package:frontend/models/will/witness_model.dart';
-
+import 'package:frontend/models/will/my_will_model.dart';
 
 class WillService {
   final _dio = Dio.Dio();
@@ -30,6 +30,16 @@ class WillService {
     _dio.interceptors.add(LoggingInterceptor()); // console에 로깅
 
   }
+
+  // 실험 // 
+  Future<MyWillModel> getWillInfo() async {
+    try {
+      Dio.Response res = await _dio.get('$baseUrl/api/myWill');
+      MyWillModel willInfo = MyWillModel.fromJson(res.data);
+      debugPrint(willInfo.willFileAddress.toString());
+      return willInfo;
+    } catch (e) {debugPrint('아오'); throw Exception(e);}
+  } 
 
   ///////////////////////// 열람인 //////////////////////////////////
   Future<Map<String, dynamic>> sendViewer(List<ViewerModel> viewerList) async {

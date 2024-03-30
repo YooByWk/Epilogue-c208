@@ -157,4 +157,14 @@ class BlockChainWillViewModel extends ChangeNotifier {
     // 결과를 반환한다.
     return res.toString();
   }
+
+  Future WillCheck () async {
+    // 1. 다운받는다 - 임시 경로
+    
+    // 2. 다운받은 파일의 해시를 구한다.
+
+    // 3. 해당 해시를 블록체인 이용해 SearchByHash를 실행한다.
+
+    // 뭔가 되겠지?
+  }
 }
