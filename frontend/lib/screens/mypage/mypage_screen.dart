@@ -26,7 +26,24 @@ class MypageScreen extends StatelessWidget {
           if (viewModel.isLoading) {
             return Center(child: CircularProgressIndicator());
           } else if (viewModel.errorMessage != null) {
-            return Center(child: Text(viewModel.errorMessage!));
+            // await viewModel.fetchUserData();
+            return Column(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                Center(child: Text(viewModel.errorMessage!)),
+                SizedBox(height: 20),
+                CommonButtonWidget(text: '홈으로', onPressed: ()=>Navigator.pushNamed(context, '/home').then((value) async => debugPrint('홈으로 이동 후 토큰 ${await storage.read(key: 'token')}')) ),
+                SizedBox(height: 20),
+                CommonButtonWidget(text: '로그아웃', onPressed: () async {
+                  await viewModel.logout();
+                  Navigator.pushAndRemoveUntil(
+                      context,
+                      MaterialPageRoute(builder: (context) => LoginScreen()),
+                      (Route<dynamic> route) => false);
+                }),
+
+              ],
+            );
           } else if (viewModel.user == null) {
             return Center(child: Text('사용자 정보를 불러올 수 없습니다.'));
           }
