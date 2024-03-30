@@ -87,14 +87,12 @@ public class AwsS3Service {
 
     // 유언 파일 url 불러오기
     public String getWillFromS3(String fileName) {
-        URL url = amazonS3.getUrl(bucketName, fileName);
-        return "" + url;
+        return amazonS3.getUrl(bucketName, fileName).toString();
     }
 
     // 묘비 사진 url 불러오기
     public String getGraveImageFromS3(String fileName) {
-        URL url = amazonS3.getUrl(graveBucketName, fileName);
-        return "" + url;
+        return amazonS3.getUrl(graveBucketName, fileName).toString();
     }
 
     // 사진 업로드
@@ -113,8 +111,7 @@ public class AwsS3Service {
 
     // 사진 url 불러오기
     public String getPhotoFromS3(String fileName) {
-        URL url = amazonS3.getUrl(photoBucketName, fileName);
-        return "" + url;
+        return amazonS3.getUrl(photoBucketName, fileName).toString();
     }
 
     @Transactional
@@ -134,8 +131,7 @@ public class AwsS3Service {
 
     // 동영상 url 불러오기
     public String getVideoFromS3(String fileName) {
-        URL url = amazonS3.getUrl(videoBucketName, fileName);
-        return "" + url;
+        return amazonS3.getUrl(videoBucketName, fileName).toString();
     }
 
     public void deleteFromS3(Principal principal) throws MalformedURLException, UnsupportedEncodingException {
