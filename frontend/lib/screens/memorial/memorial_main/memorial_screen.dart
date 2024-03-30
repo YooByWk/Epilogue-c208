@@ -21,25 +21,25 @@ class _MemorialScreenState extends State<MemorialScreen> {
   @override
   void initState() {
     super.initState();
-    _scrollController.addListener(_onScroll);
-    _viewModel.loadMore();
+    // _scrollController.addListener(_onScroll);
+    _viewModel.getLists();
   }
 
-  @override
-  void dispose() {
-    _scrollController.dispose();
-    super.dispose();
-  }
+  // @override
+  // void dispose() {
+  //   _scrollController.dispose();
+  //   super.dispose();
+  // }
 
-  void _onScroll() {
-    // debugPrint('스크롤 감지' + _scrollController.position.pixels.toString());
-    if (_scrollController.position.pixels >= _scrollController.position.maxScrollExtent - 50) {
-      debugPrint('현재 Item 수: ' + _viewModel.memorialCards.length.toString() + '새로운 정보를 불러옵니다.');
-      _viewModel.loadMore();
-      
-      setState((){}); // Update the UI
-    }
-  }
+  // void _onScroll() {
+  //   // debugPrint('스크롤 감지' + _scrollController.position.pixels.toString());
+  //   if (_scrollController.position.pixels >= _scrollController.position.maxScrollExtent - 50) {
+  //     debugPrint('현재 Item 수: ' + _viewModel.memorialCards.length.toString() + '새로운 정보를 불러옵니다.');
+  //     _viewModel.loadMore();
+  //
+  //     setState((){}); // Update the UI
+  //   }
+  // }
 
   @override
   Widget build(BuildContext context) {

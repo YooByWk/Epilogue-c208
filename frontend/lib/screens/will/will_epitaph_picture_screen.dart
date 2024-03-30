@@ -18,7 +18,10 @@ class _WillEpitaphPictureScreenState extends State<WillEpitaphPictureScreen> {
   File? picture;
 
   Future<void> _pickImage(BuildContext context) async {
-    FilePickerResult? result = await FilePicker.platform.pickFiles();
+    FilePickerResult? result = await FilePicker.platform.pickFiles(
+      type: FileType.custom,
+      allowedExtensions: ['jpg', 'png', 'jpeg'],
+    );
 
     if (result != null) {
       debugPrint('사진 선택 완료');

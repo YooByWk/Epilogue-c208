@@ -13,6 +13,7 @@ import 'package:frontend/view_models/auth_view_models/user_viewmodel.dart';
 import 'package:frontend/widgets/common_button.dart';
 import 'package:frontend/widgets/memorial_enter_button.dart';
 import 'package:provider/provider.dart';
+import 'package:webview_flutter/webview_flutter.dart';
 
 class LoginScreen extends StatefulWidget {
   LoginScreen ({super.key});

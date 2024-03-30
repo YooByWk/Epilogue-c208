@@ -158,7 +158,6 @@ class WillService {
       return {'success': false, 'statusCode': e.response?.statusCode};
     }
   }
-
 }
 
 class LoggingInterceptor extends Dio.Interceptor {
