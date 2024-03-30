@@ -74,8 +74,11 @@ class MypageWillMoreScreen extends StatelessWidget {
               WillAdditionalInfo(),
               SizedBox(height: 20),
               CommonButtonWidget(width: 250,text: '저장된 유언 진위여부 확인', onPressed: () async =>{
-                await BlockChainWillViewModel().WillCheck(),
-                await MyWillViewModel().fetchMyWillData(),
+                await BlockChainWillViewModel().WillCheck().then((res) {
+                  if (res == '200') {
+                    
+                  }
+                }),
               })
             ],
           ),

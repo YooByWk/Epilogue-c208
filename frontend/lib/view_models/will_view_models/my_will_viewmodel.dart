@@ -20,13 +20,13 @@ class MyWillViewModel extends ChangeNotifier {
   Future<void> fetchMyWillData() async {
     // 모델에 데이터를 넣음
     final directory = await getApplicationCacheDirectory();
-    final path = '${directory.path}/will.mp4';
+    final path = '${directory.path}/downloadedwill.mp4';
     _willModel = await _willService.getWillInfo();
     debugPrint('실행중이니?');
     // 파일을 다운로드 받아서 저장
     try {
       await _dio.download(_willModel.willFileAddress!, path);
-      debugPrint('다운로드 완료');
+      debugPrint('다운로드 완료 $path');
     } catch (e) {
       debugPrint('다운로드 실패: $e');
     }
