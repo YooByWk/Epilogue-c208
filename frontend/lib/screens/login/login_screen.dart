@@ -14,8 +14,37 @@ import 'package:frontend/widgets/common_button.dart';
 import 'package:frontend/widgets/memorial_enter_button.dart';
 import 'package:provider/provider.dart';
 
-class LoginScreen extends StatelessWidget {
+class LoginScreen extends StatefulWidget {
+  LoginScreen ({super.key});
+  @override
+  State<LoginScreen> createState() => _LoginScreenState();
+}
+class _LoginScreenState extends State<LoginScreen> {
+
   var storage = FlutterSecureStorage();
+
+_asyncMethod() async {
+  String? token = await storage.read(key: 'token');
+  debugPrint(token);
+  if (token != null) {
+    if(!mounted) return;
+    // UserViewModel().fetchUserData();
+    debugPrint('아마도 자동되야할걸');
+    Navigator.pushReplacementNamed(context, '/home'); 
+  }
+}
+
+  @override
+  void initState() {
+    super.initState();
+    debugPrint('후');
+      WidgetsBinding.instance!.addPostFrameCallback((_) {
+    _asyncMethod();
+  });
+    // _asyncMethod();
+  }
+
+
   @override
   Widget build(BuildContext context) {
     final commonWidth = MediaQuery.of(context).size.width;
@@ -91,6 +120,8 @@ class LoginScreen extends StatelessWidget {
                           var _pk = await storage.read(key:'privateKey');
                           var _userName = await storage.read(key:'userId');
                           var _owner = await storage.read(key:'owner');
+                          debugPrint('유저 아이디, 오너 아이디, pk  유저 ${_userName} || 오너 ${_owner}, 피케이 ${ _pk }');
+
                           if (!viewModel.isLoading) {
                             viewModel.login().then((_)  {
                               // 로그인 성공 시 홈 화면으로 이동
@@ -103,7 +134,6 @@ class LoginScreen extends StatelessWidget {
                                 } else if (  _pk !=null &&  _owner != viewModel.userName) {
                                   // 다르다면 로그아웃 혹은 키 복구 요청
                                     debugPrint('아이디와 오너가 다름');
-                                    debugPrint('유저 아이디, 오너 아이디, pk ${viewModel.userName} ${_owner} ${ _pk }');
                                     showDialog(
                                         context: context,
                                         builder: (BuildContext context) {
@@ -141,7 +171,6 @@ class LoginScreen extends StatelessWidget {
                                   Navigator.pushNamed(context, '/mnemonic');
                                 }
 
-                                // 저장된 아이디와 키 모두 없다면 홈으로 이동
                               } else {
                                 if (viewModel.errorMessage != null) {
                                   ScaffoldMessenger.of(context).showSnackBar(

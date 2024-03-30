@@ -2,6 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 // import 'package:provider/provider.dart';
 import 'package:frontend/models/block_chain_wallet_model.dart';
+import 'package:frontend/view_models/auth_view_models/login_viewmodel.dart';
+import 'package:frontend/view_models/auth_view_models/signup_viewmodel.dart';
 import 'package:web3dart/web3dart.dart';
 import 'dart:math';
 import 'package:http/http.dart' as http;
@@ -82,6 +84,8 @@ class BlockChainWalletViewModel extends ChangeNotifier {
     debugPrint('복구된 개인키 : $privateKeyHex2');
     debugPrint('복구된 주소 : ${privateKey2.address}');
     debugPrint(privateKey == privateKey2 ? '복구 성공' : '복구 실패');
+    await storage.write(key : 'owner', value : await storage.read(key : 'userId'));
+    debugPrint(await storage.read(key : 'userId'));
   }
 
 
@@ -148,6 +152,9 @@ int validateMnemonic() {
     debugPrint('asdasdasdasd저장된 개인키 : $writenKey, 저장된 주소 : $writenAddress');
     debugPrint(wrtienMnemonic.runtimeType.toString());
     debugPrint('저장된 니모닉 : $wrtienMnemonic');
+    // await storage.write(key : 'owner', value : (SignupViewModel().userId != '' ? SignupViewModel().userId : LoginViewModel().userName));
+    await storage.write(key : 'owner', value : await storage.read(key : 'userId'));
+
   } 
 
 

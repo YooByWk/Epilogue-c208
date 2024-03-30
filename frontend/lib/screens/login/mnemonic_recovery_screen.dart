@@ -73,7 +73,7 @@ class MnemonicRecoveryScreen extends StatelessWidget {
                         ),
                         TextButton(
                           onPressed: () {
-                            // 실행 코드를 여기에 작성하세요.
+                            Navigator.pushNamed(context, '/myMnemonic');
                           },
                           child: Text('실행'),
                         ),
