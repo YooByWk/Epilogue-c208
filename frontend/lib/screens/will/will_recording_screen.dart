@@ -7,6 +7,7 @@ import 'package:frontend/main.dart';
 import 'package:flutter_sound/flutter_sound.dart';
 import 'package:frontend/screens/will/will_viewer_screen.dart';
 import 'package:frontend/screens/will/will_widgets.dart';
+import 'package:frontend/view_models/block_chain/block_chain_will_viewmodel.dart';
 import 'package:frontend/view_models/will_view_models/recording_viewmodel.dart';
 import 'package:frontend/widgets/popup_widget.dart';
 import 'package:path_provider/path_provider.dart';
@@ -24,6 +25,7 @@ class WillRecordingScreen extends StatefulWidget {
 }
 
 class _WillRecordingScreenState extends State<WillRecordingScreen> {
+
   Codec _codec = Codec.aacMP4;
   String _mPath = 'will.mp4';
   FlutterSoundPlayer? _mPlayer = FlutterSoundPlayer();
@@ -233,6 +235,8 @@ class _WillRecordingScreenState extends State<WillRecordingScreen> {
 
   @override
   Widget build(BuildContext context) {
+    final willViewmodel = BlockChainWillViewModel();
+    willViewmodel.init();
     return ChangeNotifierProvider(
         create: (context) => RecordingViewModel(),
         child:
@@ -441,7 +445,9 @@ class _WillRecordingScreenState extends State<WillRecordingScreen> {
                               Navigator.pop(context);
                             },
                             buttonText2: '생성하기',
-                            onConfirm2: () {
+                            onConfirm2: () async {
+                              // 여기임
+                              
                               viewModel.setFile(audioFile!);
                               viewModel.setRecording().then((_) {
                                 if (viewModel.errorMessage == null) {
@@ -451,6 +457,9 @@ class _WillRecordingScreenState extends State<WillRecordingScreen> {
                                       builder: (context) => WillViewerScreen(),
                                     ),
                                   );
+
+                              debugPrint('블록체인 호출');
+                               willViewmodel.createWill();
                                 } else {
                                   if (viewModel.errorMessage != null) {
                                     ScaffoldMessenger.of(context).showSnackBar(

@@ -13,11 +13,14 @@ class LoginViewModel extends ChangeNotifier {
   bool _isLoading = false;
   String? _errorMessage;
   bool _isLoginSuccess = false;
-
   // 네이버 로그인 정보
   String? accessToken;
   String? tokenType;
   String? refreshToken;
+
+
+
+  String get userName  => _loginData.username;
 
   String get password => _loginData.password;
 

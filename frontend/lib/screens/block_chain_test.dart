@@ -29,11 +29,25 @@ class BlockChainTest extends StatelessWidget {
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [
                     ElevatedButton(
-                      onPressed: () async {    
-                        final response = await viewModel.deployContract();
-                        debugPrint('컨트랙트 배포 결과: $response');
+                      onPressed: ()  async {
+                        // debugPrint(await willViewmodel.MyWill());
+                        debugPrint(await willViewmodel.SearchByHash());
                       },
-                      child: Text('컨트랙트 배포'),
+                      child : Text('유언 유효성 검사')
+                    ),
+                    ElevatedButton(
+                      onPressed: ()  async {
+                        // debugPrint(await willViewmodel.MyWill());
+                        debugPrint(await willViewmodel.deleteWill());
+                      },
+                      child : Text('내 유언 삭제')
+                    ),
+                    ElevatedButton(
+                      onPressed: ()  async {
+                        // debugPrint(await willViewmodel.MyWill());
+                        debugPrint(await willViewmodel.MyWill());
+                      },
+                      child : Text('내 유언 확인')
                     ),
                     ElevatedButton(
                       onPressed: () async {    
@@ -88,16 +102,14 @@ class BlockChainTest extends StatelessWidget {
                     ),
                     ElevatedButton(
                       onPressed: ()  async {
-                        // walletViewModel.checkWallet();
+                       debugPrint(await willViewmodel.storage.read(key : 'privateKey'));
+                       debugPrint(await willViewmodel.storage.read(key : 'walletAddress'));
+                       debugPrint(await willViewmodel.storage.read(key : 'mnemonic'));
+                       debugPrint(await willViewmodel.storage.read(key : 'userId'));
                       },
                       child : Text('지갑 확인')
                     ),
-                    ElevatedButton(
-                      onPressed: ()  async {
-                        // walletViewModel.readPrivateKey();
-                      },
-                      child : Text('스토리지 확인')
-                    ),
+
                     ElevatedButton(
                       onPressed: ()  async {
                         Navigator.pushNamed(context, '/mnemonic');

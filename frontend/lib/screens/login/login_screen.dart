@@ -1,16 +1,50 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 import 'package:frontend/screens/login/login_input_field_widget.dart';
+import 'package:frontend/screens/login/mnemonic_recovery_screen.dart';
 import 'package:frontend/screens/will/recording_test.dart';
+import 'package:frontend/services/auth_service.dart';
 import 'package:frontend/view_models/auth_view_models/login_viewmodel.dart';
 import 'package:frontend/screens/login/social_button_widget.dart';
 import 'package:frontend/screens/signup/signup_screen.dart';
 import 'package:frontend/screens/will/will_select_type_screen.dart';
+import 'package:frontend/view_models/auth_view_models/user_viewmodel.dart';
 import 'package:frontend/widgets/common_button.dart';
 import 'package:frontend/widgets/memorial_enter_button.dart';
 import 'package:provider/provider.dart';
 
-class LoginScreen extends StatelessWidget {
+class LoginScreen extends StatefulWidget {
+  LoginScreen ({super.key});
+  @override
+  State<LoginScreen> createState() => _LoginScreenState();
+}
+class _LoginScreenState extends State<LoginScreen> {
+
+  var storage = FlutterSecureStorage();
+
+_asyncMethod() async {
+  String? token = await storage.read(key: 'token');
+  debugPrint(token);
+  if (token != null) {
+    if(!mounted) return;
+    // UserViewModel().fetchUserData();
+    debugPrint('아마도 자동되야할걸');
+    Navigator.pushReplacementNamed(context, '/home'); 
+  }
+}
+
+  @override
+  void initState() {
+    super.initState();
+    debugPrint('후');
+      WidgetsBinding.instance!.addPostFrameCallback((_) {
+    _asyncMethod();
+  });
+    // _asyncMethod();
+  }
+
+
   @override
   Widget build(BuildContext context) {
     final commonWidth = MediaQuery.of(context).size.width;
@@ -82,11 +116,61 @@ class LoginScreen extends StatelessWidget {
                         width: MediaQuery.of(context).size.width * 0.8,
                         height: 50,
                         fontSize: 30,
-                        onPressed: () {
+                        onPressed: () async {
+                          var _pk = await storage.read(key:'privateKey');
+                          var _userName = await storage.read(key:'userId');
+                          var _owner = await storage.read(key:'owner');
+                          debugPrint('유저 아이디, 오너 아이디, pk  유저 ${_userName} || 오너 ${_owner}, 피케이 ${ _pk }');
+
                           if (!viewModel.isLoading) {
-                            viewModel.login().then((_) {
+                            viewModel.login().then((_)  {
+                              // 로그인 성공 시 홈 화면으로 이동
                               if (viewModel.errorMessage == null) {
-                                Navigator.pushNamed(context, '/home');
+                                // 저장된 키의 주인과 방금 로그인 비교
+                                if ( _pk != null && _owner == viewModel.userName) {
+                                      debugPrint('아이디와 오너가 같음');
+                                  // 같다면 홈으로 이동
+                                  Navigator.pushNamed(context, '/home');
+                                } else if (  _pk !=null &&  _owner != viewModel.userName) {
+                                  // 다르다면 로그아웃 혹은 키 복구 요청
+                                    debugPrint('아이디와 오너가 다름');
+                                    showDialog(
+                                        context: context,
+                                        builder: (BuildContext context) {
+                                          return AlertDialog(
+                                            title: Text('로그아웃 혹은 유언장 복구'),
+                                            content: Text(
+                                                '이전에 로그인한 아이디와 현재 로그인한 아이디가 다릅니다. 로그아웃을 하시겠습니까?'),
+                                            actions: [
+                                              TextButton(
+                                                  onPressed: () {
+                                                    storage.delete(
+                                                        key: 'privateKey');
+                                                    storage.delete(
+                                                        key: 'owner');
+                                                    Navigator.pushNamed(
+                                                        context, '/mnemonic');
+                                                  },
+                                                  child: Text('이 계정 사용')),
+                                              TextButton(
+                                                  onPressed: () async {
+                                                    debugPrint('둘다없음');
+                                                    Navigator.pushNamed(context, '/login');
+                                                    await UserViewModel().logout();
+                                                  },
+                                                  child: Text('로그아웃'))
+                                            ],
+                                          );
+                                        });
+                                  ();
+                                }
+                                //
+                                else if ( _pk == null &&  _userName == null) {
+                                  debugPrint('아이디 키 모두 없음');
+                                  // 저장된 아이디와 키 모두 없다면 키를 복구한다.
+                                  Navigator.pushNamed(context, '/mnemonic');
+                                }
+
                               } else {
                                 if (viewModel.errorMessage != null) {
                                   ScaffoldMessenger.of(context).showSnackBar(
@@ -100,6 +184,7 @@ class LoginScreen extends StatelessWidget {
                           }
                         },
                       ),
+                      
                       SizedBox(height: 10),
                       Text(
                         '------------------------------ or ------------------------------',

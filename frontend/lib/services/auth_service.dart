@@ -39,7 +39,7 @@ class AuthService {
         debugPrint('토큰값: $token');
 
         if (token != null) {
-          _storage.deleteAll(); // 기존 토큰 삭제
+          _storage.delete(key: 'token'); // 기존 토큰 삭제
           await _storage.write(key: 'token', value: token);
           return {'success': true};
         } else {
@@ -48,7 +48,7 @@ class AuthService {
       } else {
         return {'success': false, 'statusCode': response.statusCode};
       }
-    } on Dio.DioError catch (e) {
+    } on Dio.DioException catch (e) {
       debugPrint(e.message);
       return {'success': false, 'statusCode': e.response?.statusCode};
     }
