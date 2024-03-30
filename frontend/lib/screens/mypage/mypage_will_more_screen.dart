@@ -76,7 +76,27 @@ class MypageWillMoreScreen extends StatelessWidget {
               CommonButtonWidget(width: 250,text: '저장된 유언 진위여부 확인', onPressed: () async =>{
                 await BlockChainWillViewModel().WillCheck().then((res) {
                   if (res == '200') {
-                    
+                    showDialog(context: context, 
+                    builder: (BuildContext context) {
+                      return PopupWidget(
+                        text: '유언이 안전하게 저장되고 있습니다.',
+                        buttonText1: '확인',
+                                                  onConfirm1: (){Navigator.pop(context);},
+
+                      );
+                    });
+                  } else {
+                    showDialog(
+                      context: context,
+                      barrierDismissible: true,
+                      builder: (BuildContext context) {
+                        return PopupWidget(
+                          text: '유언이 변경되었습니다.\n다시 생성해주세요.',
+                          buttonText1: '확인',
+                          onConfirm1: (){Navigator.pop(context);},
+                        );
+                      },
+                    );
                   }
                 }),
               })
