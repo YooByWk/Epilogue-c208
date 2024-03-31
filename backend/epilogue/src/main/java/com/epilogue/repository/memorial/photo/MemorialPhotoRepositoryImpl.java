@@ -43,4 +43,11 @@ public class MemorialPhotoRepositoryImpl implements MemorialPhotoRepositoryCusto
                 .getResultList();
     }
 
+    @Override
+    public List<MemorialPhoto> findAllByMemorialSeq(int memorialSeq) {
+        return entityManager.createQuery("SELECT mp FROM MemorialPhoto mp WHERE mp.memorial.memorialSeq = :memorialSeq", MemorialPhoto.class)
+                .setParameter("memorialSeq", memorialSeq)
+                .getResultList();
+    }
+
 }

@@ -14,4 +14,6 @@ public interface MemorialVideoRepositoryCustom {
     public List<MemorialVideo> find20ByMemorialSeq(int memorialSeq);
 
     public List<MemorialVideo> find20ByMemorialSeqAndLastVideoSeq(int memorialSeq, int lastVideoSeq);
+
+    public List<MemorialVideo> findAllByMemorialSeq(int memorialSeq);
 }

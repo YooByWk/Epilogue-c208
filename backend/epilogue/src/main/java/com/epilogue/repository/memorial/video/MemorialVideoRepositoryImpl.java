@@ -33,4 +33,11 @@ public class MemorialVideoRepositoryImpl implements MemorialVideoRepositoryCusto
                 .setParameter("lastVideoSeq", lastVideoSeq)
                 .getResultList();
     }
+
+    @Override
+    public List<MemorialVideo> findAllByMemorialSeq(int memorialSeq) {
+        return entityManager.createQuery("SELECT mv FROM MemorialVideo mv WHERE mv.memorial.memorialSeq = :memorialSeq", MemorialVideo.class)
+                .setParameter("memorialSeq", memorialSeq)
+                .getResultList();
+    }
 }

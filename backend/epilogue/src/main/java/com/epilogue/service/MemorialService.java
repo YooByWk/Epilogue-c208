@@ -219,11 +219,10 @@ public class MemorialService {
         return graveResponseDto;
     }
 
-    public List<MemorialPhotoDto> viewMemorialPhotoList(int memorialSeq, int lastPhotoSeq) {
+    public MemorialPhotoListResponseDto viewMemorialPhotoList(int memorialSeq, int lastPhotoSeq) {
         List<MemorialPhotoDto> memorialPhotoDtoList = new ArrayList<>();
 
         List<MemorialPhoto> memorialPhotoList = new ArrayList<>();
-
         // 사진 처음 로드시
         if(lastPhotoSeq == 0) {
             memorialPhotoList = memorialPhotoRepository.find20ByMemorialSeq(memorialSeq);
@@ -240,14 +239,17 @@ public class MemorialService {
                     .build();
             memorialPhotoDtoList.add(memorialPhotoDto);
         }
-        return memorialPhotoDtoList;
+
+        return MemorialPhotoListResponseDto.builder()
+                .memorialPhotoDtoList(memorialPhotoDtoList)
+                .count(memorialPhotoRepository.findAllByMemorialSeq(memorialSeq).size())
+                .build();
     }
 
-    public List<MemorialVideoDto> viewMemorialVideoList(int memorialSeq, int lastVideoSeq) {
+    public MemorialVideoListResponseDto viewMemorialVideoList(int memorialSeq, int lastVideoSeq) {
         List<MemorialVideoDto> memorialVideoDtoList = new ArrayList<>();
 
         List<MemorialVideo> memorialVideoList = new ArrayList<>();
-
         // 동영상 처음 로드시
         if(lastVideoSeq == 0) {
             memorialVideoList = memorialVideoRepository.find20ByMemorialSeq(memorialSeq);
@@ -264,7 +266,11 @@ public class MemorialService {
                     .build();
             memorialVideoDtoList.add(memorialVideoDto);
         }
-        return memorialVideoDtoList;
+
+        return MemorialVideoListResponseDto.builder()
+                .memorialVideoDtoList(memorialVideoDtoList)
+                .count(memorialVideoRepository.findAllByMemorialSeq(memorialSeq).size())
+                .build();
     }
 
     public void saveMedia(String loginUserId, int memorialSeq, MultipartFile multipartFile, MemorialMediaRequestDto memorialMediaRequestDto) throws Exception {
@@ -326,7 +332,7 @@ public class MemorialService {
         return memorialMediaResponseDto;
     }
 
-    public List<MemorialLetterDto> viewMemorialLetterList(int memorialSeq, int lastLetterSeq) {
+    public MemorialLetterListResponseDto viewMemorialLetterList(int memorialSeq, int lastLetterSeq) {
         List<MemorialLetterDto> memorialLetterDtoList = new ArrayList<>();
 
         SimpleDateFormat sdf = new SimpleDateFormat("yyyy.MM.dd");
@@ -347,7 +353,10 @@ public class MemorialService {
                     .build();
             memorialLetterDtoList.add(memorialLetterDto);
         }
-        return memorialLetterDtoList;
+        return MemorialLetterListResponseDto.builder()
+                .memorialLetterDtoList(memorialLetterDtoList)
+                .count(memorialLetterRepository.findAllByMemorialSeq(memorialSeq).size())
+                .build();
     }
 
     public void createMemorialLetter(int memorialSeq, MemorialLetterRequestDto memorialLetterRequestDto) {
