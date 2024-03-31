@@ -122,7 +122,7 @@ _asyncMethod() async {
                           var _pk = await storage.read(key:'privateKey');
                           var _userName = await storage.read(key:'userId');
                           var _owner = await storage.read(key:'owner');
-                          debugPrint('유저 아이디, 오너 아이디, pk  유저 ${_userName} || 오너 ${_owner}, 피케이 ${ _pk }');
+                          // debugPrint('유저 아이디, 오너 아이디, pk  유저 ${_userName} || 오너 ${_owner}, 피케이 ${ _pk }');
 
                           if (!viewModel.isLoading) {
                             viewModel.login().then((_)  {

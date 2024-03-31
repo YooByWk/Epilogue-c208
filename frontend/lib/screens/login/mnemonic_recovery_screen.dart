@@ -105,13 +105,13 @@ class MnemonicRecoveryScreen extends StatelessWidget {
                                   onPressed: () {
                                     Navigator.pop(context);
                                   },
-                                  child: Text('취소'),
+                                  child: Text('취소',style: TextStyle(color: Colors.grey[500])),
                                 ),
                                 TextButton(
                                   onPressed: () {
                                     Navigator.pushNamed(context, '/myMnemonic');
                                   },
-                                  child: Text('실행'),
+                                  child: Text('실행',style: TextStyle(color: themeColour5)),
                                 ),
                               ],
                             ),
@@ -143,7 +143,7 @@ class MnemonicRecoveryScreen extends StatelessWidget {
                         onPressed: () {
                           Navigator.pop(context);
                         },
-                        child: Text('확인'),
+                        child: Text('확인',style: TextStyle(color: Colors.grey[600])),
                       ),
                     ],
                   ),
@@ -165,7 +165,7 @@ class MnemonicRecoveryScreen extends StatelessWidget {
                         onPressed: () {
                           Navigator.pop(context);
                         },
-                        child: Text('확인'),
+                        child: Text('확인',style: TextStyle(color: Colors.grey[600])),
                       ),
                     ],
                   ),
