@@ -179,11 +179,13 @@ class MemorialService {
       );
 
       if (response.statusCode == 200) {
-
         MemorialPhotoDetailModel memorialPhotoDetailModel =
-        MemorialPhotoDetailModel.fromJson(response.data);
+            MemorialPhotoDetailModel.fromJson(response.data);
 
-        return {'success': true, 'memorialPhotoDetailModel': memorialPhotoDetailModel};
+        return {
+          'success': true,
+          'memorialPhotoDetailModel': memorialPhotoDetailModel
+        };
       } else {
         return {'success': false, 'statusCode': response.statusCode};
       }
@@ -301,6 +303,26 @@ class MemorialService {
     }
   }
 
+  ////////////////// 사진 신고하기 ///////////////////////
+  Future<Map<String, dynamic>> reportPhoto() async {
+    String? photoSeq = await _storage.read(key: 'photoSeq');
+
+    try {
+      Dio.Response response = await _dio.post(
+        '$baseUrl/api/memorial/report/photo/$photoSeq',
+      );
+
+      if (response.statusCode == 200) {
+        return {
+          'success': true,
+        };
+      } else {
+        return {'success': false, 'statusCode': response.statusCode};
+      }
+    } on Dio.DioError catch (e) {
+      return {'success': false, 'statusCode': e.response?.statusCode};
+    }
+  }
 }
 
 class LoggingInterceptor extends Dio.Interceptor {
