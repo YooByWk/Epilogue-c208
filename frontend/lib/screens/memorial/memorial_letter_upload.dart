@@ -1,12 +1,9 @@
-import 'dart:io';
-
-import 'package:file_picker/file_picker.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:frontend/main.dart';
 import 'package:frontend/screens/memorial/memorial_app_bar.dart';
 import 'package:frontend/view_models/memorial_view_models/memorial_detail_letterTab_viewmodel.dart';
-import 'package:frontend/view_models/memorial_view_models/memorial_detail_phototab_viewmodel.dart';
+import 'package:frontend/widgets/common_text_widget.dart';
 import 'package:provider/provider.dart';
 
 class MemorialLetterUpload extends StatefulWidget {
@@ -35,62 +32,69 @@ class _MemorialLetterUploadState extends State<MemorialLetterUpload> {
                 crossAxisAlignment: CrossAxisAlignment.start,
                 // mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                 children: [
-                  Text("편지 남기기"),
-                  SizedBox(
-                    height: 30,
-                  ),
+                  SizedBox(height: 30),
                   Center(
-                      child: Column(
-                    children: [
-                      TextField(
-                        onChanged: (value) {
-                          viewModel.setNickname(value);
-                        },
-                        maxLines: null,
-                        minLines: 5,
-                        decoration: InputDecoration(
-                          contentPadding: EdgeInsets.symmetric(
-                              horizontal: 15.0, vertical: 20.0),
-                          border: OutlineInputBorder(
-                              borderRadius: const BorderRadius.all(
-                                const Radius.circular(1.0),
-                              ),
-                              borderSide:
-                                  BorderSide(color: Colors.grey, width: 2.0)),
-                          focusedBorder: OutlineInputBorder(
-                            // 포커스됐을 때 외곽선 설정
-                            borderRadius:
-                                const BorderRadius.all(Radius.circular(1.0)),
-                            borderSide: BorderSide(
-                                color: themeColour5, width: 2.0), // 여기서 색깔 변경
+                      child: CommonText(
+                    text: '고인에게 생전에 하지 못 했던 말을 남겨보세요.',
+                    fontSize: 20,
+                  )),
+                  SizedBox(height: 30),
+                  Center(
+                      child: Padding(
+                    padding: const EdgeInsets.symmetric(horizontal: 20.0),
+                    child: Column(
+                      children: [
+                        TextField(
+                          onChanged: (value) {
+                            viewModel.setNickname(value);
+                          },
+                          decoration: InputDecoration(
+                            hintText: '보내는 사람',
+                            contentPadding: EdgeInsets.symmetric(
+                                horizontal: 15.0, vertical: 20.0),
+                            border: OutlineInputBorder(
+                                borderRadius: const BorderRadius.all(
+                                  const Radius.circular(2.0),
+                                ),
+                                borderSide:
+                                    BorderSide(color: Colors.grey, width: 2.0)),
+                            focusedBorder: OutlineInputBorder(
+                              // 포커스됐을 때 외곽선 설정
+                              borderRadius:
+                                  const BorderRadius.all(Radius.circular(2.0)),
+                              borderSide: BorderSide(
+                                  color: themeColour5, width: 2.0), // 여기서 색깔 변경
+                            ),
                           ),
                         ),
-                      ),
-                      TextField(
-                        onChanged: (value) {
-                          viewModel.setContent(value);
-                        },
-                        maxLines: null,
-                        minLines: 5,
-                        decoration: InputDecoration(
-                          contentPadding: EdgeInsets.symmetric(
-                              horizontal: 15.0, vertical: 20.0),
-                          border: OutlineInputBorder(
-                              borderRadius: const BorderRadius.all(
-                                const Radius.circular(1.0),
-                              ),
-                              borderSide:
-                                  BorderSide(color: Colors.grey, width: 2.0)),
-                          focusedBorder: OutlineInputBorder(
-                            // 포커스됐을 때 외곽선 설정
-                            borderRadius:
-                                const BorderRadius.all(Radius.circular(1.0)),
-                            borderSide: BorderSide(
-                                color: themeColour5, width: 2.0), // 여기서 색깔 변경
+                        SizedBox(height: 30),
+                        TextField(
+                          onChanged: (value) {
+                            viewModel.setContent(value);
+                          },
+                          maxLines: null,
+                          minLines: 10,
+                          decoration: InputDecoration(
+                            hintText: '편지 내용을 작성해주세요.',
+                            contentPadding: EdgeInsets.symmetric(
+                                horizontal: 15.0, vertical: 20.0),
+                            border: OutlineInputBorder(
+                                borderRadius: const BorderRadius.all(
+                                  const Radius.circular(2.0),
+                                ),
+                                borderSide:
+                                    BorderSide(color: Colors.grey, width: 2.0)),
+                            focusedBorder: OutlineInputBorder(
+                              // 포커스됐을 때 외곽선 설정
+                              borderRadius:
+                                  const BorderRadius.all(Radius.circular(2.0)),
+                              borderSide: BorderSide(
+                                  color: themeColour5, width: 2.0), // 여기서 색깔 변경
+                            ),
                           ),
                         ),
-                      ),
-                    ],
+                      ],
+                    ),
                   )),
                   SizedBox(
                     height: 30,
