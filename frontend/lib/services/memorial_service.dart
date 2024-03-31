@@ -8,6 +8,7 @@ import 'package:flutter/material.dart';
 import 'package:frontend/models/memorial/memorial_grave_model.dart';
 import 'package:frontend/models/memorial/memorial_letter_list_model.dart';
 import 'package:frontend/models/memorial/memorial_photo_list_model.dart';
+import 'package:frontend/models/memorial/memorial_video_list_model.dart';
 import 'package:frontend/models/memorial_detail_model.dart';
 import 'package:frontend/models/memorial_letter_upload_model.dart';
 
@@ -217,6 +218,65 @@ class MemorialService {
       return {'success': false, 'statusCode': e.response?.statusCode};
     }
   }
+
+  ////////////////// 추모관 영상 업로드 ///////////////////////
+  // Future<Map<String, dynamic>> photoUpload(
+  //     File photoFile, String? content) async {
+  //   String? memorialSeq = await _storage.read(key: 'graveSeq');
+  //   String contentJson = jsonEncode(content);
+  //
+  //   var formData = Dio.FormData.fromMap({
+  //     'multipartFile': await Dio.MultipartFile.fromFile(photoFile.path),
+  //     'memorialMediaRequestDto': contentJson,
+  //   });
+  //
+  //   try {
+  //     _dio.options.contentType = 'multipart/form-data';
+  //     Dio.Response response = await _dio.post(
+  //       '$baseUrl/api/memorial/media/$memorialSeq',
+  //       data: formData,
+  //     );
+  //
+  //     if (response.statusCode == 200) {
+  //       return {'success': true};
+  //     } else {
+  //       return {'success': false, 'statusCode': response.statusCode};
+  //     }
+  //   } on Dio.DioError catch (e) {
+  //     return {'success': false, 'statusCode': e.response?.statusCode};
+  //   }
+  // }
+
+  ////////////////// 추모관 영상 리스트 ///////////////////////
+  Future<Map<String, dynamic>> videoList({required int lastVideoSeq}) async {
+    String? memorialSeq = await _storage.read(key: 'graveSeq');
+
+    try {
+      Dio.Response response = await _dio.get(
+        '$baseUrl/api/memorial/video-list/$memorialSeq/$lastVideoSeq',
+      );
+
+      if (response.statusCode == 200) {
+        List<MemorialVideoListModel> videoList = [];
+        if (response.data['memorialVideoDtoList'] != []) {
+          for (var item in response.data['memorialVideoDtoList']) {
+            videoList.add(
+              MemorialVideoListModel.fromJson(item),
+            );
+          }
+        }
+
+        String count = response.data['count'].toString();
+
+        return {'success': true, 'videoList': videoList, 'count': count};
+      } else {
+        return {'success': false, 'statusCode': response.statusCode};
+      }
+    } on Dio.DioError catch (e) {
+      return {'success': false, 'statusCode': e.response?.statusCode};
+    }
+  }
+
 }
 
 class LoggingInterceptor extends Dio.Interceptor {

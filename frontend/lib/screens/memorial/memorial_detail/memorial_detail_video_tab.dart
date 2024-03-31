@@ -30,7 +30,7 @@ class VideoTab extends StatelessWidget {
                 height: MediaQuery.of(context).size.height,
                 width: MediaQuery.of(context).size.width,
                 child: (ListView.builder(
-                  itemCount: viewModel.videos.length,
+                  itemCount: viewModel.videos.length + 1,
                   itemBuilder: (context, index) {
                     if (index == 0) {
                       // return Text('비디오 탭입니다.');
@@ -45,12 +45,12 @@ class VideoTab extends StatelessWidget {
                         SizedBox(height: 10)
                       ]));
                     }
-                    if (index >= viewModel.videos.length) {
-                      return null; // 수정: index가 viewModel.videos.length 이상일 때는 null을 반환합니다.
-                    }
+                    // if (index >= viewModel.videos.length) {
+                    //   return null; // 수정: index가 viewModel.videos.length 이상일 때는 null을 반환합니다.
+                    // }
                     return VideoCard(
                       key: ValueKey(index),
-                      videoPath: viewModel.videos[index],
+                      videoPath: viewModel.videos[index - 1].s3url,
                       index: index,
                     );
                   },
