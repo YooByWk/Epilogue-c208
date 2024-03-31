@@ -30,8 +30,7 @@ List<ChangeNotifierProvider> providers = [
   // 이하 필요한 ViewModel 들을 추가 해주면 됩니다.
   ChangeNotifierProvider(create: (context) => MainViewModel()),
   ChangeNotifierProvider(create: (context) => SignupViewModel()),
-  ChangeNotifierProvider(
-      create: (context) => BlockChainWalletViewModel(BlockChainWalletModel())),
+  ChangeNotifierProvider(create: (context) => BlockChainWalletViewModel(BlockChainWalletModel())),
   ChangeNotifierProvider(create: (context) => ViewerViewModel()),
   ChangeNotifierProvider(create: (context) => AdditionalViewModel()),
   ChangeNotifierProvider(create: (context) => RecordingViewModel()),
@@ -44,6 +43,8 @@ List<ChangeNotifierProvider> providers = [
   ChangeNotifierProvider(create: (context) => MemorialListViewModel()),
   ChangeNotifierProvider(create: (context) => MemorialDetailViewModel()),
   ChangeNotifierProvider(create: (context) => BlockChainWillViewModel()),
+  // ChangeNotifierProvider(create: (context) => UserViewModel()),
+
   ChangeNotifierProvider(create: (context) => MemorialPhotoDetailViewModel()),
   ChangeNotifierProvider(create: (context) => MemorialVideoDetailViewModel()),
   // ChangeNotifierProvider(create :(context) => RecordingViewModel())
