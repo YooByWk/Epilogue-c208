@@ -9,6 +9,7 @@ import 'package:frontend/models/memorial/memorial_grave_model.dart';
 import 'package:frontend/models/memorial/memorial_letter_list_model.dart';
 import 'package:frontend/models/memorial/memorial_photo_detail_model.dart';
 import 'package:frontend/models/memorial/memorial_photo_list_model.dart';
+import 'package:frontend/models/memorial/memorial_video_detail_model.dart';
 import 'package:frontend/models/memorial/memorial_video_list_model.dart';
 import 'package:frontend/models/memorial_detail_model.dart';
 import 'package:frontend/models/memorial_letter_upload_model.dart';
@@ -194,6 +195,28 @@ class MemorialService {
     }
   }
 
+  ////////////////// 사진 신고하기 ///////////////////////
+  Future<Map<String, dynamic>> reportPhoto() async {
+    String? photoSeq = await _storage.read(key: 'photoSeq');
+
+    try {
+      Dio.Response response = await _dio.post(
+        '$baseUrl/api/memorial/report/photo/$photoSeq',
+      );
+
+      if (response.statusCode == 200) {
+        return {
+          'success': true,
+        };
+      } else {
+        return {'success': false, 'statusCode': response.statusCode};
+      }
+    } on Dio.DioError catch (e) {
+      return {'success': false, 'statusCode': e.response?.statusCode};
+    }
+  }
+
+
 ////////////////// 추모관 편지 업로드 ///////////////////////
   Future<Map<String, dynamic>> letterUpload(
       LetterUploadModel letterUploadModel) async {
@@ -302,14 +325,38 @@ class MemorialService {
       return {'success': false, 'statusCode': e.response?.statusCode};
     }
   }
+  ////////////////// 추모관 영상 디테일 ///////////////////////
+  Future<Map<String, dynamic>> videoDetail() async {
+    String? memorialVideoSeq = await _storage.read(key: 'videoSeq');
 
-  ////////////////// 사진 신고하기 ///////////////////////
-  Future<Map<String, dynamic>> reportPhoto() async {
-    String? photoSeq = await _storage.read(key: 'photoSeq');
+    try {
+      Dio.Response response = await _dio.get(
+        '$baseUrl/api/memorial/video/$memorialVideoSeq',
+      );
+
+      if (response.statusCode == 200) {
+        MemorialVideoDetailModel memorialVideoDetailModel =
+        MemorialVideoDetailModel.fromJson(response.data);
+
+        return {
+          'success': true,
+          'memorialVideoDetailModel': memorialVideoDetailModel
+        };
+      } else {
+        return {'success': false, 'statusCode': response.statusCode};
+      }
+    } on Dio.DioError catch (e) {
+      return {'success': false, 'statusCode': e.response?.statusCode};
+    }
+  }
+
+  ////////////////// 영상 신고하기 ///////////////////////
+  Future<Map<String, dynamic>> reportVideo() async {
+    String? videoSeq = await _storage.read(key: 'videoSeq');
 
     try {
       Dio.Response response = await _dio.post(
-        '$baseUrl/api/memorial/report/photo/$photoSeq',
+        '$baseUrl/api/memorial/report/video/$videoSeq',
       );
 
       if (response.statusCode == 200) {
