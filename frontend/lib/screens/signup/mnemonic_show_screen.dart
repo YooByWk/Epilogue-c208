@@ -120,18 +120,24 @@ class _MnemonicShowScreenState extends State<MnemonicShowScreen> {
       builder : (BuildContext context) {
         return AlertDialog(
           title : Text('경고'),
-          content : Text('유언장 단어 확인을 마치시겠습니까?'),
+          content : Text('유언장 단어 확인을 마치시겠습니까?',),
           actions: [
             TextButton(
               onPressed: () => {Navigator.pushNamedAndRemoveUntil(context, '/home', (route) => false)},
+              // backgroundColor: themeColour5,
               style: TextButton.styleFrom(
+              backgroundColor: themeColour1,
+                foregroundColor: themeColour3, 
+
               ),
-              child: Text('네'),
+              child: Text('네', style: TextStyle(color: Colors.black87)),
           ),TextButton(
               onPressed: () => {Navigator.pop(context)},
               style: TextButton.styleFrom(
+                shadowColor : themeColour3,
+                foregroundColor: themeColour3, 
               ),
-              child: Text('아니요')
+              child: Text('아니요',style: TextStyle(color: Colors.grey[500]))
           )
           ],
         );

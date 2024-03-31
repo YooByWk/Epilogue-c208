@@ -63,11 +63,6 @@ class _WillAdditionalInfoState extends State<WillAdditionalInfo> {
               builder: (context, value, child) {
                 return Column(
                   children: [
-                    CommonButtonWidget(
-                      text: 'text',
-                      onPressed: () async =>
-                          debugPrint(widget.willData['graveType'].toString()),
-                    ),
                     Container(
                       decoration: BoxDecoration(
                         color: themeColour3.withOpacity(0.3),
