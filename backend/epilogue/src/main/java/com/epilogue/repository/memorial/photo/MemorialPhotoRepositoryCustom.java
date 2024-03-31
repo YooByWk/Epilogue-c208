@@ -15,4 +15,6 @@ public interface MemorialPhotoRepositoryCustom {
 
     public List<MemorialPhoto> find20ByMemorialSeqAndLastPhotoSeq(int memorialSeq, int lastPhotoSeq);
 
+    public List<MemorialPhoto> findAllByMemorialSeq(int memorialSeq);
+
 }

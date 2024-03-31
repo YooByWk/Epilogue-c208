@@ -58,17 +58,17 @@ public class MemorialController {
     @Operation(summary = "디지털 추모관 사진 목록 조회 API", description = "사진을 최근순으로 20개씩 불러옵니다. 마지막 사진이 없을 시 즉, 처음 사진을 로드하는 경우 lastPhotoSeq 0으로 넘겨주세요.")
     @GetMapping("/photo-list/{memorialSeq}/{lastPhotoSeq}")
     @ApiResponse(responseCode = "200", description = "성공")
-    public ResponseEntity<List<MemorialPhotoDto>> viewMemorialPhotoList(@Parameter(description = "디지털 추모관 식별키") @PathVariable int memorialSeq, @Parameter(description = "마지막 사진의 식별키") @PathVariable int lastPhotoSeq) {
-        List<MemorialPhotoDto> memorialPhotoDtoList = memorialService.viewMemorialPhotoList(memorialSeq, lastPhotoSeq);
-        return new ResponseEntity<>(memorialPhotoDtoList, HttpStatus.OK);
+    public ResponseEntity<MemorialPhotoListResponseDto> viewMemorialPhotoList(@Parameter(description = "디지털 추모관 식별키") @PathVariable int memorialSeq, @Parameter(description = "마지막 사진의 식별키") @PathVariable int lastPhotoSeq) {
+        MemorialPhotoListResponseDto memorialPhotoListResponseDto = memorialService.viewMemorialPhotoList(memorialSeq, lastPhotoSeq);
+        return new ResponseEntity<>(memorialPhotoListResponseDto, HttpStatus.OK);
     }
 
     @Operation(summary = "디지털 추모관 동영상 목록 조회 API", description = "동영상을 최근순으로 20개씩 불러옵니다. 마지막 동영상이 없을 시 즉, 처음 동영상을 로드하는 경우 lastVideoSeq 0으로 넘겨주세요.")
     @GetMapping("/video-list/{memorialSeq}/{lastVideoSeq}")
     @ApiResponse(responseCode = "200", description = "성공")
-    public ResponseEntity<List<MemorialVideoDto>> viewMemorialVideoList(@Parameter(description = "디지털 추모관 식별키") @PathVariable int memorialSeq, @Parameter(description = "마지막 동영상의 식별키") @PathVariable int lastVideoSeq) {
-        List<MemorialVideoDto> memorialVideoDtoList = memorialService.viewMemorialVideoList(memorialSeq, lastVideoSeq);
-        return new ResponseEntity<>(memorialVideoDtoList, HttpStatus.OK);
+    public ResponseEntity<MemorialVideoListResponseDto> viewMemorialVideoList(@Parameter(description = "디지털 추모관 식별키") @PathVariable int memorialSeq, @Parameter(description = "마지막 동영상의 식별키") @PathVariable int lastVideoSeq) {
+        MemorialVideoListResponseDto memorialVideoListResponseDto = memorialService.viewMemorialVideoList(memorialSeq, lastVideoSeq);
+        return new ResponseEntity<>(memorialVideoListResponseDto, HttpStatus.OK);
     }
 
     @Operation(summary = "디지털 추모관 사진 및 영상 업로드 API")
@@ -118,9 +118,9 @@ public class MemorialController {
     @Operation(summary = "디지털 추모관 편지 목록 조회 API", description = "편지를 최근순으로 20개씩 불러옵니다. 마지막 편지가 없을 시 즉, 처음 편지를 로드하는 경우 lastLetterSeq 0으로 넘겨주세요.")
     @GetMapping("/letter-list/{memorialSeq}/{lastLetterSeq}")
     @ApiResponse(responseCode = "200", description = "성공")
-    public ResponseEntity<List<MemorialLetterDto>> viewMemorialLetterList(@Parameter(description = "디지털 추모관 식별키") @PathVariable int memorialSeq, @Parameter(description = "마지막 편지의 식별키") @PathVariable int lastLetterSeq) {
-        List<MemorialLetterDto> memorialLetterDtoList = memorialService.viewMemorialLetterList(memorialSeq, lastLetterSeq);
-        return new ResponseEntity<>(memorialLetterDtoList, HttpStatus.OK);
+    public ResponseEntity<MemorialLetterListResponseDto> viewMemorialLetterList(@Parameter(description = "디지털 추모관 식별키") @PathVariable int memorialSeq, @Parameter(description = "마지막 편지의 식별키") @PathVariable int lastLetterSeq) {
+        MemorialLetterListResponseDto memorialLetterListResponseDto = memorialService.viewMemorialLetterList(memorialSeq, lastLetterSeq);
+        return new ResponseEntity<>(memorialLetterListResponseDto, HttpStatus.OK);
     }
 
     @Operation(summary = "디지털 추모관 편지 남기기 API")
