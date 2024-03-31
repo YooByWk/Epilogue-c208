@@ -11,6 +11,7 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Component;
 
+import java.sql.Timestamp;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Date;
@@ -24,19 +25,20 @@ public class Scheduler {
     private final UserRepository userRepository;
     private final AwsS3Service awsS3Service;
 
-//    @Scheduled(cron = "0 0 0 * * *")    // 매일 00시 정각
-    @Scheduled(cron = "0 * * * * *")    // 매분
+    @Scheduled(cron = "0 0 0 * * *")    // 매일 00시 정각
+//    @Scheduled(cron = "0 * * * * *")    // 매분 (테스트용)
     public void deleteMemorial() {
 
         // 1년 전 날짜 구하기
         Calendar cal = Calendar.getInstance();
         cal.add(Calendar.YEAR, -1);
         Date oneYearAgo = cal.getTime();
+        log.info("일년전 날짜 : {}", oneYearAgo);
 
         // 1년 넘은 추모관 삭제
-        SimpleDateFormat sdf = new SimpleDateFormat("yyyy.MM.dd");
-        List<Memorial> memorialsOlderThanDate = memorialRepository.findMemorialsOlderThanDate(sdf.format(oneYearAgo));
-        memorialRepository.deleteAll(memorialsOlderThanDate);
+//        SimpleDateFormat sdf = new SimpleDateFormat("yyyy.MM.dd");
+//        List<Memorial> memorialsOlderThanDate = memorialRepository.findMemorialsOlderThanDate(sdf.format(oneYearAgo));
+//        memorialRepository.deleteAll(memorialsOlderThanDate);
 
         // 사망했지만 유언을 보내지 않은 User 검색
         List<User> findUsers = userRepository.findByUserStatus(UserStatus.DEADANDNOTSEND);
@@ -51,6 +53,7 @@ public class Scheduler {
                     .goneDate("2024.01.01")
                     .graveName(findUser.getWill().getGraveName())
                     .graveImg(awsS3Service.getGraveImageFromS3(findUser.getWill().getGraveImageAddress()))
+                    .createdDate(new Timestamp(System.currentTimeMillis()))
                     .build());
 
             findUser.setUserStatus(UserStatus.DEADANDSEND);

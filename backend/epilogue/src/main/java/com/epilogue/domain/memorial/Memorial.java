@@ -9,6 +9,8 @@ import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 
+import java.sql.Timestamp;
+
 @Entity
 @Getter
 @Builder
@@ -37,4 +39,8 @@ public class Memorial {
     @NotNull
     @Schema(description = "묘비 사진")
     private String graveImg;
+
+    @NotNull
+    @Schema(description = "디지털 추모관 생성일")
+    private Timestamp createdDate;
 }
