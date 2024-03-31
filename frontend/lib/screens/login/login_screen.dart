@@ -1,6 +1,7 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
+import 'package:frontend/main.dart';
 import 'package:frontend/screens/login/login_input_field_widget.dart';
 import 'package:frontend/screens/login/mnemonic_recovery_screen.dart';
 import 'package:frontend/screens/will/recording_test.dart';
@@ -152,21 +153,21 @@ _asyncMethod() async {
                                                     Navigator.pushNamed(
                                                         context, '/mnemonic');
                                                   },
-                                                  child: Text('이 계정 사용')),
+                                                  child: Text('이 계정 사용',style: TextStyle(color: themeColour5))),
                                               TextButton(
                                                   onPressed: () async {
                                                     debugPrint('둘다없음');
                                                     Navigator.pushNamed(context, '/login');
                                                     await UserViewModel().logout();
                                                   },
-                                                  child: Text('로그아웃'))
+                                                  child: Text('로그아웃', style: TextStyle(color: Colors.grey[600]),))
                                             ],
                                           );
                                         });
                                   ();
                                 }
                                 //
-                                else if ( _pk == null &&  _userName == null) {
+                                else if ( _pk == null &&  _owner == null) {
                                   debugPrint('아이디 키 모두 없음');
                                   // 저장된 아이디와 키 모두 없다면 키를 복구한다.
                                   Navigator.pushNamed(context, '/mnemonic');
