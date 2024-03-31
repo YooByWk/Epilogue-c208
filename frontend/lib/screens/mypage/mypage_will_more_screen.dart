@@ -104,7 +104,7 @@ class _MypageWillMoreScreenState extends State<MypageWillMoreScreen> {
                                 ),
                               ],
                             ),
-                            WillAdditionalInfo(),
+                            WillAdditionalInfo(willData : myWillViewModel.willData),
                             SizedBox(height: 20),
                             CommonButtonWidget(
                               width: 250,
