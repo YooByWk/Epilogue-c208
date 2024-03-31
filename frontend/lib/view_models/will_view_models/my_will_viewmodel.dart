@@ -17,16 +17,29 @@ class MyWillViewModel extends ChangeNotifier {
   String? get graveImageAddress => _willModel.graveImageAddress;
   String? get willFileAddress => _willModel.willFileAddress;
 
+  Map<String, dynamic> get willData => {
+        'sustainCare': sustainCare,
+        'funeralType': funeralType,
+        'graveType': graveType,
+        'organDonation': organDonation,
+        'useMemorial': useMemorial,
+        'graveName': graveName,
+        'graveImageAddress': graveImageAddress,
+        'willFileAddress': willFileAddress,
+      };
+
   Future<void> initialize() async {
     await normalfetchData();
     debugPrint('실행중이니?');
     debugPrint(_willModel.graveName?.toString() ?? 'null');
+    debugPrint('여기 ${willData['graveName'].toString()}');
   }
 
 
   Future normalfetchData() async {
     _willModel = await _willService.getWillInfo();
     notifyListeners();
+    debugPrint(willData['graveName'].toString());
     return '200';
   }
 
