@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:frontend/screens/memorial/memorial_letter_upload.dart';
 import 'package:frontend/view_models/dio_api_request_examples.dart';
 import 'package:frontend/view_models/memorial_view_models/memorial_detail_letterTab_viewmodel.dart';
 import 'package:provider/provider.dart';
@@ -7,18 +8,19 @@ class LetterTab extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return ChangeNotifierProvider(
-        create: (context) => LetterViewModel(),
-        child: Consumer<LetterViewModel>(
+        create: (context) => LetterTabViewModel(),
+        child: Consumer<LetterTabViewModel>(
           builder: (context, viewModel, child) {
             return NotificationListener<ScrollNotification>(
                 onNotification: (scroll) {
                   if (scroll.metrics.pixels >=
                       scroll.metrics.maxScrollExtent - 50) {
                     viewModel.loadMore();
-                    debugPrint('더 불러오기');
-                    debugPrint(viewModel.letters.length.toString());
+                    // debugPrint('더 불러오기');
+                    // debugPrint(viewModel.letters.length.toString());
                   } else {
-                    debugPrint('스크롤 위치 ${scroll.metrics.pixels}');}
+                    // debugPrint('스크롤 위치 ${scroll.metrics.pixels}');
+                  }
                   return false;
                 },
                 child: CustomScrollView(
@@ -31,29 +33,36 @@ class LetterTab extends StatelessWidget {
                         childAspectRatio: 2,
                       ),
                       delegate: SliverChildBuilderDelegate(
-                          (BuildContext context, int index) {
-                        if (index == 0) {
-                          return Card(
-                              child: InkWell(
-                            onTap: () => {
-                              DioExamples().GetRequest(),
-                              debugPrint('dio를 통한 호출입니다. $index')},
-                            child: Column(
-                                children: [Icon(Icons.add), Text('편지 추가')]),
-                          ));
-                        } else {
-                          debugPrint(viewModel.letters.length.toString());
-                          return Letter(
-                            key: ValueKey(index),
-                            title: '제목' + viewModel.letters[index].title,
-                            content: '내용' + viewModel.letters[index].content,
-                            date: viewModel.letters[index].date,
-                            userId: 'a' + viewModel.letters[index].userId,
-                            index: index,
-                          );
-                        }
-                      }
-                      // ,childCount: viewModel.letters.length,
+                        (BuildContext context, int index) {
+                          if (index == 0) {
+                            return Card(
+                                child: InkWell(
+                              onTap: () => {
+                                Navigator.push(
+                                  context,
+                                  MaterialPageRoute(
+                                    builder: (context) =>
+                                        MemorialLetterUpload(),
+                                  ),
+                                )
+                              },
+                              child: Column(
+                                  children: [Icon(Icons.add), Text('편지 추가')]),
+                            ));
+                          } else {
+                            return Letter(
+                              key: ValueKey(viewModel.letters[index - 1].memorialLetterSeq),
+                              content:
+                                  (viewModel.letters[index - 1].content != null)
+                                      ? viewModel.letters[index - 1].content
+                                      : '',
+                              date: viewModel.letters[index - 1].writtenDate,
+                              nickname: viewModel.letters[index - 1].nickname,
+                              // memorialLetterSeq: viewModel.letters[index - 1].memorialLetterSeq.toString(),
+                            );
+                          }
+                        },
+                        childCount: viewModel.letters.length + 1,
                       ),
                     )
                   ],
@@ -64,19 +73,17 @@ class LetterTab extends StatelessWidget {
 }
 
 class Letter extends StatelessWidget {
-  final String title;
-  final String content;
-  final DateTime date;
-  final String userId;
-  final int index;
+  final String? nickname;
+  final String? content;
+  final String date;
+  // final int memorialLetterSeq;
 
   Letter({
     Key? key,
-    required this.title,
-    required this.content,
+    this.nickname,
+    this.content,
     required this.date,
-    required this.userId,
-    required this.index,
+    // required this.memorialLetterSeq,
   }) : super(key: key);
 
   @override
@@ -102,17 +109,16 @@ class Letter extends StatelessWidget {
               ),
             ),
           );
-          Overlay.of(context)!.insert(overlayEntry!);
+          Overlay.of(context).insert(overlayEntry!);
         },
         onLongPressEnd: (details) {
           overlayEntry?.remove();
         },
         child: Column(
           children: [
-            Text(title),
-            Text(content),
-            Text(date.toString()),
-            Text(userId),
+            Text(nickname ?? ''),
+            Text(content ?? ''),
+            Text(date),
           ],
         ),
       ),

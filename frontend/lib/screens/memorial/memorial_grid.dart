@@ -30,7 +30,6 @@ class MemorialGrid extends StatelessWidget {
             );
           } else {
             final memorial = viewModel.memorialList[index - viewModel.favoriteMemorialList.length];
-            debugPrint('$memorial');
             return MemorialCard(
               // imagePath: memorial.graveImg,
               graveSeq: memorial.graveSeq,
