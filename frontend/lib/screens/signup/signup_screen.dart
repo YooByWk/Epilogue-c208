@@ -201,7 +201,8 @@ class SignUpScreen extends StatelessWidget {
                             );
                             await storage.write(key : 'owner', value : viewModel.userId);
                             debugPrint('owner : ${await storage.read(key : 'owner')}');
-                            Navigator.pushNamed(context, '/myMnemonic')     ; 
+
+                            Navigator.pushNamed(context, '/myMnemonic').then((_) => {})     ; 
                         // if (viewModel.isFormValid) {
                         //   await viewModel.signup();
                         //   if (viewModel.errorMessage == null) {

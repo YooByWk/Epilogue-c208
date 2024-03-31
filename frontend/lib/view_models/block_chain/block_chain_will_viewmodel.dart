@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 import 'package:frontend/services/user_service.dart';
 import 'package:frontend/view_models/auth_view_models/user_viewmodel.dart';
+import 'package:frontend/view_models/will_view_models/my_will_viewmodel.dart';
 import 'package:web3dart/web3dart.dart';
 import 'package:crypto/crypto.dart';
 import 'package:provider/provider.dart';
@@ -151,10 +152,37 @@ class BlockChainWillViewModel extends ChangeNotifier {
     // 다운로드 된 파일 해시를 불러온다.
     var hashvalue = await AudioHashViewModel().createAudioHash();
     // 해당 해시와 유저 아이디를 담아서 params로 만든다.
-    final params = await [ hashvalue, userId];
+    final params =  [ hashvalue, userId];
     // 해당 params를 통해 함수를 실행한다.
     final res = await _model.callFunction('SearchByHash', params);
     // 결과를 반환한다.
     return res.toString();
+  }
+
+  Future<String> WillCheck () async {
+    // 1. 다운받는다 - 임시 경로 - 했다
+    // 2. 다운받은 파일의 해시를 구한다.
+    await MyWillViewModel().fetchMyWillData();
+
+    const path = '/data/user/0/com.example.frontend/cache/downloadedwill.mp4';
+    var file = File(path);
+    if (!file.existsSync()) {
+      throw Exception('File does not exist: $path');
+    }
+    var bytes = await file.readAsBytes();
+    var  hash = sha256.convert(bytes);
+    debugPrint('오 ${await hash.toString()}');
+    
+    // 3. 해당 해시를 블록체인 이용해 SearchByHash를 실행한다.
+    final params = [hash.toString(), userId];
+    debugPrint('파라미터 들어가~');
+
+    final res = await _model.callFunction('SearchByHash', params);
+    debugPrint('결과나오는곳');
+    debugPrint('결과: ${res[0].toString()}');
+    return res[0].toString();
+    // 4. 결과를 반환한다.
+
+    // 뭔가 되겠지?
   }
 }
