@@ -38,6 +38,7 @@ class MemorialDetailViewModel extends ChangeNotifier {
     } else {
       _memorialDetailModel = result['memorialDetailModel'];
       _isLoading = false;
+      notifyListeners();
     }
   }
 

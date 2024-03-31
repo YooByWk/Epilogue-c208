@@ -4,16 +4,16 @@ import 'package:frontend/widgets/common_text_widget.dart';
 import 'package:frontend/main.dart';
 // 메모리얼 프로필 이미지
 class MemorialProfileImage extends StatelessWidget {
-  final String imagePath;
+  final String? imagePath;
 
-  MemorialProfileImage({required this.imagePath});
+  MemorialProfileImage({this.imagePath});
 
   @override
   Widget build(BuildContext context) {
     debugPrint('imagePath : $imagePath');
     return CircleAvatar(
       radius: 50.0,
-      backgroundImage: NetworkImage(imagePath),
+      backgroundImage: NetworkImage(imagePath!),
     );
   
   }

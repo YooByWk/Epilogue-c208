@@ -16,12 +16,13 @@ class MemorialScreen extends StatefulWidget {
 
 class _MemorialScreenState extends State<MemorialScreen> {
   final ScrollController _scrollController = ScrollController();
-  final MemorialListViewModel _viewModel = MemorialListViewModel();
+  late final MemorialListViewModel _viewModel;
 
   @override
   void initState() {
     super.initState();
-    // _scrollController.addListener(_onScroll);
+    _viewModel = MemorialListViewModel();
+    // _scrollController.addListener(_onScroll);s
     _viewModel.getLists();
   }
 
