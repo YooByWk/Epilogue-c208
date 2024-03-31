@@ -25,17 +25,17 @@ class PhotoTabCard extends StatelessWidget {
             builder: (context) => Container(
               height: MediaQuery.of(context).size.height * 0.1,
               width: MediaQuery.of(context).size.width * 0.1,
-              // child: Material(
-              //   color: Colors.transparent,
-              //   child: Container(
-              //     decoration: BoxDecoration(
-              //       image: DecorationImage(
-              //         image: NetworkImage('https://epilogue-grave.s3.ap-northeast-2.amazonaws.com/'),
-              //         fit: BoxFit.scaleDown,
-              //       ),
-              //     ),
-              //   ),
-              // ),
+              child: Material(
+                color: Colors.transparent,
+                child: Container(
+                  decoration: BoxDecoration(
+                    image: DecorationImage(
+                      image: NetworkImage(photoPath),
+                      fit: BoxFit.scaleDown,
+                    ),
+                  ),
+                ),
+              ),
             ),
           );
           Overlay.of(context).insert(overlayEntry!);
@@ -43,8 +43,8 @@ class PhotoTabCard extends StatelessWidget {
         onLongPressEnd: (details) {
           overlayEntry?.remove();
         },
-        child: Text('흠냥'),
-        // Image.network('https://epilogue-grave.s3.ap-northeast-2.amazonaws.com/')
+        child:
+        Image.network(photoPath),
       ),
     );
   }
@@ -63,7 +63,7 @@ class PhotoTab extends StatelessWidget {
               onNotification: (scrollInfo) {
                 if (scrollInfo.metrics.pixels >=
                     scrollInfo.metrics.maxScrollExtent - 50) {
-                  // viewModel.loadMore();
+                  viewModel.loadMore();
                 }
                 return false;
               },
@@ -103,6 +103,7 @@ class PhotoTab extends StatelessWidget {
                             key: ValueKey(index),
                             photoPath: viewModel.photos[index - 1].s3url,
                             index: index,
+                            // content: viewModel.photos[index - 1].,
                           );
                         }
                       },

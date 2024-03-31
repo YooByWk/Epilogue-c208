@@ -15,11 +15,11 @@ class LetterTab extends StatelessWidget {
                 onNotification: (scroll) {
                   if (scroll.metrics.pixels >=
                       scroll.metrics.maxScrollExtent - 50) {
-                    // viewModel.loadMore();
-                    debugPrint('더 불러오기');
+                    viewModel.loadMore();
+                    // debugPrint('더 불러오기');
                     // debugPrint(viewModel.letters.length.toString());
                   } else {
-                    debugPrint('스크롤 위치 ${scroll.metrics.pixels}');
+                    // debugPrint('스크롤 위치 ${scroll.metrics.pixels}');
                   }
                   return false;
                 },
@@ -33,35 +33,37 @@ class LetterTab extends StatelessWidget {
                         childAspectRatio: 2,
                       ),
                       delegate: SliverChildBuilderDelegate(
-                          (BuildContext context, int index) {
-                        if (index == 0) {
-                          return Card(
-                              child: InkWell(
-                            onTap: () => {
-                              Navigator.push(
-                                context,
-                                MaterialPageRoute(
-                                  builder: (context) => MemorialLetterUpload(),
-                                ),
-                              )
-                            },
-                            child: Column(
-                                children: [Icon(Icons.add), Text('편지 추가')]),
-                          ));
-                        } else {
-                          // debugPrint(viewModel.letters.length.toString());
-                          return Letter(
-                            key: ValueKey(index),
-                            title: '제목' + viewModel.letters[index].title,
-                            content: '내용' + viewModel.letters[index].content,
-                            date: viewModel.letters[index].date,
-                            userId: 'a' + viewModel.letters[index].userId,
-                            index: index,
-                          );
-                        }
-                      }
-                          // ,childCount: viewModel.letters.length,
-                          ),
+                        (BuildContext context, int index) {
+                          if (index == 0) {
+                            return Card(
+                                child: InkWell(
+                              onTap: () => {
+                                Navigator.push(
+                                  context,
+                                  MaterialPageRoute(
+                                    builder: (context) =>
+                                        MemorialLetterUpload(),
+                                  ),
+                                )
+                              },
+                              child: Column(
+                                  children: [Icon(Icons.add), Text('편지 추가')]),
+                            ));
+                          } else {
+                            return Letter(
+                              key: ValueKey(viewModel.letters[index - 1].memorialLetterSeq),
+                              content:
+                                  (viewModel.letters[index - 1].content != null)
+                                      ? viewModel.letters[index - 1].content
+                                      : '',
+                              date: viewModel.letters[index - 1].writtenDate,
+                              nickname: viewModel.letters[index - 1].nickname,
+                              // memorialLetterSeq: viewModel.letters[index - 1].memorialLetterSeq.toString(),
+                            );
+                          }
+                        },
+                        childCount: viewModel.letters.length + 1,
+                      ),
                     )
                   ],
                 ));
@@ -71,19 +73,17 @@ class LetterTab extends StatelessWidget {
 }
 
 class Letter extends StatelessWidget {
-  final String title;
-  final String content;
-  final DateTime date;
-  final String userId;
-  final int index;
+  final String? nickname;
+  final String? content;
+  final String date;
+  // final int memorialLetterSeq;
 
   Letter({
     Key? key,
-    required this.title,
-    required this.content,
+    this.nickname,
+    this.content,
     required this.date,
-    required this.userId,
-    required this.index,
+    // required this.memorialLetterSeq,
   }) : super(key: key);
 
   @override
@@ -109,17 +109,16 @@ class Letter extends StatelessWidget {
               ),
             ),
           );
-          Overlay.of(context)!.insert(overlayEntry!);
+          Overlay.of(context).insert(overlayEntry!);
         },
         onLongPressEnd: (details) {
           overlayEntry?.remove();
         },
         child: Column(
           children: [
-            Text(title),
-            Text(content),
-            Text(date.toString()),
-            Text(userId),
+            Text(nickname ?? ''),
+            Text(content ?? ''),
+            Text(date),
           ],
         ),
       ),

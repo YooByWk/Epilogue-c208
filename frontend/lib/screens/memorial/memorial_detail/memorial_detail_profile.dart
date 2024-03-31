@@ -26,7 +26,7 @@ class MemorialProfile extends StatelessWidget {
       Row(
         mainAxisAlignment: MainAxisAlignment.spaceEvenly,
         children: <Widget>[
-          MemorialProfileImage(imagePath: 'https://epilogue-grave.s3.ap-northeast-2.amazonaws.com/'),
+          // MemorialProfileImage(imagePath: viewModel.memorialDetailModel!.graveImg),
           // Text('프로필 이미지'),
           Column(children: <Widget>[
             CommonText(

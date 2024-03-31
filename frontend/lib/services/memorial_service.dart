@@ -6,6 +6,7 @@ import 'package:dio/dio.dart' as Dio;
 import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:flutter/material.dart';
 import 'package:frontend/models/memorial/memorial_grave_model.dart';
+import 'package:frontend/models/memorial/memorial_letter_list_model.dart';
 import 'package:frontend/models/memorial/memorial_photo_list_model.dart';
 import 'package:frontend/models/memorial_detail_model.dart';
 import 'package:frontend/models/memorial_letter_upload_model.dart';
@@ -41,7 +42,7 @@ class MemorialService {
         // final Map<String, dynamic> responseData = response.data;
 
         List<MemorialGraveModel> favoriteMemorialList = [];
-        if (response.data['favoriteMemorialList'] != []) {
+        if (response.data['favoriteMemorialList'] != null) {
           for (var item in response.data['favoriteMemorialList']) {
             favoriteMemorialList.add(
               MemorialGraveModel.fromJson(item),
@@ -136,6 +137,36 @@ class MemorialService {
     }
   }
 
+  ////////////////// 추모관 사진 리스트 ///////////////////////
+  Future<Map<String, dynamic>> photoList({required int lastPhotoSeq}) async {
+    String? memorialSeq = await _storage.read(key: 'graveSeq');
+
+    try {
+      Dio.Response response = await _dio.get(
+        '$baseUrl/api/memorial/photo-list/$memorialSeq/$lastPhotoSeq',
+      );
+
+      if (response.statusCode == 200) {
+        List<MemorialPhotoListModel> photoList = [];
+        if (response.data['memorialPhotoDtoList'] != []) {
+          for (var item in response.data['memorialPhotoDtoList']) {
+            photoList.add(
+              MemorialPhotoListModel.fromJson(item),
+            );
+          }
+        }
+
+        String count = response.data['count'].toString();
+
+        return {'success': true, 'photoList': photoList, 'count': count};
+      } else {
+        return {'success': false, 'statusCode': response.statusCode};
+      }
+    } on Dio.DioError catch (e) {
+      return {'success': false, 'statusCode': e.response?.statusCode};
+    }
+  }
+
 ////////////////// 추모관 편지 업로드 ///////////////////////
   Future<Map<String, dynamic>> letterUpload(
       LetterUploadModel letterUploadModel) async {
@@ -148,6 +179,37 @@ class MemorialService {
 
       if (response.statusCode == 200) {
         return {'success': true};
+      } else {
+        return {'success': false, 'statusCode': response.statusCode};
+      }
+    } on Dio.DioError catch (e) {
+      return {'success': false, 'statusCode': e.response?.statusCode};
+    }
+  }
+
+  ////////////////// 추모관 편지 리스트 ///////////////////////
+  Future<Map<String, dynamic>> letterList({required int lastLetterSeq}) async {
+    String? memorialSeq = await _storage.read(key: 'graveSeq');
+    // debugPrint('$lastLetterSeq');
+    try {
+      Dio.Response response = await _dio.get(
+        '$baseUrl/api/memorial/letter-list/$memorialSeq/$lastLetterSeq',
+      );
+
+      if (response.statusCode == 200) {
+        List<MemorialLetterListModel> letterList = [];
+        if (response.data['memorialLetterDtoList'] != []) {
+          for (var item in response.data['memorialLetterDtoList']) {
+            letterList.add(
+              MemorialLetterListModel.fromJson(item),
+            );
+          }
+        }
+
+        String count = response.data['count'].toString();
+        // debugPrint(count);
+        // debugPrint('$letterList');
+        return {'success': true, 'letterList': letterList, 'count': count};
       } else {
         return {'success': false, 'statusCode': response.statusCode};
       }

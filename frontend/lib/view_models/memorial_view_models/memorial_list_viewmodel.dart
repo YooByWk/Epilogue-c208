@@ -3,20 +3,11 @@ import 'package:frontend/models/memorial/memorial_grave_model.dart';
 import 'package:frontend/services/memorial_service.dart';
 
 class MemorialListViewModel extends ChangeNotifier {
-  // int _nextItem = 0;
+
   MemorialListViewModel() {
-    // loadInitialData();
     getLists();
   }
-  // void loadMore() {
-  //   // Add more items to the list
-  //     debugPrint('Added item $_nextItem');
-  //   for (int i = 0; i < 20; i++) {
-  //     _memorialCards.add('assets/images/ameno.jpg');
-  //     _nextItem++;
-  //   }
-  //   notifyListeners(); // Notify listeners to update the UI
-  // }
+
   final MemorialService _memorialService = MemorialService();
   List<MemorialGraveModel> _favoriteMemorialList = [];
   List<MemorialGraveModel> _memorialList = [];
@@ -51,7 +42,7 @@ class MemorialListViewModel extends ChangeNotifier {
       _favoriteMemorialList = result['favoriteMemorialList'];
       _memorialList = result['memorialList'];
     }
-
+    debugPrint('$_memorialList');
     _isLoading = false;
     notifyListeners();
   }
