@@ -4,7 +4,8 @@ import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:frontend/models/memorial/memorial_photo_list_model.dart';
-import 'package:frontend/models/memorial/memorial_photo_model.dart';
+import 'package:frontend/models/memorial/memorial_photo_detail_model.dart';
+import 'package:frontend/models/memorial/memorial_photo_upload_model.dart';
 import 'package:frontend/services/memorial_service.dart';
 
 class PhotoTabViewModel extends ChangeNotifier {
@@ -20,7 +21,7 @@ class PhotoTabViewModel extends ChangeNotifier {
 
   List<MemorialPhotoListModel> get photos => _photos;
 
-  MemorialPhotoModel _photoData = MemorialPhotoModel(
+  MemorialPhotoUploadModel _photoData = MemorialPhotoUploadModel(
     photoFile: null,
     content: null,
   );
@@ -96,7 +97,7 @@ class PhotoTabViewModel extends ChangeNotifier {
 
 
   void setFile(File value) {
-    _photoData = MemorialPhotoModel(
+    _photoData = MemorialPhotoUploadModel(
       photoFile: value,
       content: _photoData.content,
     );
@@ -104,7 +105,7 @@ class PhotoTabViewModel extends ChangeNotifier {
   }
 
   void setContent(String value) {
-    _photoData = MemorialPhotoModel(
+    _photoData = MemorialPhotoUploadModel(
       photoFile: _photoData.photoFile,
       content: value,
     );
@@ -131,7 +132,6 @@ class PhotoTabViewModel extends ChangeNotifier {
     }
     notifyListeners();
   }
-
 }
 
 

@@ -1,10 +1,10 @@
 import 'dart:io';
 
-class MemorialPhotoModel {
+class MemorialPhotoUploadModel {
   File? photoFile;
   String? content;
 
-  MemorialPhotoModel({
+  MemorialPhotoUploadModel({
     this.photoFile,
     this.content,
   });

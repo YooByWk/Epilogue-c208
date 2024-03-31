@@ -9,6 +9,7 @@ import 'package:frontend/view_models/memorial_view_models/memorial_detail_letter
 import 'package:frontend/view_models/memorial_view_models/memorial_detail_phototab_viewmodel.dart';
 import 'package:frontend/view_models/memorial_view_models/memorial_detail_videotab_viewmodel.dart';
 import 'package:frontend/view_models/block_chain/block_chain_will_viewmodel.dart';
+import 'package:frontend/view_models/memorial_view_models/memorial_photo_detail_viewmodel.dart';
 import 'package:frontend/view_models/will_view_models/additional_viewmodel.dart';
 import 'package:frontend/view_models/will_view_models/memorial_name_picture_viewmodel.dart';
 import 'package:frontend/view_models/will_view_models/memorial_use_viewmodel.dart';
@@ -42,6 +43,7 @@ List<ChangeNotifierProvider> providers = [
   ChangeNotifierProvider(create: (context) => MemorialListViewModel()),
   ChangeNotifierProvider(create: (context) => MemorialDetailViewModel()),
   ChangeNotifierProvider(create: (context) => BlockChainWillViewModel()),
+  ChangeNotifierProvider(create: (context) => MemorialPhotoDetailViewModel()),
   // ChangeNotifierProvider(create :(context) => RecordingViewModel())
 ];
 

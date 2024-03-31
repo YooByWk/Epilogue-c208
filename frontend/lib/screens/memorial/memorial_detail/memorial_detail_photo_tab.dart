@@ -1,17 +1,23 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
+import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 import 'package:frontend/screens/memorial/memorial_photo_upload.dart';
 import 'package:frontend/view_models/memorial_view_models/memorial_detail_phototab_viewmodel.dart';
 import 'package:provider/provider.dart';
 
 class PhotoTabCard extends StatelessWidget {
+  final _storage = FlutterSecureStorage();
+
   final String photoPath;
   final int index;
+  final int photoSeq;
 
   PhotoTabCard({
     Key? key,
     required this.photoPath,
     required this.index,
+    required this.photoSeq,
+
   }) : super(key: key);
 
   @override
@@ -20,6 +26,13 @@ class PhotoTabCard extends StatelessWidget {
 
     return Card(
       child: GestureDetector(
+        // 카드 누를 때 storage에 저장해서 api 요청에 사용할 거에용~
+        onTap: () {
+          _storage.write(key: 'photoSeq', value: photoSeq.toString());
+          Navigator.pushNamed(context, '/memorialPhotoDetail', arguments: {
+            'index': photoSeq,
+          });
+        },
         onLongPress: () {
           overlayEntry = OverlayEntry(
             builder: (context) => Container(
@@ -103,7 +116,7 @@ class PhotoTab extends StatelessWidget {
                             key: ValueKey(index),
                             photoPath: viewModel.photos[index - 1].s3url,
                             index: index,
-                            // content: viewModel.photos[index - 1].,
+                            photoSeq: viewModel.photos[index - 1].memorialPhotoSeq,
                           );
                         }
                       },

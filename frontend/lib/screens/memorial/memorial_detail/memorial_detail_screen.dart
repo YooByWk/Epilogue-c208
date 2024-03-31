@@ -7,21 +7,17 @@ import 'package:frontend/view_models/memorial_view_models/memorial_detail_viewmo
 import 'package:provider/provider.dart';
 
 class MemorialDetailScreen extends StatelessWidget {
-  const MemorialDetailScreen({super.key});
+  const MemorialDetailScreen({Key? key});
 
   @override
   Widget build(BuildContext context) {
     return ChangeNotifierProvider(
-        create: (context) => MemorialDetailViewModel(),
-        child: Consumer<MemorialDetailViewModel>(
-            builder: (context, viewModel, child) {
-          final args = ModalRoute.of(context)!.settings.arguments
-              as Map<String, dynamic>?;
+      create: (context) => MemorialDetailViewModel(),
+      child: Consumer<MemorialDetailViewModel>(
+        builder: (context, viewModel, child) {
+          final args = ModalRoute.of(context)!.settings.arguments as Map<String, dynamic>?;
           final index = args?['index'] ?? '인덱스';
           final memorialName = args?['memorialName'] ?? '유저이름';
-
-          // debugPrint(ModalRoute.of(context)!.settings.arguments.toString() +
-          //     '추모관 상세 페이지입니다.');
 
           return Scaffold(
             appBar: MemorialAppBar(
@@ -31,27 +27,31 @@ class MemorialDetailScreen extends StatelessWidget {
               onSelected: (value) {
                 debugPrint('$value 선택됨');
               },
-              // screenName: '추모관상세',
             ),
-            body: NestedScrollView(
-              headerSliverBuilder:
-                  (BuildContext context, bool innerBoxIsScrolled) {
+            body: viewModel.isLoading ?
+            Center(
+              child: CircularProgressIndicator(),
+            ) :
+            NestedScrollView(
+              headerSliverBuilder: (BuildContext context, bool innerBoxIsScrolled) {
                 return <Widget>[
                   SliverList(
-                      delegate: SliverChildListDelegate([
-                    Container(
-                        // height: MediaQuery.of(context).size.height * 0.1,
-                        decoration: BoxDecoration(),
+                    delegate: SliverChildListDelegate([
+                      Container(
                         child: MemorialProfile(
                           viewModel: viewModel,
-                        )),
-                  ]))
+                        ),
+                      ),
+                    ]),
+                  )
                 ];
               },
               body: MemorialDetailTabBar(),
             ),
           );
-        }));
+        },
+      ),
+    );
   }
 }
 

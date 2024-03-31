@@ -7,6 +7,7 @@ import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:flutter/material.dart';
 import 'package:frontend/models/memorial/memorial_grave_model.dart';
 import 'package:frontend/models/memorial/memorial_letter_list_model.dart';
+import 'package:frontend/models/memorial/memorial_photo_detail_model.dart';
 import 'package:frontend/models/memorial/memorial_photo_list_model.dart';
 import 'package:frontend/models/memorial/memorial_video_list_model.dart';
 import 'package:frontend/models/memorial_detail_model.dart';
@@ -160,6 +161,29 @@ class MemorialService {
         String count = response.data['count'].toString();
 
         return {'success': true, 'photoList': photoList, 'count': count};
+      } else {
+        return {'success': false, 'statusCode': response.statusCode};
+      }
+    } on Dio.DioError catch (e) {
+      return {'success': false, 'statusCode': e.response?.statusCode};
+    }
+  }
+
+  ////////////////// 추모관 사진 디테일 ///////////////////////
+  Future<Map<String, dynamic>> photoDetail() async {
+    String? memorialPhotoSeq = await _storage.read(key: 'photoSeq');
+
+    try {
+      Dio.Response response = await _dio.get(
+        '$baseUrl/api/memorial/photo/$memorialPhotoSeq',
+      );
+
+      if (response.statusCode == 200) {
+
+        MemorialPhotoDetailModel memorialPhotoDetailModel =
+        MemorialPhotoDetailModel.fromJson(response.data);
+
+        return {'success': true, 'memorialPhotoDetailModel': memorialPhotoDetailModel};
       } else {
         return {'success': false, 'statusCode': response.statusCode};
       }

@@ -3,6 +3,7 @@ import 'package:frontend/screens/block_chain_test.dart';
 import 'package:frontend/screens/login/login_screen.dart';
 import 'package:frontend/screens/login/mnemonic_recovery_screen.dart';
 import 'package:frontend/screens/memorial/memorial_detail/memorial_detail_screen.dart';
+import 'package:frontend/screens/memorial/memorial_detail/memorial_photo_detail.dart';
 import 'package:frontend/screens/memorial/memorial_main/memorial_screen.dart';
 import 'package:frontend/screens/main/main_screen.dart';
 import 'package:frontend/screens/letter/letter_screen.dart';
@@ -31,6 +32,11 @@ Route<dynamic> generateMainRoute(RouteSettings settings) {
     case '/memorialDetail':
       return MaterialPageRoute(
           builder: (context) => MemorialDetailScreen(),
+          settings: RouteSettings(arguments: settings.arguments));
+
+    case '/memorialPhotoDetail':
+      return MaterialPageRoute(
+          builder: (context) => MemorialPhotoDetailScreen(),
           settings: RouteSettings(arguments: settings.arguments));
 
     case '/blockChain':
