@@ -17,9 +17,17 @@ class MyWillViewModel extends ChangeNotifier {
   String? get graveImageAddress => _willModel.graveImageAddress;
   String? get willFileAddress => _willModel.willFileAddress;
 
-  Future<void> normalfetchData() async {
+  Future<void> initialize() async {
+    await normalfetchData();
+    debugPrint('실행중이니?');
+    debugPrint(_willModel.graveName?.toString() ?? 'null');
+  }
+
+
+  Future normalfetchData() async {
     _willModel = await _willService.getWillInfo();
     notifyListeners();
+    return '200';
   }
 
   Future<void> fetchMyWillData() async {

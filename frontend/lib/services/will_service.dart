@@ -35,6 +35,7 @@ class WillService {
   Future<MyWillModel> getWillInfo() async {
     try {
       Dio.Response res = await _dio.get('$baseUrl/api/myWill');
+      debugPrint(res.toString());
       MyWillModel willInfo = MyWillModel.fromJson(res.data);
       debugPrint(willInfo.willFileAddress.toString());
       return willInfo;
