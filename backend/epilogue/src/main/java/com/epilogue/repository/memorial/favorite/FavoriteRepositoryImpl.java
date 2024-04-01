@@ -20,4 +20,12 @@ public class FavoriteRepositoryImpl implements FavoriteRepositoryCustom {
                 .getResultList();
     }
 
+    @Override
+    public List<Favorite> findByLoginUserIdAndMemorialSeq(String loginUserId, int memorialSeq) {
+        return entityManager.createQuery("SELECT f FROM Favorite f WHERE f.user.userId = :loginUserId AND f.memorial.memorialSeq = :memorialSeq", Favorite.class)
+                .setParameter("loginUserId", loginUserId)
+                .setParameter("memorialSeq", memorialSeq)
+                .getResultList();
+    }
+
 }

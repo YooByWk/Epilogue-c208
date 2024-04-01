@@ -10,4 +10,6 @@ public interface FavoriteRepositoryCustom {
 
     public List<Favorite> findByUserId(String loginUserId);
 
+    public List<Favorite> findByLoginUserIdAndMemorialSeq(String loginUserId, int memorialSeq);
+
 }
