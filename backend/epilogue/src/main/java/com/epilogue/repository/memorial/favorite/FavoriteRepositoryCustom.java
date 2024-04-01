@@ -8,8 +8,6 @@ import java.util.List;
 @Repository
 public interface FavoriteRepositoryCustom {
 
-    public List<Favorite> findListById(int userSeq);
-
     public List<Favorite> findByUserId(String loginUserId);
 
 }
