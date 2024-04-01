@@ -14,10 +14,12 @@ import com.epilogue.repository.memorial.video.MemorialVideoRepository;
 import com.epilogue.repository.user.UserRepository;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.multipart.MultipartFile;
 
+import java.awt.print.Pageable;
 import java.sql.Timestamp;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
@@ -113,15 +115,78 @@ public class MemorialService {
         return dto;
     }
 
+//    public GraveResponseDto viewMemorial(int memorialSeq) {
+//        Optional<Memorial> memorial = memorialRepository.findById(memorialSeq);
+//        int userSeq = memorial.get().getUser().getUserSeq(); // 고인 식별키
+//
+//        // 고인의 사진 url 목록 불러오기 (최근순)
+//        List<MemorialPhoto> memorialPhotoList = memorialPhotoRepository.findAllByUserSeq(userSeq);
+//        // S3에 저장되어 있는 url 목록 불러오기
+//        List<MemorialPhotoDto> memorialPhotoDtoList = new ArrayList<>();
+//        for (MemorialPhoto photo : memorialPhotoList) {
+//            String S3url = awsS3Service.getPhotoFromS3(photo.getUniquePhotoUrl());
+//            MemorialPhotoDto memorialPhotoDto = MemorialPhotoDto.builder()
+//                    .memorialPhotoSeq(photo.getMemorialPhotoSeq())
+//                    .S3url(S3url)
+//                    .build();
+//            memorialPhotoDtoList.add(memorialPhotoDto);
+//        }
+//
+//        // 고인의 동영상 url 목록 불러오기 (최근순)
+//        List<MemorialVideo> memorialVideoList = memorialVideoRepository.findAllByUserSeq(userSeq);
+//        // S3에 저장되어 있는 url 목록 불러오기
+//        List<MemorialVideoDto> memorialVideoDtoList = new ArrayList<>();
+//        for (MemorialVideo video : memorialVideoList) {
+//            String S3url = awsS3Service.getVideoFromS3(video.getUniqueVideoUrl());
+//            MemorialVideoDto memorialVideoDto = MemorialVideoDto.builder()
+//                    .memorialVideoSeq(video.getMemorialVideoSeq())
+//                    .S3url(S3url)
+//                    .build();
+//            memorialVideoDtoList.add(memorialVideoDto);
+//        }
+//
+//        // 고인의 편지 목록 불러오기 (최근순)
+//        List<MemorialLetterDto> memorialLetterDtoList = new ArrayList<>();
+//        SimpleDateFormat sdf = new SimpleDateFormat("yyyy.MM.dd");
+//
+//        List<MemorialLetter> memorialLetterList = memorialLetterRepository.findAllByUserSeq(userSeq);
+//        for(MemorialLetter letter : memorialLetterList) {
+//            MemorialLetterDto memorialLetterDto = MemorialLetterDto.builder()
+//                    .memorialLetterSeq(letter.getMemorialLetterSeq())
+//                    .nickname(letter.getNickname())
+//                    .content(letter.getContent())
+//                    .writtenDate(sdf.format(letter.getWrittenDate()))
+//                    .build();
+//            memorialLetterDtoList.add(memorialLetterDto);
+//        }
+//
+//        GraveResponseDto graveResponseDto = GraveResponseDto.builder()
+//                .graveSeq(memorialSeq)
+//                .name(memorial.get().getUser().getName())
+//                .birth(memorial.get().getUser().getBirth())
+//                .goneDate(memorial.get().getGoneDate())
+//                .graveImg(awsS3Service.getGraveImageFromS3(memorial.get().getGraveImg()))
+//                .memorialPhotoList(memorialPhotoDtoList)
+//                .photoCount(memorialPhotoDtoList.size())
+//                .memorialVideoList(memorialVideoDtoList)
+//                .videoCount(memorialVideoDtoList.size())
+//                .memorialLetterList(memorialLetterDtoList)
+//                .letterCount(memorialLetterList.size())
+//                .build();
+//
+//        return graveResponseDto;
+//    }
+
     public GraveResponseDto viewMemorial(int memorialSeq) {
         Optional<Memorial> memorial = memorialRepository.findById(memorialSeq);
         int userSeq = memorial.get().getUser().getUserSeq(); // 고인 식별키
 
-        // 고인의 사진 url 목록 불러오기 (최근순)
-        List<MemorialPhoto> memorialPhotoList = memorialPhotoRepository.findAllByUserSeq(userSeq);
+        // 고인의 사진 url 목록 불러오기 (최근순 20개)
+        List<MemorialPhoto> memorialPhotoList20 = memorialPhotoRepository.find20ByUserSeq(userSeq);
+
         // S3에 저장되어 있는 url 목록 불러오기
         List<MemorialPhotoDto> memorialPhotoDtoList = new ArrayList<>();
-        for (MemorialPhoto photo : memorialPhotoList) {
+        for (MemorialPhoto photo : memorialPhotoList20) {
             String S3url = awsS3Service.getPhotoFromS3(photo.getUniquePhotoUrl());
             MemorialPhotoDto memorialPhotoDto = MemorialPhotoDto.builder()
                     .memorialPhotoSeq(photo.getMemorialPhotoSeq())
@@ -130,33 +195,14 @@ public class MemorialService {
             memorialPhotoDtoList.add(memorialPhotoDto);
         }
 
-        // 고인의 동영상 url 목록 불러오기 (최근순)
+        // 고인의 사진 url 목록 불러오기 (카운트용)
+        List<MemorialPhoto> memorialPhotoList = memorialPhotoRepository.findAllByUserSeq(userSeq);
+
+        // 고인의 동영상 url 목록 불러오기 (카운트용)
         List<MemorialVideo> memorialVideoList = memorialVideoRepository.findAllByUserSeq(userSeq);
-        // S3에 저장되어 있는 url 목록 불러오기
-        List<MemorialVideoDto> memorialVideoDtoList = new ArrayList<>();
-        for (MemorialVideo video : memorialVideoList) {
-            String S3url = awsS3Service.getVideoFromS3(video.getUniqueVideoUrl());
-            MemorialVideoDto memorialVideoDto = MemorialVideoDto.builder()
-                    .memorialVideoSeq(video.getMemorialVideoSeq())
-                    .S3url(S3url)
-                    .build();
-            memorialVideoDtoList.add(memorialVideoDto);
-        }
 
-        // 고인의 편지 목록 불러오기 (최근순)
-        List<MemorialLetterDto> memorialLetterDtoList = new ArrayList<>();
-        SimpleDateFormat sdf = new SimpleDateFormat("yyyy.MM.dd");
-
+        // 고인의 편지 목록 불러오기 (카운트용)
         List<MemorialLetter> memorialLetterList = memorialLetterRepository.findAllByUserSeq(userSeq);
-        for(MemorialLetter letter : memorialLetterList) {
-            MemorialLetterDto memorialLetterDto = MemorialLetterDto.builder()
-                    .memorialLetterSeq(letter.getMemorialLetterSeq())
-                    .nickname(letter.getNickname())
-                    .content(letter.getContent())
-                    .writtenDate(sdf.format(letter.getWrittenDate()))
-                    .build();
-            memorialLetterDtoList.add(memorialLetterDto);
-        }
 
         GraveResponseDto graveResponseDto = GraveResponseDto.builder()
                 .graveSeq(memorialSeq)
@@ -165,14 +211,66 @@ public class MemorialService {
                 .goneDate(memorial.get().getGoneDate())
                 .graveImg(awsS3Service.getGraveImageFromS3(memorial.get().getGraveImg()))
                 .memorialPhotoList(memorialPhotoDtoList)
-                .photoCount(memorialPhotoDtoList.size())
-                .memorialVideoList(memorialVideoDtoList)
-                .videoCount(memorialVideoDtoList.size())
-                .memorialLetterList(memorialLetterDtoList)
+                .photoCount(memorialPhotoList.size())
+                .videoCount(memorialVideoList.size())
                 .letterCount(memorialLetterList.size())
                 .build();
 
         return graveResponseDto;
+    }
+
+    public MemorialPhotoListResponseDto viewMemorialPhotoList(int memorialSeq, int lastPhotoSeq) {
+        List<MemorialPhotoDto> memorialPhotoDtoList = new ArrayList<>();
+
+        List<MemorialPhoto> memorialPhotoList = new ArrayList<>();
+        // 사진 처음 로드시
+        if(lastPhotoSeq == 0) {
+            memorialPhotoList = memorialPhotoRepository.find20ByMemorialSeq(memorialSeq);
+        }
+        // 추가 로드시 (lastPhotoSeq 있는 경우)
+        else {
+            memorialPhotoList = memorialPhotoRepository.find20ByMemorialSeqAndLastPhotoSeq(memorialSeq, lastPhotoSeq);
+        }
+
+        for(MemorialPhoto photo : memorialPhotoList) {
+            MemorialPhotoDto memorialPhotoDto = MemorialPhotoDto.builder()
+                    .memorialPhotoSeq(photo.getMemorialPhotoSeq())
+                    .S3url(awsS3Service.getPhotoFromS3(photo.getUniquePhotoUrl()))
+                    .build();
+            memorialPhotoDtoList.add(memorialPhotoDto);
+        }
+
+        return MemorialPhotoListResponseDto.builder()
+                .memorialPhotoDtoList(memorialPhotoDtoList)
+                .count(memorialPhotoRepository.findAllByMemorialSeq(memorialSeq).size())
+                .build();
+    }
+
+    public MemorialVideoListResponseDto viewMemorialVideoList(int memorialSeq, int lastVideoSeq) {
+        List<MemorialVideoDto> memorialVideoDtoList = new ArrayList<>();
+
+        List<MemorialVideo> memorialVideoList = new ArrayList<>();
+        // 동영상 처음 로드시
+        if(lastVideoSeq == 0) {
+            memorialVideoList = memorialVideoRepository.find20ByMemorialSeq(memorialSeq);
+        }
+        // 추가 로드시 (lastVideoSeq 있는 경우)
+        else {
+            memorialVideoList = memorialVideoRepository.find20ByMemorialSeqAndLastVideoSeq(memorialSeq, lastVideoSeq);
+        }
+
+        for(MemorialVideo video : memorialVideoList) {
+            MemorialVideoDto memorialVideoDto = MemorialVideoDto.builder()
+                    .memorialVideoSeq(video.getMemorialVideoSeq())
+                    .S3url(awsS3Service.getVideoFromS3(video.getUniqueVideoUrl()))
+                    .build();
+            memorialVideoDtoList.add(memorialVideoDto);
+        }
+
+        return MemorialVideoListResponseDto.builder()
+                .memorialVideoDtoList(memorialVideoDtoList)
+                .count(memorialVideoRepository.findAllByMemorialSeq(memorialSeq).size())
+                .build();
     }
 
     public void saveMedia(String loginUserId, int memorialSeq, MultipartFile multipartFile, MemorialMediaRequestDto memorialMediaRequestDto) throws Exception {
@@ -240,21 +338,31 @@ public class MemorialService {
         return memorialMediaResponseDto;
     }
 
-    public List<MemorialLetterDto> viewMemorialLetterList(int memorialSeq) {
+    public MemorialLetterListResponseDto viewMemorialLetterList(int memorialSeq, int lastLetterSeq) {
         List<MemorialLetterDto> memorialLetterDtoList = new ArrayList<>();
 
         SimpleDateFormat sdf = new SimpleDateFormat("yyyy.MM.dd");
+        List<MemorialLetter> memorialLetterList = new ArrayList<>();
 
-        List<MemorialLetter> memorialLetterList = memorialLetterRepository.findAllByMemorialSeq(memorialSeq);
+        if(lastLetterSeq == 0) {
+            memorialLetterList = memorialLetterRepository.find20ByMemorialSeq(memorialSeq);
+        } else {
+            memorialLetterList = memorialLetterRepository.find20ByMemorialSeqAndLastLetterSeq(memorialSeq, lastLetterSeq);
+        }
+
         for (MemorialLetter letter : memorialLetterList) {
             MemorialLetterDto memorialLetterDto = MemorialLetterDto.builder()
+                    .memorialLetterSeq(letter.getMemorialLetterSeq())
                     .nickname(letter.getNickname())
                     .content(letter.getContent())
                     .writtenDate(sdf.format(letter.getWrittenDate()))
                     .build();
             memorialLetterDtoList.add(memorialLetterDto);
         }
-        return memorialLetterDtoList;
+        return MemorialLetterListResponseDto.builder()
+                .memorialLetterDtoList(memorialLetterDtoList)
+                .count(memorialLetterRepository.findAllByMemorialSeq(memorialSeq).size())
+                .build();
     }
 
     public void createMemorialLetter(int memorialSeq, MemorialLetterRequestDto memorialLetterRequestDto) {

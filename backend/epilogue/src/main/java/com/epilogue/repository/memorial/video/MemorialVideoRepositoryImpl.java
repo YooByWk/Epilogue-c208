@@ -13,8 +13,31 @@ public class MemorialVideoRepositoryImpl implements MemorialVideoRepositoryCusto
 
     @Override
     public List<MemorialVideo> findAllByUserSeq(int userSeq) {
-        return entityManager.createQuery("SELECT mv FROM MemorialVideo mv JOIN FETCH mv.memorial WHERE mv.memorial.user.userSeq = :userSeq ORDER BY mv.writtenDate DESC", MemorialVideo.class)
+//        return entityManager.createQuery("SELECT mv FROM MemorialVideo mv JOIN FETCH mv.memorial WHERE mv.memorial.user.userSeq = :userSeq ORDER BY mv.writtenDate DESC", MemorialVideo.class)
+        return entityManager.createQuery("SELECT mv FROM MemorialVideo mv JOIN FETCH mv.memorial WHERE mv.memorial.user.userSeq = :userSeq", MemorialVideo.class)
                 .setParameter("userSeq", userSeq)
+                .getResultList();
+    }
+
+    @Override
+    public List<MemorialVideo> find20ByMemorialSeq(int memorialSeq) {
+        return entityManager.createQuery("SELECT mv FROM MemorialVideo mv WHERE mv.memorial.memorialSeq = :memorialSeq ORDER BY mv.writtenDate DESC LIMIT 20", MemorialVideo.class)
+                .setParameter("memorialSeq", memorialSeq)
+                .getResultList();
+    }
+
+    @Override
+    public List<MemorialVideo> find20ByMemorialSeqAndLastVideoSeq(int memorialSeq, int lastVideoSeq) {
+        return entityManager.createQuery("SELECT mv FROM MemorialVideo mv WHERE mv.memorial.memorialSeq = :memorialSeq AND mv.memorialVideoSeq < :lastVideoSeq ORDER BY mv.writtenDate DESC LIMIT 20", MemorialVideo.class)
+                .setParameter("memorialSeq", memorialSeq)
+                .setParameter("lastVideoSeq", lastVideoSeq)
+                .getResultList();
+    }
+
+    @Override
+    public List<MemorialVideo> findAllByMemorialSeq(int memorialSeq) {
+        return entityManager.createQuery("SELECT mv FROM MemorialVideo mv WHERE mv.memorial.memorialSeq = :memorialSeq", MemorialVideo.class)
+                .setParameter("memorialSeq", memorialSeq)
                 .getResultList();
     }
 }
