@@ -25,8 +25,8 @@ public class Scheduler {
     private final UserRepository userRepository;
     private final AwsS3Service awsS3Service;
 
-    @Scheduled(cron = "0 0 0 * * *")    // 매일 00시 정각
-//    @Scheduled(cron = "0 * * * * *")    // 매분 (테스트용)
+//    @Scheduled(cron = "0 0 0 * * *")    // 매일 00시 정각
+    @Scheduled(cron = "0 * * * * *")    // 매분 (테스트용)
     public void deleteMemorial() {
 
         // 1년 전 날짜 구하기
