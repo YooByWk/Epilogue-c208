@@ -71,7 +71,7 @@ public class SecurityConfig {
                 );
 
         // (생성한 커스텀 필터, 필터를 넣을 위치)
-        http.addFilterAt(new LoginFilter(authenticationManager(authenticationConfiguration),redisTemplate ,jwtUtil), UsernamePasswordAuthenticationFilter.class);
+        http.addFilterAt(new LoginFilter("/api/login", authenticationManager(authenticationConfiguration),redisTemplate ,jwtUtil), UsernamePasswordAuthenticationFilter.class);
 
         // 경로별 인가 작업
         http.authorizeHttpRequests((auth) -> auth
