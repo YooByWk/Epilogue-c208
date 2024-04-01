@@ -224,7 +224,13 @@ public class MemorialService {
 
     public MemorialMediaResponseDto viewMemorialPhoto(int memorialPhotoSeq) {
         Optional<MemorialPhoto> memorialPhoto = memorialPhotoRepository.findById(memorialPhotoSeq);
-        MemorialMediaResponseDto memorialMediaResponseDto = MemorialMediaResponseDto.builder().mediaSeq(memorialPhoto.get().getMemorialPhotoSeq()).S3url(awsS3Service.getPhotoFromS3(memorialPhoto.get().getUniquePhotoUrl())).content(memorialPhoto.get().getContent()).reportCount(memorialPhoto.get().getReportCount()).build();
+        MemorialMediaResponseDto memorialMediaResponseDto =
+                MemorialMediaResponseDto.builder()
+                        .mediaSeq(memorialPhoto.get().getMemorialPhotoSeq())
+                        .S3url(awsS3Service.getPhotoFromS3(memorialPhoto.get().getUniquePhotoUrl()))
+                        .content(memorialPhoto.get().getContent())
+                        .reportCount(memorialPhoto.get().getReportCount())
+                        .build();
         return memorialMediaResponseDto;
     }
 
