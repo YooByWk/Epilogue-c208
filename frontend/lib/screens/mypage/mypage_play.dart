@@ -205,9 +205,11 @@ _Fn? getPauseResumeFn() {
           max: duration,
         ),
 if (progress != null)
-  Text(
-    '${_formatTime(progress.position.inMilliseconds)} / ${_formatTime(duration.toInt())}',
-    style: TextStyle(fontSize: 12),
+  Center(
+    child: Text(
+      '${_formatTime(progress.position.inMilliseconds)} / ${_formatTime(duration.toInt())}',
+      style: TextStyle(fontSize: 12),
+    ),
   ),
       ],
     );
