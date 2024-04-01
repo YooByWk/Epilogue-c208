@@ -30,7 +30,19 @@ class MyWillModel {
       graveImageAddress: json['graveImageAddress'],
       willFileAddress: json['willFileAddress'],
     );
-  } 
+  }
 
-  // 서버로 안보냅니다.
+  // UserModel 인스턴스에서 JSON으로의 변환 메서드
+  Map<String, dynamic> toJson() {
+    return {
+      'sustainCare': this.sustainCare,
+      'funeralType': this.funeralType,
+      'graveType': this.graveType,
+      'organDonation': this.organDonation,
+      'useMemorial': this.useMemorial,
+      'graveName': this.graveName,
+      'graveImageAddress': this.graveImageAddress,
+      'willFileAddress': this.willFileAddress,
+    };
+  }
 }
