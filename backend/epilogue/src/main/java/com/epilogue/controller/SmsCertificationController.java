@@ -2,6 +2,7 @@ package com.epilogue.controller;
 
 import com.epilogue.dto.request.user.SmsCertificationRequestDto;
 import com.epilogue.service.UserService;
+import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.Parameter;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.responses.ApiResponses;
@@ -21,6 +22,7 @@ import org.springframework.web.bind.annotation.RestController;
 public class SmsCertificationController {
     private final UserService userService;
 
+    @Operation(summary = "SMS 본인 인증 메세지 전송 API")
     @PostMapping("/send")
     @ApiResponse(responseCode = "200", description = "성공")
     public ResponseEntity<?> sendSms(@Parameter(description = "인증 요청") @RequestBody SmsCertificationRequestDto smsCertificationRequestDto) {
@@ -29,6 +31,7 @@ public class SmsCertificationController {
     }
 
     //인증번호 확인
+    @Operation(summary = "SMS 본인인증 인증번호 확인 API")
     @PostMapping("/confirm")
     @ApiResponses(value = {
             @ApiResponse(responseCode = "true", description = "인증 성공"),
