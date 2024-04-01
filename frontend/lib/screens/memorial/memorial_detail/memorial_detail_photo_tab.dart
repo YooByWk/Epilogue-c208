@@ -99,7 +99,6 @@ class PhotoTab extends StatelessWidget {
                                             builder: (context) =>
                                                 MemorialPhotoUpload(),
                                           ),
-
                                         )
                                       },
                                   child: Center(

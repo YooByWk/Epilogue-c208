@@ -8,8 +8,8 @@ class MemorialAppBar extends StatelessWidget implements PreferredSizeWidget {
   final String colour;
   final bool isMenu;
   final List<String>? items;
-  final Function(String)? onSelected;
-
+  final Function? onSelected;
+final String? value;
 
   MemorialAppBar(
     {required this.screenName,
@@ -17,6 +17,7 @@ class MemorialAppBar extends StatelessWidget implements PreferredSizeWidget {
     this.isMenu = false,
     this.items,
     this.onSelected,
+      this.value,
     }
     );
 
@@ -50,9 +51,13 @@ class MemorialAppBar extends StatelessWidget implements PreferredSizeWidget {
         if (isMenu && items != null && onSelected != null)
           QuickMenu(
             items: items!,
-            onSelected: onSelected!,
+            onSelected: clickHandler(value),
           ),
       ],
     );
+  }
+
+   clickHandler (v) {
+    debugPrint('sdfsdf${v}');
   }
 }

@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:frontend/main.dart';
 import 'package:frontend/screens/memorial/memorial_app_bar.dart';
 import 'package:frontend/screens/memorial/memorial_detail/memorial_detail_tabBar.dart';
 import 'package:frontend/screens/memorial/memorial_detail/memorial_detail_widgets.dart';
@@ -20,13 +21,9 @@ class MemorialDetailScreen extends StatelessWidget {
           final memorialName = args?['memorialName'] ?? '유저이름';
 
           return Scaffold(
-            appBar: MemorialAppBar(
-              screenName: '故 $memorialName 님의 추모관',
-              isMenu: true,
-              items: ['회원가입', '로그인', '로그아웃'],
-              onSelected: (value) {
-                debugPrint('$value 선택됨');
-              },
+            appBar: AppBar(
+              backgroundColor: themeColour2,
+              title: Text('故 ${viewModel.memorialDetailModel?.name}님의 추모관'),
             ),
             body: viewModel.isLoading ?
             Center(
