@@ -56,10 +56,6 @@ public class WillController {
     @ApiResponse(responseCode = "200", description = "성공")
     @PostMapping("/will")
     public ResponseEntity<Void> saveWill(@Parameter(description = "유언 열람 파일") @RequestPart MultipartFile multipartFile, Principal principal) {
-        // 블록체인 트랜잭션 생성 (해시, 녹음 파일 url, 초기 영수증)
-
-        // 블록체인 생성이 성공적으로 됐을 경우
-
         // 유언 파일 S3 저장 (원본 파일, 초기 영수증)
         awsS3Service.uploadWill(multipartFile, principal);
 
@@ -137,9 +133,9 @@ public class WillController {
             @ApiResponse(responseCode = "404", description = "인증 실패"),
     })
     @PostMapping("/will/certificate")
-    public ResponseEntity<?> certificateCode(@Parameter(description = "유언 인증 코드") @RequestBody String willCode) {
+    public ResponseEntity<?> certificateCode(@Parameter(description = "유언 인증 코드") String willCode) {
         Will will = willService.certificateCode(willCode);
-        if (will != null) return new ResponseEntity<>(will.getWillFileAddress(), HttpStatus.OK);
+        if (will != null) return new ResponseEntity<>(willService.getMyWill(will.getWillSeq()), HttpStatus.OK);
         return new ResponseEntity<>(HttpStatus.NOT_FOUND);
     }
 }

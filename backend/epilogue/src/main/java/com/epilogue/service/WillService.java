@@ -97,6 +97,12 @@ public class WillService {
                 .build();
     }
 
+    public String getMyWill(int willSeq) {
+        Will will = willRepository.findById(willSeq).get();
+        log.info("willSeq={}", will.getWillSeq());
+        return awsS3Service.getWillFromS3(will.getWillFileAddress());
+    }
+
     public void deleteMyWill(Principal principal) throws MalformedURLException, UnsupportedEncodingException {
         String loginUserId = principal.getName();
 

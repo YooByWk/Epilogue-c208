@@ -3,8 +3,11 @@ package com.epilogue.util;
 import com.epilogue.domain.memorial.Memorial;
 import com.epilogue.domain.user.User;
 import com.epilogue.domain.user.UserStatus;
+import com.epilogue.domain.viewer.Viewer;
+import com.epilogue.domain.witness.Witness;
 import com.epilogue.repository.memorial.MemorialRepository;
 import com.epilogue.repository.user.UserRepository;
+import com.epilogue.repository.viewer.ViewerRepository;
 import com.epilogue.service.AwsS3Service;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -23,11 +26,16 @@ import java.util.List;
 @RequiredArgsConstructor
 public class Scheduler {
     private final MemorialRepository memorialRepository;
+    private final ViewerRepository viewerRepository;
     private final UserRepository userRepository;
     private final AwsS3Service awsS3Service;
 
-//    @Scheduled(cron = "0 0 0 * * *")    // 매일 00시 정각
-    @Scheduled(cron = "0 * * * * *")    // 매분 (테스트용)
+    private final SmsCertificationUtil smsUtil;
+    private final EmailUtil emailUtil;
+
+    @Scheduled(cron = "0 0 0 * * *")    // 매일 00시 정각
+//    @Scheduled(cron = "0 * * * * *")    // 매분 (테스트용)
+
     public void deleteMemorial() {
 
         LocalDateTime currentTime = LocalDateTime.now();
@@ -43,6 +51,17 @@ public class Scheduler {
 
         for (User findUser : findUsers) {
             // 1. 유언장 전송 메소드 호출 (핸드폰 & 이메일)
+            List<Viewer> viewers  = viewerRepository.findAllByWillWillSeq(findUser.getWill().getWillSeq());
+
+            for (Viewer v : viewers) {
+                if (v.getViewerMobile() == null) continue;
+                smsUtil.sendWillLink(v.getViewerMobile(), findUser.getName(), v.getViewerName());
+            }
+
+            for (Viewer v : viewers) {
+                if (v.getViewerEmail() == null) continue;
+                emailUtil.sendWillLink(v.getViewerEmail(), findUser.getName(), v.getViewerName());
+            }
 
             // 2. 추모관 생성
             memorialRepository.save(Memorial.builder()

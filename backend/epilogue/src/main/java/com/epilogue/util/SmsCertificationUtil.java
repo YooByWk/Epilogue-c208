@@ -24,6 +24,20 @@ public class SmsCertificationUtil {
         this.messageService = NurigoApp.INSTANCE.initialize(apiKey, apiSecretKey, "https://api.coolsms.co.kr");
     }
 
+    public SingleMessageSentResponse sendWillLink(String to, String deadName, String viewerName) {
+        String applyLink = "http://j10c208.p.ssafy.io:80";
+        Message message = new Message();
+        // 발신번호 및 수신번호는 반드시 01012345678 형태로 입력되어야 합니다.
+        message.setFrom("01066041442");
+        message.setTo(to);
+        message.setText("[E:pilogue] 유언 열람 안내\n\n안녕하세요. E:pilogue 입니다.\n" +
+                viewerName + "님은 " + deadName + "님이 지정한 유언 열람인으로 " + deadName + "님의 유언 열람이 가능합니다.\n" +
+                "아래의 유언 열람 링크에서 " + deadName + "님의 유언을 확인해주세요.\n" +
+                "- 유언 열람 신청 링크 : " + applyLink);
+
+        return this.messageService.sendOne(new SingleMessageSendingRequest(message));
+    }
+
     // 단일 메시지 발송 예제
     public SingleMessageSentResponse sendSms(String to, String verificationCode) {
         Message message = new Message();
