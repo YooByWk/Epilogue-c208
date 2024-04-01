@@ -1,6 +1,7 @@
 package com.epilogue.util;
 
 import com.epilogue.dto.response.user.CustomUserDetails;
+import com.epilogue.repository.user.UserRepository;
 import jakarta.servlet.FilterChain;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServletRequest;
@@ -26,6 +27,13 @@ public class LoginFilter extends UsernamePasswordAuthenticationFilter {
     private final AuthenticationManager authenticationManager;
     private final StringRedisTemplate redisTemplate;
     private final JWTUtil jwtUtil;
+
+    public LoginFilter(String defaultFilterProcessUrl, AuthenticationManager authenticationManager, StringRedisTemplate redisTemplate, JWTUtil jwtUtil) {
+        super.setFilterProcessesUrl(defaultFilterProcessUrl);
+        this.authenticationManager = authenticationManager;
+        this.redisTemplate = redisTemplate;
+        this.jwtUtil = jwtUtil;
+    }
 
     @Override
     public Authentication attemptAuthentication(HttpServletRequest request, HttpServletResponse response) {
