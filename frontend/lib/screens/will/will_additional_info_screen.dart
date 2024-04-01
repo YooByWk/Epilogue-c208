@@ -241,14 +241,15 @@ class _WillAdditionalInfoScreenState extends State<WillAdditionalInfoScreen> {
                   viewModel.setOrganDonation(organDonationOption!);
                   viewModel.setAdditional().then((_) {
                     if (viewModel.errorMessage == null) {
-                      Navigator.pushNamed(context, '/home');
+                      Navigator.pushNamed(context, '/mypage');
                     } else {
                       if (viewModel.errorMessage != null) {
-                        ScaffoldMessenger.of(context).showSnackBar(
-                          SnackBar(
-                            content: Text(viewModel.errorMessage!),
-                          ),
-                        );
+                        Navigator.pushNamed(context, '/home');
+                        // ScaffoldMessenger.of(context).showSnackBar(
+                        //   SnackBar(
+                        //     content: Text(viewModel.errorMessage!),
+                        //   ),
+                        // );
                       }
                     }
                   });

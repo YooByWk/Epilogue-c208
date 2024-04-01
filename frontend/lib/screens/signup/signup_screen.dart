@@ -42,7 +42,7 @@ class SignUpScreen extends StatelessWidget {
                   InputFormWidget(
                       label: '생년월일',
                       textColor: Colors.white,
-                      hintText: '예시) 19950308',
+                      hintText: '예시) 1995.03.08',
                       hintTextStyle:
                           TextStyle(fontSize: 20, color: Colors.grey[400]),
                       contentPadding: EdgeInsets.only(bottom: 5, left: 100),

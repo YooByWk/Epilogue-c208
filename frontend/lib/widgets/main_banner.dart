@@ -20,7 +20,9 @@ class BannerItem {
 }
 
 class MainBannerWidget extends StatefulWidget {
-  MainBannerWidget({super.key});
+  final Function(int)? switchTab;
+
+  MainBannerWidget({super.key, this.switchTab});
 
   @override
   _MainBannerWidgetState createState() => _MainBannerWidgetState();
@@ -115,10 +117,8 @@ class _MainBannerWidgetState extends State<MainBannerWidget> {
                                           style: ElevatedButton.styleFrom(
                                             minimumSize: Size.fromHeight(50),
                                             shape: RoundedRectangleBorder(
-                                              borderRadius: BorderRadius.all(
-                                                Radius.circular(10)
-                                              )
-                                            ),
+                                                borderRadius: BorderRadius.all(
+                                                    Radius.circular(10))),
                                             backgroundColor: themeColour5,
                                             foregroundColor: Colors.white,
                                             textStyle: TextStyle(
@@ -137,6 +137,8 @@ class _MainBannerWidgetState extends State<MainBannerWidget> {
                                     );
                                   },
                                 );
+                              } else if (banner.routeName == '/memorial') {
+                                widget.switchTab?.call(1);
                               } else {
                                 Navigator.pushNamed(context, banner.routeName);
                               }

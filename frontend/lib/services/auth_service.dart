@@ -28,7 +28,7 @@ class AuthService {
   ///////////////////////// 로그인 //////////////////////////////////
   Future<Map<String, dynamic>> login(LoginModel loginModel) async {
     try {
-      Dio.Response response = await _dio.post('$baseUrl/login',
+      Dio.Response response = await _dio.post('$baseUrl/api/login',
           options: Dio.Options(
             contentType: Dio.Headers.formUrlEncodedContentType,
           ),
@@ -113,7 +113,7 @@ class AuthService {
   Future<void> mobileCertificationSend(String mobile) async {
     try {
       Dio.Response response = await _dio
-          .post('$baseUrl/sms-certification/send', data: {'phone': mobile});
+          .post('$baseUrl/api/sms-certification/send', data: {'phone': mobile});
     } on Dio.DioException catch (e) {
       debugPrint(e.toString());
     }
@@ -123,7 +123,7 @@ class AuthService {
       String mobile, String certificationNumber) async {
     try {
       Dio.Response response =
-          await _dio.post('$baseUrl/sms-certification/confirm', data: {
+          await _dio.post('$baseUrl/api/sms-certification/confirm', data: {
         'phone': mobile,
         'certificationNumber': certificationNumber,
       });
