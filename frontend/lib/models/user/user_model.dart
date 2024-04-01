@@ -1,7 +1,7 @@
 class UserModel {
   final String userId;
-  final String name;
-  final String mobile;
+  String name;
+  String mobile;
   final String birth;
 
   UserModel({

@@ -3,7 +3,6 @@ import 'package:dio/dio.dart' as Dio;
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 import 'package:frontend/models/user/user_model.dart';
 import 'package:flutter_dotenv/flutter_dotenv.dart';
-import 'package:flutter/material.dart';
 import 'package:frontend/services/auth_service.dart';
 
 class UserService {
@@ -42,7 +41,7 @@ class UserService {
   }
 
   // 정보 수정
-  Future<UserModel> modifyUserData(String name, String mobile) async {
+  Future<UserModel?> modifyUserData(String name, String mobile) async {
     try {
       Dio.Response response = await _dio.put(
         '$baseUrl/api/user',
@@ -51,9 +50,11 @@ class UserService {
           'mobile': mobile,
         },
       );
-      return UserModel.fromJson(response.data);
-    } catch (e) {
-      throw Exception('정보를 불러오는 데 실패했습니다.');
+      UserModel userData = UserModel.fromJson(response.data);
+      return userData;
+    } on Dio.DioException catch (e) {
+      print(e);
     }
+    return null;
   }
 }
