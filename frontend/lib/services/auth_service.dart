@@ -28,7 +28,7 @@ class AuthService {
   ///////////////////////// 로그인 //////////////////////////////////
   Future<Map<String, dynamic>> login(LoginModel loginModel) async {
     try {
-      Dio.Response response = await _dio.post('$baseUrl/login',
+      Dio.Response response = await _dio.post('$baseUrl/api/login',
           options: Dio.Options(
             contentType: Dio.Headers.formUrlEncodedContentType,
           ),

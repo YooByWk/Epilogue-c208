@@ -6,13 +6,12 @@ import 'package:frontend/screens/memorial/memorial_detail/memorial_detail_screen
 import 'package:frontend/screens/memorial/memorial_detail/memorial_photo_detail.dart';
 import 'package:frontend/screens/memorial/memorial_main/memorial_screen.dart';
 import 'package:frontend/screens/main/main_screen.dart';
-import 'package:frontend/screens/letter/letter_screen.dart';
+import 'package:frontend/screens/mypage/mypage_screen.dart';
 import 'package:frontend/screens/signup/mnemonic_show_screen.dart'; 
 final Map<String, WidgetBuilder> mainRoutes = {
   '/login': (context) => LoginScreen(),
   '/memorial': (context) => MemorialScreen(),
   '/home': (context) => MainScreen(),
-  '/letter': (context) => LetterScreen(),
 };
 
 Route<dynamic> generateMainRoute(RouteSettings settings) {
@@ -26,8 +25,8 @@ Route<dynamic> generateMainRoute(RouteSettings settings) {
     case '/home':
       return MaterialPageRoute(builder: (context) => MainScreen());
 
-    case '/letter':
-      return MaterialPageRoute(builder: (context) => LetterScreen());
+    case '/mypage':
+      return MaterialPageRoute(builder: (context) => MypageScreen());
 
     case '/memorialDetail':
       return MaterialPageRoute(

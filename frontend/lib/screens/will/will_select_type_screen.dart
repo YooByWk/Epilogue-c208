@@ -69,16 +69,12 @@ class _WillSelectTypeScreenState extends State<WillSelectTypeScreen> {
                   ),
                 ),
                 WillCommonButtonWidget(
-                  text: "영상 녹화",
-                  width: MediaQuery.of(context).size.width * 0.4,
-                  height: MediaQuery.of(context).size.height * 0.2,
-                  onPressed: () => Navigator.push(
-                    context,
-                    MaterialPageRoute(
-                      builder: (context) => WillWitnessScreen(),
-                    ),
-                  ),
-                ),
+                    text: "영상 녹화",
+                    fontColor: Colors.grey,
+                    backgroundColor: Colors.grey[400],
+                    width: MediaQuery.of(context).size.width * 0.4,
+                    height: MediaQuery.of(context).size.height * 0.2,
+                    onPressed: () => {}),
               ],
             ),
           ]),
