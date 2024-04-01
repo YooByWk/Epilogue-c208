@@ -2,6 +2,7 @@ package com.epilogue.controller;
 
 import com.epilogue.dto.request.user.LoginRequestDto;
 import com.epilogue.util.JWTUtil;
+import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.Parameter;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.tags.Tag;
@@ -21,6 +22,7 @@ public class LoginController {
 
     private final JWTUtil jwtUtil;
 
+    @Operation(summary = "로그인 API")
     @ApiResponse(responseCode = "200", description = "성공")
     @PostMapping("/login---------")
     public ResponseEntity<Void> join(HttpServletResponse response, @Parameter(description = "로그인 요청 DTO") @RequestBody LoginRequestDto loginRequestDto) {
