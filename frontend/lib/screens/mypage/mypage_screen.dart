@@ -1,14 +1,33 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/widgets.dart';
 import 'package:frontend/main.dart';
+import 'package:frontend/models/will/my_will_model.dart';
 import 'package:frontend/screens/mypage/mypage_modify_info_screen.dart';
 import 'package:frontend/screens/mypage/mypage_will_more_screen.dart';
+import 'package:frontend/screens/will/will_select_type_screen.dart';
 import 'package:frontend/view_models/auth_view_models/user_viewmodel.dart';
 import 'package:frontend/widgets/common_button.dart';
 import 'package:frontend/widgets/common_text_widget.dart';
+import 'package:frontend/widgets/will_notice.dart';
 import 'package:provider/provider.dart';
 import 'package:frontend/screens/login/login_screen.dart';
 
-class MypageScreen extends StatelessWidget {
+class MypageScreen extends StatefulWidget {
+  @override
+  _MypageScreenState createState() => _MypageScreenState();
+}
+
+
+class _MypageScreenState extends State<MypageScreen> {
+  late Future<MyWillModel?> _willInfoFuture;
+
+  @override
+  void initState() {
+    super.initState();
+    final viewModel = Provider.of<UserViewModel>(context, listen: false);
+    _willInfoFuture = viewModel.getWillInfo();
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -95,21 +114,83 @@ class MypageScreen extends StatelessWidget {
                       isBold: true,
                     ),
                     SizedBox(height: 20),
-                    CommonButtonWidget(
-                        height: 200,
-                        width: 200,
-                        borderColor: themeColour5,
-                        text: '더보기',
-                        fontSize: 24,
-                        textColor: Colors.black,
-                        imagePath: 'assets/images/willmore.png',
-                        onPressed: () {
-                          Navigator.push(
-                              context,
-                              MaterialPageRoute(
-                                  builder: (context) =>
-                                      MypageWillMoreScreen()));
-                        }),
+                    FutureBuilder(
+                      future: _willInfoFuture,
+                      builder : (context, snapshot) {
+                                      if (snapshot.connectionState == ConnectionState.waiting) {
+                  return CircularProgressIndicator(); // 로딩 표시
+                } 
+                     else {
+                  if (snapshot.data == null) {
+                    return CommonButtonWidget(
+                      height: 200,
+                      width: 200,
+                      borderColor: themeColour5,
+                      text: '생성하기',
+                      fontSize: 24,
+                      textColor: Colors.black,
+                      imagePath: 'assets/images/willmore.png',
+                      onPressed: () {
+                        showDialog(
+                                  context: context,
+                                  barrierDismissible: true,
+                                  builder: (BuildContext context) {
+                                    return AlertDialog(
+                                      backgroundColor: Colors.white,
+                                      content: WillNotice(),
+                                      insetPadding: const EdgeInsets.symmetric(
+                                        horizontal: 10,
+                                        vertical: 100,
+                                      ),
+                                      actions: [
+                                        ElevatedButton(
+                                          child: const Text('동의 후 생성하기'),
+                                          style: ElevatedButton.styleFrom(
+                                            minimumSize: Size.fromHeight(50),
+                                            shape: RoundedRectangleBorder(
+                                                borderRadius: BorderRadius.all(
+                                                    Radius.circular(10))),
+                                            backgroundColor: themeColour5,
+                                            foregroundColor: Colors.white,
+                                            textStyle: TextStyle(
+                                              fontSize: 24,
+                                            ),
+                                          ),
+                                          onPressed: () {
+                                            Navigator.push(
+                                                context,
+                                                MaterialPageRoute(
+                                                    builder: (context) =>
+                                                        WillSelectTypeScreen()));
+                                          },
+                                        ),
+                                      ],
+                                    );
+                                  },
+                                );
+                      },
+                    );
+                  } else {
+                    return CommonButtonWidget(
+                      height: 200,
+                      width: 200,
+                      borderColor: themeColour5,
+                      text: '더보기',
+                      fontSize: 24,
+                      textColor: Colors.black,
+                      imagePath: 'assets/images/willmore.png',
+                      onPressed: () {
+                        Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                            builder: (context) => MypageWillMoreScreen(),
+                          ),
+                        );
+                      },
+                    );
+                  }
+                      }},
+                    ),
                     SizedBox(height: 40),
                   ],
                 ),
