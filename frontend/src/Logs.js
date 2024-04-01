@@ -1,9 +1,9 @@
 
-import BlockChainHashHook from './hooks/blockChainHash';
+import BlockChainLogHook from './hooks/blockChainLog';
 
 
-function Will()  {
-    const blockChainRes = BlockChainHashHook();
+function Logs()  {
+    const blockChainRes = BlockChainLogHook();
     // console.log('여기여기',blockChainRes);
     // await blockChainRes.init();
     return(
@@ -28,7 +28,7 @@ function Will()  {
     )
 }
 
-export default Will;
+export default Logs;
 
 const cc = {
     display: 'flex',

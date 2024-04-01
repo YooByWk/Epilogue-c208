@@ -4,6 +4,8 @@ import Select from "./Select";
 import WillApplyWitness from './WillApplyWitness';
 import WillViewViewer from './WillViewViewer';
 import Will from './Will';
+import Logs from './Logs';
+
 
 function App() {
   return (
@@ -15,6 +17,7 @@ function App() {
       <Route path="/witness" element={<WillApplyWitness />} />
       <Route path='/viewer' element={<WillViewViewer />} />
       <Route path='/will' element={<Will />} />
+      <Route path='/logs' element={<Logs />} />
     </Routes>
     </BrowserRouter>
     </>

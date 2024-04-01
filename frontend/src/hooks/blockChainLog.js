@@ -5,7 +5,7 @@ import WillSystemABI from '../smartContract/will_system.json';
 
 
 
-export default function BlockChainHook () {
+export default function BlockChainLogHook () {
 
   const [web3, setWeb3] = useState(null);
   const [contract, setContract] = useState(null);
@@ -15,7 +15,7 @@ export default function BlockChainHook () {
   console.log(process.env.REACT_APP_RPC_URL);
   console.log(process.env.REACT_APP_CHAIN_ID);
   console.log('process.env.REACT_APP_CONTRACT_ADDRESS: ', process.env.REACT_APP_CONTRACT_ADDRESS);
-  console.log(WillSystemABI);
+  // console.log(WillSystemABI);
 
   useEffect(() => {
   async function init() {
@@ -33,7 +33,7 @@ export default function BlockChainHook () {
     } catch (e) {
       console.log(e);
     }
-
+    
 
 
 
@@ -41,5 +41,5 @@ export default function BlockChainHook () {
 
   init(); // 비동기 함수 호출
 }, []);
-  
+  return result
 } 
