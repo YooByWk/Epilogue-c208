@@ -27,9 +27,6 @@ public class SimpleJobConfiguration {
     }
     @Bean
     public Tasklet testTasklet(){
-        return ((contribution, chunkContext) -> {
-            log.info(">>>>> This is Step1");
-            return RepeatStatus.FINISHED;
-        });
+        return ((contribution, chunkContext) -> RepeatStatus.FINISHED);
     }
 }

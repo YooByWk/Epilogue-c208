@@ -80,20 +80,14 @@ public class MemorialController {
         if (principal != null) {
             String loginUserId = principal.getName();
 
-            log.info("============================================");
-            log.info("url = {}", multipartFile.getOriginalFilename());
-
             // url 형식 검사
             String[] urlCheck = multipartFile.getOriginalFilename().split("\\.");
-            log.info("url = {}", urlCheck[0] + " " + urlCheck[1]);
             if (urlCheck.length > 2) {
-                log.error("{ error = 파일명에 .을 사용할 수 없습니다. }");
                 return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
             }
 
             memorialService.saveMedia(loginUserId, memorialSeq, multipartFile, content);
         } else {
-            log.error("{ error = 회원가입 후 이용해주세요. }");
             return new ResponseEntity<>(HttpStatus.FORBIDDEN);
         }
         return new ResponseEntity<>(HttpStatus.OK);

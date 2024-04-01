@@ -105,7 +105,6 @@ public class AwsS3Service {
 
             amazonS3.putObject(photoBucketName, uniqueFileName, file.getInputStream(), metadata);
         } catch (IOException e) {
-            log.info("디지털 추모관 S3에 사진 저장 실패");
             e.printStackTrace();
         }
     }
@@ -126,7 +125,6 @@ public class AwsS3Service {
 
             amazonS3.putObject(videoBucketName, uniqueFileName, file.getInputStream(), metadata);
         } catch (IOException e) {
-            log.info("디지털 추모관 S3에 동영상 저장 실패");
             e.printStackTrace();
         }
     }

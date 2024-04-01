@@ -381,8 +381,6 @@ public class MemorialService {
                 .user(userRepository.findByUserId(loginUserId))
                 .memorial(memorialRepository.findById(memorialSeq).get())
                 .build();
-        log.info("======================================");
-        log.info("favorite/memorialSeq = {}", favorite.getMemorial().getMemorialSeq());
         favoriteRepository.save(favorite);
     }
 
@@ -422,7 +420,6 @@ public class MemorialService {
 
     public List<GraveDto> searchedMemorialList(SearchRequestDto searchRequestDto) {
         List<GraveDto> graveDtoList = new ArrayList<>();
-        System.out.println(searchRequestDto.getSearchWord());
         List<Memorial> memorialList = memorialRepository.findMemorialsByGraveNameOrUserName(searchRequestDto.getSearchWord());
 
         for (Memorial memorial : memorialList) {

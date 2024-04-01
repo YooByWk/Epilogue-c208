@@ -68,7 +68,7 @@ public class EmailUtil {
 
     private String getWillApplyMessage(String deadName, String witnessName, String willCode) {
         String certificationMessage = "";
-        String applyLink = "http://j10c208.p.ssafy.io/";
+        String applyLink = "http://j10c208.p.ssafy.io:80";
         certificationMessage += "<h1 style='text-align: center;'>[E:pilogue] 유언 열람 신청 안내";
         certificationMessage += "<h3 style='text-align: center;'>안녕하세요. E:pilogue 입니다.<br>" +
                 witnessName + "님은 " + deadName + "님의 유언 생성 증인으로 추후 " + deadName + "님이 별세하신 후 유언 열람 신청이 가능합니다.<br>" +

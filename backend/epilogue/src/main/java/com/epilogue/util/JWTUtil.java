@@ -43,7 +43,6 @@ public class JWTUtil {
                 .claim("role", role)
                 .issuedAt(new Date(System.currentTimeMillis())) // 토큰 발행시간
                 .expiration(new Date(System.currentTimeMillis() + 1209600000)) // 액세스토큰 만료기간 (1시간)
-//                .expiration(new Date(System.currentTimeMillis() + 60)) // 액세스토큰 만료기간 (1시간)
                 .signWith(secretKey) // 최종적으로 secretKey를 통해 토큰 암호화
                 .compact();
     }
