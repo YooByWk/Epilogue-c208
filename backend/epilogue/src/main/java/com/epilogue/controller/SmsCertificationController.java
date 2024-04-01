@@ -18,7 +18,7 @@ import org.springframework.web.bind.annotation.RestController;
 @Tag(name = "SmsCertificationController", description = "휴대폰 인증 API")
 @RestController
 @RequiredArgsConstructor
-@RequestMapping("/sms-certification")
+@RequestMapping("/api/sms-certification")
 public class SmsCertificationController {
     private final UserService userService;
 
