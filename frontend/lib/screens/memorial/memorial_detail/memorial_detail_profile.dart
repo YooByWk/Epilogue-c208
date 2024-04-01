@@ -30,19 +30,16 @@ class MemorialProfile extends StatelessWidget {
           // Text('프로필 이미지'),
           Column(children: <Widget>[
             CommonText(
-                text: viewModel.memorialDetailModel!.name,
-                fontSize: 20,
+                text: '故 ${viewModel.memorialDetailModel!.name}',
+                fontSize: 30,
                 isBold: true),
-            // Text('추모관 이름 : $userName'),
-            // Text(
-            //     '추모관 인덱스 : ${index != null ? (int.parse(index.toString()) + 1)
-            //         .toString() : index.toString()} ')
+      Text(
+          '${viewModel.memorialDetailModel!.birth} ~ ${viewModel.memorialDetailModel!.goneDate}',
+      style: TextStyle(fontSize: 16),),
           ])
         ],
       ),
       SizedBox(height: 20.0),
-      Text(
-          '${viewModel.memorialDetailModel!.birth} ~ ${viewModel.memorialDetailModel!.goneDate}'),
       Divider(
         height: 20.0,
         color: Colors.grey,
