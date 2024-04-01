@@ -8,6 +8,7 @@ import com.epilogue.dto.request.will.WillAdditionalRequestDto;
 import com.epilogue.dto.request.will.WillApplyRequestDto;
 import com.epilogue.dto.request.will.WillMemorialRequestDto;
 import com.epilogue.dto.response.WillResponseDto;
+import com.epilogue.dto.response.will.WillCertificateResponseDto;
 import com.epilogue.repository.user.UserRepository;
 import com.epilogue.repository.viewer.ViewerRepository;
 import com.epilogue.repository.will.WillRepository;
@@ -96,9 +97,14 @@ public class WillService {
                 .build();
     }
 
-    public String getMyWill(int willSeq) {
+    public WillCertificateResponseDto getMyWill(int willSeq) {
         Will will = willRepository.findById(willSeq).get();
-        return awsS3Service.getWillFromS3(will.getWillFileAddress());
+        User user = userRepository.findByWill(will);
+
+        return WillCertificateResponseDto.builder()
+                .willFileAddress(awsS3Service.getWillFromS3(will.getWillFileAddress()))
+                .userId(user.getUserId())
+                .build();
     }
 
     public void deleteMyWill(Principal principal) throws MalformedURLException, UnsupportedEncodingException {
