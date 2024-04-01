@@ -13,6 +13,7 @@ import org.springframework.stereotype.Component;
 
 import java.sql.Timestamp;
 import java.text.SimpleDateFormat;
+import java.time.LocalDateTime;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
@@ -29,23 +30,19 @@ public class Scheduler {
 //    @Scheduled(cron = "0 * * * * *")    // 매분 (테스트용)
     public void deleteMemorial() {
 
-        // 1년 전 날짜 구하기
-        Calendar cal = Calendar.getInstance();
-        cal.add(Calendar.YEAR, -1);
-        Date oneYearAgo = cal.getTime();
-        log.info("일년전 날짜 : {}", oneYearAgo);
+        LocalDateTime currentTime = LocalDateTime.now();
+        LocalDateTime oneYearAgo = currentTime.minusYears(1);
+        Timestamp timestampOneYearAgo = Timestamp.valueOf(oneYearAgo);
 
         // 1년 넘은 추모관 삭제
-//        SimpleDateFormat sdf = new SimpleDateFormat("yyyy.MM.dd");
-//        List<Memorial> memorialsOlderThanDate = memorialRepository.findMemorialsOlderThanDate(sdf.format(oneYearAgo));
-//        memorialRepository.deleteAll(memorialsOlderThanDate);
+        List<Memorial> memorialsOlderThanDate = memorialRepository.findMemorialsOlderThanDate(timestampOneYearAgo);
+        memorialRepository.deleteAll(memorialsOlderThanDate);
 
         // 사망했지만 유언을 보내지 않은 User 검색
         List<User> findUsers = userRepository.findByUserStatus(UserStatus.DEADANDNOTSEND);
 
         for (User findUser : findUsers) {
             // 1. 유언장 전송 메소드 호출 (핸드폰 & 이메일)
-
 
             // 2. 추모관 생성
             memorialRepository.save(Memorial.builder()
