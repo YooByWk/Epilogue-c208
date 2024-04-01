@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:frontend/main.dart';
 import 'package:frontend/screens/memorial/memorial_app_bar.dart';
 import 'package:frontend/view_models/memorial_view_models/memorial_photo_detail_viewmodel.dart';
 import 'package:frontend/widgets/popup_widget.dart';
@@ -14,13 +15,9 @@ class MemorialPhotoDetailScreen extends StatelessWidget {
       child: Consumer<MemorialPhotoDetailViewModel>(
         builder: (context, viewModel, child) {
           return Scaffold(
-              appBar: MemorialAppBar(
-                screenName: '세월은 가도 사진은 남는다',
-                isMenu: true,
-                items: ['회원가입', '로그인', '로그아웃'],
-                onSelected: (value) {
-                  debugPrint('$value 선택됨');
-                },
+              appBar: AppBar(
+                backgroundColor: themeColour2,
+                title: Text('세월은 가도 사진은 남는다.'),
               ),
               body: viewModel.isLoading
                   ? Center(

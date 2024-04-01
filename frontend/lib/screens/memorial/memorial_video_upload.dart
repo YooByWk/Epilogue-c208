@@ -39,14 +39,9 @@ class _MemorialVideoUploadState extends State<MemorialVideoUpload> {
         child:
         Consumer<VideoTabViewModel>(builder: (context, viewModel, child) {
           return Scaffold(
-            appBar: MemorialAppBar(
-              screenName: '추모관 영상 업로드',
-              isMenu: true,
-              items: ['로그아웃'],
-              onSelected: (value) {
-                debugPrint('$value 선택됨');
-              },
-              // screenName: '추모관상세',
+            appBar: AppBar(
+              backgroundColor: themeColour2,
+              title: Text('추모관 영상 업로드'),
             ),
             body: SingleChildScrollView(
               child: Column(

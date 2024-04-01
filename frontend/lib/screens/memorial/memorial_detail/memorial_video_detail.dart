@@ -2,6 +2,7 @@ import 'dart:typed_data';
 
 import 'package:chewie/chewie.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 import 'package:frontend/main.dart';
 import 'package:frontend/screens/memorial/memorial_app_bar.dart';
 import 'package:frontend/view_models/memorial_view_models/memorial_video_detail_viewmodel.dart';
@@ -10,8 +11,16 @@ import 'package:video_player/video_player.dart';
 import 'package:video_thumbnail/video_thumbnail.dart';
 import 'package:visibility_detector/visibility_detector.dart';
 
+final _storage = FlutterSecureStorage();
+bool isLogin = false;
 class MemorialVideoDetailScreen extends StatelessWidget {
   const MemorialVideoDetailScreen({Key? key});
+
+  Future<String?> getToken() async {
+    String? token = await _storage.read(key: 'token');
+    isLogin = token != null;
+    return token;
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -20,13 +29,9 @@ class MemorialVideoDetailScreen extends StatelessWidget {
       child: Consumer<MemorialVideoDetailViewModel>(
         builder: (context, viewModel, child) {
           return Scaffold(
-              appBar: MemorialAppBar(
-                screenName: '세월은 가도 영상은 남는다',
-                isMenu: true,
-                items: ['로그아웃'],
-                onSelected: (value) {
-                  // debugPrint('$value 선택됨');
-                },
+              appBar: AppBar(
+                backgroundColor: themeColour2,
+                title: const Text('세월은 가도 영상은 남는다.'),
               ),
               body: viewModel.isLoading
                   ? Center(
