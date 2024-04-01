@@ -17,6 +17,36 @@ public class EmailUtil {
 
     private final String SUBJECT = "[E:pilogue] 유언 열람 신청 메일입니다.";
 
+    public boolean sendWillLink(String email, String deadName, String viewerName) {
+        try {
+            MimeMessage message = javaMailSender.createMimeMessage();
+            MimeMessageHelper messageHelper = new MimeMessageHelper(message, true);
+
+            String htmlContent = getWillMessage(deadName, viewerName);
+
+            messageHelper.setTo(email);
+            messageHelper.setSubject(SUBJECT);
+            messageHelper.setText(htmlContent, true);
+
+            javaMailSender.send(message);
+        } catch (MessagingException exception) {
+            log.error(exception.getMessage());
+            return false;
+        }
+        return true;
+    }
+
+    private String getWillMessage(String deadName, String viewerName) {
+        String certificationMessage = "";
+        String willLink = "http://j10c208.p.ssafy.io:80";
+        certificationMessage += "<h1 style='text-align: center;'>[E:pilogue] 유언 열람 안내";
+        certificationMessage += "<h3 style='text-align: center;'>안녕하세요. E:pilogue 입니다.<br>" +
+                viewerName + "님은 " + deadName + "님이 지정한 유언 열람인으로 " + deadName + "님의 유언 열람이 가능합니다.<br>" +
+                "아래의 유언 열람 링크에서 " + deadName + "님의 유언을 확인해주세요.<br>" +
+                "유언 열람 신청 링크 : " + willLink + "</h3>";
+        return certificationMessage;
+    }
+
     public boolean sendWillApplyLink(String email, String deadName, String witnessName, String willCode) {
         try {
             MimeMessage message = javaMailSender.createMimeMessage();
@@ -33,7 +63,6 @@ public class EmailUtil {
             log.error(exception.getMessage());
             return false;
         }
-
         return true;
     }
 
