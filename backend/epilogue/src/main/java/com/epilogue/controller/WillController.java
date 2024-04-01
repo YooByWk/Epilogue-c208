@@ -49,6 +49,7 @@ public class WillController {
 
         // 증인 리스트 저장
         witnessService.saveWitness(will, witnessList, principal);
+
         return new ResponseEntity<>(HttpStatus.OK);
     }
 
