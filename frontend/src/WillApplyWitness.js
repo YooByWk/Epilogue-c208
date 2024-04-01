@@ -1,32 +1,43 @@
 import React, { useState } from 'react';
-// import axios from 'axios';
+import axios from 'axios';
 
 function WillApplyWitness() {
   const [deadName, setDeadName] = useState('');
   const [deadBirth, setDeadBirth] = useState('');
   const [witnessName, setWitnessName] = useState('');
-  const [witnessCode, setWitnessCode] = useState('');
+  const [willCode, setWillCode] = useState('');
+  const [uploadImgUrl, setUploadImgUrl] = useState('');
 
-//   const baseUrl = 'http://j10c208.p.ssafy.io';
+  const baseUrl = 'http://j10c208.p.ssafy.io';
 
-//   const applyWitness = async () => {
-//     try {
-//       const response = await axios.post(`${baseUrl}/api/will/apply`, {
-//         deadName,
-//         deadBirth,
-//         witnessName,
-//         witnessCode,
-//       });
+  const applyWitness = async () => {
+    try {
+      const response = await axios.post(`${baseUrl}/api/will/apply`, {
+        deadName,
+        deadBirth,
+        witnessName,
+        willCode,
+      });
 
-//       if (response.status === 200) {
-//         console.log('신청 성공:', response.data);
-//       } else {
-//         console.log('신청 오류:', response.status);
-//       }
-//     } catch (error) {
-//       console.error(error);
-//     }
-//   };
+      if (response.status === 200) {
+        console.log('신청 성공:', response.data);
+      } else {
+        console.log('신청 오류:', response.status);
+      }
+    } catch (error) {
+      console.error(error);
+    }
+  };
+  
+    const onchangeImageUpload = (e)=> {
+       const {files} = e.target;
+       const uploadFile = files[0];
+       const reader = new FileReader();
+       reader.readAsDataURL(uploadFile);
+       reader.onloadend = ()=> {
+       setUploadImgUrl(reader.result);
+    }
+  };
 
   return (
     <div>
@@ -53,10 +64,12 @@ function WillApplyWitness() {
       <input
         type="text"
         placeholder="증인 코드"
-        value={witnessCode}
-        onChange={(e) => setWitnessCode(e.target.value)}
+        value={willCode}
+        onChange={(e) => setWillCode(e.target.value)}
       />
-      {/* <button onClick={applyWitness}>신청하기</button> */}
+      <img src = {uploadImgUrl} img = "img"/>
+      <input type = "file" accept = "image/*" onChange = {onchangeImageUpload}/>
+      <button onClick={applyWitness}>신청하기</button>
     </div>
   );
 }
