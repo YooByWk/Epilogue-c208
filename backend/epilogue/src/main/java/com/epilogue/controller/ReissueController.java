@@ -2,6 +2,7 @@ package com.epilogue.controller;
 
 import com.epilogue.util.JWTUtil;
 import io.jsonwebtoken.ExpiredJwtException;
+import io.swagger.v3.oas.annotations.Operation;
 import jakarta.servlet.http.HttpServletResponse;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.redis.core.StringRedisTemplate;
@@ -19,6 +20,7 @@ public class ReissueController {
     private final JWTUtil jwtUtil;
     private final StringRedisTemplate redisTemplate;
 
+    @Operation(summary = "Refresh Token 재발급 API")
     @PostMapping("/reissue")
     public ResponseEntity<?> reissue(HttpServletResponse response) {
 
