@@ -36,7 +36,8 @@ class MemorialVideoDetailViewModel extends ChangeNotifier {
           _errorMessage = '알 수 없는 오류가 발생했습니다. 관리자에게 문의해주세요.';
       }
     } else {
-      _memorialVideoDetailModel = result['MemorialVideoDetailModel'];
+      // debugPrint(result['memorialVideoDetailModel'].toString());
+      _memorialVideoDetailModel = result['memorialVideoDetailModel'];
       _isLoading = false;
       notifyListeners();
     }

@@ -27,11 +27,13 @@ class MemorialGrid extends StatelessWidget {
               graveSeq: memorial.graveSeq,
               name: memorial.name,
               graveName: memorial.graveName,
+              viewModel: viewModel,
             );
           } else {
             final memorial = viewModel.memorialList[index - viewModel.favoriteMemorialList.length];
             return MemorialCard(
               // imagePath: memorial.graveImg,
+              viewModel: viewModel,
               graveSeq: memorial.graveSeq,
               name: memorial.name,
               graveName: memorial.graveName,

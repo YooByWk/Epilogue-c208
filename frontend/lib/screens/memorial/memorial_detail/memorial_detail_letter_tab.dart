@@ -133,7 +133,7 @@ class Letter extends StatelessWidget {
           mainAxisAlignment: MainAxisAlignment.center,
           crossAxisAlignment: CrossAxisAlignment.center,
           children: [
-            Text("To. ${nickname ?? ''}", style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold)),
+            Text("From. ${nickname ?? ''}", style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold)),
             Text(content ?? '', style: TextStyle(fontSize: 20)),
             Text(date, style: TextStyle(fontSize: 18)),
           ],
