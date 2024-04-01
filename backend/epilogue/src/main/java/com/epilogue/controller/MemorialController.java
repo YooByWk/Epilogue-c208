@@ -72,11 +72,11 @@ public class MemorialController {
     }
 
     @Operation(summary = "디지털 추모관 사진 및 영상 업로드 API")
-    @PostMapping(value = "/media/{memorialSeq}", consumes = {MediaType.APPLICATION_JSON_VALUE, MediaType.MULTIPART_FORM_DATA_VALUE})
+    @PostMapping(value = "/media/{memorialSeq}", consumes = {MediaType.MULTIPART_FORM_DATA_VALUE})
     @ApiResponse(responseCode = "200", description = "성공")
     @ApiResponse(responseCode = "400", description = "파일명 또는 파일 확장자 에러")
     @ApiResponse(responseCode = "403", description = "로그인 에러")
-    public ResponseEntity<Void> saveMedia(@Parameter(description = "디지털 추모관 식별키") @PathVariable int memorialSeq, @RequestPart(value = "multipartFile", required = true) MultipartFile multipartFile, @RequestPart(value = "memorialMediaRequestDto") MemorialMediaRequestDto memorialMediaRequestDto, Principal principal) throws Exception {
+    public ResponseEntity<Void> saveMedia(@Parameter(description = "디지털 추모관 식별키") @PathVariable int memorialSeq, @RequestPart(value = "multipartFile", required = true) MultipartFile multipartFile, @RequestPart(value = "content") String content, Principal principal) throws Exception {
         if (principal != null) {
             String loginUserId = principal.getName();
 
@@ -91,7 +91,7 @@ public class MemorialController {
                 return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
             }
 
-            memorialService.saveMedia(loginUserId, memorialSeq, multipartFile, memorialMediaRequestDto);
+            memorialService.saveMedia(loginUserId, memorialSeq, multipartFile, content);
         } else {
             log.error("{ error = 회원가입 후 이용해주세요. }");
             return new ResponseEntity<>(HttpStatus.FORBIDDEN);

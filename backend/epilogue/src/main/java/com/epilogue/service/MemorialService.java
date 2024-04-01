@@ -273,7 +273,7 @@ public class MemorialService {
                 .build();
     }
 
-    public void saveMedia(String loginUserId, int memorialSeq, MultipartFile multipartFile, MemorialMediaRequestDto memorialMediaRequestDto) throws Exception {
+    public void saveMedia(String loginUserId, int memorialSeq, MultipartFile multipartFile, String content) throws Exception {
         String[] url = multipartFile.getOriginalFilename().split("\\.");
         String fileType = url[1]; // 파일 확장자
         String originalFileName = multipartFile.getOriginalFilename(); // 원래 파일명
@@ -287,7 +287,7 @@ public class MemorialService {
                     .uniquePhotoUrl(uniqueFileName)
                     .memorial(memorialRepository.findById(memorialSeq).get())
                     .user(userRepository.findByUserId(loginUserId))
-                    .content(memorialMediaRequestDto.getContent())
+                    .content(content)
                     .writtenDate(new Timestamp(System.currentTimeMillis()))
                     .reportCount(0)
                     .build();
@@ -305,7 +305,7 @@ public class MemorialService {
                     .uniqueVideoUrl(uniqueFileName)
                     .memorial(memorialRepository.findById(memorialSeq).get())
                     .user(userRepository.findByUserId(loginUserId))
-                    .content(memorialMediaRequestDto.getContent())
+                    .content(content)
                     .writtenDate(new Timestamp(System.currentTimeMillis()))
                     .reportCount(0)
                     .build();
