@@ -122,6 +122,8 @@ class _MypageScreenState extends State<MypageScreen> {
                   return CircularProgressIndicator(); // 로딩 표시
                 } 
                      else {
+                      debugPrint(snapshot.data?.graveName.toString());
+                      
                   if (snapshot.data == null) {
                     return CommonButtonWidget(
                       height: 200,
@@ -184,7 +186,7 @@ class _MypageScreenState extends State<MypageScreen> {
                         Navigator.push(
                           context,
                           MaterialPageRoute(
-                            builder: (context) => MypageWillMoreScreen(),
+                            builder: (context) => MypageWillMoreScreen(path : snapshot.data!.willFileAddress.toString()),
                           ),
                         );
                       },

@@ -1,3 +1,5 @@
+import 'dart:io';
+
 import 'package:dio/dio.dart' as Dio;
 import 'package:flutter/material.dart';
 import 'package:frontend/models/will/my_will_model.dart';
@@ -40,6 +42,16 @@ class MyWillViewModel extends ChangeNotifier {
     _willModel = await _willService.getWillInfo();
     notifyListeners();
     debugPrint(willData['graveName'].toString());
+    debugPrint('왜 다운 안하냐?');
+
+    try {
+      Directory cacheDir = await getTemporaryDirectory();
+      await _dio.download(_willModel.willFileAddress!, '${cacheDir.path}/downloadedwill.mp4');
+      debugPrint('다운로드 하고있어요....');
+      File('${cacheDir.path}/downloadedwill.mp4').exists().then((value) => debugPrint('파일이 있나요? $value'));
+    } catch (e) {
+      debugPrint('다운로드 실패: $e');
+    } 
     return '200';
   }
 
