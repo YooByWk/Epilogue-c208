@@ -7,7 +7,7 @@ function WillViewViewer() {
   const Navi = useNavigate();
     const [code, setCode] = useState('');
 
-    const baseUrl = 'http://j10c208.p.ssafy.io';
+    const baseUrl = 'http://j10c208.p.ssafy.io:8080';
 
   const applyViewer = async () => {
     if (code.trim() === '') {

@@ -8,16 +8,17 @@ function WillApplyWitness() {
   const [willCode, setWillCode] = useState('');
   const [uploadImgUrl, setUploadImgUrl] = useState('');
 
-  const baseUrl = 'http://j10c208.p.ssafy.io';
+  const baseUrl = 'http://j10c208.p.ssafy.io:8080';
 
   const applyWitness = async () => {
     try {
       const response = await axios.post(`${baseUrl}/api/will/apply`, {
-        deadName,
-        deadBirth,
-        witnessName,
-        willCode,
-      });
+        "deadName": deadName,
+        "deadBirth": deadBirth,
+        "witnessName": witnessName,
+        "willCode": willCode
+      }
+      );
 
       if (response.status === 200) {
         console.log('신청 성공:', response.data);
