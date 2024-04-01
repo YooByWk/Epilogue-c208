@@ -320,11 +320,21 @@ public class MemorialService {
     }
 
     public void createMemorialFavorite(String loginUserId, int memorialSeq) {
-        Favorite favorite = Favorite.builder()
-                .user(userRepository.findByUserId(loginUserId))
-                .memorial(memorialRepository.findById(memorialSeq).get())
-                .build();
-        favoriteRepository.save(favorite);
+        // 내가 즐겨찾기한 추모관인지 확인
+        List<Favorite> favoriteList = favoriteRepository.findByLoginUserIdAndMemorialSeq(loginUserId, memorialSeq);
+
+        // 즐겨찾기 추가를 아직 안했으면 즐겨찾기 추가
+        if(favoriteList.isEmpty()) {
+            Favorite favorite = Favorite.builder()
+                    .user(userRepository.findByUserId(loginUserId))
+                    .memorial(memorialRepository.findById(memorialSeq).get())
+                    .build();
+            favoriteRepository.save(favorite);
+        }
+        // 즐겨찾기 되어있다면 즐겨찾기 삭제
+        else {
+            favoriteRepository.deleteById(favoriteList.get(0).getFavoriteSeq());
+        }
     }
 
     public List<GraveDto> viewMyFavoriteGraveList(String loginUserId) {
