@@ -183,7 +183,7 @@ class WillService {
       } else {
         return {'success': false, 'statusCode': response.statusCode};
       }
-    } on Dio.DioError catch (e) {
+    } on Dio.DioException catch (e) {
       return {'success': false, 'statusCode': e.response?.statusCode};
     }
   }
