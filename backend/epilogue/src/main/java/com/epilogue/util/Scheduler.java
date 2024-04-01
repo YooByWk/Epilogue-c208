@@ -9,6 +9,7 @@ import com.epilogue.repository.memorial.MemorialRepository;
 import com.epilogue.repository.user.UserRepository;
 import com.epilogue.repository.viewer.ViewerRepository;
 import com.epilogue.service.AwsS3Service;
+import io.swagger.v3.oas.annotations.media.Schema;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.scheduling.annotation.Scheduled;
@@ -34,7 +35,7 @@ public class Scheduler {
     private final EmailUtil emailUtil;
 
     @Scheduled(cron = "0 0 0 * * *")    // 매일 00시 정각
-//    @Scheduled(cron = "0 * * * * *")    // 매분 (테스트용)
+//    @Scheduled(cron = "* * * * * *")    // 매초
 
     public void deleteMemorial() {
 

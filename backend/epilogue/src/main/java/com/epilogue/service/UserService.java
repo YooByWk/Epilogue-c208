@@ -36,7 +36,6 @@ public class UserService {
     }
 
     public Boolean check(IdCheckRequestDto idCheckRequestDto) {
-        System.out.println(idCheckRequestDto.getUserId());
         return userRepository.existsByUserId(idCheckRequestDto.getUserId());
     }
 
@@ -69,7 +68,6 @@ public class UserService {
 
     public boolean verifySms(SmsCertificationRequestDto smsCertificationRequestDto) {
         if (isVerify(smsCertificationRequestDto)) {
-            System.out.println("인증번호 틀림");
             return false;
         }
         smsCertificationRepository.removeSmsCertification(smsCertificationRequestDto.getPhone());

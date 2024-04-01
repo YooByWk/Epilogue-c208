@@ -65,7 +65,6 @@ public class WillService {
         // 휴대폰 문자로 유언 열람 신청 링크 및 인증코드 전송
         for (Witness w : witnessList) {
             if (w.getWitnessMobile() == null) continue;
-            log.info("전화번호={}", w.getWitnessMobile());
             smsUtil.sendWillApplyLink(w.getWitnessMobile(), user.getName(), w.getWitnessName(), will.getWillCode());
         }
 
@@ -99,7 +98,6 @@ public class WillService {
 
     public String getMyWill(int willSeq) {
         Will will = willRepository.findById(willSeq).get();
-        log.info("willSeq={}", will.getWillSeq());
         return awsS3Service.getWillFromS3(will.getWillFileAddress());
     }
 
@@ -145,7 +143,6 @@ public class WillService {
     }
 
     public Will certificateCode(String willCode) {
-        log.info("willCode = {}", willCode);
         return willRepository.findByWillCode(willCode);
     }
 }
