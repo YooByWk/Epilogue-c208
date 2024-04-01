@@ -23,9 +23,9 @@ class MemorialVideoDetailScreen extends StatelessWidget {
               appBar: MemorialAppBar(
                 screenName: '세월은 가도 영상은 남는다',
                 isMenu: true,
-                items: ['회원가입', '로그인', '로그아웃'],
+                items: ['로그아웃'],
                 onSelected: (value) {
-                  debugPrint('$value 선택됨');
+                  // debugPrint('$value 선택됨');
                 },
               ),
               body: viewModel.isLoading
@@ -77,7 +77,7 @@ class MemorialVideoDetailScreen extends StatelessWidget {
                           ),
                           VideoCard(
                             videoPath:
-                                viewModel.memorialVideoDetailModel?.s3url ?? '',
+                                viewModel.memorialVideoDetailModel!.s3url,
                           ),
                           Text(viewModel.memorialVideoDetailModel?.content ?? ''),
                         ],
@@ -112,7 +112,7 @@ class _VideoCardState extends State<VideoCard> {
   @override
   void initState() {
     super.initState();
-    videoPlayerController = VideoPlayerController.asset(widget.videoPath);
+    videoPlayerController = VideoPlayerController.networkUrl(Uri.parse(widget.videoPath));
     scrollController = ScrollController();
 
     chewieController = ChewieController(
@@ -127,35 +127,35 @@ class _VideoCardState extends State<VideoCard> {
       showControls: true,
       placeholder: Container(
         // color: Colors.white,
-        child: FutureBuilder<Uint8List?>(
-          future: generateThumbnail(),
-          builder: (context, snapshot) {
-            if (snapshot.connectionState == ConnectionState.done) {
-              if (snapshot.data != null) {
-                return Image.memory(snapshot.data!);
-              } else {
-                return Center(child: CircularProgressIndicator());
-              }
-            } else {
-              return Center(child: CircularProgressIndicator());
-            }
-          },
-        ),
+        // child: FutureBuilder<Uint8List?>(
+        //   // future: generateThumbnail(),
+        //   builder: (context, snapshot) {
+        //     if (snapshot.connectionState == ConnectionState.done) {
+        //       if (snapshot.data != null) {
+        //         return Image.memory(snapshot.data!);
+        //       } else {
+        //         return Center(child: CircularProgressIndicator());
+        //       }
+        //     } else {
+        //       return Center(child: CircularProgressIndicator());
+        //     }
+        //   },
+        // ),
       ),
     );
     ;
-    generateThumbnail();
+    // generateThumbnail();
   }
 
-  Future<Uint8List?> generateThumbnail() async {
-    final thumbnail = await VideoThumbnail.thumbnailData(
-      video: widget.videoPath,
-      imageFormat: ImageFormat.JPEG,
-      maxWidth: 128,
-      quality: 25,
-    );
-    return thumbnail;
-  }
+  // Future<Uint8List?> generateThumbnail() async {
+  //   final thumbnail = await VideoThumbnail.thumbnailData(
+  //     video: widget.videoPath,
+  //     imageFormat: ImageFormat.JPEG,
+  //     maxWidth: 128,
+  //     quality: 25,
+  //   );
+  //   return thumbnail;
+  // }
 
   @override
   void dispose() {

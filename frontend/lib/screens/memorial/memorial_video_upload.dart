@@ -5,41 +5,42 @@ import 'package:flutter/material.dart';
 import 'package:frontend/main.dart';
 import 'package:frontend/screens/memorial/memorial_app_bar.dart';
 import 'package:frontend/view_models/memorial_view_models/memorial_detail_phototab_viewmodel.dart';
+import 'package:frontend/view_models/memorial_view_models/memorial_detail_videotab_viewmodel.dart';
 import 'package:frontend/widgets/common_text_widget.dart';
 import 'package:provider/provider.dart';
 
-class MemorialPhotoUpload extends StatefulWidget {
-  _MemorialPhotoUploadState createState() => _MemorialPhotoUploadState();
+class MemorialVideoUpload extends StatefulWidget {
+  _MemorialVideoUploadState createState() => _MemorialVideoUploadState();
 }
 
-class _MemorialPhotoUploadState extends State<MemorialPhotoUpload> {
-  File? photo;
+class _MemorialVideoUploadState extends State<MemorialVideoUpload> {
+  File? video;
 
   Future<void> _pickFile(BuildContext context) async {
     FilePickerResult? result = await FilePicker.platform.pickFiles(
       type: FileType.custom,
-      allowedExtensions: ['jpg', 'png', 'jpeg', 'gif'],
+      allowedExtensions: ['mov', 'mp4'],
     );
 
     if (result != null) {
-      debugPrint('사진 선택 완료');
+      // debugPrint('영상 선택 완료');
       setState(() {
-        photo = File(result.files.single.path!);
+        video = File(result.files.single.path!);
       });
     } else {
-      debugPrint('사진 선택 취소');
+      // debugPrint('영상 선택 취소');
     }
   }
 
   @override
   Widget build(BuildContext context) {
     return ChangeNotifierProvider(
-        create: (context) => PhotoTabViewModel(),
+        create: (context) => VideoTabViewModel(),
         child:
-            Consumer<PhotoTabViewModel>(builder: (context, viewModel, child) {
+        Consumer<VideoTabViewModel>(builder: (context, viewModel, child) {
           return Scaffold(
             appBar: MemorialAppBar(
-              screenName: '추모관 사진 업로드',
+              screenName: '추모관 영상 업로드',
               isMenu: true,
               items: ['로그아웃'],
               onSelected: (value) {
@@ -55,9 +56,9 @@ class _MemorialPhotoUploadState extends State<MemorialPhotoUpload> {
                   SizedBox(height: 30),
                   Center(
                       child: CommonText(
-                    text: '고인과의 추억이 담긴 사진을 공유해보세요.',
-                    fontSize: 20,
-                  )),
+                        text: '고인과의 추억이 담긴 영상을 공유해보세요.',
+                        fontSize: 20,
+                      )),
                   SizedBox(
                     height: 30,
                   ),
@@ -81,25 +82,25 @@ class _MemorialPhotoUploadState extends State<MemorialPhotoUpload> {
                                       0, 3), // changes position of shadow
                                 ),
                               ],
-                              image: (photo != null)
+                              image: (video != null)
                                   ? DecorationImage(
-                                      fit: BoxFit.fill,
-                                      image: FileImage(File(photo!.path)))
+                                  fit: BoxFit.fill,
+                                  image: FileImage(File(video!.path)))
                                   : null),
-                          child: (photo != null)
+                          child: (video != null)
                               ? null
                               : Text(
-                                  "+",
-                                  textAlign: TextAlign.center,
-                                  style: TextStyle(
-                                      fontWeight: FontWeight.bold,
-                                      fontSize: 20),
-                                ),
+                            "+",
+                            textAlign: TextAlign.center,
+                            style: TextStyle(
+                                fontWeight: FontWeight.bold,
+                                fontSize: 20),
+                          ),
                         )),
                   ),
                   Padding(
                     padding: const EdgeInsets.symmetric(horizontal: 90.0, vertical: 8.0),
-                    child: CommonText(text: "크기 제한 (사진 7Mb 이내)", fontSize: 16,),
+                    child: CommonText(text: "크기 제한 (영상 1분 이내)", fontSize: 16,),
                   ),
                   SizedBox(height: 20,),
                   Padding(
@@ -111,7 +112,7 @@ class _MemorialPhotoUploadState extends State<MemorialPhotoUpload> {
                       maxLines: null,
                       minLines: 5,
                       decoration: InputDecoration(
-                        hintText: '사진에 대한 설명을 남겨주세요.',
+                        hintText: '영상에 대한 설명을 남겨주세요.',
                         contentPadding: EdgeInsets.symmetric(
                             horizontal: 15.0, vertical: 20.0),
                         border: OutlineInputBorder(
@@ -119,11 +120,11 @@ class _MemorialPhotoUploadState extends State<MemorialPhotoUpload> {
                               const Radius.circular(1.0),
                             ),
                             borderSide:
-                                BorderSide(color: Colors.grey, width: 2.0)),
+                            BorderSide(color: Colors.grey, width: 2.0)),
                         focusedBorder: OutlineInputBorder(
                           // 포커스됐을 때 외곽선 설정
                           borderRadius:
-                              const BorderRadius.all(Radius.circular(1.0)),
+                          const BorderRadius.all(Radius.circular(1.0)),
                           borderSide: BorderSide(
                               color: themeColour5, width: 2.0), // 여기서 색깔 변경
                         ),
@@ -138,8 +139,8 @@ class _MemorialPhotoUploadState extends State<MemorialPhotoUpload> {
               height: 80,
               child: InkWell(
                 onTap: () {
-                  viewModel.setFile(photo!);
-                  viewModel.setPhoto().then((_) {
+                  viewModel.setFile(video!);
+                  viewModel.setVideo().then((_) {
                     if (viewModel.errorMessage == null) {
                       Navigator.pop(context);
                     } else {

@@ -120,11 +120,12 @@ class MemorialService {
 
     var formData = Dio.FormData.fromMap({
       'multipartFile': await Dio.MultipartFile.fromFile(photoFile.path),
-      'memorialMediaRequestDto': contentJson,
+      'content': contentJson,
     });
 
     try {
-      _dio.options.contentType = 'multipart/form-data';
+      // _dio.options.contentType = 'application/json';
+      // _dio.options.contentType = 'multipart/form-data';
       Dio.Response response = await _dio.post(
         '$baseUrl/api/memorial/media/$memorialSeq',
         data: formData,
@@ -269,32 +270,32 @@ class MemorialService {
   }
 
   ////////////////// 추모관 영상 업로드 ///////////////////////
-  // Future<Map<String, dynamic>> photoUpload(
-  //     File photoFile, String? content) async {
-  //   String? memorialSeq = await _storage.read(key: 'graveSeq');
-  //   String contentJson = jsonEncode(content);
-  //
-  //   var formData = Dio.FormData.fromMap({
-  //     'multipartFile': await Dio.MultipartFile.fromFile(photoFile.path),
-  //     'memorialMediaRequestDto': contentJson,
-  //   });
-  //
-  //   try {
-  //     _dio.options.contentType = 'multipart/form-data';
-  //     Dio.Response response = await _dio.post(
-  //       '$baseUrl/api/memorial/media/$memorialSeq',
-  //       data: formData,
-  //     );
-  //
-  //     if (response.statusCode == 200) {
-  //       return {'success': true};
-  //     } else {
-  //       return {'success': false, 'statusCode': response.statusCode};
-  //     }
-  //   } on Dio.DioError catch (e) {
-  //     return {'success': false, 'statusCode': e.response?.statusCode};
-  //   }
-  // }
+  Future<Map<String, dynamic>> videoUpload(
+      File videoFile, String? content) async {
+    String? memorialSeq = await _storage.read(key: 'graveSeq');
+    String contentJson = jsonEncode(content);
+
+    var formData = Dio.FormData.fromMap({
+      'multipartFile': await Dio.MultipartFile.fromFile(videoFile.path),
+      'content': contentJson,
+    });
+
+    try {
+      _dio.options.contentType = 'multipart/form-data';
+      Dio.Response response = await _dio.post(
+        '$baseUrl/api/memorial/media/$memorialSeq',
+        data: formData,
+      );
+
+      if (response.statusCode == 200) {
+        return {'success': true};
+      } else {
+        return {'success': false, 'statusCode': response.statusCode};
+      }
+    } on Dio.DioError catch (e) {
+      return {'success': false, 'statusCode': e.response?.statusCode};
+    }
+  }
 
   ////////////////// 추모관 영상 리스트 ///////////////////////
   Future<Map<String, dynamic>> videoList({required int lastVideoSeq}) async {
