@@ -6,6 +6,7 @@ import 'package:frontend/screens/mypage/mypage_modify_info_screen.dart';
 import 'package:frontend/screens/mypage/mypage_will_more_screen.dart';
 import 'package:frontend/screens/will/will_select_type_screen.dart';
 import 'package:frontend/view_models/auth_view_models/user_viewmodel.dart';
+import 'package:frontend/view_models/will_view_models/my_will_viewmodel.dart';
 import 'package:frontend/widgets/common_button.dart';
 import 'package:frontend/widgets/common_text_widget.dart';
 import 'package:frontend/widgets/will_notice.dart';
