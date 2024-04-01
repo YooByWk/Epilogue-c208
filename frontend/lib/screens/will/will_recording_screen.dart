@@ -98,7 +98,7 @@ class _WillRecordingScreenState extends State<WillRecordingScreen> {
   }
 
   Future<void> openTheRecorder() async {
-    if (!kIsWeb) {
+    if (!kIsWeb) { 
       var status = await Permission.microphone.request();
       if (status != PermissionStatus.granted) {
         throw RecordingPermissionException('Microphone permission not granted');
@@ -218,7 +218,7 @@ class _WillRecordingScreenState extends State<WillRecordingScreen> {
     return null;
   }
 
-  _Fn? getPlaybackFn() {
+  _Fn? getPlaybackFn() { 
     if (!_mPlayerIsInited || !_mplaybackReady || !_mRecorder!.isStopped) {
       return null;
     }

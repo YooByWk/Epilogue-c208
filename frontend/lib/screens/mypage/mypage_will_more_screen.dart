@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:frontend/screens/mypage/mypage_play.dart';
 import 'package:frontend/view_models/auth_view_models/user_viewmodel.dart';
 import 'package:frontend/view_models/block_chain/block_chain_will_viewmodel.dart';
 import 'package:frontend/view_models/will_view_models/my_will_viewmodel.dart';
@@ -9,8 +10,12 @@ import 'package:frontend/widgets/will_additional_info_widget.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
+
 class MypageWillMoreScreen extends StatefulWidget {
-  const MypageWillMoreScreen({Key? key}) : super(key: key);
+  final String path;
+  const MypageWillMoreScreen({
+    required this.path,
+    Key? key}) : super(key: key);
 
   @override
   _MypageWillMoreScreenState createState() => _MypageWillMoreScreenState();
@@ -18,6 +23,8 @@ class MypageWillMoreScreen extends StatefulWidget {
 
 class _MypageWillMoreScreenState extends State<MypageWillMoreScreen> {
   late Future myWillDataFuture;
+
+  // late String audioPath;
 
   @override
   void didChangeDependencies() {
@@ -27,6 +34,7 @@ class _MypageWillMoreScreenState extends State<MypageWillMoreScreen> {
 
   @override
   Widget build(BuildContext context) {
+    debugPrint('추가정보 위젯 테스트 : ${widget.path}');
     return MultiProvider(
       providers: [
         ChangeNotifierProvider(create: (context) => UserViewModel()),
@@ -38,7 +46,12 @@ class _MypageWillMoreScreenState extends State<MypageWillMoreScreen> {
             future: myWillDataFuture,
             builder: (context, snapshot) {
               if (snapshot.connectionState == ConnectionState.waiting) {
-                return CircularProgressIndicator(); // 데이터를 기다리는 동안 표시할 위젯
+                return Scaffold(
+                  body: Center(
+                    child: CircularProgressIndicator(),
+                  ),
+                );
+                
               } else {
                 if (snapshot.hasError) {
                   return Text('Error: ${snapshot.error}');
@@ -104,6 +117,8 @@ class _MypageWillMoreScreenState extends State<MypageWillMoreScreen> {
                                 ),
                               ],
                             ),
+                            MyPagePlay(path: widget.path),
+                            // MyPagePlay(path: 'myWillViewModel.willData[]'),
                             WillAdditionalInfo(willData : myWillViewModel.willData),
                             SizedBox(height: 20),
                             CommonButtonWidget(
