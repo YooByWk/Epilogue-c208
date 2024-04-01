@@ -371,6 +371,28 @@ class MemorialService {
       return {'success': false, 'statusCode': e.response?.statusCode};
     }
   }
+
+  ////////////////// 추모관 즐겨찾기 ///////////////////////
+  Future<Map<String, dynamic>> favoriteMemorial() async {
+    String? memorialSeq = await _storage.read(key: 'favoriteMemorial');
+
+    try {
+      Dio.Response response = await _dio.post(
+        '$baseUrl/api/memorial/favorite/$memorialSeq',
+      );
+
+      if (response.statusCode == 200) {
+        return {
+          'success': true,
+        };
+      } else {
+        return {'success': false, 'statusCode': response.statusCode};
+      }
+    } on Dio.DioError catch (e) {
+      return {'success': false, 'statusCode': e.response?.statusCode};
+    }
+  }
+
 }
 
 class LoggingInterceptor extends Dio.Interceptor {
