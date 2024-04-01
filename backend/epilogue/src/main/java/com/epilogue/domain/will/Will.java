@@ -45,13 +45,7 @@ public class Will {
 
     @Schema(description = "유언 파일 주소")
     private String willFileAddress;
-
-    @Schema(description = "열람 신청 링크")
-    private String viewApplyLink;
-
-    @Schema(description = "유언장 링크")
-    private String willLink;
-
+    
     @Schema(description = "유언 코드")
     private String willCode;
 
