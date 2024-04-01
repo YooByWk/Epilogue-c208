@@ -21,6 +21,7 @@ function WillApplyWitness() {
 
       if (response.status === 200) {
         console.log('신청 성공:', response.data);
+        alert('신청이 완료되었습니다. 확인하는데 3-5일 정도 소요됩니다. 기다리세용~!')
       } else {
         console.log('신청 오류:', response.status);
       }
