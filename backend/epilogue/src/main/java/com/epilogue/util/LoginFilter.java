@@ -7,6 +7,7 @@ import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.data.redis.core.StringRedisTemplate;
 import org.springframework.security.authentication.AuthenticationManager;
@@ -22,6 +23,7 @@ import java.util.Collection;
 import java.util.Iterator;
 
 @RequiredArgsConstructor
+@Slf4j
 public class LoginFilter extends UsernamePasswordAuthenticationFilter {
 
     private final AuthenticationManager authenticationManager;
@@ -40,6 +42,10 @@ public class LoginFilter extends UsernamePasswordAuthenticationFilter {
 
         String userId = obtainUsername(request);
         String password = obtainPassword(request);
+
+        log.info("=============================================");
+        log.info("userId : {}", userId);
+        log.info("password : {}", password);
 
         // 스프링 시큐리티에서 아이디와 비밀번호를 검증하기 위해서는 token에 담아야 함
         UsernamePasswordAuthenticationToken authToken = new UsernamePasswordAuthenticationToken(userId, password, null);
