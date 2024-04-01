@@ -75,10 +75,11 @@ public class MemorialService {
             memorialList.add(graveDto);
         }
 
-        for (int i = 0; i < memorialList.size(); i++) {
+        for (int i = memorialList.size()-1; i >= 0; i--) {
             for (int j = 0; j < favoriteMemorialList.size(); j++) {
                 if (memorialList.get(i).getGraveSeq() == favoriteMemorialList.get(j).getGraveSeq()) {
                     memorialList.remove(i);
+                    break;
                 }
             }
         }
