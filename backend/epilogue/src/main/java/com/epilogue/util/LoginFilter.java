@@ -56,11 +56,14 @@ public class LoginFilter extends UsernamePasswordAuthenticationFilter {
 
     @Override
     protected void successfulAuthentication(HttpServletRequest request, HttpServletResponse response, FilterChain chain, Authentication authentication) {
-        //유저 정보
+        // 유저 정보
         // 로그인 성공 -> 로그인한 유저의 정보를 가지고 JWT 발급
         // getPrincipal() : 현재 사용자 정보 가져오기
         CustomUserDetails customUserDetails = (CustomUserDetails) authentication.getPrincipal();
         String userId = customUserDetails.getUsername(); // 아이디
+        log.info("=============================================");
+        log.info("successfulAuthentication 의 userId : {}", userId);
+        log.info("successfulAuthentication 의 password : {}", customUserDetails.getPassword());
 
         Collection<? extends GrantedAuthority> authorities = authentication.getAuthorities();
         Iterator<? extends GrantedAuthority> iterator = authorities.iterator();
