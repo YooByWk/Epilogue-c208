@@ -43,7 +43,7 @@ class SignupViewModel extends ChangeNotifier {
   // 생년월일 유효성 검사
   bool get isBirthValid {
     RegExp regex =
-        RegExp(r'^(19|20|21)\d{2}(0[1-9]|1[0-2])(0[1-9]|[12][0-9]|3[01])$');
+        RegExp(r'^(19|20|21)\d{2}\.(0[1-9]|1[0-2])\.(0[1-9]|[12][0-9]|3[01])$');
     return regex.hasMatch(_signupData.birth);
   }
 
@@ -182,6 +182,14 @@ class SignupViewModel extends ChangeNotifier {
     _isLoading = true;
     _errorMessage = null;
     notifyListeners();
+
+    // 폼 유효성 검사 추가
+    // if (!isFormValid) {
+    //   _isLoading = false;
+    //   _errorMessage = "입력한 정보를 다시 확인해주세요.";
+    //   notifyListeners();
+    //   return;
+    // }
 
     if (_userIdExists != null) {
       _isLoading = false;

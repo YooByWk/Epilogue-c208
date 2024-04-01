@@ -170,6 +170,7 @@ class _ChoiceButtonWidgetState extends State<ChoiceButtonWidget> {
 //////////////// 유언 생성 중 선택 버튼 ///////////////////////////
 class WillCommonButtonWidget extends StatelessWidget {
   final String text;
+  final Color? fontColor;
   final Color? backgroundColor;
   final double? width;
   final double? height;
@@ -179,6 +180,7 @@ class WillCommonButtonWidget extends StatelessWidget {
   const WillCommonButtonWidget({
     required this.text,
     this.backgroundColor = Colors.white,
+    this.fontColor = Colors.black,
     required this.onPressed,
     this.width = 150.0,
     this.height = 35.0,
@@ -210,7 +212,7 @@ class WillCommonButtonWidget extends StatelessWidget {
             text,
             textAlign: TextAlign.center,
             style: TextStyle(
-              color: Colors.black,
+              color: fontColor,
               fontSize: fontSize,
               fontWeight: FontWeight.bold,
             ),

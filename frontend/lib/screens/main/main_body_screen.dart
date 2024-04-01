@@ -6,7 +6,8 @@ import 'package:frontend/widgets/main_banner.dart';
 
 
 class MainBodyScreen extends StatelessWidget {
-  const MainBodyScreen({super.key});
+  final Function(int)? switchTab;
+  const MainBodyScreen({super.key, this.switchTab});
 
   @override
   Widget build(BuildContext context) {
@@ -24,7 +25,7 @@ class MainBodyScreen extends StatelessWidget {
           child: Column(
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
-              MainBannerWidget(),
+              MainBannerWidget(switchTab: switchTab,),
               SizedBox(height: 30),
               MainDescriptionWidget(
                 text: '당신의 삶을 \n오랫동안 기념할 수 있는 플랫폼',

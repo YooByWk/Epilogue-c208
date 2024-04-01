@@ -33,6 +33,11 @@ void handleBackPress(BuildContext context) {
     SystemNavigator.pop();
   }
 }
+
+  void _switchTab(BuildContext context, int index) {
+    Provider.of<MainViewModel>(context, listen: false).setCurrentIndex(index);
+  }
+
   @override
   Widget build(BuildContext context) {
     return PopScope(
@@ -49,9 +54,9 @@ void handleBackPress(BuildContext context) {
           child: Consumer<MainViewModel>(builder: (context, viewModel, child) {
             return Scaffold(
               body: IndexedStack(
-                index: viewModel.currentIndex,
+                index: Provider.of<MainViewModel>(context).currentIndex,
                 children: [
-                  MainBodyScreen(),
+                  MainBodyScreen(switchTab: (index) => _switchTab(context, index)),
                   MemorialScreen(),
                   MypageScreen(),
                 ],

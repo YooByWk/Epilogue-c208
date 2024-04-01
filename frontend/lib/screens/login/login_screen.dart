@@ -239,28 +239,6 @@ _asyncMethod() async {
                           ),
                         ),
                       ),
-                      ElevatedButton(
-                        onPressed: () {
-                          Navigator.push(
-                            context,
-                            MaterialPageRoute(
-                              builder: (context) => WillSelectTypeScreen(),
-                            ),
-                          );
-                        },
-                        child: Text('유언 작성'),
-                      ),
-                      ElevatedButton(
-                        onPressed: () {
-                          Navigator.push(
-                            context,
-                            MaterialPageRoute(
-                              builder: (context) => RecordTest(),
-                            ),
-                          );
-                        },
-                        child: Text('녹음'),
-                      ),
                     ],
                   ),
                 ),

@@ -1,12 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:frontend/main.dart';
-
 import 'package:frontend/screens/mypage/mypage_modify_info_screen.dart';
 import 'package:frontend/screens/mypage/mypage_will_more_screen.dart';
 import 'package:frontend/view_models/auth_view_models/user_viewmodel.dart';
 import 'package:frontend/widgets/common_button.dart';
 import 'package:frontend/widgets/common_text_widget.dart';
-import 'package:frontend/widgets/pin_memorial_widget.dart';
 import 'package:provider/provider.dart';
 import 'package:frontend/screens/login/login_screen.dart';
 
@@ -113,13 +111,6 @@ class MypageScreen extends StatelessWidget {
                                       MypageWillMoreScreen()));
                         }),
                     SizedBox(height: 40),
-                    CommonText(
-                      text: '즐겨찾기 한 추모관',
-                      fontSize: 24,
-                      isBold: true,
-                    ),
-                    SizedBox(height: 20),
-                    PinMemorialWidget(),
                   ],
                 ),
               )
