@@ -72,6 +72,7 @@ class MemorialImage extends StatelessWidget {
 }
 
 
+
 // StatefulWidget으로 변환된 MemorialSearchWidget
 class MemorialSearchWidget extends StatefulWidget {
   final MemorialListViewModel viewModel;
@@ -94,7 +95,7 @@ class _MemorialSearchWidgetState extends State<MemorialSearchWidget> {
   void _handleSearch() {
     // 검색어를 viewModel에 설정
     widget.viewModel.setSearchWord(_searchController.text);
-    // 검색 실행
+    // 검색 실행 후 결과 return
     widget.viewModel.search();
   }
 

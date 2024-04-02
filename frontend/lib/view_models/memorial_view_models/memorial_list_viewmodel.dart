@@ -5,10 +5,6 @@ import 'package:frontend/services/memorial_service.dart';
 
 class MemorialListViewModel extends ChangeNotifier {
 
-  MemorialListViewModel() {
-    getLists();
-  }
-
   final MemorialService _memorialService = MemorialService();
   List<MemorialGraveModel> _favoriteMemorialList = [];
   List<MemorialGraveModel> _memorialList = [];
@@ -29,6 +25,12 @@ class MemorialListViewModel extends ChangeNotifier {
   bool get isFocused => _isFocused;
   bool get isLoading => _isLoading;
   String? get errorMessage => _errorMessage;
+
+  MemorialListViewModel() {
+    getLists();
+    debugPrint(_memorialList.toString());
+    debugPrint(_favoriteMemorialList.toString());
+  }
 
   // 리스트 조회
   Future<void> getLists() async {
@@ -56,7 +58,7 @@ class MemorialListViewModel extends ChangeNotifier {
   }
 
   // 즐겨찾기
-  Future<void> favoriteMemorial() async {
+  Future favoriteMemorial() async {
     _isLoading = true;
     _errorMessage = null;
     notifyListeners();
@@ -72,11 +74,28 @@ class MemorialListViewModel extends ChangeNotifier {
           _errorMessage = '알 수 없는 오류가 발생했습니다. 관리자에게 문의해주세요.';
       }
     } else {
-
+      final result = await _memorialService.getList();
+      if (!result['success']) {
+        int statusCode = result['statusCode'];
+        switch (statusCode) {
+          case 500:
+            _errorMessage = '서버 오류가 발생했습니다. 잠시 후 다시 시도해주세요.';
+            break;
+          case 403:
+            _errorMessage = '로그인 후 이용할 수 있습니다.';
+          default:
+            _errorMessage = '알 수 없는 오류가 발생했습니다. 관리자에게 문의해주세요.';
+        }
+        _isLoading = false;
+      } else {
+        _favoriteMemorialList = result['favoriteMemorialList'];
+        _memorialList = result['memorialList'];
+        _isLoading = false;
+        notifyListeners();
+      }
+      notifyListeners();
+      _errorMessage = null;
     }
-    debugPrint('$_memorialList');
-    _isLoading = false;
-    notifyListeners();
   }
 
   // 검색
@@ -90,11 +109,14 @@ class MemorialListViewModel extends ChangeNotifier {
     notifyListeners();
   }
 
-  Future<void> search() async {
+  Future search() async {
+    _searchList = [];
+
     _isLoading = true;
     _errorMessage = null;
     notifyListeners();
-
+  
+    // 검색
     final result = await _memorialService.searchMemorial(_searchData);
     _isLoading = false;
 
@@ -108,9 +130,9 @@ class MemorialListViewModel extends ChangeNotifier {
           _errorMessage = '알 수 없는 오류가 발생했습니다. 관리자에게 문의해주세요.';
       }
     } else {
-      _errorMessage = null;
       _searchList = result['searchMemorialList'];
     }
+    _isLoading = false;
     notifyListeners();
   }
 }

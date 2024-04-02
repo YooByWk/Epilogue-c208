@@ -4,6 +4,7 @@ import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 import 'package:frontend/main.dart';
 import 'package:frontend/screens/login/login_input_field_widget.dart';
 import 'package:frontend/screens/login/mnemonic_recovery_screen.dart';
+import 'package:frontend/screens/login/naver_login_screen.dart';
 import 'package:frontend/screens/will/recording_test.dart';
 import 'package:frontend/services/auth_service.dart';
 import 'package:frontend/view_models/auth_view_models/login_viewmodel.dart';
@@ -237,13 +238,14 @@ _asyncMethod() async {
                           SocialButtonWidget(
                             imagePath: 'assets/images/naver.png',
                             onPressed: () async {
-                              if (viewModel.isLoginSuccess) {
-                                Navigator.pushReplacementNamed(
-                                    context, '/home');
-                              } else {
-                                ScaffoldMessenger.of(context).showSnackBar(
-                                    SnackBar(content: Text('로그인 실패')));
-                              }
+
+                                Navigator.push(
+                                  context,
+                                  MaterialPageRoute(
+                                    builder: (context) => NaverLoginScreen(),
+                                  ),
+                                );
+
                             },
                           ),
                         ],

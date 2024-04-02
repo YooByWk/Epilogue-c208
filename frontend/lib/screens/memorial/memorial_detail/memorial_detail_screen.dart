@@ -16,10 +16,6 @@ class MemorialDetailScreen extends StatelessWidget {
       create: (context) => MemorialDetailViewModel(),
       child: Consumer<MemorialDetailViewModel>(
         builder: (context, viewModel, child) {
-          final args = ModalRoute.of(context)!.settings.arguments
-              as Map<String, dynamic>?;
-          final index = args?['index'] ?? '인덱스';
-          final memorialName = args?['memorialName'] ?? '유저이름';
 
           return Scaffold(
             appBar: AppBar(

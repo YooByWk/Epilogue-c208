@@ -11,8 +11,6 @@ import 'package:provider/provider.dart';
 // }
 
 class MemorialLetterUpload extends StatelessWidget {
-  MemorialLetterUpload({this.arguments});
-  final arguments;
 
   @override
   Widget build(BuildContext context) {
