@@ -172,6 +172,7 @@ class MnemonicRecoveryScreen extends StatelessWidget {
                 );
               } else {
                 await viewModel.recoverFromMnemonic();
+                Navigator.pushNamed(context, '/home');
               }
             },
             child: Icon(Icons.check),
