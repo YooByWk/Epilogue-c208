@@ -140,6 +140,6 @@ public class WillController {
     public ResponseEntity<?> certificateCode(@Parameter(description = "유언 인증 코드") String willCode) {
         Will will = willService.certificateCode(willCode);
         if (will != null) return new ResponseEntity<>(willService.getMyWill(will.getWillSeq()), HttpStatus.OK);
-        return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+        return new ResponseEntity<>(HttpStatus.NO_CONTENT);
     }
 }
