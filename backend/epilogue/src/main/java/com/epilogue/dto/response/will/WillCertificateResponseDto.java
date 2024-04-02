@@ -15,4 +15,7 @@ public class WillCertificateResponseDto {
     @NotNull
     @Schema(description = "회원 아이디")
     private String userId;
+
+    @Schema(description = "해시 코드")
+    private String hashCode;
 }

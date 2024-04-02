@@ -18,10 +18,16 @@ import com.epilogue.util.SmsCertificationUtil;
 import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
+import org.springframework.web.client.RestTemplate;
+import jakarta.xml.bind.DatatypeConverter;
 
+import java.io.IOException;
 import java.io.UnsupportedEncodingException;
 import java.net.MalformedURLException;
+import java.security.MessageDigest;
+import java.security.NoSuchAlgorithmException;
 import java.security.Principal;
 import java.util.List;
 
@@ -97,13 +103,22 @@ public class WillService {
                 .build();
     }
 
-    public WillCertificateResponseDto getMyWill(int willSeq) {
-        Will will = willRepository.findById(willSeq).get();
+    public WillCertificateResponseDto getMyWill(Will will) throws NoSuchAlgorithmException, IOException {
         User user = userRepository.findByWill(will);
+
+        // 유언 파일에서 해시 값 추출
+        RestTemplate restTemplate = new RestTemplate();
+        ResponseEntity<byte[]> response = restTemplate.getForEntity(awsS3Service.getWillFromS3(will.getWillFileAddress()), byte[].class);
+        byte[] fileContent = response.getBody();
+
+        MessageDigest md = MessageDigest.getInstance("SHA-256");
+        byte[] hash = md.digest(fileContent);
+        String hashCode = DatatypeConverter.printHexBinary(hash);
 
         return WillCertificateResponseDto.builder()
                 .willFileAddress(awsS3Service.getWillFromS3(will.getWillFileAddress()))
                 .userId(user.getUserId())
+                .hashCode(hashCode)
                 .build();
     }
 

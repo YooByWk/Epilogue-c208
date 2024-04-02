@@ -23,8 +23,10 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
+import java.io.IOException;
 import java.io.UnsupportedEncodingException;
 import java.net.MalformedURLException;
+import java.security.NoSuchAlgorithmException;
 import java.security.Principal;
 import java.util.List;
 import java.util.UUID;
@@ -137,9 +139,9 @@ public class WillController {
             @ApiResponse(responseCode = "404", description = "인증 실패"),
     })
     @PostMapping("/will/certificate")
-    public ResponseEntity<?> certificateCode(@Parameter(description = "유언 인증 코드") String willCode) {
+    public ResponseEntity<?> certificateCode(@Parameter(description = "유언 인증 코드") String willCode) throws NoSuchAlgorithmException, IOException {
         Will will = willService.certificateCode(willCode);
-        if (will != null) return new ResponseEntity<>(willService.getMyWill(will.getWillSeq()), HttpStatus.OK);
+        if (will != null) return new ResponseEntity<>(willService.getMyWill(will), HttpStatus.OK);
         return new ResponseEntity<>(HttpStatus.NO_CONTENT);
     }
 }
