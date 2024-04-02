@@ -27,6 +27,7 @@ import java.io.UnsupportedEncodingException;
 import java.net.MalformedURLException;
 import java.security.Principal;
 import java.util.List;
+import java.util.UUID;
 
 @Slf4j
 @Tag(name = "Will Controller", description = "유언 관련 API")
