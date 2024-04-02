@@ -17,6 +17,7 @@ class WillOpenViewModel extends ChangeNotifier {
       int statusCode = result['statusCode'];
     } else {
       _s3url = result['willFileAddress'];
+      debugPrint(_s3url);
     }
   }
 }

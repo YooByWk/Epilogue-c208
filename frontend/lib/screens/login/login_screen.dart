@@ -206,7 +206,6 @@ _asyncMethod() async {
                           SocialButtonWidget(
                             imagePath: 'assets/images/naver.png',
                             onPressed: () async {
-                              await viewModel.loginWithNaver();
                               if (viewModel.isLoginSuccess) {
                                 Navigator.pushReplacementNamed(
                                     context, '/home');
