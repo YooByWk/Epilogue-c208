@@ -40,7 +40,7 @@ export default function BlockChainHashHook (willCode) {
     formData.append('willCode', willCode);
     
     await axios.post(`${BaseURL}/api/will/certificate`, formData)
-    .then((res) => {backRes = {'hash' : res.data['hashCode'], 'id' : res.data['userId']}; })
+    .then((res) => {backRes = {'hash' : res.data['hashCode'], 'id' : res.data['userId']}; console.log(res.data);})
     .catch((e) => {console.log(e)});
     
     var params = [backRes['hash'], backRes['id']];
@@ -53,7 +53,7 @@ export default function BlockChainHashHook (willCode) {
       
       var k;
 
-      var res = await contract.methods.SearchByHash(params[0], 'fish').call().then((r) => {
+      var res = await contract.methods.SearchByHash(params[0], params[1]).call().then((r) => {
         k = r.toString();
         // setResult(r.toString());
         console.log('성공rr', r.toString());
