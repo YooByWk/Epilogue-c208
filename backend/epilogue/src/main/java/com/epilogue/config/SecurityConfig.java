@@ -1,7 +1,7 @@
 package com.epilogue.config;
 
 import com.epilogue.service.CustomOAuth2UserService;
-import com.epilogue.util.CustomSuccessHandler;
+import com.epilogue.service.CustomSuccessHandler;
 import com.epilogue.util.JWTFilter;
 import com.epilogue.util.JWTUtil;
 import com.epilogue.util.LoginFilter;
@@ -67,7 +67,7 @@ public class SecurityConfig {
                 .oauth2Login((oauth2) -> oauth2
                         .userInfoEndpoint((userInfoEndpointConfig) -> userInfoEndpointConfig
                                 .userService(customOAuth2UserService))
-                        .successHandler(customSuccessHandler)
+//                        .successHandler(customSuccessHandler)
                 );
 
         // (생성한 커스텀 필터, 필터를 넣을 위치)
