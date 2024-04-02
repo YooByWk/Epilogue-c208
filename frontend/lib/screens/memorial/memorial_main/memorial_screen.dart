@@ -9,7 +9,7 @@ import 'package:frontend/screens/memorial/memorial_main/memorial_body.dart';
 import 'package:frontend/screens/memorial/memorial_widgets.dart';
 
 class MemorialScreen extends StatefulWidget {
-  
+
   @override
   _MemorialScreenState createState() => _MemorialScreenState();
 }
@@ -22,32 +22,15 @@ class _MemorialScreenState extends State<MemorialScreen> {
   void initState() {
     super.initState();
     _viewModel = MemorialListViewModel();
-    // _scrollController.addListener(_onScroll);s
     _viewModel.getLists();
   }
-
-  // @override
-  // void dispose() {
-  //   _scrollController.dispose();
-  //   super.dispose();
-  // }
-
-  // void _onScroll() {
-  //   // debugPrint('스크롤 감지' + _scrollController.position.pixels.toString());
-  //   if (_scrollController.position.pixels >= _scrollController.position.maxScrollExtent - 50) {
-  //     debugPrint('현재 Item 수: ' + _viewModel.memorialCards.length.toString() + '새로운 정보를 불러옵니다.');
-  //     _viewModel.loadMore();
-  //
-  //     setState((){}); // Update the UI
-  //   }
-  // }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: MemorialAppBar(
         screenName : '디지털 추모관',
-        colour : 'themeColour'
+        colour : 'themeColour2'
       ),
       body: Container(
         color: backgroundColour, // Set the background color here
@@ -58,7 +41,7 @@ class _MemorialScreenState extends State<MemorialScreen> {
               delegate: SliverChildListDelegate(
                 [
                   MemorialBodyWidget(),
-                  MemorialSearchWidget(),
+                  // MemorialSearchWidget(viewModel: _viewModel),
                 ],
               ),
             ),

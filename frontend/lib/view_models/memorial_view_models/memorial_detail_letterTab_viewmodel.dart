@@ -28,15 +28,14 @@ class LetterTabViewModel extends ChangeNotifier {
 
   String? get errorMessage => _errorMessage;
 
-  // void updateLetter(LetterListModel letter) {
-  //   // 새로운 편지 불러오기
-  //   _letters.add(letter);
-  //   notifyListeners();
-  // }
+  void updateLetter() {
+    // 새로운 편지 불러오기
+    // _letters.add(_letterData as MemorialLetterListModel);
+    notifyListeners();
+  }
 
   LetterTabViewModel() {
     loadInitialData();
-    notifyListeners();
   }
 
   void loadInitialData() async {
@@ -65,6 +64,7 @@ class LetterTabViewModel extends ChangeNotifier {
       _isLoading = false;
       debugPrint('letterList: $_letters');
     }
+    debugPrint('ㅁ닝럼닝럼너리ㅓㄴ미럼ㄴ:ㄴ${_letters.length}');
     notifyListeners(); // 데이터가 변경되었음을 알림
   }
 
@@ -75,7 +75,7 @@ class LetterTabViewModel extends ChangeNotifier {
 
     final lastLetterSeq = _letters.isNotEmpty ? _letters.last.memorialLetterSeq : 0;
     final result = await _memorialService.letterList(lastLetterSeq: lastLetterSeq);
-    debugPrint(result['count']);
+    // debugPrint(result['count']);
     // _letters의 길이가 전체 개수면 그만!
     if (_letters.length.toString() == result['count']) {
       _isLoading = false; // 데이터를 더 불러오지 않음
@@ -116,7 +116,7 @@ class LetterTabViewModel extends ChangeNotifier {
     notifyListeners();
   }
 
-  Future<void> uploadLetter() async {
+  Future uploadLetter() async {
     _isLoading = true;
     _errorMessage = null;
     notifyListeners();
@@ -134,6 +134,26 @@ class LetterTabViewModel extends ChangeNotifier {
           _errorMessage = '알 수 없는 오류가 발생했습니다. 관리자에게 문의해주세요.';
       }
     } else {
+      final result = await _memorialService.letterList(lastLetterSeq: 0);
+      if (!result['success']) {
+        int statusCode = result['statusCode'];
+        switch (statusCode) {
+          case 500:
+            _errorMessage = '서버 오류가 발생했습니다. 잠시 후 다시 시도해주세요.';
+            break;
+          case 403:
+            _errorMessage = '로그인 후 이용할 수 있습니다.';
+          default:
+            _errorMessage = '알 수 없는 오류가 발생했습니다. 관리자에게 문의해주세요.';
+        }
+      } else {
+        _letters = result['letterList'];
+        _isLoading = false;
+        return _letters;
+      }
+      debugPrint('ㅁ닝럼닝럼너리ㅓㄴ미럼ㄴ:ㄴ${_letters.length}');
+      notifyListeners(); // 데이터가 변경되었음을 알림
+
       _errorMessage = null;
       // await loadInitialData();
     }

@@ -91,15 +91,19 @@ class PhotoTab extends StatelessWidget {
                         if (index == 0) {
                           return Card(
                               child: InkWell(
-                                  onTap: () => {
+                                  onTap: () async {
                                         // debugPrint('add Photo Button Clicked'),
-                                        Navigator.push(
+                                        bool uploaded = await (Navigator.push(
                                           context,
                                           MaterialPageRoute(
                                             builder: (context) =>
                                                 MemorialPhotoUpload(),
                                           ),
-                                        )
+                                        ));
+                                        if (uploaded == true) {
+                                          viewModel.loadInitialData();
+                                        };
+                                        
                                       },
                                   child: Center(
                                       child: Column(
