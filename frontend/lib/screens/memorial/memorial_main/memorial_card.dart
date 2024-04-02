@@ -64,22 +64,21 @@ class MemorialCard extends StatelessWidget {
               });
             },
           ),
-          Positioned(
-            top: 25,
-            child: IconButton(
-              iconSize: 30,
-              icon:  viewModel.favoriteMemorialList.any((favorite) => favorite.graveSeq == graveSeq) ? Icon(Icons.star) : Icon(Icons.star_border),
-              onPressed: () {
-                _storage.write(key: 'favoriteMemorial', value: graveSeq.toString());
-                viewModel.favoriteMemorial().then((_) {
-                  if (viewModel.errorMessage ==
-                      null) {
-
-                  }
-                });
-                },
-            ),
-          ),
+          // Positioned(
+          //   top: 25,
+          //   child: IconButton(
+          //     iconSize: 30,
+          //     // icon:  viewModel.favoriteMemorialList.any((favorite) => favorite.graveSeq == graveSeq) ? Icon(Icons.star) : Icon(Icons.star_border),
+          //     onPressed: () {
+          //       _storage.write(key: 'favoriteMemorial', value: graveSeq.toString());
+          //       viewModel.favoriteMemorial().then((_) {
+          //         if (viewModel.errorMessage ==
+          //             null) {
+          //         }
+          //       });
+          //       },
+          //   ),
+          // ),
           Positioned(
             bottom: 30,
             child: Text('故$name', style: TextStyle(fontSize: 15, fontWeight: FontWeight.bold),)
