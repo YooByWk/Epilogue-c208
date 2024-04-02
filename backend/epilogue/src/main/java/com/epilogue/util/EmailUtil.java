@@ -38,7 +38,7 @@ public class EmailUtil {
 
     private String getWillMessage(String deadName, String viewerName) {
         String certificationMessage = "";
-        String willLink = "http://j10c208.p.ssafy.io:80";
+        String willLink = "http://j10c208.p.ssafy.io/viewer";
         certificationMessage += "<h1 style='text-align: center;'>[E:pilogue] 유언 열람 안내</h1>";
         certificationMessage += "<h3 style='text-align: center;'>블록체인 기반 디지털 유언 생성 서비스</h3><br><br>";
         certificationMessage += "<h3 style='text-align: center;'>안녕하세요. E:pilogue 입니다.<br>" +
@@ -69,7 +69,7 @@ public class EmailUtil {
 
     private String getWillApplyMessage(String deadName, String witnessName, String willCode) {
         String certificationMessage = "";
-        String applyLink = "http://j10c208.p.ssafy.io:80";
+        String applyLink = "http://j10c208.p.ssafy.io/witness";
         certificationMessage += "<h1 style='text-align: center;'>[E:pilogue] 유언 열람 신청 안내";
         certificationMessage += "<h3 style='text-align: center;'>블록체인 기반 디지털 유언 생성 서비스</h3><br><br>";
         certificationMessage += "<h3 style='text-align: center;'>안녕하세요. E:pilogue 입니다.<br>" +
