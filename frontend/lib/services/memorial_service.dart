@@ -1,3 +1,4 @@
+//memorial_service.dart
 import 'dart:convert';
 import 'dart:io';
 
@@ -9,6 +10,7 @@ import 'package:frontend/models/memorial/memorial_grave_model.dart';
 import 'package:frontend/models/memorial/memorial_letter_list_model.dart';
 import 'package:frontend/models/memorial/memorial_photo_detail_model.dart';
 import 'package:frontend/models/memorial/memorial_photo_list_model.dart';
+import 'package:frontend/models/memorial/memorial_search_model.dart';
 import 'package:frontend/models/memorial/memorial_video_detail_model.dart';
 import 'package:frontend/models/memorial/memorial_video_list_model.dart';
 import 'package:frontend/models/memorial_detail_model.dart';
@@ -97,7 +99,7 @@ class MemorialService {
         }
 
         MemorialDetailModel memorialDetailModel =
-            MemorialDetailModel.fromJson(response.data);
+        MemorialDetailModel.fromJson(response.data);
 
         return {
           'success': true,
@@ -182,7 +184,7 @@ class MemorialService {
 
       if (response.statusCode == 200) {
         MemorialPhotoDetailModel memorialPhotoDetailModel =
-            MemorialPhotoDetailModel.fromJson(response.data);
+        MemorialPhotoDetailModel.fromJson(response.data);
 
         return {
           'success': true,
@@ -393,6 +395,35 @@ class MemorialService {
     }
   }
 
+  ////////////////// 추모관 검색 ///////////////////////
+  Future<Map<String, dynamic>> searchMemorial(MemorialSearchModel memorialSearchModel) async {
+
+    try {
+      Dio.Response response = await _dio.post(
+          '$baseUrl/api/memorial/search',
+          data: memorialSearchModel.toJson()
+      );
+
+      if (response.statusCode == 200) {
+
+        List<MemorialGraveModel> searchMemorialList = [];
+        if (response.data != null) {
+          for (var item in response.data) {
+            searchMemorialList.add(
+              MemorialGraveModel.fromJson(item),
+            );
+          }
+        }
+        return {
+          'success': true, 'searchMemorialList':searchMemorialList,
+        };
+      } else {
+        return {'success': false, 'statusCode': response.statusCode};
+      }
+    } on Dio.DioError catch (e) {
+      return {'success': false, 'statusCode': e.response?.statusCode};
+    }
+  }
 }
 
 class LoggingInterceptor extends Dio.Interceptor {

@@ -12,7 +12,6 @@ class MemorialListViewModel extends ChangeNotifier {
   final MemorialService _memorialService = MemorialService();
   List<MemorialGraveModel> _favoriteMemorialList = [];
   List<MemorialGraveModel> _memorialList = [];
-  List<MemorialGraveModel> _searchList = [];
 
   MemorialSearchModel _searchData = MemorialSearchModel(searchWord: '');
 
@@ -22,7 +21,6 @@ class MemorialListViewModel extends ChangeNotifier {
 
   List<MemorialGraveModel> get favoriteMemorialList => _favoriteMemorialList;
   List<MemorialGraveModel> get memorialList => _memorialList;
-  List<MemorialGraveModel> get searchList => _searchList;
 
   String get searchWord => _searchData.searchWord;
 
@@ -109,7 +107,6 @@ class MemorialListViewModel extends ChangeNotifier {
       }
     } else {
       _errorMessage = null;
-      _searchList = result['searchMemorialList'];
     }
     notifyListeners();
   }

@@ -1,26 +1,29 @@
+//memorial_letter_upload.dart
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:frontend/main.dart';
-import 'package:frontend/screens/memorial/memorial_app_bar.dart';
 import 'package:frontend/view_models/memorial_view_models/memorial_detail_letterTab_viewmodel.dart';
 import 'package:frontend/widgets/common_text_widget.dart';
 import 'package:provider/provider.dart';
 
-class MemorialLetterUpload extends StatefulWidget {
-  _MemorialLetterUploadState createState() => _MemorialLetterUploadState();
-}
+// class MemorialLetterUpload extends StatefulWidget {
+//   _MemorialLetterUploadState createState() => _MemorialLetterUploadState();
+// }
 
-class _MemorialLetterUploadState extends State<MemorialLetterUpload> {
+class MemorialLetterUpload extends StatelessWidget {
+  MemorialLetterUpload({this.arguments});
+  final arguments;
+
   @override
   Widget build(BuildContext context) {
     return ChangeNotifierProvider(
         create: (context) => LetterTabViewModel(),
         child:
-            Consumer<LetterTabViewModel>(builder: (context, viewModel, child) {
+        Consumer<LetterTabViewModel>(builder: (context, viewModel, child) {
           return Scaffold(
             appBar: AppBar(
               backgroundColor: themeColour2,
-              title: Text('추모관 편지 업로드'),
+              title: const Text('추모관 편지 남기기'),
             ),
             body: SingleChildScrollView(
               child: Column(
@@ -30,9 +33,9 @@ class _MemorialLetterUploadState extends State<MemorialLetterUpload> {
                   SizedBox(height: 30),
                   Center(
                       child: CommonText(
-                    text: '고인에게 생전에 하지 못 했던 말을 남겨보세요.',
-                    fontSize: 20,
-                  )),
+                        text: '고인에게 생전에 하지 못 했던 말을 남겨보세요.',
+                        fontSize: 20,
+                      )),
                   SizedBox(height: 30),
                   Center(
                       child: Padding(
@@ -53,9 +56,9 @@ class _MemorialLetterUploadState extends State<MemorialLetterUpload> {
                                 ),
                                 borderSide:
                                     BorderSide(color: Colors.grey, width: 2.0)),
-                            focusedBorder: OutlineInputBorder(
-                              // 포커스됐을 때 외곽선 설정
-                              borderRadius:
+                                focusedBorder: OutlineInputBorder(
+                                  // 포커스됐을 때 외곽선 설정
+                                  borderRadius:
                                   const BorderRadius.all(Radius.circular(2.0)),
                               borderSide: BorderSide(
                                   color: themeColour5, width: 2.0), // 여기서 색깔 변경
@@ -79,18 +82,18 @@ class _MemorialLetterUploadState extends State<MemorialLetterUpload> {
                                 ),
                                 borderSide:
                                     BorderSide(color: Colors.grey, width: 2.0)),
-                            focusedBorder: OutlineInputBorder(
-                              // 포커스됐을 때 외곽선 설정
-                              borderRadius:
+                                focusedBorder: OutlineInputBorder(
+                                  // 포커스됐을 때 외곽선 설정
+                                  borderRadius:
                                   const BorderRadius.all(Radius.circular(2.0)),
-                              borderSide: BorderSide(
-                                  color: themeColour5, width: 2.0), // 여기서 색깔 변경
+                                  borderSide: BorderSide(
+                                      color: themeColour5, width: 2.0), // 여기서 색깔 변경
+                                ),
+                              ),
                             ),
-                          ),
+                          ],
                         ),
-                      ],
-                    ),
-                  )),
+                      )),
                   SizedBox(
                     height: 30,
                   ),
@@ -101,20 +104,21 @@ class _MemorialLetterUploadState extends State<MemorialLetterUpload> {
               color: themeColour3,
               height: 80,
               child: InkWell(
-                onTap: () {
-                  viewModel.uploadLetter().then((_) {
-                    if (viewModel.errorMessage == null) {
-                      Navigator.pop(context);
-                    } else {
-                      if (viewModel.errorMessage != null) {
-                        ScaffoldMessenger.of(context).showSnackBar(
-                          SnackBar(
-                            content: Text(viewModel.errorMessage!),
-                          ),
-                        );
-                      }
+                onTap: () async {
+                  await viewModel.uploadLetter();
+                  if (viewModel.errorMessage == null) {
+                    var newList = viewModel.uploadLetter();
+                    Navigator.pop(context, newList);
+                    // setState(() {});
+                  } else {
+                    if (viewModel.errorMessage != null) {
+                      ScaffoldMessenger.of(context).showSnackBar(
+                        SnackBar(
+                          content: Text(viewModel.errorMessage!),
+                        ),
+                      );
                     }
-                  });
+                  }
                 },
                 child: Center(
                   child: Text(
