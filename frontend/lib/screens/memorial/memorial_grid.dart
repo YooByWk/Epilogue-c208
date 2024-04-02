@@ -18,7 +18,7 @@ class MemorialGrid extends StatelessWidget {
         crossAxisCount: gridCount,
       ),
       delegate: SliverChildBuilderDelegate(
-            (BuildContext context, int index) {
+        (BuildContext context, int index) {
           if (index < viewModel.favoriteMemorialList.length) {
             final memorial = viewModel.favoriteMemorialList[index];
 
@@ -30,7 +30,8 @@ class MemorialGrid extends StatelessWidget {
               viewModel: viewModel,
             );
           } else {
-            final memorial = viewModel.memorialList[index - viewModel.favoriteMemorialList.length];
+            final memorial = viewModel
+                .memorialList[index - viewModel.favoriteMemorialList.length];
             return MemorialCard(
               // imagePath: memorial.graveImg,
               viewModel: viewModel,
@@ -40,7 +41,8 @@ class MemorialGrid extends StatelessWidget {
             );
           }
         },
-        childCount: viewModel.favoriteMemorialList.length + viewModel.memorialList.length,
+        childCount: viewModel.favoriteMemorialList.length +
+            viewModel.memorialList.length,
       ),
     );
   }
