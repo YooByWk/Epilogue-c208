@@ -11,24 +11,20 @@ function WillApplyWitness() {
 
   const baseUrl = 'http://j10c208.p.ssafy.io:8080';
 
+
   const applyWitness = async () => {
     try {
-      const formData = new FormData();
-      formData.append('deadName', deadName);
-      formData.append('deadBirth', deadBirth);
-      formData.append('witnessName', witnessName);
-      formData.append('willCode', willCode);
-      formData.append('file', file);
-
-      const response = await axios.post(`${baseUrl}/api/will/apply`, formData, {
-        headers: {
-          'Content-Type': 'multipart/form-data'
-        }
-      });
+      const response = await axios.post(`${baseUrl}/api/will/apply`, {
+        "deadName": deadName,
+        "deadBirth": deadBirth,
+        "witnessName": witnessName,
+        "willCode": willCode
+      }
+      );
 
       if (response.status === 200) {
         console.log('신청 성공:', response.data);
-        alert('신청이 완료되었습니다. 확인하는데 3-5일 정도 소요됩니다. 기다리세요!');
+        alert('신청이 완료되었습니다. 확인하는데 3-5일 정도 소요됩니다. 기다리세용~!')
       } else {
         console.log('신청 오류:', response.status);
       }
@@ -36,6 +32,7 @@ function WillApplyWitness() {
       console.error(error);
     }
   };
+
 
   const onchangeImageUpload = (e) => {
     const uploadedFile = e.target.files[0];
