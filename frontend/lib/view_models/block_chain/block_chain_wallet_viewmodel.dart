@@ -120,6 +120,7 @@ int validateMnemonic() {
           debugPrint('니모닉이 유효하지 않습니다.');
           break;
       }
+      // await storage.write( key : 'mnemonic', value: ); // 니모닉 저장
 
 
       return;
