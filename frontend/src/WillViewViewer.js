@@ -13,14 +13,23 @@ function WillViewViewer() {
       alert('코드를 입력해주세요.');
       return;
     }
-    console.log('누름요');
+  
+    const formData = new FormData();
+    formData.append('willCode', code);
+  
     try {
-      const response = await axios.post(`${baseUrl}/api/will/certificate`, { code });
-
+      const response = await axios.post(`${baseUrl}/api/will/certificate`, formData, {
+        headers: {
+          'Content-Type': 'multipart/form-data'
+        }
+      });
+  
       if (response.status === 200) {
-        console.log('열람 성공:', response.data);
-        Navi('/will');
-        // <Route exact path="/will" videoPath={'메롱'} />
+        // console.log('열람 성공:', response.data);
+        const userId = response.data.userId
+        const s3url = response.data.willFileAddress
+        
+        console.log('열람 성공 : ', response.data.willFileAddress)
       } else {
         console.log('열람 오류:', response.status);
       }
@@ -28,6 +37,7 @@ function WillViewViewer() {
       console.error('Error:', error);
     }
   };
+  
 
   return (
     <div style={styles.container}>

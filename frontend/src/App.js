@@ -14,7 +14,9 @@ function App() {
       <Route path="/" element={<Select />} />
       <Route path="/witness" element={<WillApplyWitness />} />
       <Route path='/viewer' element={<WillViewViewer />} />
-      <Route path='/will' element={<Will />} />
+      <Route path="/will/:userId">
+                    <Will />
+                </Route>
     </Routes>
     </BrowserRouter>
     </>
