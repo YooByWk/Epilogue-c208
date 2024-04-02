@@ -146,13 +146,14 @@ _asyncMethod() async {
                                                 '이전에 로그인한 아이디와 현재 로그인한 아이디가 다릅니다. 로그아웃을 하시겠습니까?'),
                                             actions: [
                                               TextButton(
-                                                  onPressed: () {
-                                                    storage.delete(
+                                                  onPressed: () async {
+                                                    await storage.delete(
                                                         key: 'privateKey');
-                                                    storage.delete(
+                                                    await storage.delete(
                                                         key: 'owner');
                                                     Navigator.pushNamed(
                                                         context, '/mnemonic');
+                                                    await  storage.write(key : 'owner', value : await storage.read(key : 'userId')).then((value) async => debugPrint('유저이름 저장 : 이 계정 사용 : ${await storage.read(key : 'owner')}'));
                                                   },
                                                   child: Text('이 계정 사용',style: TextStyle(color: themeColour5))),
                                               TextButton(
@@ -168,10 +169,40 @@ _asyncMethod() async {
                                   ();
                                 }
                                 //
-                                else if ( _pk == null &&  _owner == null) {
-                                  debugPrint('아이디 키 모두 없음');
+                                else if ( _pk == null ||  _owner == null) {
+                                  debugPrint('아이디 혹은 키  없음');
+                                  showDialog(
+                                    context: context,
+                                    builder: (BuildContext context) {
+                                      return AlertDialog(
+                                        title: Text('유언장 복구'),
+                                        content: Text(
+                                            '저장된 키가 없습니다. \n유언장을 복구하시겠습니까?'),
+                                        actions: [
+                                          TextButton(
+                                              onPressed: () async {
+                                                await storage.delete(
+                                                    key: 'privateKey');
+                                                await storage.delete(
+                                                    key: 'owner');
+                                                await  storage.write(key : 'owner', value : await storage.read(key : 'userId')).then((value) async => debugPrint('유저이름 저장 : 이 계정 사용 : ${await storage.read(key : 'owner')}'));
+                                                Navigator.pushNamed(
+                                                    context, '/mnemonic');
+                                              },
+                                              child: Text('이 계정 사용',style: TextStyle(color: themeColour5))),
+                                          TextButton(
+                                              onPressed: () async {
+                                                debugPrint('둘다없음');
+                                                Navigator.pushNamed(context, '/login');
+                                                await UserViewModel().logout();
+                                              },
+                                              child: Text('로그아웃', style: TextStyle(color: Colors.grey[600]),))
+                                        ],
+                                      );
+                                    }
+                                    );
                                   // 저장된 아이디와 키 모두 없다면 키를 복구한다.
-                                  Navigator.pushNamed(context, '/mnemonic');
+                                  // Navigator.pushNamed(context, '/mnemonic');
                                 }
 
                               } else {
