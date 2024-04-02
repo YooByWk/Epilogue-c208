@@ -6,7 +6,10 @@ import 'package:frontend/screens/memorial/memorial_grid.dart';
 import 'package:frontend/view_models/memorial_view_models/memorial_list_viewmodel.dart';
 import 'package:frontend/screens/memorial/memorial_topbtn.dart';
 import 'package:frontend/screens/memorial/memorial_main/memorial_body.dart';
+import 'package:frontend/widgets/common_button.dart';
 import 'package:provider/provider.dart';
+
+import '../memorial_widgets.dart';
 
 class MemorialScreen extends StatefulWidget {
   @override
@@ -38,7 +41,7 @@ class _MemorialScreenState extends State<MemorialScreen> {
                           delegate: SliverChildListDelegate(
                             [
                               MemorialBodyWidget(),
-                              // MemorialSearchWidget(viewModel: _viewModel),
+                              MemorialSearchWidget(viewModel: viewModel),
                             ],
                           ),
                         ),

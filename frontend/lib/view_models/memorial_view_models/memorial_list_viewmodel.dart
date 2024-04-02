@@ -90,11 +90,14 @@ class MemorialListViewModel extends ChangeNotifier {
     notifyListeners();
   }
 
-  Future<void> search() async {
+  Future search() async {
+    _searchList = [];
+
     _isLoading = true;
     _errorMessage = null;
     notifyListeners();
-
+  
+    // 검색
     final result = await _memorialService.searchMemorial(_searchData);
     _isLoading = false;
 
@@ -108,7 +111,6 @@ class MemorialListViewModel extends ChangeNotifier {
           _errorMessage = '알 수 없는 오류가 발생했습니다. 관리자에게 문의해주세요.';
       }
     } else {
-      _errorMessage = null;
       _searchList = result['searchMemorialList'];
     }
     notifyListeners();
