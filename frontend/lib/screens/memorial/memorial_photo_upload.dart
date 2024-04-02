@@ -136,7 +136,7 @@ class _MemorialPhotoUploadState extends State<MemorialPhotoUpload> {
                   viewModel.setFile(photo!);
                   viewModel.setPhoto().then((_) {
                     if (viewModel.errorMessage == null) {
-                      Navigator.pop(context);
+                      Navigator.pop(context,true);
                     } else {
                       if (viewModel.errorMessage != null) {
                         ScaffoldMessenger.of(context).showSnackBar(

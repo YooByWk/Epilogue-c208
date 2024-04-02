@@ -1,5 +1,4 @@
 import 'dart:io';
-
 import 'package:flutter/material.dart';
 import 'package:frontend/models/memorial/memorial_video_list_model.dart';
 import 'package:frontend/models/memorial/memorial_video_upload_model.dart';
@@ -42,6 +41,7 @@ class VideoTabViewModel extends ChangeNotifier {
   String? get errorMessage => _errorMessage;
 
   void loadInitialData() async {
+    _videos = [];
     _isLoading = true;
     _errorMessage = null;
     notifyListeners();
