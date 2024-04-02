@@ -25,7 +25,11 @@ function WillApplyWitness() {
       if (response.status === 200) {
         console.log('신청 성공:', response.data);
         alert('신청이 완료되었습니다. 확인하는데 3-5일 정도 소요됩니다. 기다리세용~!')
-      } else {
+      } if (response.status === 204) {
+        console.log('잘못된 값')
+        alert('정보를 정확히 입력해주세요!')
+      }
+      else {
         console.log('신청 오류:', response.status);
       }
     } catch (error) {
@@ -57,7 +61,7 @@ function WillApplyWitness() {
       />
       <input
         type="text"
-        placeholder="고인 생년월일"
+        placeholder="고인 생년월일(YYYY.MM.DD)"
         value={deadBirth}
         onChange={(e) => setDeadBirth(e.target.value)}
         style={styles.input}
