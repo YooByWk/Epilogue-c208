@@ -104,21 +104,20 @@ class MemorialLetterUpload extends StatelessWidget {
               color: themeColour3,
               height: 80,
               child: InkWell(
-                onTap: () async {
-                  await viewModel.uploadLetter();
-                  if (viewModel.errorMessage == null) {
-                    var newList = viewModel.uploadLetter();
-                    Navigator.pop(context, newList);
-                    // setState(() {});
-                  } else {
-                    if (viewModel.errorMessage != null) {
-                      ScaffoldMessenger.of(context).showSnackBar(
-                        SnackBar(
-                          content: Text(viewModel.errorMessage!),
-                        ),
-                      );
+                onTap: () {
+                  viewModel.uploadLetter().then((_) {
+                    if (viewModel.errorMessage == null) {
+                      Navigator.pop(context, true);
+                    } else {
+                      if (viewModel.errorMessage != null) {
+                        ScaffoldMessenger.of(context).showSnackBar(
+                          SnackBar(
+                            content: Text(viewModel.errorMessage!),
+                          ),
+                        );
+                      }
                     }
-                  }
+                  });
                 },
                 child: Center(
                   child: Text(

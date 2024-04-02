@@ -137,7 +137,7 @@ class _MemorialVideoUploadState extends State<MemorialVideoUpload> {
                   viewModel.setFile(video!);
                   viewModel.setVideo().then((_) {
                     if (viewModel.errorMessage == null) {
-                      Navigator.pop(context);
+                      Navigator.pop(context, true);
                     } else {
                       if (viewModel.errorMessage != null) {
                         ScaffoldMessenger.of(context).showSnackBar(

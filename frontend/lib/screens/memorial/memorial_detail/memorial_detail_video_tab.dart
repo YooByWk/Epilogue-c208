@@ -11,7 +11,7 @@ import 'package:video_thumbnail/video_thumbnail.dart';
 import 'dart:typed_data';
 import 'package:visibility_detector/visibility_detector.dart';
 import 'package:frontend/main.dart';
-
+// 비디오 탭입니다.
 class VideoTab extends StatelessWidget {
   const VideoTab({Key? key}) : super(key: key);
 
@@ -36,21 +36,21 @@ class VideoTab extends StatelessWidget {
                   itemCount: viewModel.videos.length + 1,
                   itemBuilder: (context, index) {
                     if (index == 0) {
-                      // return Text('비디오 탭입니다.');
                       return Padding( padding:EdgeInsets.fromLTRB(8, 0, 8, 0), child:Column(children: [
                         SizedBox(height: 10),
                         MemorialVideoUploadButton(
                             width: MediaQuery.of(context).size.width,
-                            onPressed: () {
-                              // debugPrint('비디오 업로드 버튼 클릭');
-                              Navigator.push(
+                            onPressed: () async {
+                              bool uploaded = await Navigator.push(
                                 context,
                                 MaterialPageRoute(
-                                  builder: (context) =>
-                                      MemorialVideoUpload(),
-                                ),
+                                    builder: (context) => MemorialVideoUpload()),
                               );
-                            }),
+                              if (uploaded == true) {
+                                viewModel.loadInitialData();
+                              } 
+                            }
+                            ),
                         SizedBox(height: 10)
                       ]));
                     }
@@ -70,6 +70,8 @@ class VideoTab extends StatelessWidget {
   }
 }
 
+//////////////////////////////////////////////////////////
+// 비디오 카드 위젯  //
 //////////////////////////////////////////////////////////
 class VideoCard extends StatefulWidget {
   final String videoPath;
