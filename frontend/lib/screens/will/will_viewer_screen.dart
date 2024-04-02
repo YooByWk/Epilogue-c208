@@ -26,6 +26,7 @@ class _WillViewerScreenState extends State<WillViewerScreen> {
         builder: (context, viewModel, child) {
           return Scaffold(
             appBar: AppBar(
+              automaticallyImplyLeading: false,
               backgroundColor: themeColour2,
               title: const Text('유언장 생성하기'),
             ),
@@ -176,7 +177,7 @@ class _WillViewerScreenState extends State<WillViewerScreen> {
               width: double.infinity,
               height: 100,
               child: TextButtonWidget(
-                preText: '이전',
+                preText: '',
                 nextText: '다음',
                 onPressed: () {
                   if (!viewModel.isLoading) {

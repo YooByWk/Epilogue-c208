@@ -175,7 +175,6 @@ _Fn? getPauseResumeFn() {
       child: Column(
         mainAxisAlignment: MainAxisAlignment.center,
         children: <Widget>[
-          Text('내 유언 확인 '),
           Row(
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
