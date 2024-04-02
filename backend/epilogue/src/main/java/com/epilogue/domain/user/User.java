@@ -44,7 +44,6 @@ public class User {
 
     @Schema(description = "유언")
     @OneToOne(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
-//    @OneToOne(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
     private Will will;
 
     @Enumerated(EnumType.STRING)
@@ -61,5 +60,9 @@ public class User {
 
     public void updateWillNull() {
         this.will = null;
+    }
+
+    public void updateUserStatus() {
+        this.userStatus = UserStatus.DEADANDSEND;
     }
 }

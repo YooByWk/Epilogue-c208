@@ -136,6 +136,8 @@ public class WillService {
         User user = userRepository.findByNameAndBirth(deadName, deadBirth);
         if (user == null || !user.getUserStatus().equals(UserStatus.DEADANDNOTSEND)) return false;
 
+        user.updateUserStatus();
+
         Will will = user.getWill();
         if (!will.getWillCode().equals(willCode)) return false;
 
