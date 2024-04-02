@@ -118,6 +118,7 @@ public class WillController {
         return new ResponseEntity<>(HttpStatus.OK);
     }
 
+    @CrossOrigin
     @Operation(summary = "유언 열람 신청 API", description = "유언 열람을 신청합니다.")
     @ApiResponses(value = {
             @ApiResponse(responseCode = "true", description = "인증 성공"),
@@ -128,6 +129,7 @@ public class WillController {
         return new ResponseEntity<>(willService.applyWill(willApplyRequestDto), HttpStatus.OK);
     }
 
+    @CrossOrigin
     @Operation(summary = "인증 코드 확인 API", description = "열람인의 인증 코드를 확인합니다.")
     @ApiResponses(value = {
             @ApiResponse(responseCode = "200과 유언 파일 주소(String)", description = "인증 성공"),

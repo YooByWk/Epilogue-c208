@@ -1,11 +1,13 @@
 package com.epilogue.util;
 
 import com.epilogue.dto.response.user.CustomUserDetails;
+import com.epilogue.repository.user.UserRepository;
 import jakarta.servlet.FilterChain;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.data.redis.core.StringRedisTemplate;
 import org.springframework.security.authentication.AuthenticationManager;
@@ -21,17 +23,29 @@ import java.util.Collection;
 import java.util.Iterator;
 
 @RequiredArgsConstructor
+@Slf4j
 public class LoginFilter extends UsernamePasswordAuthenticationFilter {
 
     private final AuthenticationManager authenticationManager;
     private final StringRedisTemplate redisTemplate;
     private final JWTUtil jwtUtil;
 
+    public LoginFilter(String defaultFilterProcessUrl, AuthenticationManager authenticationManager, StringRedisTemplate redisTemplate, JWTUtil jwtUtil) {
+        super.setFilterProcessesUrl(defaultFilterProcessUrl);
+        this.authenticationManager = authenticationManager;
+        this.redisTemplate = redisTemplate;
+        this.jwtUtil = jwtUtil;
+    }
+
     @Override
     public Authentication attemptAuthentication(HttpServletRequest request, HttpServletResponse response) {
 
         String userId = obtainUsername(request);
         String password = obtainPassword(request);
+
+        log.info("=============================================");
+        log.info("userId : {}", userId);
+        log.info("password : {}", password);
 
         // 스프링 시큐리티에서 아이디와 비밀번호를 검증하기 위해서는 token에 담아야 함
         UsernamePasswordAuthenticationToken authToken = new UsernamePasswordAuthenticationToken(userId, password, null);
@@ -42,11 +56,14 @@ public class LoginFilter extends UsernamePasswordAuthenticationFilter {
 
     @Override
     protected void successfulAuthentication(HttpServletRequest request, HttpServletResponse response, FilterChain chain, Authentication authentication) {
-        //유저 정보
+        // 유저 정보
         // 로그인 성공 -> 로그인한 유저의 정보를 가지고 JWT 발급
         // getPrincipal() : 현재 사용자 정보 가져오기
         CustomUserDetails customUserDetails = (CustomUserDetails) authentication.getPrincipal();
         String userId = customUserDetails.getUsername(); // 아이디
+        log.info("=============================================");
+        log.info("successfulAuthentication 의 userId : {}", userId);
+        log.info("successfulAuthentication 의 password : {}", customUserDetails.getPassword());
 
         Collection<? extends GrantedAuthority> authorities = authentication.getAuthorities();
         Iterator<? extends GrantedAuthority> iterator = authorities.iterator();

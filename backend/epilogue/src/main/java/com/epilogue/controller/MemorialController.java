@@ -130,7 +130,7 @@ public class MemorialController {
         }
     }
 
-    @Operation(summary = "디지털 추모관 즐겨찾기 추가 API")
+    @Operation(summary = "디지털 추모관 즐겨찾기 추가/취소 API")
     @PostMapping("/favorite/{memorialSeq}")
     @ApiResponse(responseCode = "200", description = "성공")
     @ApiResponse(responseCode = "403", description = "로그인 에러")
