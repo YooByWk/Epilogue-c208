@@ -49,7 +49,7 @@ class LetterTab extends StatelessWidget {
                                   context,
                                   MaterialPageRoute(builder: (context) =>MemorialLetterUpload()),
                                 );
-                                if (res = true) {
+                                if (res == true) {
                                   viewModel.loadInitialData();
                                   debugPrint('편지 추가 확인${viewModel.letters.length}');
                                   // setState((){});

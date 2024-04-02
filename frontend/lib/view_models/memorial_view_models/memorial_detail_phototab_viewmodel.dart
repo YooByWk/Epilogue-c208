@@ -42,6 +42,7 @@ class PhotoTabViewModel extends ChangeNotifier {
 
 
   void loadInitialData() async {
+    _photos = [];
     _isLoading = true;
     _errorMessage = null;
     notifyListeners();
