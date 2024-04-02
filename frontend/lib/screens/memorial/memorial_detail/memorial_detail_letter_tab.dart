@@ -1,17 +1,29 @@
+//memorial_detail_letter_tab.dart
 import 'package:flutter/material.dart';
+import 'package:frontend/main.dart';
 import 'package:frontend/screens/memorial/memorial_letter_upload.dart';
 import 'package:frontend/view_models/dio_api_request_examples.dart';
 import 'package:frontend/view_models/memorial_view_models/memorial_detail_letterTab_viewmodel.dart';
+import 'package:frontend/widgets/common_text_widget.dart';
 import 'package:provider/provider.dart';
 
-class LetterTab extends StatelessWidget {
+class LetterTab extends StatefulWidget {
+  const LetterTab({Key? key}) : super(key: key);
+
+  @override
+  _LetterTabState createState() => _LetterTabState();
+}
+
+class _LetterTabState extends State<LetterTab> {
   final List<Color> colorList = [
-    Color.fromRGBO(255,245,192, 1.0),
-    Color.fromRGBO(197,255,192, 1.0),
-    Color.fromRGBO(192,213,255, 1.0),
-    Color.fromRGBO(246,192,255, 1.0),
-    Color.fromRGBO(255,215,192, 1.0),
+    Color.fromRGBO(255, 245, 192, 1.0),
+    Color.fromRGBO(197, 255, 192, 1.0),
+    Color.fromRGBO(192, 213, 255, 1.0),
+    Color.fromRGBO(246, 192, 255, 1.0),
+    Color.fromRGBO(255, 215, 192, 1.0),
   ];
+
+
   @override
   Widget build(BuildContext context) {
     return ChangeNotifierProvider(
@@ -48,21 +60,27 @@ class LetterTab extends StatelessWidget {
                                 Navigator.push(
                                   context,
                                   MaterialPageRoute(
-                                    builder: (context) =>
-                                        MemorialLetterUpload(),
-                                  ),
+                                      builder: (context) => MemorialLetterUpload()),
                                 )
                               },
                               child: Column(
                                   mainAxisAlignment: MainAxisAlignment.center,
                                   crossAxisAlignment: CrossAxisAlignment.center,
-                                  children: [Icon(Icons.add), Text('편지 추가', style: TextStyle(fontSize: 20),)]),
+                                  children: [
+                                    Icon(Icons.add),
+                                    Text(
+                                      '편지 추가',
+                                      style: TextStyle(fontSize: 20),
+                                    )
+                                  ]),
                             ));
                           } else {
-                            Color cardColor = colorList[(index - 1) % colorList.length];
+                            Color cardColor =
+                                colorList[(index - 1) % colorList.length];
 
                             return Letter(
-                              key: ValueKey(viewModel.letters[index - 1].memorialLetterSeq),
+                              key: ValueKey(viewModel
+                                  .letters[index - 1].memorialLetterSeq),
                               content:
                                   (viewModel.letters[index - 1].content != null)
                                       ? viewModel.letters[index - 1].content
@@ -89,6 +107,7 @@ class Letter extends StatelessWidget {
   final String? content;
   final String date;
   final Color cardColor;
+
   // final int memorialLetterSeq;
 
   Letter({
@@ -133,7 +152,8 @@ class Letter extends StatelessWidget {
           mainAxisAlignment: MainAxisAlignment.center,
           crossAxisAlignment: CrossAxisAlignment.center,
           children: [
-            Text("From. ${nickname ?? ''}", style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold)),
+            Text("From. ${nickname ?? ''}",
+                style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold)),
             Text(content ?? '', style: TextStyle(fontSize: 20)),
             Text(date, style: TextStyle(fontSize: 18)),
           ],
@@ -142,3 +162,5 @@ class Letter extends StatelessWidget {
     );
   }
 }
+
+
