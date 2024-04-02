@@ -101,20 +101,25 @@ class _MypageWillMoreScreenState extends State<MypageWillMoreScreen> {
                                 CommonButtonWidget(
                                   height: 300,
                                   width: 300,
-                                  text: '묘비명\n故${userViewModel.user!.name}',
+                                  text: '${myWillViewModel.graveName}\n故${userViewModel.user!.name}',
                                   fontSize: 24,
                                   textColor: Colors.black,
                                   imagePath: 'assets/images/stone.png',
                                   onPressed: () {},
                                 ),
                                 Positioned(
-                                  top: 25,
-                                  child: IconButton(
-                                    iconSize: 30,
-                                    icon: Icon(Icons.edit),
-                                    onPressed: () {},
+                                    top: 40,
+                                    child: Text('RIP', style: TextStyle(fontSize: 30),)),
+                                Positioned(
+                                  bottom: 40,
+                                  child: myWillViewModel.graveImageAddress != null // imageUrl은 ViewModel에서 이미지 URL을 가리키는 속성입니다.
+                                      ? Image.network(
+                                    myWillViewModel.graveImageAddress!,
+                                    width: 100, // 이미지 크기, 필요에 따라 조정
+                                    height: 70,
+                                    fit: BoxFit.cover, // 이미지가 컨테이너에 맞게 조절되도록 설정
+                                  ) : Container(),
                                   ),
-                                ),
                               ],
                             ),
                             MyPagePlay(path: widget.path),

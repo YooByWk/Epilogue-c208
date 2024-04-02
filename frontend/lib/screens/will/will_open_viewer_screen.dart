@@ -1,13 +1,12 @@
-import 'package:chewie/chewie.dart';
+import 'package:frontend/screens/mypage/mypage_play.dart';
 import 'package:flutter/material.dart';
-import 'package:dio/dio.dart';
-import 'package:frontend/main.dart';
 import 'package:frontend/view_models/will_view_models/will_open_viewmodel.dart';
-import 'package:video_player/video_player.dart';
 import 'package:provider/provider.dart';
-import 'package:visibility_detector/visibility_detector.dart';
 
 class WillOpenViewerScreen extends StatefulWidget {
+  WillOpenViewerScreen({
+    Key? key}) : super(key: key);
+
   @override
   _WillOpenViewerScreenState createState() => _WillOpenViewerScreenState();
 }
@@ -44,7 +43,10 @@ class _WillOpenViewerScreenState extends State<WillOpenViewerScreen> {
                             ),
                           ),
                           Container(
-                            width: MediaQuery.of(context).size.width * 0.7,
+                            width: MediaQuery
+                                .of(context)
+                                .size
+                                .width * 0.7,
                             child: TextField(
                               controller: _codeController,
                               decoration: InputDecoration(
@@ -67,17 +69,18 @@ class _WillOpenViewerScreenState extends State<WillOpenViewerScreen> {
                                 FocusScope.of(context).unfocus(); // 키보드 숨기기
                                 await viewModel
                                     .submitCode(_codeController.text);
+                                setState(() {
+
+                                });
                               }
                             },
                             child: Text('제출하기'),
                           ),
                           SizedBox(height: 30),
                           viewModel.s3url != null
-                              ? VideoCard(videoPath: viewModel.s3url!)
-                              : Card(
-                                  child: Container(
-                                      color: themeColour1,
-                                      child: SizedBox(height: 35)))
+                              ? MyPagePlay(path: viewModel.s3url!)
+                              : SizedBox(height: 35, child: Center(child: Text(
+                              "오디오 파일을 로드하는 중입니다."))),
                         ],
                       ),
                     ),
@@ -85,107 +88,5 @@ class _WillOpenViewerScreenState extends State<WillOpenViewerScreen> {
                 ));
           },
         ));
-  }
-}
-
-class VideoCard extends StatefulWidget {
-  final String videoPath;
-
-  VideoCard({
-    Key? key,
-    required this.videoPath,
-  }) : super(key: key);
-
-  @override
-  _VideoCardState createState() => _VideoCardState();
-}
-
-//////////////////////////////////////////////////////////
-class _VideoCardState extends State<VideoCard> {
-  late VideoPlayerController videoPlayerController;
-  late ChewieController chewieController;
-  late ScrollController scrollController;
-
-  @override
-  void initState() {
-    super.initState();
-    videoPlayerController =
-        VideoPlayerController.networkUrl(Uri.parse(widget.videoPath));
-    scrollController = ScrollController();
-
-    chewieController = ChewieController(
-        videoPlayerController: videoPlayerController,
-        autoPlay: false,
-        looping: true,
-        autoInitialize: true,
-        allowMuting: false,
-        allowFullScreen: true,
-        allowPlaybackSpeedChanging: false,
-        showControlsOnInitialize: false,
-        showControls: true,
-        placeholder: Image.asset('assets/images/willplayimage.jpg'));
-    ;
-  }
-
-  @override
-  void dispose() {
-    videoPlayerController.dispose();
-    chewieController.dispose();
-    super.dispose();
-  }
-
-  @override
-  Widget build(BuildContext context) {
-    return VisibilityDetector(
-        key: Key('visible-$widget.index'),
-        onVisibilityChanged: (visibilityInfo) {
-          var visiblePercentage = visibilityInfo.visibleFraction * 100;
-          if (visiblePercentage == 100) {
-            // 화면 중앙에 가장 가까운 비디오를 재생합니다.
-            if (!videoPlayerController.value.isPlaying) {
-              debugPrint('비디오 재생');
-              videoPlayerController.play();
-            }
-          } else {
-            // 비디오를 일시정지합니다.
-            videoPlayerController.pause();
-          }
-          videoPlayerController.addListener(() {
-            debugPrint(
-                'Video is playing: ${videoPlayerController.value.isPlaying}');
-          });
-        },
-        child: GestureDetector(
-            onLongPressStart: (details) {
-              if (videoPlayerController.value.isPlaying) {
-                videoPlayerController.pause();
-              }
-            },
-            onLongPressEnd: (details) {
-              if (!videoPlayerController.value.isPlaying) {
-                videoPlayerController.play();
-              }
-            },
-            onTap: () {
-              if (!videoPlayerController.value.isPlaying) {
-                videoPlayerController.play();
-              } else {
-                videoPlayerController.pause();
-              }
-            },
-            child: Card(
-                child: Container(
-                    color: themeColour1,
-                    child: Column(
-                      children: [
-                        AspectRatio(
-                          aspectRatio: 16 / 9,
-                          child: Chewie(
-                            controller: chewieController,
-                          ),
-                        ),
-                        SizedBox(height: 35)
-                      ],
-                    )))));
   }
 }

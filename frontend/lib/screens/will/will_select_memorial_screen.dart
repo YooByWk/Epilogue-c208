@@ -22,6 +22,7 @@ class _WillSelectMemorialScreenState extends State<WillSelectMemorialScreen> {
             builder: (context, viewModel, child) {
           return Scaffold(
               appBar: AppBar(
+                automaticallyImplyLeading: false,
                 backgroundColor: themeColour2,
                 title: const Text('유언장 생성하기'),
               ),
@@ -105,14 +106,7 @@ class _WillSelectMemorialScreenState extends State<WillSelectMemorialScreen> {
                       ),
                     ),
                   ]),
-              bottomNavigationBar: SizedBox(
-                width: double.infinity,
-                height: 100,
-                child: TextButtonWidget(
-                  preText: '이전',
-                  prePage: WillViewerScreen(),
-                ),
-              ));
+              );
         }));
   }
 }
