@@ -29,6 +29,7 @@ function WillViewViewer() {
         const userId = response.data.userId
         const s3url = response.data.willFileAddress
         
+        Navi(`/will/${userId}`, {state : {s3url : s3url}});
         console.log('열람 성공 : ', response.data.willFileAddress)
       } else {
         console.log('열람 오류:', response.status);

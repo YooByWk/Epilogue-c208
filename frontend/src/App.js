@@ -4,6 +4,7 @@ import Select from "./Select";
 import WillApplyWitness from './WillApplyWitness';
 import WillViewViewer from './WillViewViewer';
 import Will from './Will';
+import Naver from './Naver';
 
 function App() {
   return (
@@ -14,9 +15,8 @@ function App() {
       <Route path="/" element={<Select />} />
       <Route path="/witness" element={<WillApplyWitness />} />
       <Route path='/viewer' element={<WillViewViewer />} />
-      <Route path="/will/:userId">
-                    <Will />
-                </Route>
+      <Route path='/naver' element={<Naver />} />
+      <Route path="/will/:userId" element= {<Will />} />
     </Routes>
     </BrowserRouter>
     </>
