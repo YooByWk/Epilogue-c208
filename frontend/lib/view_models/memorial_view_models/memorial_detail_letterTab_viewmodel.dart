@@ -40,6 +40,7 @@ class LetterTabViewModel extends ChangeNotifier {
   }
 
   void loadInitialData() async {
+    _letters = [];
     _isLoading = true;
     _errorMessage = null;
     notifyListeners();
@@ -58,8 +59,11 @@ class LetterTabViewModel extends ChangeNotifier {
           _errorMessage = '알 수 없는 오류가 발생했습니다. 관리자에게 문의해주세요.';
       }
     } else {
+
+      debugPrint('으악 ${ result['letterList']}');
       _letters = result['letterList'];
       _isLoading = false;
+      debugPrint('letterList: $_letters');
     }
     notifyListeners(); // 데이터가 변경되었음을 알림
   }
@@ -131,6 +135,7 @@ class LetterTabViewModel extends ChangeNotifier {
       }
     } else {
       _errorMessage = null;
+      // await loadInitialData();
     }
     notifyListeners();
   }

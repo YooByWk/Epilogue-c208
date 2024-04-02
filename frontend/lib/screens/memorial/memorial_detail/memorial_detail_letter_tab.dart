@@ -44,14 +44,16 @@ class LetterTab extends StatelessWidget {
                           if (index == 0) {
                             return Card(
                                 child: InkWell(
-                              onTap: () => {
-                                Navigator.push(
+                              onTap: () async {
+                                bool res = await Navigator.push(
                                   context,
-                                  MaterialPageRoute(
-                                    builder: (context) =>
-                                        MemorialLetterUpload(),
-                                  ),
-                                )
+                                  MaterialPageRoute(builder: (context) =>MemorialLetterUpload()),
+                                );
+                                if (res = true) {
+                                  viewModel.loadInitialData();
+                                  debugPrint('편지 추가 확인${viewModel.letters.length}');
+                                  // setState((){});
+                                } 
                               },
                               child: Column(
                                   mainAxisAlignment: MainAxisAlignment.center,

@@ -18,13 +18,15 @@ class _MemorialLetterUploadState extends State<MemorialLetterUpload> {
         child:
             Consumer<LetterTabViewModel>(builder: (context, viewModel, child) {
           return Scaffold(
-            appBar: MemorialAppBar(
-              screenName: '편지 남기기',
-              isMenu: true,
-              items: ['회원가입', '로그인', '로그아웃'],
-              onSelected: (value) {
-                debugPrint('$value 선택됨');
-              },
+            appBar: AppBar(
+              title: Text('편지 남기기'),
+              backgroundColor: themeColour2,
+              // screenName: '편지 남기기',
+              // isMenu: true,
+              // items: ['회원가입', '로그인', '로그아웃'],
+              // onSelected: (value) {
+              //   debugPrint('$value 선택됨');
+              // },
               // screenName: '추모관상세',
             ),
             body: SingleChildScrollView(
@@ -109,7 +111,7 @@ class _MemorialLetterUploadState extends State<MemorialLetterUpload> {
                 onTap: () {
                   viewModel.uploadLetter().then((_) {
                     if (viewModel.errorMessage == null) {
-                      Navigator.pop(context);
+                      Navigator.pop(context, true);
                     } else {
                       if (viewModel.errorMessage != null) {
                         ScaffoldMessenger.of(context).showSnackBar(
