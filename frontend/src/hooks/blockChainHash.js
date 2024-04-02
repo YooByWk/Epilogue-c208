@@ -27,12 +27,12 @@ export default function BlockChainHashHook () {
     ////// S3 버킷에 올라간 파일을 가져오는 코드
     // 0. 임시 공간에 저장 
     // console.log(BaseURL + 'api/will/certificate/');
-    const willCode = '600fc347-a793-45af-ba98-3f6da9e627aa';
+    const willCode = 'e3a03883-8685-488f-b620-ac641e3c1432';
     let formData = new FormData();
     formData.append('willCode', willCode);
-    
-    axios.post(BaseURL + '/api/will/certificate/', formData)
-    .then((res) => {console.log(res)})
+    console.log(formData)
+    axios.post(`${BaseURL}/api/will/certificate/`, formData)
+    .then((res) => {console.log('호출결과'  ,res)})
     .catch((e) => {console.log(e)});
     
     // 1. 다운받는다
@@ -40,20 +40,20 @@ export default function BlockChainHashHook () {
     // 2. 해시값을 구한다
 
 
-    try {
-      // 함수 호출
-      const res = await contract.methods.getLogs().call().then((r) => {
-        setResult(r);
+    // try {
+    //   // 함수 호출
+    //   const res = await contract.methods.getLogs().call().then((r) => {
+    //     setResult(r);
 
 
-        //  console.log('여기까지 오나?');
-        // console.log('성공', r);
-      }).catch((e) => {console.log(e)});
-      // console.log(res);
-    } catch (e) {
-      // 에러처리 : 윗부분이 안된 경우에.
-      console.log(e);
-    }
+    //      console.log('여기까지 오나?');
+    //     console.log('성공', r);
+    //   }).catch((e) => {console.log(e)});
+    //   // console.log(res);
+    // } catch (e) {
+    //   // 에러처리 : 윗부분이 안된 경우에.
+    //   console.log(e);
+    // }
     
 
 

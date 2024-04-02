@@ -18,6 +18,7 @@ function App() {
       <Route path='/viewer' element={<WillViewViewer />} />
       <Route path='/will' element={<Will />} />
       <Route path='/logs' element={<Logs />} />
+      <Route path="/will/:userId" element= {<Will />} />
     </Routes>
     </BrowserRouter>
     </>
