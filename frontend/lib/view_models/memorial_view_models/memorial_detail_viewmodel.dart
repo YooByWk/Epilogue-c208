@@ -10,7 +10,7 @@ class MemorialDetailViewModel extends ChangeNotifier {
     getDetail();
   }
 
-  late MemorialDetailModel? _memorialDetailModel;
+  MemorialDetailModel? _memorialDetailModel;
   bool _isLoading = false;
   String? _errorMessage;
 
@@ -25,22 +25,24 @@ class MemorialDetailViewModel extends ChangeNotifier {
     _errorMessage = null;
     notifyListeners();
 
-    final result = await _memorialService.getDetail();
-    if (!result['success']) {
-      int statusCode = result['statusCode'];
-      switch (statusCode) {
-        case 500:
-          _errorMessage = '서버 오류가 발생했습니다. 잠시 후 다시 시도해주세요.';
-          break;
-        default:
-          _errorMessage = '알 수 없는 오류가 발생했습니다. 관리자에게 문의해주세요.';
+    try {
+      final result = await _memorialService.getDetail();
+      if (!result['success']) {
+        int statusCode = result['statusCode'];
+        _errorMessage = statusCode == 500
+            ? '서버 오류가 발생했습니다. 잠시 후 다시 시도해주세요.'
+            : '알 수 없는 오류가 발생했습니다. 관리자에게 문의해주세요.';
+      } else {
+        _memorialDetailModel = result['memorialDetailModel'];
       }
-    } else {
-      _memorialDetailModel = result['memorialDetailModel'];
+    } catch (e) {
+      _errorMessage = '데이터 로딩 중 예외가 발생했습니다: $e';
+    } finally {
       _isLoading = false;
       notifyListeners();
     }
   }
+}
 
 // // Model의 값 변화용 함수 - 하지만 추모관의 정보는 변경 될 일이 별로 없는데?
 // void updateModel({
@@ -87,4 +89,3 @@ viewModel.updateModel(
 //     notifyListeners();
 //   }
 // }
-}
