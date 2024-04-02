@@ -1,13 +1,14 @@
-package com.epilogue.util;
+package com.epilogue.service;
 
+
+import com.epilogue.domain.auth.CustomOAuth2User;
+import com.epilogue.util.JWTUtil;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.http.Cookie;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import lombok.RequiredArgsConstructor;
-import lombok.extern.slf4j.Slf4j;
 import org.springframework.data.redis.core.StringRedisTemplate;
-import org.springframework.http.HttpStatus;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.web.authentication.SimpleUrlAuthenticationSuccessHandler;
@@ -17,9 +18,9 @@ import java.io.IOException;
 import java.util.Collection;
 import java.util.Iterator;
 
-@Slf4j
 @Component
 @RequiredArgsConstructor
+
 public class CustomSuccessHandler extends SimpleUrlAuthenticationSuccessHandler {
 
     private final JWTUtil jwtUtil;
@@ -27,8 +28,13 @@ public class CustomSuccessHandler extends SimpleUrlAuthenticationSuccessHandler 
 
     @Override
     public void onAuthenticationSuccess(HttpServletRequest request, HttpServletResponse response, Authentication authentication) throws IOException, ServletException {
-        //유저 정보
-        String username = authentication.getName();
+
+        System.out.println("==========================");
+        System.out.println(authentication.getPrincipal().toString());
+        System.out.println("=============================");
+        //OAuth2User
+        CustomOAuth2User customUserDetails = (CustomOAuth2User) authentication.getPrincipal();
+        String username = customUserDetails.getUsername();
 
         Collection<? extends GrantedAuthority> authorities = authentication.getAuthorities();
         Iterator<? extends GrantedAuthority> iterator = authorities.iterator();
@@ -47,7 +53,6 @@ public class CustomSuccessHandler extends SimpleUrlAuthenticationSuccessHandler 
 
         // Redis refreshToken 저장
         redisTemplate.opsForValue().set(JWTUtil.REFRESH_TOKEN, "Bearer " + refreshToken);
-        
-    }
 
+    }
 }

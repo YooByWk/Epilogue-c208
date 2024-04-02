@@ -23,10 +23,10 @@ public class CustomOAuth2UserService extends DefaultOAuth2UserService {
 
         OAuth2User oAuth2User = super.loadUser(userRequest);
 
-        String registrationId = userRequest.getClientRegistration().getRegistrationId();
+        String registrationId = userRequest.getClientRegistration().getClientName();
         OAuth2Response oAuth2Response;
         if (registrationId.equals("naver")) {
-
+            System.out.println("여기 들어오냐 ????");
             oAuth2Response = new NaverResponse(oAuth2User.getAttributes());
 //        } else if (registrationId.equals("google")) {
 

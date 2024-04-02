@@ -2,7 +2,7 @@ package com.epilogue.dto.response.oauth2;
 
 import java.util.Map;
 
-public class NaverResponse implements OAuth2Response {
+public class NaverResponse implements OAuth2Response{
 
     private final Map<String, Object> attribute;
 
@@ -25,13 +25,13 @@ public class NaverResponse implements OAuth2Response {
 
     @Override
     public String getMobile() {
-
         return attribute.get("mobile").toString();
     }
 
     @Override
     public String getName() {
-        return attribute.get("userId").toString();
+
+        return attribute.get("name").toString();
     }
 
     @Override
