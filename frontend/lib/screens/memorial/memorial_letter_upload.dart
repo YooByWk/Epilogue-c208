@@ -39,48 +39,48 @@ class MemorialLetterUpload extends StatelessWidget {
                   SizedBox(height: 30),
                   Center(
                       child: Padding(
-                        padding: const EdgeInsets.symmetric(horizontal: 20.0),
-                        child: Column(
-                          children: [
-                            TextField(
-                              onChanged: (value) {
-                                viewModel.setNickname(value);
-                              },
-                              decoration: InputDecoration(
-                                hintText: '보내는 사람',
-                                contentPadding: EdgeInsets.symmetric(
-                                    horizontal: 15.0, vertical: 20.0),
-                                border: OutlineInputBorder(
-                                    borderRadius: const BorderRadius.all(
-                                      const Radius.circular(2.0),
-                                    ),
-                                    borderSide:
+                    padding: const EdgeInsets.symmetric(horizontal: 20.0),
+                    child: Column(
+                      children: [
+                        TextField(
+                          onChanged: (value) {
+                            viewModel.setNickname(value);
+                          },
+                          decoration: InputDecoration(
+                            hintText: '보내는 사람 (6자 이내)',
+                            contentPadding: EdgeInsets.symmetric(
+                                horizontal: 15.0, vertical: 20.0),
+                            border: OutlineInputBorder(
+                                borderRadius: const BorderRadius.all(
+                                  const Radius.circular(2.0),
+                                ),
+                                borderSide:
                                     BorderSide(color: Colors.grey, width: 2.0)),
                                 focusedBorder: OutlineInputBorder(
                                   // 포커스됐을 때 외곽선 설정
                                   borderRadius:
                                   const BorderRadius.all(Radius.circular(2.0)),
-                                  borderSide: BorderSide(
-                                      color: themeColour5, width: 2.0), // 여기서 색깔 변경
-                                ),
-                              ),
+                              borderSide: BorderSide(
+                                  color: themeColour5, width: 2.0), // 여기서 색깔 변경
                             ),
-                            SizedBox(height: 30),
-                            TextField(
-                              onChanged: (value) {
-                                viewModel.setContent(value);
-                              },
-                              maxLines: null,
-                              minLines: 10,
-                              decoration: InputDecoration(
-                                hintText: '편지 내용을 작성해주세요.',
-                                contentPadding: EdgeInsets.symmetric(
-                                    horizontal: 15.0, vertical: 20.0),
-                                border: OutlineInputBorder(
-                                    borderRadius: const BorderRadius.all(
-                                      const Radius.circular(2.0),
-                                    ),
-                                    borderSide:
+                          ),
+                        ),
+                        SizedBox(height: 30),
+                        TextField(
+                          onChanged: (value) {
+                            viewModel.setContent(value);
+                          },
+                          maxLines: null,
+                          minLines: 5,
+                          decoration: InputDecoration(
+                            hintText: '편지 내용을 작성해주세요. (30자 이내)',
+                            contentPadding: EdgeInsets.symmetric(
+                                horizontal: 15.0, vertical: 20.0),
+                            border: OutlineInputBorder(
+                                borderRadius: const BorderRadius.all(
+                                  const Radius.circular(2.0),
+                                ),
+                                borderSide:
                                     BorderSide(color: Colors.grey, width: 2.0)),
                                 focusedBorder: OutlineInputBorder(
                                   // 포커스됐을 때 외곽선 설정
