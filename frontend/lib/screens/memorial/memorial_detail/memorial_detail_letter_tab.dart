@@ -102,41 +102,34 @@ class Letter extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    String displayNickname = nickname ?? '';
+    if (displayNickname.length > 6) {
+      displayNickname = '${displayNickname.substring(0, 6)}...';
+    }
+
+    String displayContent = content ?? '';
+    if (displayContent.length > 30) {
+      displayContent = '${displayContent.substring(0, 30)}...';
+    }
     OverlayEntry? overlayEntry;
     return Card(
       color: cardColor,
       child: GestureDetector(
         onLongPress: () {
-          overlayEntry = OverlayEntry(
-            builder: (context) => Container(
-              height: MediaQuery.of(context).size.height * 0.1,
-              width: MediaQuery.of(context).size.width * 0.1,
-              child: Material(
-                color: Colors.transparent,
-                child: Container(
-                  decoration: BoxDecoration(
-                    image: DecorationImage(
-                      image: AssetImage('assets/images/letter.png'),
-                      fit: BoxFit.scaleDown,
-                    ),
-                  ),
-                ),
-              ),
-            ),
-          );
-          Overlay.of(context).insert(overlayEntry!);
         },
         onLongPressEnd: (details) {
-          overlayEntry?.remove();
         },
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
-          crossAxisAlignment: CrossAxisAlignment.center,
-          children: [
-            Text("From. ${nickname ?? ''}", style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold)),
-            Text(content ?? '', style: TextStyle(fontSize: 20)),
-            Text(date, style: TextStyle(fontSize: 18)),
-          ],
+        child: Padding(
+          padding: const EdgeInsets.all(8.0),
+          child: Column(
+            mainAxisAlignment: MainAxisAlignment.center,
+            crossAxisAlignment: CrossAxisAlignment.center,
+            children: [
+              Text("From. $displayNickname", style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold)),
+              Text(displayContent, style: TextStyle(fontSize: 20)),
+              Text(date, style: TextStyle(fontSize: 18)),
+            ],
+          ),
         ),
       ),
     );

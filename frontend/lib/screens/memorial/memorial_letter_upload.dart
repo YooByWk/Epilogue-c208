@@ -18,14 +18,9 @@ class _MemorialLetterUploadState extends State<MemorialLetterUpload> {
         child:
             Consumer<LetterTabViewModel>(builder: (context, viewModel, child) {
           return Scaffold(
-            appBar: MemorialAppBar(
-              screenName: '편지 남기기',
-              isMenu: true,
-              items: ['회원가입', '로그인', '로그아웃'],
-              onSelected: (value) {
-                debugPrint('$value 선택됨');
-              },
-              // screenName: '추모관상세',
+            appBar: AppBar(
+              backgroundColor: themeColour2,
+              title: Text('추모관 편지 업로드'),
             ),
             body: SingleChildScrollView(
               child: Column(
@@ -49,7 +44,7 @@ class _MemorialLetterUploadState extends State<MemorialLetterUpload> {
                             viewModel.setNickname(value);
                           },
                           decoration: InputDecoration(
-                            hintText: '보내는 사람',
+                            hintText: '보내는 사람 (6자 이내)',
                             contentPadding: EdgeInsets.symmetric(
                                 horizontal: 15.0, vertical: 20.0),
                             border: OutlineInputBorder(
@@ -73,9 +68,9 @@ class _MemorialLetterUploadState extends State<MemorialLetterUpload> {
                             viewModel.setContent(value);
                           },
                           maxLines: null,
-                          minLines: 10,
+                          minLines: 5,
                           decoration: InputDecoration(
-                            hintText: '편지 내용을 작성해주세요.',
+                            hintText: '편지 내용을 작성해주세요. (30자 이내)',
                             contentPadding: EdgeInsets.symmetric(
                                 horizontal: 15.0, vertical: 20.0),
                             border: OutlineInputBorder(
