@@ -16,7 +16,8 @@ class MemorialDetailScreen extends StatelessWidget {
       create: (context) => MemorialDetailViewModel(),
       child: Consumer<MemorialDetailViewModel>(
         builder: (context, viewModel, child) {
-          final args = ModalRoute.of(context)!.settings.arguments as Map<String, dynamic>?;
+          final args = ModalRoute.of(context)!.settings.arguments
+              as Map<String, dynamic>?;
           final index = args?['index'] ?? '인덱스';
           final memorialName = args?['memorialName'] ?? '유저이름';
 
@@ -25,26 +26,29 @@ class MemorialDetailScreen extends StatelessWidget {
               backgroundColor: themeColour2,
               title: Text('故 ${viewModel.memorialDetailModel?.name}님의 추모관'),
             ),
-            body: viewModel.isLoading ?
-            Center(
-              child: CircularProgressIndicator(),
-            ) :
-            NestedScrollView(
-              headerSliverBuilder: (BuildContext context, bool innerBoxIsScrolled) {
-                return <Widget>[
-                  SliverList(
-                    delegate: SliverChildListDelegate([
-                      Container(
-                        child: MemorialProfile(
-                          viewModel: viewModel,
-                        ),
-                      ),
-                    ]),
+            body: viewModel.isLoading
+                ? Center(
+                    child: CircularProgressIndicator(),
                   )
-                ];
-              },
-              body: MemorialDetailTabBar(),
-            ),
+                : viewModel.errorMessage != null
+                    ? Center(child: Text(viewModel.errorMessage!))
+                    : NestedScrollView(
+                        headerSliverBuilder:
+                            (BuildContext context, bool innerBoxIsScrolled) {
+                          return <Widget>[
+                            SliverList(
+                              delegate: SliverChildListDelegate([
+                                Container(
+                                  child: MemorialProfile(
+                                    viewModel: viewModel,
+                                  ),
+                                ),
+                              ]),
+                            )
+                          ];
+                        },
+                        body: MemorialDetailTabBar(),
+                      ),
           );
         },
       ),

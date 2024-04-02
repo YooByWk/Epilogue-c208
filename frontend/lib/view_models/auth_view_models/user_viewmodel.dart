@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:frontend/models/user/user_model.dart';
+import 'package:frontend/models/will/my_will_model.dart';
 import 'package:frontend/services/auth_service.dart';
 import 'package:frontend/services/user_service.dart';
+import 'package:frontend/services/will_service.dart';
 import 'package:provider/provider.dart';
 import 'dart:convert';
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
@@ -36,6 +38,10 @@ class UserViewModel extends ChangeNotifier {
 
   UserViewModel() {
     fetchUserData();
+  }
+
+  Future<MyWillModel?> getWillInfo() {
+    return WillService().getWillInfo();
   }
 
   // // 유저 정보 불러오기

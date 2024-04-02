@@ -68,7 +68,7 @@ class _WillAdditionalInfoState extends State<WillAdditionalInfo> {
                         color: themeColour3.withOpacity(0.3),
                         borderRadius: BorderRadius.circular(20),
                       ),
-                      height: MediaQuery.of(context).size.height * 0.3,
+                      height: MediaQuery.of(context).size.height * 0.25,
                       width: MediaQuery.of(context).size.width * 0.8,
                       margin: EdgeInsets.only(top: 10),
                       alignment: Alignment.center,

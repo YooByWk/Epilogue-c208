@@ -41,7 +41,7 @@ class _MainBannerWidgetState extends State<MainBannerWidget> {
     BannerItem(
       imagePath: 'assets/images/banner3.jpg',
       description: '문자, 메일로 전달 받은 코드를 통해\n유언장을 열람할 수 있습니다.',
-      routeName: '',
+      routeName: '/open',
       buttonText: '유언 열람하기',
     ),
     BannerItem(

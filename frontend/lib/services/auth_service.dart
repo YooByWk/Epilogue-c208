@@ -55,22 +55,24 @@ class AuthService {
   }
 
   //////////////////////// 네이버 소셜 로그인 - 미완성 ////////////////////////////
-  Future<bool> naverLogin(String accessToken) async {
-    try {
-      Dio.Response response = await _dio.post(
-        '$baseUrl/api/auth/oauth2/naver',
-        // data: {'accessToken': accessToken},
-      );
-      if (response.statusCode == 200) {
-        await _storage.write(key: 'token', value: response.data['Access_Token']);
-        return true;
-      }
-      return false;
-    } on Dio.DioException catch (e) {
-      print(e);
-      return false;
-    }
-  }
+  // Future<bool> naverLogin() async {
+  //   try {
+  //     Dio.Response response = await _dio.post(
+  //       '$baseUrl/api/auth/oauth2/naver',
+  //       data: {'code': code,
+  //         'clientId': clientId,
+  //         'clientSecret': clientSecret,},
+  //     );
+  //     if (response.statusCode == 200) {
+  //       await _storage.write(key: 'token', value: response.data['Access_Token']);
+  //       return true;
+  //     }
+  //     return false;
+  //   } on Dio.DioException catch (e) {
+  //     print(e);
+  //     return false;
+  //   }
+  // }
 
   ///////////////////////// 로그아웃 /////////////////////////////////
   Future<void> logout() async {

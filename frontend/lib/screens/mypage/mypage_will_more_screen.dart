@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:frontend/screens/mypage/mypage_play.dart';
 import 'package:frontend/view_models/auth_view_models/user_viewmodel.dart';
 import 'package:frontend/view_models/block_chain/block_chain_will_viewmodel.dart';
 import 'package:frontend/view_models/will_view_models/my_will_viewmodel.dart';
@@ -9,8 +10,12 @@ import 'package:frontend/widgets/will_additional_info_widget.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
+
 class MypageWillMoreScreen extends StatefulWidget {
-  const MypageWillMoreScreen({Key? key}) : super(key: key);
+  final String path;
+  const MypageWillMoreScreen({
+    required this.path,
+    Key? key}) : super(key: key);
 
   @override
   _MypageWillMoreScreenState createState() => _MypageWillMoreScreenState();
@@ -18,6 +23,8 @@ class MypageWillMoreScreen extends StatefulWidget {
 
 class _MypageWillMoreScreenState extends State<MypageWillMoreScreen> {
   late Future myWillDataFuture;
+
+  // late String audioPath;
 
   @override
   void didChangeDependencies() {
@@ -27,6 +34,7 @@ class _MypageWillMoreScreenState extends State<MypageWillMoreScreen> {
 
   @override
   Widget build(BuildContext context) {
+    debugPrint('추가정보 위젯 테스트 : ${widget.path}');
     return MultiProvider(
       providers: [
         ChangeNotifierProvider(create: (context) => UserViewModel()),
@@ -38,7 +46,12 @@ class _MypageWillMoreScreenState extends State<MypageWillMoreScreen> {
             future: myWillDataFuture,
             builder: (context, snapshot) {
               if (snapshot.connectionState == ConnectionState.waiting) {
-                return CircularProgressIndicator(); // 데이터를 기다리는 동안 표시할 위젯
+                return Scaffold(
+                  body: Center(
+                    child: CircularProgressIndicator(),
+                  ),
+                );
+                
               } else {
                 if (snapshot.hasError) {
                   return Text('Error: ${snapshot.error}');
@@ -88,22 +101,29 @@ class _MypageWillMoreScreenState extends State<MypageWillMoreScreen> {
                                 CommonButtonWidget(
                                   height: 300,
                                   width: 300,
-                                  text: '묘비명\n故${userViewModel.user!.name}',
+                                  text: '${myWillViewModel.graveName}\n故${userViewModel.user!.name}',
                                   fontSize: 24,
                                   textColor: Colors.black,
                                   imagePath: 'assets/images/stone.png',
                                   onPressed: () {},
                                 ),
                                 Positioned(
-                                  top: 25,
-                                  child: IconButton(
-                                    iconSize: 30,
-                                    icon: Icon(Icons.edit),
-                                    onPressed: () {},
+                                    top: 40,
+                                    child: Text('RIP', style: TextStyle(fontSize: 30),)),
+                                Positioned(
+                                  bottom: 40,
+                                  child: myWillViewModel.graveImageAddress != null // imageUrl은 ViewModel에서 이미지 URL을 가리키는 속성입니다.
+                                      ? Image.network(
+                                    myWillViewModel.graveImageAddress!,
+                                    width: 100, // 이미지 크기, 필요에 따라 조정
+                                    height: 70,
+                                    fit: BoxFit.cover, // 이미지가 컨테이너에 맞게 조절되도록 설정
+                                  ) : Container(),
                                   ),
-                                ),
                               ],
                             ),
+                            MyPagePlay(path: widget.path),
+                            // MyPagePlay(path: 'myWillViewModel.willData[]'),
                             WillAdditionalInfo(willData : myWillViewModel.willData),
                             SizedBox(height: 20),
                             CommonButtonWidget(
