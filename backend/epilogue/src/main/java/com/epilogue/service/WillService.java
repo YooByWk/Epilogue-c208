@@ -134,8 +134,7 @@ public class WillService {
         String willCode = willApplyRequestDto.getWillCode();
 
         User user = userRepository.findByNameAndBirth(deadName, deadBirth);
-        if (user == null || !user.getUserStatus().equals(UserStatus.DEADANDNOTSEND)) return false;
-
+        if (user == null || !user.getUserStatus().equals(UserStatus.LIVE)) return false;
         user.updateUserStatus();
 
         Will will = user.getWill();
