@@ -9,6 +9,8 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 
+import java.util.UUID;
+
 @Slf4j
 @Entity
 @Builder
@@ -49,6 +51,9 @@ public class Will {
     @Schema(description = "유언 코드")
     private String willCode;
 
+    @Schema(description = "유언장 구분을 위한 url 코드")
+    private UUID urlCode;
+
     public void updateMemorial(String useMemorial, String graveName) {
         this.useMemorial = useMemorial;
         this.graveName = graveName;
@@ -71,6 +76,10 @@ public class Will {
 
     public void updateWillCode(String willCode) {
         this.willCode = willCode;
+    }
+
+    public void updateWillUrlCode(UUID urlCode) {
+        this.urlCode = urlCode;
     }
 }
 
