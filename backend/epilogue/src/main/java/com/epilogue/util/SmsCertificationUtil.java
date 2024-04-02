@@ -28,7 +28,7 @@ public class SmsCertificationUtil {
         String applyLink = "http://j10c208.p.ssafy.io/";
         Message message = new Message();
         // 발신번호 및 수신번호는 반드시 01012345678 형태로 입력되어야 합니다.
-        message.setFrom("01066041442");
+        message.setFrom("01036946469");
         message.setTo(to);
         message.setText("[E:pilogue] 유언 열람 안내\n\n안녕하세요. 블록체인 기반 디지털 유언 생성 서비스 E:pilogue 입니다.\n" +
                 viewerName + "님은 " + deadName + "님이 지정한 유언 열람인으로 " + deadName + "님의 유언 열람이 가능합니다.\n" +
@@ -42,7 +42,7 @@ public class SmsCertificationUtil {
     public SingleMessageSentResponse sendSms(String to, String verificationCode) {
         Message message = new Message();
         // 발신번호 및 수신번호는 반드시 01012345678 형태로 입력되어야 합니다.
-        message.setFrom("01066041442");
+        message.setFrom("01036946469");
         message.setTo(to);
         message.setText("[E:pilogue] 본인 확인 인증번호는 " + verificationCode + "입니다.");
 
@@ -53,7 +53,7 @@ public class SmsCertificationUtil {
         String applyLink = "http://j10c208.p.ssafy.io/";
         Message message = new Message();
         // 발신번호 및 수신번호는 반드시 01012345678 형태로 입력되어야 합니다.
-        message.setFrom("01066041442");
+        message.setFrom("01036946469");
         message.setTo(to);
         message.setText("[E:pilogue] 유언 열람 신청 안내\n\n안녕하세요. 블록체인 기반 디지털 유언 생성 서비스 E:pilogue 입니다.\n" +
                 witnessName + "님은 " + deadName + "님의 유언 생성 증인으로 추후" + deadName + "님이 별세하신 후 유언 열람 신청이 가능합니다.\n" +
