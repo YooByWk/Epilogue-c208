@@ -39,7 +39,8 @@ public class EmailUtil {
     private String getWillMessage(String deadName, String viewerName) {
         String certificationMessage = "";
         String willLink = "http://j10c208.p.ssafy.io:80";
-        certificationMessage += "<h1 style='text-align: center;'>[E:pilogue] 유언 열람 안내";
+        certificationMessage += "<h1 style='text-align: center;'>[E:pilogue] 유언 열람 안내</h1>";
+        certificationMessage += "<h3 style='text-align: center;'>블록체인 기반 디지털 유언 생성 서비스</h3><br><br>";
         certificationMessage += "<h3 style='text-align: center;'>안녕하세요. E:pilogue 입니다.<br>" +
                 viewerName + "님은 " + deadName + "님이 지정한 유언 열람인으로 " + deadName + "님의 유언 열람이 가능합니다.<br>" +
                 "아래의 유언 열람 링크에서 " + deadName + "님의 유언을 확인해주세요.<br>" +
@@ -70,6 +71,7 @@ public class EmailUtil {
         String certificationMessage = "";
         String applyLink = "http://j10c208.p.ssafy.io:80";
         certificationMessage += "<h1 style='text-align: center;'>[E:pilogue] 유언 열람 신청 안내";
+        certificationMessage += "<h3 style='text-align: center;'>블록체인 기반 디지털 유언 생성 서비스</h3><br><br>";
         certificationMessage += "<h3 style='text-align: center;'>안녕하세요. E:pilogue 입니다.<br>" +
                 witnessName + "님은 " + deadName + "님의 유언 생성 증인으로 추후 " + deadName + "님이 별세하신 후 유언 열람 신청이 가능합니다.<br>" +
                 deadName + "님의 사망진단서와 아래의 인증코드를 지참하여 유언 열람 신청 폼에 입력하여 주시기 바랍니다.<br>" +
