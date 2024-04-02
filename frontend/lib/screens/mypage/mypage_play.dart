@@ -100,7 +100,7 @@ void initState() {
 void _play() async {
   if (!_mPlayerIsInited) return;
   File audioFile = await getAudioFIle();
-  await _mPlayer!.startPlayer(fromURI: audioFile.path).then((duration) {
+  await _mPlayer!.startPlayer(fromURI: widget.path).then((duration) {
     setState(() {
       _playTime = duration!.inMilliseconds.toDouble();
       _mPlayerIsPlaying = true;
