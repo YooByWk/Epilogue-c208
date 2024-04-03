@@ -54,9 +54,6 @@ class VideoTab extends StatelessWidget {
                         SizedBox(height: 10)
                       ]));
                     }
-                    // if (index >= viewModel.videos.length) {
-                    //   return null; // 수정: index가 viewModel.videos.length 이상일 때는 null을 반환합니다.
-                    // }
                     return VideoCard(
                       key: ValueKey(index),
                       videoPath: viewModel.videos[index - 1].s3url,
@@ -107,7 +104,7 @@ class _VideoCardState extends State<VideoCard> {
       videoPlayerController: videoPlayerController,
       autoPlay: false,
       looping: true,
-      autoInitialize: false,
+      autoInitialize: true,
       allowMuting: false,
       allowFullScreen: true,
       allowPlaybackSpeedChanging: false,

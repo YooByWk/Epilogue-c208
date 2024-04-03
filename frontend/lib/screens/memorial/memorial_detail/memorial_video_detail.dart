@@ -36,65 +36,66 @@ class MemorialVideoDetailScreen extends StatelessWidget {
                       child: CircularProgressIndicator(), // 로딩 중 표시
                     )
                   : SingleChildScrollView(
-                      child: Center(
-                        child: Column(
-                          children: [
-                            TextButton(
-                              onPressed: () {
-                                showDialog(
-                                  context: context,
-                                  builder: (BuildContext context) {
-                                    return AlertDialog(
-                                      title: Text('게시물 신고하기'),
-                                      content: Text('게시물을 신고하시겠습니까?', style: TextStyle(fontSize: 20),),
-                                      actions: <Widget>[
-                                        TextButton(
-                                          onPressed: () {
-                                            Navigator.of(context).pop();
-                                          },
-                                          child: Text('취소'),
-                                        ),
-                                        TextButton(
-                                          onPressed: () {
-                                            viewModel.reportVideo();
-                                            Navigator.of(context).pop();
-                                            if (viewModel.errorMessage != null) {
-                                              ScaffoldMessenger.of(context).showSnackBar(
-                                                  SnackBar(
-                                                      content:
-                                                      Text(viewModel.errorMessage!)));
-                                            } else {
-                                              ScaffoldMessenger.of(context).showSnackBar(
-                                                  SnackBar(
-                                                      content:
-                                                      Text('게시물 신고가 완료되었습니다')));
-                                            }
-                                          },
-                                          child:  Text('신고하기', style: TextStyle(color: Colors.red),),
-                                        ),
-                                      ],
-                                    );
-                                  },
-                                );
-                              },
-                              child: Row(
-                                children: [
-                                  Padding(
-                                    padding: const EdgeInsets.only(left: 10.0),
-                                    child: Icon(Icons.warning, color: Colors.red),
-                                  ),
-                                  SizedBox(width: 10,),
-                                  Text('게시물 신고하기', style: TextStyle(fontSize: 20, color: Colors.red),),
-                                ],
-                              ),
+                      child: Column(
+                        children: [
+                          TextButton(
+                            onPressed: () {
+                              showDialog(
+                                context: context,
+                                builder: (BuildContext context) {
+                                  return AlertDialog(
+                                    title: Text('게시물 신고하기'),
+                                    content: Text('게시물을 신고하시겠습니까?', style: TextStyle(fontSize: 20),),
+                                    actions: <Widget>[
+                                      TextButton(
+                                        onPressed: () {
+                                          Navigator.of(context).pop();
+                                        },
+                                        child: Text('취소'),
+                                      ),
+                                      TextButton(
+                                        onPressed: () {
+                                          viewModel.reportVideo();
+                                          Navigator.of(context).pop();
+                                          if (viewModel.errorMessage != null) {
+                                            ScaffoldMessenger.of(context).showSnackBar(
+                                                SnackBar(
+                                                    content:
+                                                    Text(viewModel.errorMessage!)));
+                                          } else {
+                                            ScaffoldMessenger.of(context).showSnackBar(
+                                                SnackBar(
+                                                    content:
+                                                    Text('게시물 신고가 완료되었습니다')));
+                                          }
+                                        },
+                                        child:  Text('신고하기', style: TextStyle(color: Colors.red),),
+                                      ),
+                                    ],
+                                  );
+                                },
+                              );
+                            },
+                            child: Row(
+                              children: [
+                                Padding(
+                                  padding: const EdgeInsets.only(left: 10.0),
+                                  child: Icon(Icons.warning, color: Colors.red),
+                                ),
+                                SizedBox(width: 10,),
+                                Text('게시물 신고하기', style: TextStyle(fontSize: 20, color: Colors.red),),
+                              ],
                             ),
-                            VideoCard(
-                              videoPath:
-                                  viewModel.memorialVideoDetailModel!.s3url,
-                            ),
-                            Text(viewModel.memorialVideoDetailModel?.content ?? '', style: TextStyle(fontSize: 24),),
-                          ],
-                        ),
+                          ),
+                          VideoCard(
+                            videoPath:
+                                viewModel.memorialVideoDetailModel!.s3url,
+                          ),
+                          Padding(
+                            padding: const EdgeInsets.only(right: 20.0, left: 20.0, top: 10.0),
+                            child: Text(viewModel.memorialVideoDetailModel?.content ?? '', style: TextStyle(fontSize: 24),),
+                          ),
+                        ],
                       ),
                     ));
         },
@@ -139,37 +140,8 @@ class _VideoCardState extends State<VideoCard> {
       allowPlaybackSpeedChanging: false,
       showControlsOnInitialize: false,
       showControls: true,
-      placeholder: Container(
-        // color: Colors.white,
-        // child: FutureBuilder<Uint8List?>(
-        //   // future: generateThumbnail(),
-        //   builder: (context, snapshot) {
-        //     if (snapshot.connectionState == ConnectionState.done) {
-        //       if (snapshot.data != null) {
-        //         return Image.memory(snapshot.data!);
-        //       } else {
-        //         return Center(child: CircularProgressIndicator());
-        //       }
-        //     } else {
-        //       return Center(child: CircularProgressIndicator());
-        //     }
-        //   },
-        // ),
-      ),
     );
-    ;
-    // generateThumbnail();
   }
-
-  // Future<Uint8List?> generateThumbnail() async {
-  //   final thumbnail = await VideoThumbnail.thumbnailData(
-  //     video: widget.videoPath,
-  //     imageFormat: ImageFormat.JPEG,
-  //     maxWidth: 128,
-  //     quality: 25,
-  //   );
-  //   return thumbnail;
-  // }
 
   @override
   void dispose() {
@@ -228,7 +200,7 @@ class _VideoCardState extends State<VideoCard> {
                             controller: chewieController,
                           ),
                         ),
-                        SizedBox(height: 35)
+                        // SizedBox(height: 35)
                       ],
                     )))));
   }
