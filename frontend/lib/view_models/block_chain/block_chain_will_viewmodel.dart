@@ -154,8 +154,10 @@ class BlockChainWillViewModel extends ChangeNotifier {
     // debugPrint(res);
 
   }
+
+  
   Future<File> downloadFromIpfs(String ipfsHash) async {
-    debugPrint('여기임 http://j10c208.p.ssafy.io:5002/ipfs/$ipfsHash');
+    debugPrint('여기임 http://j10c208.p.ssafy.io:5001/ipfs/$ipfsHash');
   var uri = Uri.parse('http://j10c208.p.ssafy.io:5001/ipfs/$ipfsHash');
   var uri2 = Uri.parse('https://ipfs.io/ipfs/$ipfsHash');
   debugPrint('들어갑니디');

@@ -19,12 +19,15 @@ contract WillSystem {
         string userId;
         string fileHash;
         uint createdAt;
+        // IPFS 해시값
+        string ipfsHash;
     }
 
     // 이력 추적용 구조체
     struct History {
         string eventType;
         uint256 timestamp;
+        address userAddress;
         string userId;
     }
 
@@ -37,12 +40,17 @@ contract WillSystem {
     mapping(string => History[]) public userToHistroy; // 한 유저는 여러 이력
     mapping(string => address) public userIdToaddress; // 유저 아이디로 주소를 찾음
 
-    function createWill(string memory userId, string memory fileHash) public {
+    // IPFS 해시값을 저장하는 매핑
+    // mapping(string => string) public userIdToIpfsHash; // 유저 아이디로 ipfs 해시값을 찾음
+    // mapping(address => string) public addressToIpfsHash; // 주소로 ipfs 해시값을 찾음
+
+    function createWill(string memory userId, string memory fileHash, string memory ipfsHash) public {
         // 0. 유언장 정보 등록
         Will memory newWill = Will({
             userId: userId,
             fileHash: fileHash,
-            createdAt: block.timestamp
+            createdAt: block.timestamp,
+            ipfsHash : ipfsHash
         });
 
         // 1. 유저를 등록한다
@@ -60,7 +68,8 @@ contract WillSystem {
         History memory userHistory = History({
             eventType : unicode'유언 생성',
             timestamp: block.timestamp,
-            userId: userId
+            userId: userId,
+            userAddress : msg.sender
         });
         // 6. 유저 로그에 추가한다.
         userToHistroy[userId].push(userHistory);
@@ -71,7 +80,9 @@ contract WillSystem {
         History memory newHistroy = History({
             eventType: eventType,
             timestamp: block.timestamp,
-            userId: userId
+            userId: userId,
+            userAddress : msg.sender
+
         });
 
         logs.push(newHistroy);
