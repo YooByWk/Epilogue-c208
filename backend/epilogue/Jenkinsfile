@@ -60,3 +60,45 @@ pipeline {
         }
     }
 }
+
+
+
+// pipeline {
+//     agent any
+//
+//     stages {
+//         stage('Git Clone') {
+//             steps {
+//                 echo 'Git Clone'
+//                 git branch: 'backend', credentialsId: 'epilogue', url: 'https://lab.ssafy.com/s10-blockchain-contract-sub2/S10P22C208.git'
+//             }
+//         }
+//
+//         stage('Build') {
+//             steps {
+//                 echo 'Build'
+//                 dir('backend/epilogue') {
+//                     sh 'chmod +x ./gradlew'
+//                     sh './gradlew clean build'
+//                 }
+//             }
+//         }
+//
+//         stage('Deploy') {
+//             steps {
+//                 // 스프링 도커 컨테이너 중지
+//                 sh 'docker stop spring-docker || true'
+//                 // 스프링 도커 컨테이너 제거
+//                 sh 'docker rm spring-docker || true'
+//                 // 스프링 이미지 삭제
+//                 sh 'docker rmi spring || true'
+//                 // 스프링 이미지 빌드(생성)
+//                 sh 'docker build -t spring ./backend/epilogue'
+//                 // 스프링 도커 컨테이너 실행
+//                 sh 'docker run -d -p 8080:8080 --name spring-docker spring'
+//             }
+//         }
+//     }
+// }
+
+
