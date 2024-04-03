@@ -25,10 +25,10 @@ docker run -d --name ipfs_host -v /path/to/ipfs/staging:/export -v /path/to/ipfs
 ```
 포트 설명 
       1. 5000 : 기존의 4001 포트 IPFS 노드 간 피어 통신 
-      2. 5001 : 기존의 8080 IPFS HTTP API 접근 포트
-      3. 5002 : 기존의 5001 IPFS노드와 로컬 애플리케이션 간 통신 포트
+      2. 5002 : 기존의 5001 IPFS노드와 로컬 애플리케이션 간 통신 포트
+      3. 5001 : 기존의 8080 IPFS HTTP API 접근 포트
 
-3. 데몬 실행
+1. 데몬 실행
 
 ```bash
 docker exec -it ipfs_host ipfs daemon
@@ -63,3 +63,9 @@ docker restart ipfs_host # 도커 ipfs 재시작
 5002/webui
 
 ![alt text](image.png)
+
+
+6. GUI는 ipfs 이하의 파일만 보여주므로 업로드 되더라도 바로 반영되지 않습니다. 
+> 해당 사항을 반영하기 위해서는 ipfs 에 접근해 ipfs files cp /ipfs/QmThing /파일명 명령을 실행합니다.
+>
+> 다만 MFS(Mutable File System)에 복사본 파일을 다시 저장하는 것으로 저장공간에 손해가 발생합니다.

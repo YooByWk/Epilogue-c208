@@ -61,10 +61,20 @@ debugPrint('업로드)');
   var response = await request.send();
   debugPrint(response.statusCode.toString());
   if (response.statusCode == 200) {
-      var responseData = await http.Response.fromStream(response);
-      var jsonResponse = jsonDecode(responseData.body);
-      debugPrint(jsonResponse['Hash']);
-      return jsonResponse['Hash'];
+      var responseData = await http.Response.fromStream(response); // 응답 데이터
+      var jsonResponse = jsonDecode(responseData.body); // JSON 디코딩
+      var hash = jsonResponse['Hash']; // 해시값
+      // 고정하자. 가비지 컬렉션 멈춰!
+      var pinUri = Uri.parse('http://j10c208.p.ssafy.io:5002/api/v0/pin/add/${jsonResponse['Hash']}');
+      var pinResponse = await http.post(pinUri); // IPFS 서버에 파일 고정
+      debugPrint(pinResponse.statusCode.toString());
+      debugPrint('오. 고정 성공?');
+      if (pinResponse.statusCode == 200) { debugPrint('고정!');} else { debugPrint('고정 실패!');}
+
+      debugPrint(jsonResponse['Hash']); 
+
+      // 해시값 출력
+      return hash;
     } else {
       throw Exception('File upload failed with status: ${response.statusCode}.');
     }
@@ -146,10 +156,10 @@ class BlockChainWillViewModel extends ChangeNotifier {
   }
   Future<File> downloadFromIpfs(String ipfsHash) async {
     debugPrint('여기임 http://j10c208.p.ssafy.io:5002/ipfs/$ipfsHash');
-  var uri = Uri.parse('http://j10c208.p.ssafy.io:5002/ipfs/$ipfsHash');
+  var uri = Uri.parse('http://j10c208.p.ssafy.io:5001/ipfs/$ipfsHash');
   var uri2 = Uri.parse('https://ipfs.io/ipfs/$ipfsHash');
   debugPrint('들어갑니디');
-  var response = await http.get(uri2);
+  var response = await http.get(uri);
   debugPrint('공용 게이트웨이 호출 결과: ${response.statusCode}');
   if (response.statusCode == 200) {
     var tempDir = await getTemporaryDirectory();
