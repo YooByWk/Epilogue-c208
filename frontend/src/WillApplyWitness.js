@@ -21,19 +21,19 @@ function WillApplyWitness() {
         "willCode": willCode
       }
       );
-
-      if (response.status === 200) {
-        console.log('신청 성공:', response.data);
-        alert('신청이 완료되었습니다. 확인하는데 3-5일 정도 소요됩니다. 기다리세용~!')
-      } if (response.status === 204) {
-        console.log('잘못된 값')
-        alert('정보를 정확히 입력해주세요!')
-      }
-      else {
-        console.log('신청 오류:', response.status);
+      
+    if (response.status === 200) {
+      if (response.data === true) {
+        // console.log('신청 성공:', response.data);
+        alert(
+          "신청이 정상적으로 접수되었습니다. \n확인 후 3-5일 이내 열람자에게 유언장 열람 안내를 발송해드리겠습니다.")
+      } if (response.data === false) {
+        alert('없는 정보입니다. \n입력한 정보를 다시 확인해주세요.')
+      }} else if (response.status === 204) {
+        alert('증인 코드를 확인해주세요')
       }
     } catch (error) {
-      console.error(error);
+      // console.error(error);
     }
   };
 

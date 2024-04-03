@@ -32,9 +32,12 @@ function WillViewViewer() {
 
         Navi(`/will/${userId}`, {state : {s3url : s3url, 'willCode' : code}});
         console.log('열람 성공 : ', response.data.willFileAddress)
-      } else {
+      } if (response.status === 204) {
+        alert('유언장 코드를 확인해주세요.')
+      } 
+      else {
         console.log('열람 오류:', response.status);
-      }
+      } 
     } catch (error) {
       console.error('Error:', error);
     }
