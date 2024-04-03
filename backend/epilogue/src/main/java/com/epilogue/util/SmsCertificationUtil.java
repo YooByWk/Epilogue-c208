@@ -50,7 +50,7 @@ public class SmsCertificationUtil {
     }
 
     public SingleMessageSentResponse sendWillApplyLink(String to, String deadName, String witnessName, String willCode) {
-        String applyLink = "http://j10c208.p.ssafy.io/witenss";
+        String applyLink = "http://j10c208.p.ssafy.io/witness";
         Message message = new Message();
         // 발신번호 및 수신번호는 반드시 01012345678 형태로 입력되어야 합니다.
         message.setFrom("01036946469");
