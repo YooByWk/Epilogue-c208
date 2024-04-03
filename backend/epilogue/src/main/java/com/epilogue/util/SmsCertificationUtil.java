@@ -32,7 +32,7 @@ public class SmsCertificationUtil {
         message.setTo(to);
         message.setText("[E:pilogue] 유언 열람 안내\n\n안녕하세요. 블록체인 기반 디지털 유언 생성 서비스 E:pilogue 입니다.\n" +
                 viewerName + "님은 " + deadName + "님이 지정한 유언 열람인으로 " + deadName + "님의 유언 열람이 가능합니다.\n" +
-                "아래의 유언 열람 링크에서 " + deadName + "님의 유언을 확인해주세요.\n" +
+                "아래의 유언 열람 링크에서 " + deadName + "님의 유언을 확인해주세요.\n\n" +
                 "- 유언 열람 신청 링크 : " + applyLink + "\n- 인증코드 : " + willCode);
 
         return this.messageService.sendOne(new SingleMessageSendingRequest(message));
