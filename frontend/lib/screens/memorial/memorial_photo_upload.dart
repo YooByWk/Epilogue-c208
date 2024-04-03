@@ -83,20 +83,28 @@ class _MemorialPhotoUploadState extends State<MemorialPhotoUpload> {
                                   : null),
                           child: (photo != null)
                               ? null
-                              : Text(
-                                  "+",
-                                  textAlign: TextAlign.center,
-                                  style: TextStyle(
+                              : Center(
+                                  child: Text(
+                                    "사진 추가하기",
+                                    style: TextStyle(
                                       fontWeight: FontWeight.bold,
-                                      fontSize: 20),
+                                      fontSize: 20,
+                                    ),
+                                  ),
                                 ),
                         )),
                   ),
                   Padding(
-                    padding: const EdgeInsets.symmetric(horizontal: 90.0, vertical: 8.0),
-                    child: CommonText(text: "크기 제한 (사진 7Mb 이내)", fontSize: 16,),
+                    padding: const EdgeInsets.symmetric(
+                        horizontal: 90.0, vertical: 8.0),
+                    child: CommonText(
+                      text: "크기 제한 (사진 7Mb 이내)",
+                      fontSize: 16,
+                    ),
                   ),
-                  SizedBox(height: 20,),
+                  SizedBox(
+                    height: 20,
+                  ),
                   Padding(
                     padding: const EdgeInsets.symmetric(horizontal: 20.0),
                     child: TextField(
@@ -136,7 +144,7 @@ class _MemorialPhotoUploadState extends State<MemorialPhotoUpload> {
                   viewModel.setFile(photo!);
                   viewModel.setPhoto().then((_) {
                     if (viewModel.errorMessage == null) {
-                      Navigator.pop(context,true);
+                      Navigator.pop(context, true);
                     } else {
                       if (viewModel.errorMessage != null) {
                         ScaffoldMessenger.of(context).showSnackBar(

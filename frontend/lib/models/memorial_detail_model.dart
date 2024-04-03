@@ -18,7 +18,7 @@ class MemorialDetailModel {
         'name': name,
         'birth': birth,
         'goneDate': goneDate,
-        'graveIma': graveImg,
+        'graveImg': graveImg,
       };
 
   factory MemorialDetailModel.fromJson(Map<String, dynamic> json) {

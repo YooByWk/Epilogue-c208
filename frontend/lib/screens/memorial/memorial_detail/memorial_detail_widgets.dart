@@ -10,7 +10,7 @@ class MemorialProfileImage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    debugPrint('imagePath : $imagePath');
+    // debugPrint('imagePath : $imagePath');
     return CircleAvatar(
       radius: 50.0,
       backgroundImage: NetworkImage(imagePath!),

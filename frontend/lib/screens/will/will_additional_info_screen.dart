@@ -241,7 +241,7 @@ class _WillAdditionalInfoScreenState extends State<WillAdditionalInfoScreen> {
                   viewModel.setOrganDonation(organDonationOption!);
                   viewModel.setAdditional().then((_) {
                     if (viewModel.errorMessage == null) {
-                      Navigator.pushNamed(context, '/mypage');
+                      Navigator.pushNamed(context, '/home');
                     } else {
                       if (viewModel.errorMessage != null) {
                         Navigator.pushNamed(context, '/home');
