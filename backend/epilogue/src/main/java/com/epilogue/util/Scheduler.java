@@ -69,7 +69,7 @@ public class Scheduler {
                     .user(findUser)
                     .goneDate("2024.01.01")
                     .graveName(findUser.getWill().getGraveName())
-                    .graveImg(awsS3Service.getGraveImageFromS3(findUser.getWill().getGraveImageAddress()))
+                    .graveImg(findUser.getWill().getGraveImageAddress())
                     .createdDate(new Timestamp(System.currentTimeMillis()))
                     .build());
 

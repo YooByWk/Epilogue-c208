@@ -56,7 +56,7 @@ public class SmsCertificationUtil {
         message.setFrom("01036946469");
         message.setTo(to);
         message.setText("[E:pilogue] 유언 열람 신청 안내\n\n안녕하세요. 블록체인 기반 디지털 유언 생성 서비스 E:pilogue 입니다.\n" +
-                witnessName + "님은 " + deadName + "님의 유언 생성 증인으로 추후" + deadName + "님이 별세하신 후 유언 열람 신청이 가능합니다.\n" +
+                witnessName + "님은 " + deadName + "님의 유언 생성 증인으로 추후 " + deadName + "님이 별세하신 후 유언 열람 신청이 가능합니다.\n" +
                 deadName + "님의 사망진단서와 아래의 인증코드를 지참하여 유언 열람 신청 폼에 입력하여 주시기 바랍니다.\n" +
                 "검토 결과는 영업일 5일 이내에 해당 연락처로 전송됩니다.\n\n- 유언 열람 신청 링크 : " + applyLink + "\n- 인증코드 : " + willCode);
 
