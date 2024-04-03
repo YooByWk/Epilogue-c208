@@ -209,7 +209,7 @@ class _VideoCardState extends State<VideoCard> {
                       crossAxisAlignment: CrossAxisAlignment.center,
                       children: [
                         ListTile(
-                          title: Text('비디오 ${widget.index}'),
+                          title: Text('# ${widget.index}', style: TextStyle(fontWeight: FontWeight.bold),),
                           // trailing: Text(DateTime.now().toString()),
                         ),
                         AspectRatio(

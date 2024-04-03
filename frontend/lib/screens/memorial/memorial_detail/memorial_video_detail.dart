@@ -4,11 +4,9 @@ import 'package:chewie/chewie.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 import 'package:frontend/main.dart';
-import 'package:frontend/screens/memorial/memorial_app_bar.dart';
 import 'package:frontend/view_models/memorial_view_models/memorial_video_detail_viewmodel.dart';
 import 'package:provider/provider.dart';
 import 'package:video_player/video_player.dart';
-import 'package:video_thumbnail/video_thumbnail.dart';
 import 'package:visibility_detector/visibility_detector.dart';
 
 final _storage = FlutterSecureStorage();
@@ -37,55 +35,66 @@ class MemorialVideoDetailScreen extends StatelessWidget {
                   ? Center(
                       child: CircularProgressIndicator(), // 로딩 중 표시
                     )
-                  : Center(
-                      child: Column(
-                        children: [
-                          TextButton(
-                            onPressed: () {
-                              showDialog(
-                                context: context,
-                                builder: (BuildContext context) {
-                                  return AlertDialog(
-                                    title: Text('게시물 신고하기'),
-                                    content: Text('게시물을 신고하시겠습니까?'),
-                                    actions: <Widget>[
-                                      TextButton(
-                                        onPressed: () {
-                                          Navigator.of(context).pop();
-                                        },
-                                        child: Text('취소'),
-                                      ),
-                                      TextButton(
-                                        onPressed: () {
-                                          viewModel.reportVideo();
-                                          Navigator.of(context).pop();
-                                          if (viewModel.errorMessage != null) {
-                                            ScaffoldMessenger.of(context).showSnackBar(
-                                                SnackBar(
-                                                    content:
-                                                    Text(viewModel.errorMessage!)));
-                                          } else {
-                                            ScaffoldMessenger.of(context).showSnackBar(
-                                                SnackBar(
-                                                    content:
-                                                    Text('게시물 신고가 완료되었습니다')));
-                                          }
-                                        },
-                                        child: Text('신고'),
-                                      ),
-                                    ],
-                                  );
-                                },
-                              );
-                            },
-                            child: Text('게시물 신고하기'),
-                          ),
-                          VideoCard(
-                            videoPath:
-                                viewModel.memorialVideoDetailModel!.s3url,
-                          ),
-                          Text(viewModel.memorialVideoDetailModel?.content ?? ''),
-                        ],
+                  : SingleChildScrollView(
+                      child: Center(
+                        child: Column(
+                          children: [
+                            TextButton(
+                              onPressed: () {
+                                showDialog(
+                                  context: context,
+                                  builder: (BuildContext context) {
+                                    return AlertDialog(
+                                      title: Text('게시물 신고하기'),
+                                      content: Text('게시물을 신고하시겠습니까?', style: TextStyle(fontSize: 20),),
+                                      actions: <Widget>[
+                                        TextButton(
+                                          onPressed: () {
+                                            Navigator.of(context).pop();
+                                          },
+                                          child: Text('취소'),
+                                        ),
+                                        TextButton(
+                                          onPressed: () {
+                                            viewModel.reportVideo();
+                                            Navigator.of(context).pop();
+                                            if (viewModel.errorMessage != null) {
+                                              ScaffoldMessenger.of(context).showSnackBar(
+                                                  SnackBar(
+                                                      content:
+                                                      Text(viewModel.errorMessage!)));
+                                            } else {
+                                              ScaffoldMessenger.of(context).showSnackBar(
+                                                  SnackBar(
+                                                      content:
+                                                      Text('게시물 신고가 완료되었습니다')));
+                                            }
+                                          },
+                                          child:  Text('신고하기', style: TextStyle(color: Colors.red),),
+                                        ),
+                                      ],
+                                    );
+                                  },
+                                );
+                              },
+                              child: Row(
+                                children: [
+                                  Padding(
+                                    padding: const EdgeInsets.only(left: 10.0),
+                                    child: Icon(Icons.warning, color: Colors.red),
+                                  ),
+                                  SizedBox(width: 10,),
+                                  Text('게시물 신고하기', style: TextStyle(fontSize: 20, color: Colors.red),),
+                                ],
+                              ),
+                            ),
+                            VideoCard(
+                              videoPath:
+                                  viewModel.memorialVideoDetailModel!.s3url,
+                            ),
+                            Text(viewModel.memorialVideoDetailModel?.content ?? '', style: TextStyle(fontSize: 24),),
+                          ],
+                        ),
                       ),
                     ));
         },
