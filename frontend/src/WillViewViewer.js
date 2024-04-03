@@ -44,7 +44,9 @@ function WillViewViewer() {
   return (
     <div style={styles.container}>
       <h1 style={styles.title}>유언장 확인하기</h1>
-      <p style={styles.subtitle}>유언장을 확인하기 위해 전달 받은 코드를 입력해주세요.</p>
+      <p style={styles.subtitle}>
+        유언장을 확인하기 위해 전달 받은 코드를 입력해주세요.
+      </p>
       <input
         type="text"
         placeholder="보안코드"
@@ -52,7 +54,9 @@ function WillViewViewer() {
         onChange={(e) => setCode(e.target.value)}
         style={styles.input}
       />
-      <button onClick={applyViewer} style={styles.button}>제출하기</button>
+      <button onClick={applyViewer} style={styles.button}>
+        제출하기
+      </button>
     </div>
   );
 }

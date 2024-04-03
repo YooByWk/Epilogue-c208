@@ -11,31 +11,32 @@ function WillApplyWitness() {
 
   const baseUrl = 'http://j10c208.p.ssafy.io:8080';
 
+
   const applyWitness = async () => {
     try {
-      const formData = new FormData();
-      formData.append('deadName', deadName);
-      formData.append('deadBirth', deadBirth);
-      formData.append('witnessName', witnessName);
-      formData.append('willCode', willCode);
-      formData.append('file', file);
-
-      const response = await axios.post(`${baseUrl}/api/will/apply`, formData, {
-        headers: {
-          'Content-Type': 'multipart/form-data'
-        }
-      });
+      const response = await axios.post(`${baseUrl}/api/will/apply`, {
+        "deadName": deadName,
+        "deadBirth": deadBirth,
+        "witnessName": witnessName,
+        "willCode": willCode
+      }
+      );
 
       if (response.status === 200) {
         console.log('신청 성공:', response.data);
-        alert('신청이 완료되었습니다. 확인하는데 3-5일 정도 소요됩니다. 기다려주세요!');
-      } else {
+        alert('신청이 완료되었습니다. 확인하는데 3-5일 정도 소요됩니다. 기다리세용~!')
+      } if (response.status === 204) {
+        console.log('잘못된 값')
+        alert('정보를 정확히 입력해주세요!')
+      }
+      else {
         console.log('신청 오류:', response.status);
       }
     } catch (error) {
       console.error(error);
     }
   };
+
 
   const onchangeImageUpload = (e) => {
     const uploadedFile = e.target.files[0];
@@ -60,7 +61,7 @@ function WillApplyWitness() {
       />
       <input
         type="text"
-        placeholder="고인 생년월일"
+        placeholder="고인 생년월일(YYYY.MM.DD)"
         value={deadBirth}
         onChange={(e) => setDeadBirth(e.target.value)}
         style={styles.input}
