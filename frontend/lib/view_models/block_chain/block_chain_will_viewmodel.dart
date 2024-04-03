@@ -11,6 +11,7 @@ import 'package:frontend/models/block_chain_will_model.dart';
 import 'dart:convert';
 import 'package:file_picker/file_picker.dart';
 import 'package:http/http.dart' as http;
+import 'package:path_provider/path_provider.dart';
 
 class AudioHashViewModel extends ChangeNotifier {
   AudioHash? _audioHash;
@@ -52,8 +53,21 @@ class AudioHashViewModel extends ChangeNotifier {
 ///IPFS 서버에 파일 업로드 함수
 ///업로드된 파일의 해시값을 반환한다.
 ///업로드된 파일은 IPFS 서버에 저장되어 있으며, 해당 파일의 해시값을 반환한다.
-Future<void> uploadToIpfs(String filePath) async{
-  // var uri = Uri.parse();
+Future<String> uploadToIpfs() async{
+  var filePath = '/data/user/0/com.example.frontend/cache/will.mp4';
+debugPrint('업로드)');
+  var uri = Uri.parse('http://j10c208.p.ssafy.io:5002/api/v0/add');
+  var request = http.MultipartRequest('POST', uri)..files.add(await http.MultipartFile.fromPath('file', filePath)); // 파일 업로드
+  var response = await request.send();
+  debugPrint(response.statusCode.toString());
+  if (response.statusCode == 200) {
+      var responseData = await http.Response.fromStream(response);
+      var jsonResponse = jsonDecode(responseData.body);
+      debugPrint(jsonResponse['Hash']);
+      return jsonResponse['Hash'];
+    } else {
+      throw Exception('File upload failed with status: ${response.statusCode}.');
+    }
 } 
 
 
@@ -130,8 +144,37 @@ class BlockChainWillViewModel extends ChangeNotifier {
     // debugPrint(res);
 
   }
-  
+  Future<File> downloadFromIpfs(String ipfsHash) async {
+    debugPrint('여기임 http://j10c208.p.ssafy.io:5002/ipfs/$ipfsHash');
+  var uri = Uri.parse('http://j10c208.p.ssafy.io:5002/ipfs/$ipfsHash');
+  var uri2 = Uri.parse('https://ipfs.io/ipfs/$ipfsHash');
+  debugPrint('들어갑니디');
+  var response = await http.get(uri2);
+  debugPrint('공용 게이트웨이 호출 결과: ${response.statusCode}');
+  if (response.statusCode == 200) {
+    var tempDir = await getTemporaryDirectory();
+    var file = File('${tempDir.path}/$ipfsHash');
+    return file.writeAsBytes(response.bodyBytes);
+  } else {
+    throw Exception('File download failed with status: ${response.statusCode}.');
+  }
+}
+
   Future createWill() async {
+    String fileHash = await AudioHashViewModel().createAudioHash();
+    String ipfsHash = await AudioHashViewModel().uploadToIpfs();
+    debugPrint('결과: $ipfsHash');
+    
+
+  var hash = await sha256.convert(await downloadFromIpfs(ipfsHash).then((value) => value.readAsBytes()));
+
+  debugPrint('Hash: ${hash.toString()}');
+
+  debugPrint(fileHash == hash.toString() ? 'Match' : 'No match');
+    
+  }
+   
+  Future createWill2() async {
     // 함수 이름
     // 넣을 값
     init();
@@ -140,8 +183,6 @@ class BlockChainWillViewModel extends ChangeNotifier {
     final params = await [id, fileHash];
     final res = await _model.sendTransaction('유언장이 등록되었습니다.','createWill', params);
     debugPrint(res);
-
-
     return res;
   }
 
