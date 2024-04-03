@@ -28,8 +28,9 @@ function WillViewViewer() {
         // console.log('열람 성공:', response.data);
         const userId = response.data.userId
         const s3url = response.data.willFileAddress
-        
-        Navi(`/will/${userId}`, {state : {s3url : s3url}});
+
+
+        Navi(`/will/${userId}`, {state : {s3url : s3url, 'willCode' : code}});
         console.log('열람 성공 : ', response.data.willFileAddress)
       } else {
         console.log('열람 오류:', response.status);
@@ -38,6 +39,7 @@ function WillViewViewer() {
       console.error('Error:', error);
     }
   };
+  
 
   return (
     <div style={styles.container}>

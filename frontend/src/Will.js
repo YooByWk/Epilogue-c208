@@ -1,11 +1,67 @@
-// Will.js
-import React from "react";
-import { useLocation } from "react-router-dom";
+import React from 'react';
+import { useLocation, useParams } from 'react-router-dom';
+import BlockChainHashHook from './hooks/blockChainHash';
+import ReactModal from 'react-modal';
 import willPlayImage from "./willplayimage.jpg";
 
+
 function Will() {
+
   const location = useLocation();
-  const { s3url } = location.state;
+  const { userId } = useParams();
+  const { s3url, willCode } = location.state;
+  const blockChainRes = BlockChainHashHook(willCode);
+  const [isModalOpen, setIsModalOpen] = React.useState(false);
+  const [message, setMessage] = React.useState('');
+  
+  const handleClick = () => {
+    setIsModalOpen(true);
+    if (blockChainRes) {
+      setMessage("유언 기록 당시 업로드된 원본입니다.");
+    } else {
+      setMessage("위변조된 원본입니다.");
+    }
+  };
+
+  const modalStyle = {
+
+    content: {
+      top: '50%',
+      left: '50%',
+      right: 'auto',
+      bottom: 'auto',
+      marginRight: '-50%',
+      transform: 'translate(-50%, -50%)',
+      backgroundColor: '#f8f9fa',
+      borderRadius: '0.3rem',
+      padding: '2rem',
+      border: 'none',
+      boxShadow: '0 0.5rem 1rem rgba(0, 0, 0, 0.15)',
+      maxWidth: '300px',
+      width: '50%',
+      fontFamily: '"Helvetica Neue", Helvetica, Arial, sans-serif',
+      display: 'flex',
+      flexDirection: 'column',
+      alignItems: 'center',
+
+    },
+    overlay: {
+      backgroundColor: 'rgba(0, 0, 0, 0.5)'
+    },
+    button: {
+      padding: '0.5rem 1rem',
+      color: '#fff',
+      backgroundColor: '#E4DCCF',
+      border: '1px solid #E4DCCF',
+      borderRadius: '0.3rem',
+      fontSize: '1rem',
+      lineHeight: '1.5',
+      transition: 'color 0.15s ease-in-out, background-color 0.15s ease-in-out, border-color 0.15s ease-in-out, box-shadow 0.15s ease-in-out',
+      fontFamily: '"Helvetica Neue", Helvetica, Arial, sans-serif',
+      cursor: 'pointer',
+      width: '75%',
+    }
+  };
 
   return (
     <>
@@ -13,14 +69,18 @@ function Will() {
         <h1>유언장</h1>
         <h3>삼가 고인의 명복을 빕니다.</h3>
         <video
-          src={s3url}
-          alt="비디오"
-          controls
-          style={styles.video}
-          poster={willPlayImage}
+        src={s3url}
+        alt="비디오"
+        controls
+        style={styles.video}
+        poster={willPlayImage}
         />
-        <button style={styles.button}>진위 여부 확인하기</button>
-      </div>
+        <button style={styles.button } onClick={handleClick}>진위 여부 확인하기</button>
+        <ReactModal isOpen={isModalOpen} style= {modalStyle}>
+          <p>{message}</p>
+          <button style={modalStyle.button} onClick={() => setIsModalOpen(false)}> 닫기 </button>
+        </ReactModal>
+    </div>
     </>
   );
 }
