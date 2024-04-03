@@ -28,8 +28,8 @@ class MemorialListViewModel extends ChangeNotifier {
 
   MemorialListViewModel() {
     getLists();
-    debugPrint(_memorialList.toString());
-    debugPrint(_favoriteMemorialList.toString());
+    // debugPrint(_memorialList.toString());
+    // debugPrint(_favoriteMemorialList.toString());
   }
 
   // 리스트 조회
@@ -51,8 +51,9 @@ class MemorialListViewModel extends ChangeNotifier {
     } else {
       _favoriteMemorialList = result['favoriteMemorialList'];
       _memorialList = result['memorialList'];
+      _searchList = [];
     }
-    debugPrint('$_memorialList');
+    // debugPrint('$_memorialList');
     _isLoading = false;
     notifyListeners();
   }

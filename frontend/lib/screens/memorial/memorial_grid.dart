@@ -15,8 +15,8 @@ class MemorialGrid extends StatelessWidget {
   Widget build(BuildContext context) {
     return
 
-      // viewModel.searchList == []
-      //   ?
+      viewModel.searchList.isEmpty
+        ?
     SliverGrid(
             gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
               crossAxisCount: gridCount,
@@ -47,22 +47,22 @@ class MemorialGrid extends StatelessWidget {
               },
               childCount: viewModel.favoriteMemorialList.length +
                   viewModel.memorialList.length,
-            ));
-        // : SliverGrid(
-        //     gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
-        //       crossAxisCount: gridCount,
-        //     ),
-        //     delegate:
-        //         SliverChildBuilderDelegate((BuildContext context, int index) {
-        //       final memorial = viewModel.searchList[index];
-        //       return MemorialCard(
-        //         // imagePath: memorial.graveImg,
-        //         viewModel: viewModel,
-        //         graveSeq: memorial.graveSeq,
-        //         name: memorial.name,
-        //         graveName: memorial.graveName,
-        //       );
-        //     }, childCount: viewModel.searchList.length),
-        //   );
+            ))
+        : SliverGrid(
+            gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+              crossAxisCount: gridCount,
+            ),
+            delegate:
+                SliverChildBuilderDelegate((BuildContext context, int index) {
+              final memorial = viewModel.searchList[index];
+              return MemorialCard(
+                // imagePath: memorial.graveImg,
+                viewModel: viewModel,
+                graveSeq: memorial.graveSeq,
+                name: memorial.name,
+                graveName: memorial.graveName,
+              );
+            }, childCount: viewModel.searchList.length),
+          );
   }
 }
