@@ -72,9 +72,10 @@ debugPrint('업로드)');
       if (pinResponse.statusCode == 200) { debugPrint('고정!');} else { debugPrint('고정 실패!');}
 
       debugPrint(jsonResponse['Hash']); 
+      debugPrint(hash.runtimeType.toString());
 
       // 해시값 출력
-      return hash;
+      return hash.toString();
     } else {
       throw Exception('File upload failed with status: ${response.statusCode}.');
     }
@@ -155,7 +156,7 @@ class BlockChainWillViewModel extends ChangeNotifier {
 
   }
 
-  
+
   Future<File> downloadFromIpfs(String ipfsHash) async {
     debugPrint('여기임 http://j10c208.p.ssafy.io:5001/ipfs/$ipfsHash');
   var uri = Uri.parse('http://j10c208.p.ssafy.io:5001/ipfs/$ipfsHash');
@@ -172,30 +173,37 @@ class BlockChainWillViewModel extends ChangeNotifier {
   }
 }
 
-  Future createWill() async {
+  Future createWill2() async {
     String fileHash = await AudioHashViewModel().createAudioHash();
     String ipfsHash = await AudioHashViewModel().uploadToIpfs();
     debugPrint('결과: $ipfsHash');
     
-
-  var hash = await sha256.convert(await downloadFromIpfs(ipfsHash).then((value) => value.readAsBytes()));
-
-  debugPrint('Hash: ${hash.toString()}');
-
-  debugPrint(fileHash == hash.toString() ? 'Match' : 'No match');
-    
+    var hash = await sha256.convert(await downloadFromIpfs(ipfsHash).then((value) => value.readAsBytes()));
+    debugPrint('Hash: ${hash.toString()}');
+    debugPrint(fileHash == hash.toString() ? 'Match' : 'No match');
   }
    
-  Future createWill2() async {
+  Future createWill() async {
     // 함수 이름
     // 넣을 값
     init();
+
     String fileHash = await AudioHashViewModel().createAudioHash();
+    String ipfsHash = await AudioHashViewModel().uploadToIpfs(); // ipfs 해쉬
+    debugPrint('결과: $fileHash|$ipfsHash');
     var id = await storage.read(key: 'userId');
-    final params = await [id, fileHash];
-    final res = await _model.sendTransaction('유언장이 등록되었습니다.','createWill', params);
-    debugPrint(res);
-    return res;
+    final params =  [id, fileHash, ipfsHash];
+    debugPrint(params.toList().toString());
+    try {
+      final res = await _model.sendTransaction('유언장이 등록되었습니다.','createWill', params);
+      debugPrint(res);
+      return res;
+    } catch (e) {
+      debugPrint('에러: $e');
+    }
+    // final res = await _model.sendTransaction('유언장이 등록되었습니다.','createWill', params);
+    // debugPrint(res);
+    // return res;
   }
 
   
