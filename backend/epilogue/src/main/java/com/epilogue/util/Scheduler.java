@@ -35,9 +35,10 @@ public class Scheduler {
     private final SmsCertificationUtil smsUtil;
     private final EmailUtil emailUtil;
 
-//    @Scheduled(cron = "0 0 0 * * *")    // 매일 00시 정각
-    @Scheduled(cron = "* * * * * *")    // 매초
+    @Scheduled(cron = "0 0 0 * * *")    // 매일 00시 정각
+//    @Scheduled(cron = "* * * * * *")    // 매초
 
+    @Transactional
     public void deleteMemorial() {
 
         LocalDateTime currentTime = LocalDateTime.now();
