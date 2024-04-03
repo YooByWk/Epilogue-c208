@@ -105,7 +105,7 @@ class _VideoCardState extends State<VideoCard> {
       autoPlay: false,
       looping: true,
       autoInitialize: true,
-      allowMuting: false,
+      allowMuting: true,
       allowFullScreen: true,
       allowPlaybackSpeedChanging: false,
       showControlsOnInitialize: false,

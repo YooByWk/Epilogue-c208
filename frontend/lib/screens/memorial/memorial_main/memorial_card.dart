@@ -5,22 +5,26 @@ import 'package:frontend/widgets/common_button.dart';
 
 class MemorialCard extends StatelessWidget {
 // 글자수 길면 잘라버리기
-  String _truncateText(String text, int maxLines) {
-    final span = TextSpan(text: text);
-    final tp = TextPainter(
-      text: span,
-      maxLines: maxLines,
-      textDirection: TextDirection.ltr,
-    );
 
-    tp.layout();
+  String _formatText(String text) {
+    const int maxCharsPerLine = 9;
+    // 전체 텍스트를 rune 단위로 처리하여, 각 문자를 정확히 카운트합니다.
+    List<int> runes = text.runes.toList();
 
-    if (tp.didExceedMaxLines) {
-      final endIndex = tp.getPositionForOffset(Offset(0, tp.height)).offset;
-      return text.substring(0, endIndex - 3) + '...';
-    } else {
-      return text;
-    }
+    // 첫 번째 줄 처리: 최대 7자까지 허용
+    String firstLine = runes.length > maxCharsPerLine
+        ? String.fromCharCodes(runes.take(maxCharsPerLine))
+        : String.fromCharCodes(runes);
+
+    // 두 번째 줄 처리: 남은 텍스트가 있을 경우, 처리
+    String secondLine = runes.length > maxCharsPerLine
+        ? (runes.length <= maxCharsPerLine * 2
+        ? String.fromCharCodes(runes.getRange(maxCharsPerLine, runes.length))
+        : String.fromCharCodes(runes.getRange(maxCharsPerLine, maxCharsPerLine * 2)) + '...')
+        : '';
+
+    // 두 문자열을 조합하여 최종 텍스트 생성
+    return firstLine + (secondLine.isNotEmpty ? '\n$secondLine' : '');
   }
 
   final _storage = FlutterSecureStorage();
@@ -52,7 +56,7 @@ class MemorialCard extends StatelessWidget {
           CommonButtonWidget(
             height: 300,
             width: 300,
-            text: _truncateText('$graveName', 2),
+            text: _formatText('$graveName'),
             fontSize: 15,
             textColor: Colors.black,
             imagePath: 'assets/images/stone.png',
