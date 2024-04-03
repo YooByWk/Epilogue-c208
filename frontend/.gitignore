@@ -20,7 +20,8 @@
 # VS Code which you may wish to be included in version control, so this line
 # is commented out by default.
 #.vscode/
-
+/node_modules/
+frontend/node_modules/
 # Flutter/Dart/Pub related
 **/doc/api/
 .dart_tool/
