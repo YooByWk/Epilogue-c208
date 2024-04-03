@@ -56,12 +56,12 @@ public class Scheduler {
 
             for (Viewer v : viewers) {
                 if (v.getViewerMobile() == null) continue;
-                smsUtil.sendWillLink(v.getViewerMobile(), findUser.getName(), v.getViewerName());
+                smsUtil.sendWillLink(v.getViewerMobile(), findUser.getName(), v.getViewerName(), findUser.getWill().getWillCode());
             }
 
             for (Viewer v : viewers) {
                 if (v.getViewerEmail() == null) continue;
-                emailUtil.sendWillLink(v.getViewerEmail(), findUser.getName(), v.getViewerName());
+                emailUtil.sendWillLink(v.getViewerEmail(), findUser.getName(), v.getViewerName(), findUser.getWill().getWillCode());
             }
 
             // 2. 추모관 생성
