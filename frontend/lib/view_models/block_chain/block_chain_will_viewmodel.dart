@@ -73,7 +73,6 @@ debugPrint('업로드)');
 
       debugPrint(jsonResponse['Hash']); 
       debugPrint(hash.runtimeType.toString());
-
       // 해시값 출력
       return hash.toString();
     } else {
@@ -213,7 +212,8 @@ class BlockChainWillViewModel extends ChangeNotifier {
     EthereumAddress address = EthereumAddress.fromHex(test);
     // print(test);
     final res = await _model.callFunction('addressToWill', [address]);
-    return res.toString();
+    return res;
+    // return res.toString();
   }
   // Future
 
