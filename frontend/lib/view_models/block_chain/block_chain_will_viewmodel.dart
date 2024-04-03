@@ -10,6 +10,8 @@ import 'package:provider/provider.dart';
 import 'package:frontend/models/block_chain_will_model.dart';
 import 'dart:convert';
 import 'package:file_picker/file_picker.dart';
+import 'package:http/http.dart' as http;
+
 class AudioHashViewModel extends ChangeNotifier {
   AudioHash? _audioHash;
 
@@ -21,6 +23,8 @@ class AudioHashViewModel extends ChangeNotifier {
   }
 
   // /data/user/0/com.example.frontend/cache/will.mp4
+
+  /// 오디오 파일 해시 생성 함수
  createAudioHash() async {
   var filePath = '/data/user/0/com.example.frontend/cache/will.mp4';
   // var filePath = '/data/user/0/com.example.frontend/cache/will.mp4';
@@ -45,6 +49,16 @@ class AudioHashViewModel extends ChangeNotifier {
   return hash.toString();
 }
 
+///IPFS 서버에 파일 업로드 함수
+///업로드된 파일의 해시값을 반환한다.
+///업로드된 파일은 IPFS 서버에 저장되어 있으며, 해당 파일의 해시값을 반환한다.
+Future<void> uploadToIpfs(String filePath) async{
+  // var uri = Uri.parse();
+} 
+
+
+
+/// 블록체인 검증용 실험 함수
 Future<void> checkHash() async {
   FilePickerResult? downloadResult = await FilePicker.platform.pickFiles();
 
@@ -72,6 +86,7 @@ Future<void> checkHash() async {
     debugPrint('User canceled the picker');
   }
 }
+
 }
 
 

@@ -8,6 +8,9 @@ import 'package:http/http.dart';
 import 'package:path/path.dart' as path;
 import 'package:flutter/services.dart' show rootBundle;
 import 'package:flutter/material.dart';
+import 'package:flutter_dotenv/flutter_dotenv.dart';
+
+
 class AudioHash {
   String filePath;
   String fileName;
@@ -31,7 +34,7 @@ class BlockChainWillModel {
   // print(_ABI);
   static const String _contractAddress =
       '0xed2e8aac38bcddd780bc046f1223296e9ca1d00c';
-  final String _rpcUrl = 'https://rpc.ssafy-blockchain.com'; // RPC 주소
+   final String _rpcUrl= dotenv.env['RPC_URL']?? ''; // RPC 주소
 
   static Future<String> get _pk async {
     String? value = await storage.read(key: 'privateKey');
