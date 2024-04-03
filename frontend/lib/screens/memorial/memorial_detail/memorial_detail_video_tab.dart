@@ -23,7 +23,7 @@ class VideoTab extends StatelessWidget {
             Consumer<VideoTabViewModel>(builder: (context, viewModel, child) {
           return NotificationListener<ScrollNotification>(
               onNotification: (scrollInfo) {
-                if (scrollInfo.metrics.pixels >=
+                if (!viewModel.isLoading && scrollInfo.metrics.pixels >=
                     scrollInfo.metrics.maxScrollExtent - 50) {
                   viewModel.loadMore();
                 }
@@ -107,7 +107,7 @@ class _VideoCardState extends State<VideoCard> {
       videoPlayerController: videoPlayerController,
       autoPlay: false,
       looping: true,
-      autoInitialize: true,
+      autoInitialize: false,
       allowMuting: false,
       allowFullScreen: true,
       allowPlaybackSpeedChanging: false,

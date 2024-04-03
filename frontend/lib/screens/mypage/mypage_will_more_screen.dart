@@ -101,7 +101,7 @@ class _MypageWillMoreScreenState extends State<MypageWillMoreScreen> {
                                 CommonButtonWidget(
                                   height: 300,
                                   width: 300,
-                                  text: '${myWillViewModel.graveName}\n故${userViewModel.user!.name}',
+                                  text: '${myWillViewModel.graveName}',
                                   fontSize: 24,
                                   textColor: Colors.black,
                                   imagePath: 'assets/images/stone.png',
@@ -111,15 +111,24 @@ class _MypageWillMoreScreenState extends State<MypageWillMoreScreen> {
                                     top: 40,
                                     child: Text('RIP', style: TextStyle(fontSize: 30),)),
                                 Positioned(
-                                  bottom: 40,
-                                  child: myWillViewModel.graveImageAddress != null // imageUrl은 ViewModel에서 이미지 URL을 가리키는 속성입니다.
-                                      ? Image.network(
-                                    myWillViewModel.graveImageAddress!,
-                                    width: 100, // 이미지 크기, 필요에 따라 조정
-                                    height: 70,
-                                    fit: BoxFit.cover, // 이미지가 컨테이너에 맞게 조절되도록 설정
-                                  ) : Container(),
+                                  bottom: 50,
+                                  child: Row(
+                                    children: [
+                                      myWillViewModel.graveImageAddress != null
+                                          ? ClipOval(
+                                        child: Image.network(
+                                          myWillViewModel.graveImageAddress!,
+                                          width: 60, // 이미지 크기, 필요에 따라 조정
+                                          height: 60,
+                                          fit: BoxFit.cover,
+                                        ),
+                                      )
+                                          : Container(),
+                                      SizedBox(width: 10,),
+                                      Text('故${userViewModel.user!.name}', style: TextStyle(fontSize: 24),)
+                                    ],
                                   ),
+                                ),
                               ],
                             ),
                             MyPagePlay(path: widget.path),

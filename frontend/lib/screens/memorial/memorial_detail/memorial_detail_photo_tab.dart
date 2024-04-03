@@ -74,7 +74,7 @@ class PhotoTab extends StatelessWidget {
             Consumer<PhotoTabViewModel>(builder: (context, viewModel, child) {
           return NotificationListener<ScrollNotification>(
               onNotification: (scrollInfo) {
-                if (scrollInfo.metrics.pixels >=
+                if (!viewModel.isLoading && scrollInfo.metrics.pixels >=
                     scrollInfo.metrics.maxScrollExtent - 50) {
                   viewModel.loadMore();
                 }
@@ -115,7 +115,12 @@ class PhotoTab extends StatelessWidget {
                                         Text('추모관 사진 추가')
                                       ]))));
                         } else {
-                          return PhotoTabCard(
+                          return
+                            viewModel.isLoading ?
+                            Center(
+                              child: CircularProgressIndicator(), // 로딩 중 표시
+                            )
+                            : PhotoTabCard(
                             key: ValueKey(index),
                             photoPath: viewModel.photos[index - 1].s3url,
                             index: index,
