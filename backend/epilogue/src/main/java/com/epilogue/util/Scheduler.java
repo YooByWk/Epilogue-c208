@@ -68,7 +68,7 @@ public class Scheduler {
 
             Memorial memorial = memorialRepository.findMemorialByUser(findUser);
 
-            if (memorial == null) continue;
+            if (memorial != null) continue;
 
             // 2. 추모관 생성
             memorialRepository.save(Memorial.builder()
