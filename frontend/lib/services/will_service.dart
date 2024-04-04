@@ -87,7 +87,7 @@ class WillService {
 
   
   /// ipfs 업로드
-  Future ipfsUpload(ipfsHash) async {
+  Future ipfsUpload(String ipfsHash) async {
     Directory tempDir = await getTemporaryDirectory();
     String tempPath = tempDir.path;
     String filePath = '$tempPath/will.mp4';

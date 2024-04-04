@@ -79,6 +79,6 @@ class MyWillViewModel extends ChangeNotifier {
     var ipfsHash = await _blockChainWillViewModel.MyWill();
     // debugPrint('ㅁㅁㅁㅁㅁㅁㅁㅁㅁㅁㅁㅁㅁㅁㅁㅁㅁㅁㅁㅁㅁㅁㅁㅁㅁㅁ${ipfsHash[3]}');
     _willService.ipfsUpload(ipfsHash[3]);
-
+    debugPrint(ipfsHash[3]);
   }
 }
