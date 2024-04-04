@@ -1,0 +1,14 @@
+io.flutter.plugins.videoplayer.video_player_android-jetified-window-1.0.0-beta04-0 C:\Users\SSAFY\.gradle\caches\transforms-3\032f4dff274e516110d9363a9793a3e3\transformed\jetified-window-1.0.0-beta04\res
+io.flutter.plugins.videoplayer.video_player_android-jetified-window-java-1.0.0-beta04-1 C:\Users\SSAFY\.gradle\caches\transforms-3\142c24f2530665bb6deb4123ab140714\transformed\jetified-window-java-1.0.0-beta04\res
+io.flutter.plugins.videoplayer.video_player_android-jetified-exoplayer-core-2.18.7-2 C:\Users\SSAFY\.gradle\caches\transforms-3\1c54749537a4d1ff3f2079d73b98930f\transformed\jetified-exoplayer-core-2.18.7\res
+io.flutter.plugins.videoplayer.video_player_android-lifecycle-runtime-2.3.1-3 C:\Users\SSAFY\.gradle\caches\transforms-3\25a884faa36a531a9e5f369d596bbf88\transformed\lifecycle-runtime-2.3.1\res
+io.flutter.plugins.videoplayer.video_player_android-jetified-annotation-experimental-1.1.0-4 C:\Users\SSAFY\.gradle\caches\transforms-3\3f96ca76068ab400b494bc7d541ee256\transformed\jetified-annotation-experimental-1.1.0\res
+io.flutter.plugins.videoplayer.video_player_android-core-1.7.0-5 C:\Users\SSAFY\.gradle\caches\transforms-3\caf291fc1e5f9957c2c7da41fb779e7e\transformed\core-1.7.0\res
+io.flutter.plugins.videoplayer.video_player_android-main-6 C:\Users\SSAFY\AppData\Local\Pub\Cache\hosted\pub.dev\video_player_android-2.4.12\android\src\main\res
+io.flutter.plugins.videoplayer.video_player_android-release-7 C:\Users\SSAFY\AppData\Local\Pub\Cache\hosted\pub.dev\video_player_android-2.4.12\android\src\release\res
+io.flutter.plugins.videoplayer.video_player_android-pngs-8 C:\Users\SSAFY\Desktop\flutter\S10P22C208\frontend\build\video_player_android\generated\res\pngs\release
+io.flutter.plugins.videoplayer.video_player_android-resValues-9 C:\Users\SSAFY\Desktop\flutter\S10P22C208\frontend\build\video_player_android\generated\res\resValues\release
+io.flutter.plugins.videoplayer.video_player_android-rs-10 C:\Users\SSAFY\Desktop\flutter\S10P22C208\frontend\build\video_player_android\generated\res\rs\release
+io.flutter.plugins.videoplayer.video_player_android-mergeReleaseResources-11 C:\Users\SSAFY\Desktop\flutter\S10P22C208\frontend\build\video_player_android\intermediates\incremental\release\mergeReleaseResources\merged.dir
+io.flutter.plugins.videoplayer.video_player_android-mergeReleaseResources-12 C:\Users\SSAFY\Desktop\flutter\S10P22C208\frontend\build\video_player_android\intermediates\incremental\release\mergeReleaseResources\stripped.dir
+io.flutter.plugins.videoplayer.video_player_android-merged_res-13 C:\Users\SSAFY\Desktop\flutter\S10P22C208\frontend\build\video_player_android\intermediates\merged_res\release

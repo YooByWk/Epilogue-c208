@@ -1,0 +1,16 @@
+xyz.canardoux.fluttersound.flutter_sound-jetified-window-1.0.0-beta04-0 C:\Users\SSAFY\.gradle\caches\transforms-3\032f4dff274e516110d9363a9793a3e3\transformed\jetified-window-1.0.0-beta04\res
+xyz.canardoux.fluttersound.flutter_sound-jetified-window-java-1.0.0-beta04-1 C:\Users\SSAFY\.gradle\caches\transforms-3\142c24f2530665bb6deb4123ab140714\transformed\jetified-window-java-1.0.0-beta04\res
+xyz.canardoux.fluttersound.flutter_sound-media-1.4.1-2 C:\Users\SSAFY\.gradle\caches\transforms-3\24faa39eb01a2b2145f029d9c1646358\transformed\media-1.4.1\res
+xyz.canardoux.fluttersound.flutter_sound-core-1.6.0-3 C:\Users\SSAFY\.gradle\caches\transforms-3\2579a7de00054bf46a8dbc332552f622\transformed\core-1.6.0\res
+xyz.canardoux.fluttersound.flutter_sound-jetified-annotation-experimental-1.1.0-4 C:\Users\SSAFY\.gradle\caches\transforms-3\3f96ca76068ab400b494bc7d541ee256\transformed\jetified-annotation-experimental-1.1.0\res
+xyz.canardoux.fluttersound.flutter_sound-appcompat-1.2.0-5 C:\Users\SSAFY\.gradle\caches\transforms-3\9a5742a8ae24d1f6cb062dbab491d07a\transformed\appcompat-1.2.0\res
+xyz.canardoux.fluttersound.flutter_sound-jetified-flutter_sound_core-9.4.6-6 C:\Users\SSAFY\.gradle\caches\transforms-3\af6a8e916c0398ce1220cda7e8db08f7\transformed\jetified-flutter_sound_core-9.4.6\res
+xyz.canardoux.fluttersound.flutter_sound-jetified-appcompat-resources-1.2.0-7 C:\Users\SSAFY\.gradle\caches\transforms-3\cda85958ce6d377d9f6c59d0c32e4a73\transformed\jetified-appcompat-resources-1.2.0\res
+xyz.canardoux.fluttersound.flutter_sound-main-8 C:\Users\SSAFY\AppData\Local\Pub\Cache\hosted\pub.dev\flutter_sound-9.4.6\android\src\main\res
+xyz.canardoux.fluttersound.flutter_sound-release-9 C:\Users\SSAFY\AppData\Local\Pub\Cache\hosted\pub.dev\flutter_sound-9.4.6\android\src\release\res
+xyz.canardoux.fluttersound.flutter_sound-pngs-10 C:\Users\SSAFY\Desktop\flutter\S10P22C208\frontend\build\flutter_sound\generated\res\pngs\release
+xyz.canardoux.fluttersound.flutter_sound-resValues-11 C:\Users\SSAFY\Desktop\flutter\S10P22C208\frontend\build\flutter_sound\generated\res\resValues\release
+xyz.canardoux.fluttersound.flutter_sound-rs-12 C:\Users\SSAFY\Desktop\flutter\S10P22C208\frontend\build\flutter_sound\generated\res\rs\release
+xyz.canardoux.fluttersound.flutter_sound-mergeReleaseResources-13 C:\Users\SSAFY\Desktop\flutter\S10P22C208\frontend\build\flutter_sound\intermediates\incremental\release\mergeReleaseResources\merged.dir
+xyz.canardoux.fluttersound.flutter_sound-mergeReleaseResources-14 C:\Users\SSAFY\Desktop\flutter\S10P22C208\frontend\build\flutter_sound\intermediates\incremental\release\mergeReleaseResources\stripped.dir
+xyz.canardoux.fluttersound.flutter_sound-merged_res-15 C:\Users\SSAFY\Desktop\flutter\S10P22C208\frontend\build\flutter_sound\intermediates\merged_res\release

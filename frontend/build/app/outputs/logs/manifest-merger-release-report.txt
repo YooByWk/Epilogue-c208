@@ -1,0 +1,369 @@
+-- Merging decision tree log ---
+application
+INJECTED from C:\Users\SSAFY\Desktop\flutter\S10P22C208\frontend\android\app\src\main\AndroidManifest.xml:37:5-79:19
+MERGED from [androidx.window:window:1.0.0-beta04] C:\Users\SSAFY\.gradle\caches\transforms-3\032f4dff274e516110d9363a9793a3e3\transformed\jetified-window-1.0.0-beta04\AndroidManifest.xml:24:5-31:19
+MERGED from [androidx.window:window:1.0.0-beta04] C:\Users\SSAFY\.gradle\caches\transforms-3\032f4dff274e516110d9363a9793a3e3\transformed\jetified-window-1.0.0-beta04\AndroidManifest.xml:24:5-31:19
+MERGED from [com.github.canardoux:flutter_sound_core:9.4.6] C:\Users\SSAFY\.gradle\caches\transforms-3\af6a8e916c0398ce1220cda7e8db08f7\transformed\jetified-flutter_sound_core-9.4.6\AndroidManifest.xml:15:5-16:19
+MERGED from [com.github.canardoux:flutter_sound_core:9.4.6] C:\Users\SSAFY\.gradle\caches\transforms-3\af6a8e916c0398ce1220cda7e8db08f7\transformed\jetified-flutter_sound_core-9.4.6\AndroidManifest.xml:15:5-16:19
+MERGED from [androidx.core:core:1.7.0] C:\Users\SSAFY\.gradle\caches\transforms-3\caf291fc1e5f9957c2c7da41fb779e7e\transformed\core-1.7.0\AndroidManifest.xml:24:5-89
+MERGED from [androidx.core:core:1.7.0] C:\Users\SSAFY\.gradle\caches\transforms-3\caf291fc1e5f9957c2c7da41fb779e7e\transformed\core-1.7.0\AndroidManifest.xml:24:5-89
+MERGED from [androidx.versionedparcelable:versionedparcelable:1.1.1] C:\Users\SSAFY\.gradle\caches\transforms-3\6668cc85eff5929d44d91f927ab7e655\transformed\versionedparcelable-1.1.1\AndroidManifest.xml:24:5-25:19
+MERGED from [androidx.versionedparcelable:versionedparcelable:1.1.1] C:\Users\SSAFY\.gradle\caches\transforms-3\6668cc85eff5929d44d91f927ab7e655\transformed\versionedparcelable-1.1.1\AndroidManifest.xml:24:5-25:19
+	android:appComponentFactory
+		ADDED from [androidx.core:core:1.7.0] C:\Users\SSAFY\.gradle\caches\transforms-3\caf291fc1e5f9957c2c7da41fb779e7e\transformed\core-1.7.0\AndroidManifest.xml:24:18-86
+	android:label
+		ADDED from C:\Users\SSAFY\Desktop\flutter\S10P22C208\frontend\android\app\src\main\AndroidManifest.xml:38:9-34
+	android:icon
+		ADDED from C:\Users\SSAFY\Desktop\flutter\S10P22C208\frontend\android\app\src\main\AndroidManifest.xml:40:9-45
+	android:usesCleartextTraffic
+		ADDED from C:\Users\SSAFY\Desktop\flutter\S10P22C208\frontend\android\app\src\main\AndroidManifest.xml:41:9-44
+	android:name
+		INJECTED from C:\Users\SSAFY\Desktop\flutter\S10P22C208\frontend\android\app\src\main\AndroidManifest.xml
+		ADDED from C:\Users\SSAFY\Desktop\flutter\S10P22C208\frontend\android\app\src\main\AndroidManifest.xml:39:9-42
+manifest
+ADDED from C:\Users\SSAFY\Desktop\flutter\S10P22C208\frontend\android\app\src\main\AndroidManifest.xml:1:1-91:12
+INJECTED from C:\Users\SSAFY\Desktop\flutter\S10P22C208\frontend\android\app\src\main\AndroidManifest.xml:1:1-91:12
+INJECTED from C:\Users\SSAFY\Desktop\flutter\S10P22C208\frontend\android\app\src\main\AndroidManifest.xml:1:1-91:12
+INJECTED from C:\Users\SSAFY\Desktop\flutter\S10P22C208\frontend\android\app\src\main\AndroidManifest.xml:1:1-91:12
+MERGED from [:file_picker] C:\Users\SSAFY\Desktop\flutter\S10P22C208\frontend\build\file_picker\intermediates\merged_manifest\release\AndroidManifest.xml:2:1-21:12
+MERGED from [:flutter_plugin_android_lifecycle] C:\Users\SSAFY\Desktop\flutter\S10P22C208\frontend\build\flutter_plugin_android_lifecycle\intermediates\merged_manifest\release\AndroidManifest.xml:2:1-9:12
+MERGED from [:path_provider_android] C:\Users\SSAFY\Desktop\flutter\S10P22C208\frontend\build\path_provider_android\intermediates\merged_manifest\release\AndroidManifest.xml:2:1-9:12
+MERGED from [:flutter_secure_storage] C:\Users\SSAFY\Desktop\flutter\S10P22C208\frontend\build\flutter_secure_storage\intermediates\merged_manifest\release\AndroidManifest.xml:2:1-9:12
+MERGED from [:flutter_native_splash] C:\Users\SSAFY\Desktop\flutter\S10P22C208\frontend\build\flutter_native_splash\intermediates\merged_manifest\release\AndroidManifest.xml:2:1-9:12
+MERGED from [:webview_flutter_android] C:\Users\SSAFY\Desktop\flutter\S10P22C208\frontend\build\webview_flutter_android\intermediates\merged_manifest\release\AndroidManifest.xml:2:1-9:12
+MERGED from [:video_thumbnail] C:\Users\SSAFY\Desktop\flutter\S10P22C208\frontend\build\video_thumbnail\intermediates\merged_manifest\release\AndroidManifest.xml:2:1-9:12
+MERGED from [:permission_handler_android] C:\Users\SSAFY\Desktop\flutter\S10P22C208\frontend\build\permission_handler_android\intermediates\merged_manifest\release\AndroidManifest.xml:2:1-9:12
+MERGED from [:wakelock_plus] C:\Users\SSAFY\Desktop\flutter\S10P22C208\frontend\build\wakelock_plus\intermediates\merged_manifest\release\AndroidManifest.xml:2:1-9:12
+MERGED from [:package_info_plus] C:\Users\SSAFY\Desktop\flutter\S10P22C208\frontend\build\package_info_plus\intermediates\merged_manifest\release\AndroidManifest.xml:2:1-9:12
+MERGED from [:flutter_sound] C:\Users\SSAFY\Desktop\flutter\S10P22C208\frontend\build\flutter_sound\intermediates\merged_manifest\release\AndroidManifest.xml:2:1-9:12
+MERGED from [:video_player_android] C:\Users\SSAFY\Desktop\flutter\S10P22C208\frontend\build\video_player_android\intermediates\merged_manifest\release\AndroidManifest.xml:2:1-9:12
+MERGED from [androidx.window:window-java:1.0.0-beta04] C:\Users\SSAFY\.gradle\caches\transforms-3\142c24f2530665bb6deb4123ab140714\transformed\jetified-window-java-1.0.0-beta04\AndroidManifest.xml:17:1-23:12
+MERGED from [androidx.window:window:1.0.0-beta04] C:\Users\SSAFY\.gradle\caches\transforms-3\032f4dff274e516110d9363a9793a3e3\transformed\jetified-window-1.0.0-beta04\AndroidManifest.xml:17:1-33:12
+MERGED from [androidx.multidex:multidex:2.0.1] C:\Users\SSAFY\.gradle\caches\transforms-3\3c8ce11570a617fb22f89af82e67d78b\transformed\multidex-2.0.1\AndroidManifest.xml:17:1-22:12
+MERGED from [androidx.webkit:webkit:1.7.0] C:\Users\SSAFY\.gradle\caches\transforms-3\e2bc4d834f8f919d5ef35a628a89c036\transformed\webkit-1.7.0\AndroidManifest.xml:17:1-22:12
+MERGED from [com.github.canardoux:flutter_sound_core:9.4.6] C:\Users\SSAFY\.gradle\caches\transforms-3\af6a8e916c0398ce1220cda7e8db08f7\transformed\jetified-flutter_sound_core-9.4.6\AndroidManifest.xml:2:1-18:12
+MERGED from [androidx.media:media:1.4.1] C:\Users\SSAFY\.gradle\caches\transforms-3\24faa39eb01a2b2145f029d9c1646358\transformed\media-1.4.1\AndroidManifest.xml:17:1-30:12
+MERGED from [androidx.appcompat:appcompat:1.2.0] C:\Users\SSAFY\.gradle\caches\transforms-3\9a5742a8ae24d1f6cb062dbab491d07a\transformed\appcompat-1.2.0\AndroidManifest.xml:17:1-24:12
+MERGED from [com.google.android.exoplayer:exoplayer-hls:2.18.7] C:\Users\SSAFY\.gradle\caches\transforms-3\1f8b86385fa4a8f21acc08f7b28c185c\transformed\jetified-exoplayer-hls-2.18.7\AndroidManifest.xml:17:1-24:12
+MERGED from [com.google.android.exoplayer:exoplayer-dash:2.18.7] C:\Users\SSAFY\.gradle\caches\transforms-3\e993e2eb91544e33b492fc77faac541a\transformed\jetified-exoplayer-dash-2.18.7\AndroidManifest.xml:17:1-24:12
+MERGED from [com.google.android.exoplayer:exoplayer-smoothstreaming:2.18.7] C:\Users\SSAFY\.gradle\caches\transforms-3\15ca513a61e15bbbc2e78bc31b926ed8\transformed\jetified-exoplayer-smoothstreaming-2.18.7\AndroidManifest.xml:17:1-24:12
+MERGED from [com.google.android.exoplayer:exoplayer-core:2.18.7] C:\Users\SSAFY\.gradle\caches\transforms-3\1c54749537a4d1ff3f2079d73b98930f\transformed\jetified-exoplayer-core-2.18.7\AndroidManifest.xml:17:1-26:12
+MERGED from [androidx.fragment:fragment:1.1.0] C:\Users\SSAFY\.gradle\caches\transforms-3\d16d53746166143fe30054cbfe559e31\transformed\fragment-1.1.0\AndroidManifest.xml:17:1-24:12
+MERGED from [androidx.tracing:tracing:1.0.0] C:\Users\SSAFY\.gradle\caches\transforms-3\fcf486669bd3283ac86e13b69736f6ad\transformed\jetified-tracing-1.0.0\AndroidManifest.xml:17:1-24:12
+MERGED from [androidx.appcompat:appcompat-resources:1.2.0] C:\Users\SSAFY\.gradle\caches\transforms-3\cda85958ce6d377d9f6c59d0c32e4a73\transformed\jetified-appcompat-resources-1.2.0\AndroidManifest.xml:17:1-24:12
+MERGED from [androidx.drawerlayout:drawerlayout:1.0.0] C:\Users\SSAFY\.gradle\caches\transforms-3\5fb7165b46191df0789279565db6553e\transformed\drawerlayout-1.0.0\AndroidManifest.xml:17:1-22:12
+MERGED from [androidx.viewpager:viewpager:1.0.0] C:\Users\SSAFY\.gradle\caches\transforms-3\aa3cbedcef3ee23bf0d03abede347041\transformed\viewpager-1.0.0\AndroidManifest.xml:17:1-22:12
+MERGED from [androidx.loader:loader:1.0.0] C:\Users\SSAFY\.gradle\caches\transforms-3\73e9214f5c1a2878cad8e78e78318741\transformed\loader-1.0.0\AndroidManifest.xml:17:1-22:12
+MERGED from [androidx.activity:activity:1.0.0] C:\Users\SSAFY\.gradle\caches\transforms-3\527bb8264fa514a2727756f032c3968f\transformed\jetified-activity-1.0.0\AndroidManifest.xml:17:1-24:12
+MERGED from [androidx.vectordrawable:vectordrawable-animated:1.1.0] C:\Users\SSAFY\.gradle\caches\transforms-3\102ec08c80a8e3874dbb2d65decd788f\transformed\vectordrawable-animated-1.1.0\AndroidManifest.xml:17:1-24:12
+MERGED from [androidx.vectordrawable:vectordrawable:1.1.0] C:\Users\SSAFY\.gradle\caches\transforms-3\2fc23539d7b7a460b49a473bbb805f4b\transformed\vectordrawable-1.1.0\AndroidManifest.xml:17:1-24:12
+MERGED from [androidx.customview:customview:1.0.0] C:\Users\SSAFY\.gradle\caches\transforms-3\9addb396269c3fa35a089f701280c3bf\transformed\customview-1.0.0\AndroidManifest.xml:17:1-22:12
+MERGED from [androidx.core:core:1.7.0] C:\Users\SSAFY\.gradle\caches\transforms-3\caf291fc1e5f9957c2c7da41fb779e7e\transformed\core-1.7.0\AndroidManifest.xml:17:1-26:12
+MERGED from [androidx.versionedparcelable:versionedparcelable:1.1.1] C:\Users\SSAFY\.gradle\caches\transforms-3\6668cc85eff5929d44d91f927ab7e655\transformed\versionedparcelable-1.1.1\AndroidManifest.xml:17:1-27:12
+MERGED from [androidx.cursoradapter:cursoradapter:1.0.0] C:\Users\SSAFY\.gradle\caches\transforms-3\84288ad1fa78cf3fb8fb9e63aa8bd3b9\transformed\cursoradapter-1.0.0\AndroidManifest.xml:17:1-22:12
+MERGED from [com.google.android.exoplayer:exoplayer-datasource:2.18.7] C:\Users\SSAFY\.gradle\caches\transforms-3\007dcee6bd7f86ee64bfc57c55aae347\transformed\jetified-exoplayer-datasource-2.18.7\AndroidManifest.xml:17:1-24:12
+MERGED from [com.google.android.exoplayer:exoplayer-extractor:2.18.7] C:\Users\SSAFY\.gradle\caches\transforms-3\6ff620737dee362f29f1132aa8d8818b\transformed\jetified-exoplayer-extractor-2.18.7\AndroidManifest.xml:17:1-24:12
+MERGED from [com.google.android.exoplayer:exoplayer-decoder:2.18.7] C:\Users\SSAFY\.gradle\caches\transforms-3\acdfaeec4e0b31a692a097c7cbdd4bbb\transformed\jetified-exoplayer-decoder-2.18.7\AndroidManifest.xml:17:1-24:12
+MERGED from [com.google.android.exoplayer:exoplayer-database:2.18.7] C:\Users\SSAFY\.gradle\caches\transforms-3\6bb7922db04fd717dde29acfb686b924\transformed\jetified-exoplayer-database-2.18.7\AndroidManifest.xml:17:1-24:12
+MERGED from [com.google.android.exoplayer:exoplayer-common:2.18.7] C:\Users\SSAFY\.gradle\caches\transforms-3\ffab8f724980c696661d1c7e8df0b05f\transformed\jetified-exoplayer-common-2.18.7\AndroidManifest.xml:17:1-26:12
+MERGED from [androidx.lifecycle:lifecycle-runtime:2.3.1] C:\Users\SSAFY\.gradle\caches\transforms-3\25a884faa36a531a9e5f369d596bbf88\transformed\lifecycle-runtime-2.3.1\AndroidManifest.xml:17:1-24:12
+MERGED from [androidx.lifecycle:lifecycle-viewmodel:2.1.0] C:\Users\SSAFY\.gradle\caches\transforms-3\dada71b7eb51c482d5f3b75ae6e629f5\transformed\lifecycle-viewmodel-2.1.0\AndroidManifest.xml:17:1-22:12
+MERGED from [androidx.savedstate:savedstate:1.0.0] C:\Users\SSAFY\.gradle\caches\transforms-3\3370393edc609657729ac2492a37f3b4\transformed\jetified-savedstate-1.0.0\AndroidManifest.xml:17:1-24:12
+MERGED from [androidx.interpolator:interpolator:1.0.0] C:\Users\SSAFY\.gradle\caches\transforms-3\ba5cbacca9596aa589f17f054708aaf8\transformed\interpolator-1.0.0\AndroidManifest.xml:17:1-22:12
+MERGED from [androidx.lifecycle:lifecycle-livedata:2.0.0] C:\Users\SSAFY\.gradle\caches\transforms-3\108e25f406ecced09f55eceb8d3ad0dc\transformed\lifecycle-livedata-2.0.0\AndroidManifest.xml:17:1-22:12
+MERGED from [androidx.lifecycle:lifecycle-livedata-core:2.0.0] C:\Users\SSAFY\.gradle\caches\transforms-3\f1c3f56234b634f5187be5722bcbd93c\transformed\lifecycle-livedata-core-2.0.0\AndroidManifest.xml:17:1-22:12
+MERGED from [androidx.arch.core:core-runtime:2.1.0] C:\Users\SSAFY\.gradle\caches\transforms-3\e706f819c67a6a189962ffd22caace4e\transformed\core-runtime-2.1.0\AndroidManifest.xml:17:1-24:12
+MERGED from [androidx.annotation:annotation-experimental:1.1.0] C:\Users\SSAFY\.gradle\caches\transforms-3\3f96ca76068ab400b494bc7d541ee256\transformed\jetified-annotation-experimental-1.1.0\AndroidManifest.xml:17:1-24:12
+INJECTED from C:\Users\SSAFY\Desktop\flutter\S10P22C208\frontend\android\app\src\main\AndroidManifest.xml:1:1-91:12
+INJECTED from C:\Users\SSAFY\Desktop\flutter\S10P22C208\frontend\android\app\src\main\AndroidManifest.xml:1:1-91:12
+INJECTED from C:\Users\SSAFY\Desktop\flutter\S10P22C208\frontend\android\app\src\main\AndroidManifest.xml:1:1-91:12
+	package
+		INJECTED from C:\Users\SSAFY\Desktop\flutter\S10P22C208\frontend\android\app\src\main\AndroidManifest.xml
+		ADDED from C:\Users\SSAFY\Desktop\flutter\S10P22C208\frontend\android\app\src\main\AndroidManifest.xml:1:1-91:12
+		INJECTED from C:\Users\SSAFY\Desktop\flutter\S10P22C208\frontend\android\app\src\main\AndroidManifest.xml
+	android:versionName
+		INJECTED from C:\Users\SSAFY\Desktop\flutter\S10P22C208\frontend\android\app\src\main\AndroidManifest.xml
+		ADDED from C:\Users\SSAFY\Desktop\flutter\S10P22C208\frontend\android\app\src\main\AndroidManifest.xml:1:1-91:12
+		INJECTED from C:\Users\SSAFY\Desktop\flutter\S10P22C208\frontend\android\app\src\main\AndroidManifest.xml
+	android:versionCode
+		INJECTED from C:\Users\SSAFY\Desktop\flutter\S10P22C208\frontend\android\app\src\main\AndroidManifest.xml
+		ADDED from C:\Users\SSAFY\Desktop\flutter\S10P22C208\frontend\android\app\src\main\AndroidManifest.xml:1:1-91:12
+		INJECTED from C:\Users\SSAFY\Desktop\flutter\S10P22C208\frontend\android\app\src\main\AndroidManifest.xml
+	xmlns:android
+		ADDED from C:\Users\SSAFY\Desktop\flutter\S10P22C208\frontend\android\app\src\main\AndroidManifest.xml:1:11-69
+uses-feature#android.hardware.camera
+ADDED from C:\Users\SSAFY\Desktop\flutter\S10P22C208\frontend\android\app\src\main\AndroidManifest.xml:5:5-7:36
+	android:required
+		ADDED from C:\Users\SSAFY\Desktop\flutter\S10P22C208\frontend\android\app\src\main\AndroidManifest.xml:7:9-33
+	android:name
+		ADDED from C:\Users\SSAFY\Desktop\flutter\S10P22C208\frontend\android\app\src\main\AndroidManifest.xml:6:9-47
+uses-permission#android.permission.INTERNET
+ADDED from C:\Users\SSAFY\Desktop\flutter\S10P22C208\frontend\android\app\src\main\AndroidManifest.xml:13:5-66
+	android:name
+		ADDED from C:\Users\SSAFY\Desktop\flutter\S10P22C208\frontend\android\app\src\main\AndroidManifest.xml:13:22-64
+uses-permission#android.permission.WRITE_EXTERNAL_STORAGE
+ADDED from C:\Users\SSAFY\Desktop\flutter\S10P22C208\frontend\android\app\src\main\AndroidManifest.xml:16:5-80
+	android:name
+		ADDED from C:\Users\SSAFY\Desktop\flutter\S10P22C208\frontend\android\app\src\main\AndroidManifest.xml:16:22-78
+uses-permission#android.permission.READ_EXTERNAL_STORAGE
+ADDED from C:\Users\SSAFY\Desktop\flutter\S10P22C208\frontend\android\app\src\main\AndroidManifest.xml:18:5-79
+MERGED from [:file_picker] C:\Users\SSAFY\Desktop\flutter\S10P22C208\frontend\build\file_picker\intermediates\merged_manifest\release\AndroidManifest.xml:9:5-11:38
+MERGED from [:file_picker] C:\Users\SSAFY\Desktop\flutter\S10P22C208\frontend\build\file_picker\intermediates\merged_manifest\release\AndroidManifest.xml:9:5-11:38
+	android:maxSdkVersion
+		ADDED from [:file_picker] C:\Users\SSAFY\Desktop\flutter\S10P22C208\frontend\build\file_picker\intermediates\merged_manifest\release\AndroidManifest.xml:11:9-35
+	android:name
+		ADDED from C:\Users\SSAFY\Desktop\flutter\S10P22C208\frontend\android\app\src\main\AndroidManifest.xml:18:22-77
+uses-permission#android.permission.READ_MEDIA_IMAGES
+ADDED from C:\Users\SSAFY\Desktop\flutter\S10P22C208\frontend\android\app\src\main\AndroidManifest.xml:24:5-76
+	android:name
+		ADDED from C:\Users\SSAFY\Desktop\flutter\S10P22C208\frontend\android\app\src\main\AndroidManifest.xml:24:22-73
+uses-permission#android.permission.READ_MEDIA_VIDEO
+ADDED from C:\Users\SSAFY\Desktop\flutter\S10P22C208\frontend\android\app\src\main\AndroidManifest.xml:25:5-75
+	android:name
+		ADDED from C:\Users\SSAFY\Desktop\flutter\S10P22C208\frontend\android\app\src\main\AndroidManifest.xml:25:22-72
+uses-permission#android.permission.READ_MEDIA_AUDIO
+ADDED from C:\Users\SSAFY\Desktop\flutter\S10P22C208\frontend\android\app\src\main\AndroidManifest.xml:26:5-75
+	android:name
+		ADDED from C:\Users\SSAFY\Desktop\flutter\S10P22C208\frontend\android\app\src\main\AndroidManifest.xml:26:22-72
+uses-permission#android.permission-group.STORAGE
+ADDED from C:\Users\SSAFY\Desktop\flutter\S10P22C208\frontend\android\app\src\main\AndroidManifest.xml:28:5-72
+	android:name
+		ADDED from C:\Users\SSAFY\Desktop\flutter\S10P22C208\frontend\android\app\src\main\AndroidManifest.xml:28:22-69
+uses-permission#android.permission.CAMERA
+ADDED from C:\Users\SSAFY\Desktop\flutter\S10P22C208\frontend\android\app\src\main\AndroidManifest.xml:31:5-64
+	android:name
+		ADDED from C:\Users\SSAFY\Desktop\flutter\S10P22C208\frontend\android\app\src\main\AndroidManifest.xml:31:22-62
+uses-permission#android.permission.RECORD_AUDIO
+ADDED from C:\Users\SSAFY\Desktop\flutter\S10P22C208\frontend\android\app\src\main\AndroidManifest.xml:34:5-71
+	android:name
+		ADDED from C:\Users\SSAFY\Desktop\flutter\S10P22C208\frontend\android\app\src\main\AndroidManifest.xml:34:22-68
+uses-permission#android.permission.FOREGROUND_SERVICE
+ADDED from C:\Users\SSAFY\Desktop\flutter\S10P22C208\frontend\android\app\src\main\AndroidManifest.xml:35:5-77
+	android:name
+		ADDED from C:\Users\SSAFY\Desktop\flutter\S10P22C208\frontend\android\app\src\main\AndroidManifest.xml:35:22-74
+queries
+ADDED from C:\Users\SSAFY\Desktop\flutter\S10P22C208\frontend\android\app\src\main\AndroidManifest.xml:85:5-90:15
+MERGED from [:file_picker] C:\Users\SSAFY\Desktop\flutter\S10P22C208\frontend\build\file_picker\intermediates\merged_manifest\release\AndroidManifest.xml:13:5-19:15
+MERGED from [:file_picker] C:\Users\SSAFY\Desktop\flutter\S10P22C208\frontend\build\file_picker\intermediates\merged_manifest\release\AndroidManifest.xml:13:5-19:15
+MERGED from [androidx.media:media:1.4.1] C:\Users\SSAFY\.gradle\caches\transforms-3\24faa39eb01a2b2145f029d9c1646358\transformed\media-1.4.1\AndroidManifest.xml:24:5-28:15
+MERGED from [androidx.media:media:1.4.1] C:\Users\SSAFY\.gradle\caches\transforms-3\24faa39eb01a2b2145f029d9c1646358\transformed\media-1.4.1\AndroidManifest.xml:24:5-28:15
+intent#action:name:android.intent.action.PROCESS_TEXT+data:mimeType:text/plain
+ADDED from C:\Users\SSAFY\Desktop\flutter\S10P22C208\frontend\android\app\src\main\AndroidManifest.xml:86:9-89:18
+action#android.intent.action.PROCESS_TEXT
+ADDED from C:\Users\SSAFY\Desktop\flutter\S10P22C208\frontend\android\app\src\main\AndroidManifest.xml:87:13-72
+	android:name
+		ADDED from C:\Users\SSAFY\Desktop\flutter\S10P22C208\frontend\android\app\src\main\AndroidManifest.xml:87:21-70
+data
+ADDED from C:\Users\SSAFY\Desktop\flutter\S10P22C208\frontend\android\app\src\main\AndroidManifest.xml:88:13-50
+	android:mimeType
+		ADDED from C:\Users\SSAFY\Desktop\flutter\S10P22C208\frontend\android\app\src\main\AndroidManifest.xml:88:19-48
+uses-sdk
+INJECTED from C:\Users\SSAFY\Desktop\flutter\S10P22C208\frontend\android\app\src\main\AndroidManifest.xml reason: use-sdk injection requested
+INJECTED from C:\Users\SSAFY\Desktop\flutter\S10P22C208\frontend\android\app\src\main\AndroidManifest.xml
+INJECTED from C:\Users\SSAFY\Desktop\flutter\S10P22C208\frontend\android\app\src\main\AndroidManifest.xml
+MERGED from [:file_picker] C:\Users\SSAFY\Desktop\flutter\S10P22C208\frontend\build\file_picker\intermediates\merged_manifest\release\AndroidManifest.xml:5:5-7:41
+MERGED from [:file_picker] C:\Users\SSAFY\Desktop\flutter\S10P22C208\frontend\build\file_picker\intermediates\merged_manifest\release\AndroidManifest.xml:5:5-7:41
+MERGED from [:flutter_plugin_android_lifecycle] C:\Users\SSAFY\Desktop\flutter\S10P22C208\frontend\build\flutter_plugin_android_lifecycle\intermediates\merged_manifest\release\AndroidManifest.xml:5:5-7:41
+MERGED from [:flutter_plugin_android_lifecycle] C:\Users\SSAFY\Desktop\flutter\S10P22C208\frontend\build\flutter_plugin_android_lifecycle\intermediates\merged_manifest\release\AndroidManifest.xml:5:5-7:41
+MERGED from [:path_provider_android] C:\Users\SSAFY\Desktop\flutter\S10P22C208\frontend\build\path_provider_android\intermediates\merged_manifest\release\AndroidManifest.xml:5:5-7:41
+MERGED from [:path_provider_android] C:\Users\SSAFY\Desktop\flutter\S10P22C208\frontend\build\path_provider_android\intermediates\merged_manifest\release\AndroidManifest.xml:5:5-7:41
+MERGED from [:flutter_secure_storage] C:\Users\SSAFY\Desktop\flutter\S10P22C208\frontend\build\flutter_secure_storage\intermediates\merged_manifest\release\AndroidManifest.xml:5:5-7:41
+MERGED from [:flutter_secure_storage] C:\Users\SSAFY\Desktop\flutter\S10P22C208\frontend\build\flutter_secure_storage\intermediates\merged_manifest\release\AndroidManifest.xml:5:5-7:41
+MERGED from [:flutter_native_splash] C:\Users\SSAFY\Desktop\flutter\S10P22C208\frontend\build\flutter_native_splash\intermediates\merged_manifest\release\AndroidManifest.xml:5:5-7:41
+MERGED from [:flutter_native_splash] C:\Users\SSAFY\Desktop\flutter\S10P22C208\frontend\build\flutter_native_splash\intermediates\merged_manifest\release\AndroidManifest.xml:5:5-7:41
+MERGED from [:webview_flutter_android] C:\Users\SSAFY\Desktop\flutter\S10P22C208\frontend\build\webview_flutter_android\intermediates\merged_manifest\release\AndroidManifest.xml:5:5-7:41
+MERGED from [:webview_flutter_android] C:\Users\SSAFY\Desktop\flutter\S10P22C208\frontend\build\webview_flutter_android\intermediates\merged_manifest\release\AndroidManifest.xml:5:5-7:41
+MERGED from [:video_thumbnail] C:\Users\SSAFY\Desktop\flutter\S10P22C208\frontend\build\video_thumbnail\intermediates\merged_manifest\release\AndroidManifest.xml:5:5-7:41
+MERGED from [:video_thumbnail] C:\Users\SSAFY\Desktop\flutter\S10P22C208\frontend\build\video_thumbnail\intermediates\merged_manifest\release\AndroidManifest.xml:5:5-7:41
+MERGED from [:permission_handler_android] C:\Users\SSAFY\Desktop\flutter\S10P22C208\frontend\build\permission_handler_android\intermediates\merged_manifest\release\AndroidManifest.xml:5:5-7:41
+MERGED from [:permission_handler_android] C:\Users\SSAFY\Desktop\flutter\S10P22C208\frontend\build\permission_handler_android\intermediates\merged_manifest\release\AndroidManifest.xml:5:5-7:41
+MERGED from [:wakelock_plus] C:\Users\SSAFY\Desktop\flutter\S10P22C208\frontend\build\wakelock_plus\intermediates\merged_manifest\release\AndroidManifest.xml:5:5-7:41
+MERGED from [:wakelock_plus] C:\Users\SSAFY\Desktop\flutter\S10P22C208\frontend\build\wakelock_plus\intermediates\merged_manifest\release\AndroidManifest.xml:5:5-7:41
+MERGED from [:package_info_plus] C:\Users\SSAFY\Desktop\flutter\S10P22C208\frontend\build\package_info_plus\intermediates\merged_manifest\release\AndroidManifest.xml:5:5-7:41
+MERGED from [:package_info_plus] C:\Users\SSAFY\Desktop\flutter\S10P22C208\frontend\build\package_info_plus\intermediates\merged_manifest\release\AndroidManifest.xml:5:5-7:41
+MERGED from [:flutter_sound] C:\Users\SSAFY\Desktop\flutter\S10P22C208\frontend\build\flutter_sound\intermediates\merged_manifest\release\AndroidManifest.xml:5:5-7:41
+MERGED from [:flutter_sound] C:\Users\SSAFY\Desktop\flutter\S10P22C208\frontend\build\flutter_sound\intermediates\merged_manifest\release\AndroidManifest.xml:5:5-7:41
+MERGED from [:video_player_android] C:\Users\SSAFY\Desktop\flutter\S10P22C208\frontend\build\video_player_android\intermediates\merged_manifest\release\AndroidManifest.xml:5:5-7:41
+MERGED from [:video_player_android] C:\Users\SSAFY\Desktop\flutter\S10P22C208\frontend\build\video_player_android\intermediates\merged_manifest\release\AndroidManifest.xml:5:5-7:41
+MERGED from [androidx.window:window-java:1.0.0-beta04] C:\Users\SSAFY\.gradle\caches\transforms-3\142c24f2530665bb6deb4123ab140714\transformed\jetified-window-java-1.0.0-beta04\AndroidManifest.xml:19:5-21:41
+MERGED from [androidx.window:window-java:1.0.0-beta04] C:\Users\SSAFY\.gradle\caches\transforms-3\142c24f2530665bb6deb4123ab140714\transformed\jetified-window-java-1.0.0-beta04\AndroidManifest.xml:19:5-21:41
+MERGED from [androidx.window:window:1.0.0-beta04] C:\Users\SSAFY\.gradle\caches\transforms-3\032f4dff274e516110d9363a9793a3e3\transformed\jetified-window-1.0.0-beta04\AndroidManifest.xml:20:5-22:41
+MERGED from [androidx.window:window:1.0.0-beta04] C:\Users\SSAFY\.gradle\caches\transforms-3\032f4dff274e516110d9363a9793a3e3\transformed\jetified-window-1.0.0-beta04\AndroidManifest.xml:20:5-22:41
+MERGED from [androidx.multidex:multidex:2.0.1] C:\Users\SSAFY\.gradle\caches\transforms-3\3c8ce11570a617fb22f89af82e67d78b\transformed\multidex-2.0.1\AndroidManifest.xml:20:5-43
+MERGED from [androidx.multidex:multidex:2.0.1] C:\Users\SSAFY\.gradle\caches\transforms-3\3c8ce11570a617fb22f89af82e67d78b\transformed\multidex-2.0.1\AndroidManifest.xml:20:5-43
+MERGED from [androidx.webkit:webkit:1.7.0] C:\Users\SSAFY\.gradle\caches\transforms-3\e2bc4d834f8f919d5ef35a628a89c036\transformed\webkit-1.7.0\AndroidManifest.xml:20:5-44
+MERGED from [androidx.webkit:webkit:1.7.0] C:\Users\SSAFY\.gradle\caches\transforms-3\e2bc4d834f8f919d5ef35a628a89c036\transformed\webkit-1.7.0\AndroidManifest.xml:20:5-44
+MERGED from [com.github.canardoux:flutter_sound_core:9.4.6] C:\Users\SSAFY\.gradle\caches\transforms-3\af6a8e916c0398ce1220cda7e8db08f7\transformed\jetified-flutter_sound_core-9.4.6\AndroidManifest.xml:7:5-9:41
+MERGED from [com.github.canardoux:flutter_sound_core:9.4.6] C:\Users\SSAFY\.gradle\caches\transforms-3\af6a8e916c0398ce1220cda7e8db08f7\transformed\jetified-flutter_sound_core-9.4.6\AndroidManifest.xml:7:5-9:41
+MERGED from [androidx.media:media:1.4.1] C:\Users\SSAFY\.gradle\caches\transforms-3\24faa39eb01a2b2145f029d9c1646358\transformed\media-1.4.1\AndroidManifest.xml:20:5-22:41
+MERGED from [androidx.media:media:1.4.1] C:\Users\SSAFY\.gradle\caches\transforms-3\24faa39eb01a2b2145f029d9c1646358\transformed\media-1.4.1\AndroidManifest.xml:20:5-22:41
+MERGED from [androidx.appcompat:appcompat:1.2.0] C:\Users\SSAFY\.gradle\caches\transforms-3\9a5742a8ae24d1f6cb062dbab491d07a\transformed\appcompat-1.2.0\AndroidManifest.xml:20:5-22:41
+MERGED from [androidx.appcompat:appcompat:1.2.0] C:\Users\SSAFY\.gradle\caches\transforms-3\9a5742a8ae24d1f6cb062dbab491d07a\transformed\appcompat-1.2.0\AndroidManifest.xml:20:5-22:41
+MERGED from [com.google.android.exoplayer:exoplayer-hls:2.18.7] C:\Users\SSAFY\.gradle\caches\transforms-3\1f8b86385fa4a8f21acc08f7b28c185c\transformed\jetified-exoplayer-hls-2.18.7\AndroidManifest.xml:20:5-22:41
+MERGED from [com.google.android.exoplayer:exoplayer-hls:2.18.7] C:\Users\SSAFY\.gradle\caches\transforms-3\1f8b86385fa4a8f21acc08f7b28c185c\transformed\jetified-exoplayer-hls-2.18.7\AndroidManifest.xml:20:5-22:41
+MERGED from [com.google.android.exoplayer:exoplayer-dash:2.18.7] C:\Users\SSAFY\.gradle\caches\transforms-3\e993e2eb91544e33b492fc77faac541a\transformed\jetified-exoplayer-dash-2.18.7\AndroidManifest.xml:20:5-22:41
+MERGED from [com.google.android.exoplayer:exoplayer-dash:2.18.7] C:\Users\SSAFY\.gradle\caches\transforms-3\e993e2eb91544e33b492fc77faac541a\transformed\jetified-exoplayer-dash-2.18.7\AndroidManifest.xml:20:5-22:41
+MERGED from [com.google.android.exoplayer:exoplayer-smoothstreaming:2.18.7] C:\Users\SSAFY\.gradle\caches\transforms-3\15ca513a61e15bbbc2e78bc31b926ed8\transformed\jetified-exoplayer-smoothstreaming-2.18.7\AndroidManifest.xml:20:5-22:41
+MERGED from [com.google.android.exoplayer:exoplayer-smoothstreaming:2.18.7] C:\Users\SSAFY\.gradle\caches\transforms-3\15ca513a61e15bbbc2e78bc31b926ed8\transformed\jetified-exoplayer-smoothstreaming-2.18.7\AndroidManifest.xml:20:5-22:41
+MERGED from [com.google.android.exoplayer:exoplayer-core:2.18.7] C:\Users\SSAFY\.gradle\caches\transforms-3\1c54749537a4d1ff3f2079d73b98930f\transformed\jetified-exoplayer-core-2.18.7\AndroidManifest.xml:20:5-22:41
+MERGED from [com.google.android.exoplayer:exoplayer-core:2.18.7] C:\Users\SSAFY\.gradle\caches\transforms-3\1c54749537a4d1ff3f2079d73b98930f\transformed\jetified-exoplayer-core-2.18.7\AndroidManifest.xml:20:5-22:41
+MERGED from [androidx.fragment:fragment:1.1.0] C:\Users\SSAFY\.gradle\caches\transforms-3\d16d53746166143fe30054cbfe559e31\transformed\fragment-1.1.0\AndroidManifest.xml:20:5-22:41
+MERGED from [androidx.fragment:fragment:1.1.0] C:\Users\SSAFY\.gradle\caches\transforms-3\d16d53746166143fe30054cbfe559e31\transformed\fragment-1.1.0\AndroidManifest.xml:20:5-22:41
+MERGED from [androidx.tracing:tracing:1.0.0] C:\Users\SSAFY\.gradle\caches\transforms-3\fcf486669bd3283ac86e13b69736f6ad\transformed\jetified-tracing-1.0.0\AndroidManifest.xml:20:5-22:41
+MERGED from [androidx.tracing:tracing:1.0.0] C:\Users\SSAFY\.gradle\caches\transforms-3\fcf486669bd3283ac86e13b69736f6ad\transformed\jetified-tracing-1.0.0\AndroidManifest.xml:20:5-22:41
+MERGED from [androidx.appcompat:appcompat-resources:1.2.0] C:\Users\SSAFY\.gradle\caches\transforms-3\cda85958ce6d377d9f6c59d0c32e4a73\transformed\jetified-appcompat-resources-1.2.0\AndroidManifest.xml:20:5-22:41
+MERGED from [androidx.appcompat:appcompat-resources:1.2.0] C:\Users\SSAFY\.gradle\caches\transforms-3\cda85958ce6d377d9f6c59d0c32e4a73\transformed\jetified-appcompat-resources-1.2.0\AndroidManifest.xml:20:5-22:41
+MERGED from [androidx.drawerlayout:drawerlayout:1.0.0] C:\Users\SSAFY\.gradle\caches\transforms-3\5fb7165b46191df0789279565db6553e\transformed\drawerlayout-1.0.0\AndroidManifest.xml:20:5-44
+MERGED from [androidx.drawerlayout:drawerlayout:1.0.0] C:\Users\SSAFY\.gradle\caches\transforms-3\5fb7165b46191df0789279565db6553e\transformed\drawerlayout-1.0.0\AndroidManifest.xml:20:5-44
+MERGED from [androidx.viewpager:viewpager:1.0.0] C:\Users\SSAFY\.gradle\caches\transforms-3\aa3cbedcef3ee23bf0d03abede347041\transformed\viewpager-1.0.0\AndroidManifest.xml:20:5-44
+MERGED from [androidx.viewpager:viewpager:1.0.0] C:\Users\SSAFY\.gradle\caches\transforms-3\aa3cbedcef3ee23bf0d03abede347041\transformed\viewpager-1.0.0\AndroidManifest.xml:20:5-44
+MERGED from [androidx.loader:loader:1.0.0] C:\Users\SSAFY\.gradle\caches\transforms-3\73e9214f5c1a2878cad8e78e78318741\transformed\loader-1.0.0\AndroidManifest.xml:20:5-44
+MERGED from [androidx.loader:loader:1.0.0] C:\Users\SSAFY\.gradle\caches\transforms-3\73e9214f5c1a2878cad8e78e78318741\transformed\loader-1.0.0\AndroidManifest.xml:20:5-44
+MERGED from [androidx.activity:activity:1.0.0] C:\Users\SSAFY\.gradle\caches\transforms-3\527bb8264fa514a2727756f032c3968f\transformed\jetified-activity-1.0.0\AndroidManifest.xml:20:5-22:41
+MERGED from [androidx.activity:activity:1.0.0] C:\Users\SSAFY\.gradle\caches\transforms-3\527bb8264fa514a2727756f032c3968f\transformed\jetified-activity-1.0.0\AndroidManifest.xml:20:5-22:41
+MERGED from [androidx.vectordrawable:vectordrawable-animated:1.1.0] C:\Users\SSAFY\.gradle\caches\transforms-3\102ec08c80a8e3874dbb2d65decd788f\transformed\vectordrawable-animated-1.1.0\AndroidManifest.xml:20:5-22:41
+MERGED from [androidx.vectordrawable:vectordrawable-animated:1.1.0] C:\Users\SSAFY\.gradle\caches\transforms-3\102ec08c80a8e3874dbb2d65decd788f\transformed\vectordrawable-animated-1.1.0\AndroidManifest.xml:20:5-22:41
+MERGED from [androidx.vectordrawable:vectordrawable:1.1.0] C:\Users\SSAFY\.gradle\caches\transforms-3\2fc23539d7b7a460b49a473bbb805f4b\transformed\vectordrawable-1.1.0\AndroidManifest.xml:20:5-22:41
+MERGED from [androidx.vectordrawable:vectordrawable:1.1.0] C:\Users\SSAFY\.gradle\caches\transforms-3\2fc23539d7b7a460b49a473bbb805f4b\transformed\vectordrawable-1.1.0\AndroidManifest.xml:20:5-22:41
+MERGED from [androidx.customview:customview:1.0.0] C:\Users\SSAFY\.gradle\caches\transforms-3\9addb396269c3fa35a089f701280c3bf\transformed\customview-1.0.0\AndroidManifest.xml:20:5-44
+MERGED from [androidx.customview:customview:1.0.0] C:\Users\SSAFY\.gradle\caches\transforms-3\9addb396269c3fa35a089f701280c3bf\transformed\customview-1.0.0\AndroidManifest.xml:20:5-44
+MERGED from [androidx.core:core:1.7.0] C:\Users\SSAFY\.gradle\caches\transforms-3\caf291fc1e5f9957c2c7da41fb779e7e\transformed\core-1.7.0\AndroidManifest.xml:20:5-22:41
+MERGED from [androidx.core:core:1.7.0] C:\Users\SSAFY\.gradle\caches\transforms-3\caf291fc1e5f9957c2c7da41fb779e7e\transformed\core-1.7.0\AndroidManifest.xml:20:5-22:41
+MERGED from [androidx.versionedparcelable:versionedparcelable:1.1.1] C:\Users\SSAFY\.gradle\caches\transforms-3\6668cc85eff5929d44d91f927ab7e655\transformed\versionedparcelable-1.1.1\AndroidManifest.xml:20:5-22:41
+MERGED from [androidx.versionedparcelable:versionedparcelable:1.1.1] C:\Users\SSAFY\.gradle\caches\transforms-3\6668cc85eff5929d44d91f927ab7e655\transformed\versionedparcelable-1.1.1\AndroidManifest.xml:20:5-22:41
+MERGED from [androidx.cursoradapter:cursoradapter:1.0.0] C:\Users\SSAFY\.gradle\caches\transforms-3\84288ad1fa78cf3fb8fb9e63aa8bd3b9\transformed\cursoradapter-1.0.0\AndroidManifest.xml:20:5-44
+MERGED from [androidx.cursoradapter:cursoradapter:1.0.0] C:\Users\SSAFY\.gradle\caches\transforms-3\84288ad1fa78cf3fb8fb9e63aa8bd3b9\transformed\cursoradapter-1.0.0\AndroidManifest.xml:20:5-44
+MERGED from [com.google.android.exoplayer:exoplayer-datasource:2.18.7] C:\Users\SSAFY\.gradle\caches\transforms-3\007dcee6bd7f86ee64bfc57c55aae347\transformed\jetified-exoplayer-datasource-2.18.7\AndroidManifest.xml:20:5-22:41
+MERGED from [com.google.android.exoplayer:exoplayer-datasource:2.18.7] C:\Users\SSAFY\.gradle\caches\transforms-3\007dcee6bd7f86ee64bfc57c55aae347\transformed\jetified-exoplayer-datasource-2.18.7\AndroidManifest.xml:20:5-22:41
+MERGED from [com.google.android.exoplayer:exoplayer-extractor:2.18.7] C:\Users\SSAFY\.gradle\caches\transforms-3\6ff620737dee362f29f1132aa8d8818b\transformed\jetified-exoplayer-extractor-2.18.7\AndroidManifest.xml:20:5-22:41
+MERGED from [com.google.android.exoplayer:exoplayer-extractor:2.18.7] C:\Users\SSAFY\.gradle\caches\transforms-3\6ff620737dee362f29f1132aa8d8818b\transformed\jetified-exoplayer-extractor-2.18.7\AndroidManifest.xml:20:5-22:41
+MERGED from [com.google.android.exoplayer:exoplayer-decoder:2.18.7] C:\Users\SSAFY\.gradle\caches\transforms-3\acdfaeec4e0b31a692a097c7cbdd4bbb\transformed\jetified-exoplayer-decoder-2.18.7\AndroidManifest.xml:20:5-22:41
+MERGED from [com.google.android.exoplayer:exoplayer-decoder:2.18.7] C:\Users\SSAFY\.gradle\caches\transforms-3\acdfaeec4e0b31a692a097c7cbdd4bbb\transformed\jetified-exoplayer-decoder-2.18.7\AndroidManifest.xml:20:5-22:41
+MERGED from [com.google.android.exoplayer:exoplayer-database:2.18.7] C:\Users\SSAFY\.gradle\caches\transforms-3\6bb7922db04fd717dde29acfb686b924\transformed\jetified-exoplayer-database-2.18.7\AndroidManifest.xml:20:5-22:41
+MERGED from [com.google.android.exoplayer:exoplayer-database:2.18.7] C:\Users\SSAFY\.gradle\caches\transforms-3\6bb7922db04fd717dde29acfb686b924\transformed\jetified-exoplayer-database-2.18.7\AndroidManifest.xml:20:5-22:41
+MERGED from [com.google.android.exoplayer:exoplayer-common:2.18.7] C:\Users\SSAFY\.gradle\caches\transforms-3\ffab8f724980c696661d1c7e8df0b05f\transformed\jetified-exoplayer-common-2.18.7\AndroidManifest.xml:20:5-22:41
+MERGED from [com.google.android.exoplayer:exoplayer-common:2.18.7] C:\Users\SSAFY\.gradle\caches\transforms-3\ffab8f724980c696661d1c7e8df0b05f\transformed\jetified-exoplayer-common-2.18.7\AndroidManifest.xml:20:5-22:41
+MERGED from [androidx.lifecycle:lifecycle-runtime:2.3.1] C:\Users\SSAFY\.gradle\caches\transforms-3\25a884faa36a531a9e5f369d596bbf88\transformed\lifecycle-runtime-2.3.1\AndroidManifest.xml:20:5-22:41
+MERGED from [androidx.lifecycle:lifecycle-runtime:2.3.1] C:\Users\SSAFY\.gradle\caches\transforms-3\25a884faa36a531a9e5f369d596bbf88\transformed\lifecycle-runtime-2.3.1\AndroidManifest.xml:20:5-22:41
+MERGED from [androidx.lifecycle:lifecycle-viewmodel:2.1.0] C:\Users\SSAFY\.gradle\caches\transforms-3\dada71b7eb51c482d5f3b75ae6e629f5\transformed\lifecycle-viewmodel-2.1.0\AndroidManifest.xml:20:5-44
+MERGED from [androidx.lifecycle:lifecycle-viewmodel:2.1.0] C:\Users\SSAFY\.gradle\caches\transforms-3\dada71b7eb51c482d5f3b75ae6e629f5\transformed\lifecycle-viewmodel-2.1.0\AndroidManifest.xml:20:5-44
+MERGED from [androidx.savedstate:savedstate:1.0.0] C:\Users\SSAFY\.gradle\caches\transforms-3\3370393edc609657729ac2492a37f3b4\transformed\jetified-savedstate-1.0.0\AndroidManifest.xml:20:5-22:41
+MERGED from [androidx.savedstate:savedstate:1.0.0] C:\Users\SSAFY\.gradle\caches\transforms-3\3370393edc609657729ac2492a37f3b4\transformed\jetified-savedstate-1.0.0\AndroidManifest.xml:20:5-22:41
+MERGED from [androidx.interpolator:interpolator:1.0.0] C:\Users\SSAFY\.gradle\caches\transforms-3\ba5cbacca9596aa589f17f054708aaf8\transformed\interpolator-1.0.0\AndroidManifest.xml:20:5-44
+MERGED from [androidx.interpolator:interpolator:1.0.0] C:\Users\SSAFY\.gradle\caches\transforms-3\ba5cbacca9596aa589f17f054708aaf8\transformed\interpolator-1.0.0\AndroidManifest.xml:20:5-44
+MERGED from [androidx.lifecycle:lifecycle-livedata:2.0.0] C:\Users\SSAFY\.gradle\caches\transforms-3\108e25f406ecced09f55eceb8d3ad0dc\transformed\lifecycle-livedata-2.0.0\AndroidManifest.xml:20:5-44
+MERGED from [androidx.lifecycle:lifecycle-livedata:2.0.0] C:\Users\SSAFY\.gradle\caches\transforms-3\108e25f406ecced09f55eceb8d3ad0dc\transformed\lifecycle-livedata-2.0.0\AndroidManifest.xml:20:5-44
+MERGED from [androidx.lifecycle:lifecycle-livedata-core:2.0.0] C:\Users\SSAFY\.gradle\caches\transforms-3\f1c3f56234b634f5187be5722bcbd93c\transformed\lifecycle-livedata-core-2.0.0\AndroidManifest.xml:20:5-44
+MERGED from [androidx.lifecycle:lifecycle-livedata-core:2.0.0] C:\Users\SSAFY\.gradle\caches\transforms-3\f1c3f56234b634f5187be5722bcbd93c\transformed\lifecycle-livedata-core-2.0.0\AndroidManifest.xml:20:5-44
+MERGED from [androidx.arch.core:core-runtime:2.1.0] C:\Users\SSAFY\.gradle\caches\transforms-3\e706f819c67a6a189962ffd22caace4e\transformed\core-runtime-2.1.0\AndroidManifest.xml:20:5-22:41
+MERGED from [androidx.arch.core:core-runtime:2.1.0] C:\Users\SSAFY\.gradle\caches\transforms-3\e706f819c67a6a189962ffd22caace4e\transformed\core-runtime-2.1.0\AndroidManifest.xml:20:5-22:41
+MERGED from [androidx.annotation:annotation-experimental:1.1.0] C:\Users\SSAFY\.gradle\caches\transforms-3\3f96ca76068ab400b494bc7d541ee256\transformed\jetified-annotation-experimental-1.1.0\AndroidManifest.xml:20:5-22:41
+MERGED from [androidx.annotation:annotation-experimental:1.1.0] C:\Users\SSAFY\.gradle\caches\transforms-3\3f96ca76068ab400b494bc7d541ee256\transformed\jetified-annotation-experimental-1.1.0\AndroidManifest.xml:20:5-22:41
+INJECTED from C:\Users\SSAFY\Desktop\flutter\S10P22C208\frontend\android\app\src\main\AndroidManifest.xml
+INJECTED from C:\Users\SSAFY\Desktop\flutter\S10P22C208\frontend\android\app\src\main\AndroidManifest.xml
+	android:targetSdkVersion
+		INJECTED from C:\Users\SSAFY\Desktop\flutter\S10P22C208\frontend\android\app\src\main\AndroidManifest.xml
+		ADDED from C:\Users\SSAFY\Desktop\flutter\S10P22C208\frontend\android\app\src\main\AndroidManifest.xml
+		INJECTED from C:\Users\SSAFY\Desktop\flutter\S10P22C208\frontend\android\app\src\main\AndroidManifest.xml
+	android:minSdkVersion
+		INJECTED from C:\Users\SSAFY\Desktop\flutter\S10P22C208\frontend\android\app\src\main\AndroidManifest.xml
+		ADDED from C:\Users\SSAFY\Desktop\flutter\S10P22C208\frontend\android\app\src\main\AndroidManifest.xml
+		INJECTED from C:\Users\SSAFY\Desktop\flutter\S10P22C208\frontend\android\app\src\main\AndroidManifest.xml
+activity#com.example.frontend.MainActivity
+ADDED from C:\Users\SSAFY\Desktop\flutter\S10P22C208\frontend\android\app\src\main\AndroidManifest.xml:42:9-73:20
+	android:launchMode
+		ADDED from C:\Users\SSAFY\Desktop\flutter\S10P22C208\frontend\android\app\src\main\AndroidManifest.xml:45:13-43
+	android:hardwareAccelerated
+		ADDED from C:\Users\SSAFY\Desktop\flutter\S10P22C208\frontend\android\app\src\main\AndroidManifest.xml:48:13-47
+	android:windowSoftInputMode
+		ADDED from C:\Users\SSAFY\Desktop\flutter\S10P22C208\frontend\android\app\src\main\AndroidManifest.xml:49:13-55
+	android:exported
+		ADDED from C:\Users\SSAFY\Desktop\flutter\S10P22C208\frontend\android\app\src\main\AndroidManifest.xml:44:13-36
+	android:configChanges
+		ADDED from C:\Users\SSAFY\Desktop\flutter\S10P22C208\frontend\android\app\src\main\AndroidManifest.xml:47:13-163
+	android:theme
+		ADDED from C:\Users\SSAFY\Desktop\flutter\S10P22C208\frontend\android\app\src\main\AndroidManifest.xml:46:13-47
+	android:name
+		ADDED from C:\Users\SSAFY\Desktop\flutter\S10P22C208\frontend\android\app\src\main\AndroidManifest.xml:43:13-41
+meta-data#io.flutter.embedding.android.NormalTheme
+ADDED from C:\Users\SSAFY\Desktop\flutter\S10P22C208\frontend\android\app\src\main\AndroidManifest.xml:54:13-57:17
+	android:resource
+		ADDED from C:\Users\SSAFY\Desktop\flutter\S10P22C208\frontend\android\app\src\main\AndroidManifest.xml:56:15-52
+	android:name
+		ADDED from C:\Users\SSAFY\Desktop\flutter\S10P22C208\frontend\android\app\src\main\AndroidManifest.xml:55:15-70
+meta-data#com.naver.sdk.clientId
+ADDED from C:\Users\SSAFY\Desktop\flutter\S10P22C208\frontend\android\app\src\main\AndroidManifest.xml:59:13-61:53
+	android:value
+		ADDED from C:\Users\SSAFY\Desktop\flutter\S10P22C208\frontend\android\app\src\main\AndroidManifest.xml:61:17-50
+	android:name
+		ADDED from C:\Users\SSAFY\Desktop\flutter\S10P22C208\frontend\android\app\src\main\AndroidManifest.xml:60:17-54
+meta-data#com.naver.sdk.clientSecret
+ADDED from C:\Users\SSAFY\Desktop\flutter\S10P22C208\frontend\android\app\src\main\AndroidManifest.xml:62:13-64:57
+	android:value
+		ADDED from C:\Users\SSAFY\Desktop\flutter\S10P22C208\frontend\android\app\src\main\AndroidManifest.xml:64:17-54
+	android:name
+		ADDED from C:\Users\SSAFY\Desktop\flutter\S10P22C208\frontend\android\app\src\main\AndroidManifest.xml:63:17-58
+meta-data#com.naver.sdk.clientName
+ADDED from C:\Users\SSAFY\Desktop\flutter\S10P22C208\frontend\android\app\src\main\AndroidManifest.xml:65:13-67:55
+	android:value
+		ADDED from C:\Users\SSAFY\Desktop\flutter\S10P22C208\frontend\android\app\src\main\AndroidManifest.xml:67:17-52
+	android:name
+		ADDED from C:\Users\SSAFY\Desktop\flutter\S10P22C208\frontend\android\app\src\main\AndroidManifest.xml:66:17-56
+intent-filter#action:name:android.intent.action.MAIN+category:name:android.intent.category.LAUNCHER
+ADDED from C:\Users\SSAFY\Desktop\flutter\S10P22C208\frontend\android\app\src\main\AndroidManifest.xml:69:13-72:29
+action#android.intent.action.MAIN
+ADDED from C:\Users\SSAFY\Desktop\flutter\S10P22C208\frontend\android\app\src\main\AndroidManifest.xml:70:17-68
+	android:name
+		ADDED from C:\Users\SSAFY\Desktop\flutter\S10P22C208\frontend\android\app\src\main\AndroidManifest.xml:70:25-66
+category#android.intent.category.LAUNCHER
+ADDED from C:\Users\SSAFY\Desktop\flutter\S10P22C208\frontend\android\app\src\main\AndroidManifest.xml:71:17-76
+	android:name
+		ADDED from C:\Users\SSAFY\Desktop\flutter\S10P22C208\frontend\android\app\src\main\AndroidManifest.xml:71:27-74
+meta-data#flutterEmbedding
+ADDED from C:\Users\SSAFY\Desktop\flutter\S10P22C208\frontend\android\app\src\main\AndroidManifest.xml:76:9-78:33
+	android:value
+		ADDED from C:\Users\SSAFY\Desktop\flutter\S10P22C208\frontend\android\app\src\main\AndroidManifest.xml:78:13-30
+	android:name
+		ADDED from C:\Users\SSAFY\Desktop\flutter\S10P22C208\frontend\android\app\src\main\AndroidManifest.xml:77:13-44
+intent#action:name:android.intent.action.GET_CONTENT+data:mimeType:*/*
+ADDED from [:file_picker] C:\Users\SSAFY\Desktop\flutter\S10P22C208\frontend\build\file_picker\intermediates\merged_manifest\release\AndroidManifest.xml:14:9-18:18
+action#android.intent.action.GET_CONTENT
+ADDED from [:file_picker] C:\Users\SSAFY\Desktop\flutter\S10P22C208\frontend\build\file_picker\intermediates\merged_manifest\release\AndroidManifest.xml:15:13-72
+	android:name
+		ADDED from [:file_picker] C:\Users\SSAFY\Desktop\flutter\S10P22C208\frontend\build\file_picker\intermediates\merged_manifest\release\AndroidManifest.xml:15:21-69
+uses-library#androidx.window.extensions
+ADDED from [androidx.window:window:1.0.0-beta04] C:\Users\SSAFY\.gradle\caches\transforms-3\032f4dff274e516110d9363a9793a3e3\transformed\jetified-window-1.0.0-beta04\AndroidManifest.xml:25:9-27:40
+	android:required
+		ADDED from [androidx.window:window:1.0.0-beta04] C:\Users\SSAFY\.gradle\caches\transforms-3\032f4dff274e516110d9363a9793a3e3\transformed\jetified-window-1.0.0-beta04\AndroidManifest.xml:27:13-37
+	android:name
+		ADDED from [androidx.window:window:1.0.0-beta04] C:\Users\SSAFY\.gradle\caches\transforms-3\032f4dff274e516110d9363a9793a3e3\transformed\jetified-window-1.0.0-beta04\AndroidManifest.xml:26:13-54
+uses-library#androidx.window.sidecar
+ADDED from [androidx.window:window:1.0.0-beta04] C:\Users\SSAFY\.gradle\caches\transforms-3\032f4dff274e516110d9363a9793a3e3\transformed\jetified-window-1.0.0-beta04\AndroidManifest.xml:28:9-30:40
+	android:required
+		ADDED from [androidx.window:window:1.0.0-beta04] C:\Users\SSAFY\.gradle\caches\transforms-3\032f4dff274e516110d9363a9793a3e3\transformed\jetified-window-1.0.0-beta04\AndroidManifest.xml:30:13-37
+	android:name
+		ADDED from [androidx.window:window:1.0.0-beta04] C:\Users\SSAFY\.gradle\caches\transforms-3\032f4dff274e516110d9363a9793a3e3\transformed\jetified-window-1.0.0-beta04\AndroidManifest.xml:29:13-51
+uses-permission#android.permission.BLUETOOTH
+ADDED from [com.github.canardoux:flutter_sound_core:9.4.6] C:\Users\SSAFY\.gradle\caches\transforms-3\af6a8e916c0398ce1220cda7e8db08f7\transformed\jetified-flutter_sound_core-9.4.6\AndroidManifest.xml:11:5-68
+	android:name
+		ADDED from [com.github.canardoux:flutter_sound_core:9.4.6] C:\Users\SSAFY\.gradle\caches\transforms-3\af6a8e916c0398ce1220cda7e8db08f7\transformed\jetified-flutter_sound_core-9.4.6\AndroidManifest.xml:11:22-65
+uses-permission#android.permission.WAKE_LOCK
+ADDED from [com.github.canardoux:flutter_sound_core:9.4.6] C:\Users\SSAFY\.gradle\caches\transforms-3\af6a8e916c0398ce1220cda7e8db08f7\transformed\jetified-flutter_sound_core-9.4.6\AndroidManifest.xml:12:5-68
+	android:name
+		ADDED from [com.github.canardoux:flutter_sound_core:9.4.6] C:\Users\SSAFY\.gradle\caches\transforms-3\af6a8e916c0398ce1220cda7e8db08f7\transformed\jetified-flutter_sound_core-9.4.6\AndroidManifest.xml:12:22-65
+uses-permission#android.permission.MODIFY_AUDIO_SETTINGS
+ADDED from [com.github.canardoux:flutter_sound_core:9.4.6] C:\Users\SSAFY\.gradle\caches\transforms-3\af6a8e916c0398ce1220cda7e8db08f7\transformed\jetified-flutter_sound_core-9.4.6\AndroidManifest.xml:13:5-80
+	android:name
+		ADDED from [com.github.canardoux:flutter_sound_core:9.4.6] C:\Users\SSAFY\.gradle\caches\transforms-3\af6a8e916c0398ce1220cda7e8db08f7\transformed\jetified-flutter_sound_core-9.4.6\AndroidManifest.xml:13:22-77
+intent#action:name:android.media.browse.MediaBrowserService
+ADDED from [androidx.media:media:1.4.1] C:\Users\SSAFY\.gradle\caches\transforms-3\24faa39eb01a2b2145f029d9c1646358\transformed\media-1.4.1\AndroidManifest.xml:25:9-27:18
+action#android.media.browse.MediaBrowserService
+ADDED from [androidx.media:media:1.4.1] C:\Users\SSAFY\.gradle\caches\transforms-3\24faa39eb01a2b2145f029d9c1646358\transformed\media-1.4.1\AndroidManifest.xml:26:13-79
+	android:name
+		ADDED from [androidx.media:media:1.4.1] C:\Users\SSAFY\.gradle\caches\transforms-3\24faa39eb01a2b2145f029d9c1646358\transformed\media-1.4.1\AndroidManifest.xml:26:21-76
+uses-permission#android.permission.ACCESS_NETWORK_STATE
+ADDED from [com.google.android.exoplayer:exoplayer-core:2.18.7] C:\Users\SSAFY\.gradle\caches\transforms-3\1c54749537a4d1ff3f2079d73b98930f\transformed\jetified-exoplayer-core-2.18.7\AndroidManifest.xml:24:5-79
+MERGED from [com.google.android.exoplayer:exoplayer-common:2.18.7] C:\Users\SSAFY\.gradle\caches\transforms-3\ffab8f724980c696661d1c7e8df0b05f\transformed\jetified-exoplayer-common-2.18.7\AndroidManifest.xml:24:5-79
+MERGED from [com.google.android.exoplayer:exoplayer-common:2.18.7] C:\Users\SSAFY\.gradle\caches\transforms-3\ffab8f724980c696661d1c7e8df0b05f\transformed\jetified-exoplayer-common-2.18.7\AndroidManifest.xml:24:5-79
+	android:name
+		ADDED from [com.google.android.exoplayer:exoplayer-core:2.18.7] C:\Users\SSAFY\.gradle\caches\transforms-3\1c54749537a4d1ff3f2079d73b98930f\transformed\jetified-exoplayer-core-2.18.7\AndroidManifest.xml:24:22-76
