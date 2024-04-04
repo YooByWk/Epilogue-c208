@@ -66,6 +66,10 @@ public class Scheduler {
                 emailUtil.sendWillLink(v.getViewerEmail(), findUser.getName(), v.getViewerName(), findUser.getWill().getWillCode());
             }
 
+            Memorial memorial = memorialRepository.findMemorialByUser(findUser);
+
+            if (memorial == null) continue;
+
             // 2. 추모관 생성
             memorialRepository.save(Memorial.builder()
                     .user(findUser)
