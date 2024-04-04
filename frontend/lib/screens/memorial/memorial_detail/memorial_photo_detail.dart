@@ -76,12 +76,12 @@ class MemorialPhotoDetailScreen extends StatelessWidget {
                               ),
                             ),
                             Container(
-                              height: MediaQuery.of(context).size.height * 0.75,
+                              height: MediaQuery.of(context).size.height * 0.6,
                               child: Image.network(
                                   viewModel.memorialPhotoDetailModel!.s3url),
                             ),
                             Padding(
-                              padding: const EdgeInsets.all(8.0),
+                              padding: const EdgeInsets.only(right: 20.0, left: 20.0, top: 10.0),
                               child: Text(viewModel.memorialPhotoDetailModel!.content!, style: TextStyle(fontSize: 24),),
                             ),
                           ],

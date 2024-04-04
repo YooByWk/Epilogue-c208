@@ -26,6 +26,7 @@ class PhotoTabViewModel extends ChangeNotifier {
     content: null,
   );
 
+  String photoCount = '0';
   bool _isFocused = false;
   bool _isLoading = false;
   String? _errorMessage;
@@ -42,6 +43,7 @@ class PhotoTabViewModel extends ChangeNotifier {
 
 
   void loadInitialData() async {
+
     _photos = [];
     _isLoading = true;
     _errorMessage = null;
@@ -60,25 +62,27 @@ class PhotoTabViewModel extends ChangeNotifier {
       }
     } else {
       _photos = result['photoList'];
+      debugPrint(_photos.length.toString());
       _isLoading = false;
     }
     notifyListeners(); // 데이터가 변경되었음을 알림
   }
 
   Future<void> loadMore() async {
+    // photo가 이미 다 저장되어있다면 그만 불러오기
+    if (_photos.length.toString() == photoCount) {
+      _isLoading = false;
+      // debugPrint(_photos.length.toString());
+      notifyListeners();
+      return;
+    }
+
     _isLoading = true;
     _errorMessage = null;
     notifyListeners();
 
     final lastPhotoSeq = _photos.isNotEmpty ? _photos.last.memorialPhotoSeq : 0;
     final result = await _memorialService.photoList(lastPhotoSeq: lastPhotoSeq);
-
-    //전체 다 불러왔으면 그만!
-    if (_photos.length.toString() == result['count']) {
-      _isLoading = false; // 데이터를 더 불러오지 않음
-      notifyListeners();
-      return;
-    }
 
     if (!result['success']) {
       int statusCode = result['statusCode'];
@@ -91,7 +95,9 @@ class PhotoTabViewModel extends ChangeNotifier {
       }
     } else {
       _photos.addAll(result['photoList']);
+      photoCount = result['count'];
       _isLoading = false;
+      debugPrint(_photos.length.toString());
     }
     notifyListeners();
   }

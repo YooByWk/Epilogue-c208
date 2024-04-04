@@ -10,7 +10,8 @@ class VideoTabViewModel extends ChangeNotifier {
   final MemorialService _memorialService = MemorialService();
   
   List<MemorialVideoListModel> _videos = [];
-  int _nextItem = 0 ;
+
+  String videoCount = '0';
   int _focusedIndex = 0;
   bool _isLoading = false;
   ScrollController scrollController = ScrollController();
@@ -65,19 +66,20 @@ class VideoTabViewModel extends ChangeNotifier {
   }
 
   Future<void> loadMore() async {
+
+    if (_videos.length.toString() == videoCount) {
+      _isLoading = false;
+      // debugPrint(_photos.length.toString());
+      notifyListeners();
+      return;
+    }
+
     _isLoading = true;
     _errorMessage = null;
     notifyListeners();
 
     final lastVideoSeq = _videos.isNotEmpty ? _videos.last.memorialVideoSeq : 0;
     final result = await _memorialService.videoList(lastVideoSeq: lastVideoSeq);
-
-    //전체 다 불러왔으면 그만!
-    if (_videos.length.toString() == result['count']) {
-      _isLoading = false; // 데이터를 더 불러오지 않음
-      notifyListeners();
-      return;
-    }
 
     if (!result['success']) {
       int statusCode = result['statusCode'];

@@ -12,6 +12,7 @@ class LetterTabViewModel extends ChangeNotifier {
     content: '',
   );
 
+  String letterCount = '0';
   bool _isFocused = false;
   bool _isLoading = false;
   String? _errorMessage;
@@ -39,6 +40,7 @@ class LetterTabViewModel extends ChangeNotifier {
   }
 
   void loadInitialData() async {
+
     _letters = [];
     _isLoading = true;
     _errorMessage = null;
@@ -59,12 +61,12 @@ class LetterTabViewModel extends ChangeNotifier {
       }
     } else {
 
-      debugPrint('으악 ${ result['letterList']}');
+      // debugPrint('으악 ${ result['letterList']}');
       _letters = result['letterList'];
       _isLoading = false;
-      debugPrint('letterList: $_letters');
+      // debugPrint('letterList: $_letters');
     }
-    debugPrint('ㅁ닝럼닝럼너리ㅓㄴ미럼ㄴ:ㄴ${_letters.length}');
+    // debugPrint('ㅁ닝럼닝럼너리ㅓㄴ미럼ㄴ:ㄴ${_letters.length}');
     notifyListeners(); // 데이터가 변경되었음을 알림
   }
 
@@ -73,15 +75,15 @@ class LetterTabViewModel extends ChangeNotifier {
     _errorMessage = null;
     notifyListeners();
 
-    final lastLetterSeq = _letters.isNotEmpty ? _letters.last.memorialLetterSeq : 0;
-    final result = await _memorialService.letterList(lastLetterSeq: lastLetterSeq);
-    // debugPrint(result['count']);
-    // _letters의 길이가 전체 개수면 그만!
-    if (_letters.length.toString() == result['count']) {
-      _isLoading = false; // 데이터를 더 불러오지 않음
+    if (_letters.length.toString() == letterCount) {
+      _isLoading = false;
+      // debugPrint(_photos.length.toString());
       notifyListeners();
       return;
     }
+
+    final lastLetterSeq = _letters.isNotEmpty ? _letters.last.memorialLetterSeq : 0;
+    final result = await _memorialService.letterList(lastLetterSeq: lastLetterSeq);
 
     if (!result['success']) {
       int statusCode = result['statusCode'];

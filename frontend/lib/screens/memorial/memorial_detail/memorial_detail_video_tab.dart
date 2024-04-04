@@ -23,7 +23,7 @@ class VideoTab extends StatelessWidget {
             Consumer<VideoTabViewModel>(builder: (context, viewModel, child) {
           return NotificationListener<ScrollNotification>(
               onNotification: (scrollInfo) {
-                if (scrollInfo.metrics.pixels >=
+                if (!viewModel.isLoading && scrollInfo.metrics.pixels >=
                     scrollInfo.metrics.maxScrollExtent - 50) {
                   viewModel.loadMore();
                 }
@@ -54,9 +54,6 @@ class VideoTab extends StatelessWidget {
                         SizedBox(height: 10)
                       ]));
                     }
-                    // if (index >= viewModel.videos.length) {
-                    //   return null; // 수정: index가 viewModel.videos.length 이상일 때는 null을 반환합니다.
-                    // }
                     return VideoCard(
                       key: ValueKey(index),
                       videoPath: viewModel.videos[index - 1].s3url,
@@ -108,7 +105,7 @@ class _VideoCardState extends State<VideoCard> {
       autoPlay: false,
       looping: true,
       autoInitialize: true,
-      allowMuting: false,
+      allowMuting: true,
       allowFullScreen: true,
       allowPlaybackSpeedChanging: false,
       showControlsOnInitialize: false,

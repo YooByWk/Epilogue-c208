@@ -32,13 +32,9 @@ class _LetterTabState extends State<LetterTab> {
           builder: (context, viewModel, child) {
             return NotificationListener<ScrollNotification>(
                 onNotification: (scroll) {
-                  if (scroll.metrics.pixels >=
+                  if (!viewModel.isLoading && scroll.metrics.pixels >=
                       scroll.metrics.maxScrollExtent - 50) {
                     viewModel.loadMore();
-                    // debugPrint('더 불러오기');
-                    // debugPrint(viewModel.letters.length.toString());
-                  } else {
-                    // debugPrint('스크롤 위치 ${scroll.metrics.pixels}');
                   }
                   return false;
                 },
