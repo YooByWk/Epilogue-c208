@@ -9,13 +9,18 @@ import 'package:frontend/models/will/memorial_info_model.dart';
 import 'package:frontend/models/will/viewer_model.dart';
 import 'package:frontend/models/will/witness_model.dart';
 import 'package:frontend/models/will/my_will_model.dart';
+import 'package:path_provider/path_provider.dart';
 
 class WillService {
+
+
   final _dio = Dio.Dio();
   final _storage = FlutterSecureStorage();
   final baseUrl = dotenv.env['API_URL'] ?? '';
-
+  final ipfsUrl = dotenv.env['IPFS_URL'] ?? '';
+  
   WillService() {
+    
     _dio.interceptors.add(Dio.InterceptorsWrapper(
       onRequest: (options, handler) async {
         // 저장된 토큰을 가져온다
@@ -80,6 +85,34 @@ class WillService {
     }
   }
 
+  
+  /// ipfs 업로드
+  Future ipfsUpload(String ipfsHash) async {
+    Directory tempDir = await getTemporaryDirectory();
+    String tempPath = tempDir.path;
+    String filePath = '$tempPath/will.mp4';
+    await _dio.download(ipfsUrl +'5001/ipfs/${ipfsHash}', filePath);
+    var file = File(filePath);
+    debugPrint(file.path);
+    var formData = Dio.FormData.fromMap({
+      'multipartFile': await Dio.MultipartFile.fromFile(file.path),
+    });
+
+    try {
+      Dio.Response response = await _dio.post(
+        baseUrl + '/api/will',
+        data: formData,
+      );
+
+      if (response.statusCode == 200) {
+        return {'success': true, 'ipfsHash': response.data['ipfsHash']};
+      } else {
+        return {'success': false, 'statusCode': response.statusCode};
+      }
+    } on Dio.DioError catch (e) {
+      return {'success': false, 'statusCode': e.response?.statusCode};
+    }
+  }
 ///////////////////////// 녹음 저장 //////////////////////////////////
   Future<Map<String, dynamic>> recording(File audioFile) async {
     var formData = Dio.FormData.fromMap({

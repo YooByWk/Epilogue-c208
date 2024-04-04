@@ -4,9 +4,13 @@ import 'package:http/http.dart';
 import 'package:flutter/material.dart';
 import 'package:crypto/crypto.dart';
 import 'dart:typed_data';
+import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:convert/convert.dart';
+
+
+
 class BlockChainModel{
-   String _rpcUrl= 'https://rpc.ssafy-blockchain.com'; // RPC 주소
+   final String _rpcUrl= dotenv.env['RPC_URL']?? ''; // RPC 주소
    String _pk = '0xFFEed2e575D8F5D1e390B17A8d39933EFd8200c2'; // 개인키
    String _contractAddress = '0xc5F95849c13cC2b0a0339E594C28079c74183206'; // 컨트랙트 주소
    String _contractAbi ='[ { "inputs": [], "name": "retrieve", "outputs": [ { "internalType": "uint256", "name": "", "type": "uint256" } ], "stateMutability": "view", "type": "function" }, { "inputs": [ { "internalType": "uint256", "name": "num", "type": "uint256" } ], "name": "store", "outputs": [], "stateMutability": "nonpayable", "type": "function" } ]'; // 컨트랙트 ABI

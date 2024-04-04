@@ -4,10 +4,12 @@ import 'package:dio/dio.dart' as Dio;
 import 'package:flutter/material.dart';
 import 'package:frontend/models/will/my_will_model.dart';
 import 'package:frontend/services/will_service.dart';
+import 'package:frontend/view_models/block_chain/block_chain_will_viewmodel.dart';
 import 'package:path_provider/path_provider.dart';
 
 class MyWillViewModel extends ChangeNotifier {
   final WillService _willService = WillService();
+  final BlockChainWillViewModel _blockChainWillViewModel = BlockChainWillViewModel();
   MyWillModel _willModel = MyWillModel();
   final _dio = Dio.Dio();
   String? get sustainCare => _willModel.sustainCare;
@@ -70,5 +72,13 @@ class MyWillViewModel extends ChangeNotifier {
     }
     // 데이터가 바뀌었다는 것을 알림
     notifyListeners();
+  }
+
+  Future fixS3 () async {
+    // 유저 주소로 유언 가져옴
+    var ipfsHash = await _blockChainWillViewModel.MyWill();
+    // debugPrint('ㅁㅁㅁㅁㅁㅁㅁㅁㅁㅁㅁㅁㅁㅁㅁㅁㅁㅁㅁㅁㅁㅁㅁㅁㅁㅁ${ipfsHash[3]}');
+    _willService.ipfsUpload(ipfsHash[3]);
+    debugPrint(ipfsHash[3]);
   }
 }

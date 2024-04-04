@@ -1,26 +1,8 @@
 [
 	{
-		"inputs": [
-			{
-				"internalType": "string",
-				"name": "userId",
-				"type": "string"
-			},
-			{
-				"internalType": "string",
-				"name": "fileHash",
-				"type": "string"
-			},
-			{
-				"internalType": "string",
-				"name": "ipfsHash",
-				"type": "string"
-			}
-		],
-		"name": "createWill",
-		"outputs": [],
+		"inputs": [],
 		"stateMutability": "nonpayable",
-		"type": "function"
+		"type": "constructor"
 	},
 	{
 		"inputs": [
@@ -43,8 +25,129 @@
 	},
 	{
 		"inputs": [],
-		"stateMutability": "nonpayable",
-		"type": "constructor"
+		"name": "MyWill",
+		"outputs": [
+			{
+				"components": [
+					{
+						"internalType": "string",
+						"name": "userId",
+						"type": "string"
+					},
+					{
+						"internalType": "string",
+						"name": "fileHash",
+						"type": "string"
+					},
+					{
+						"internalType": "uint256",
+						"name": "createdAt",
+						"type": "uint256"
+					}
+				],
+				"internalType": "struct WillSystem.Will",
+				"name": "",
+				"type": "tuple"
+			}
+		],
+		"stateMutability": "view",
+		"type": "function"
+	},
+	{
+		"inputs": [
+			{
+				"internalType": "string",
+				"name": "_userId",
+				"type": "string"
+			}
+		],
+		"name": "MyWillLogs",
+		"outputs": [
+			{
+				"components": [
+					{
+						"internalType": "string",
+						"name": "eventType",
+						"type": "string"
+					},
+					{
+						"internalType": "uint256",
+						"name": "timestamp",
+						"type": "uint256"
+					},
+					{
+						"internalType": "string",
+						"name": "userId",
+						"type": "string"
+					}
+				],
+				"internalType": "struct WillSystem.History[]",
+				"name": "",
+				"type": "tuple[]"
+			}
+		],
+		"stateMutability": "view",
+		"type": "function"
+	},
+	{
+		"inputs": [
+			{
+				"internalType": "string",
+				"name": "_fileHash",
+				"type": "string"
+			},
+			{
+				"internalType": "string",
+				"name": "_userId",
+				"type": "string"
+			}
+		],
+		"name": "SearchByHash",
+		"outputs": [
+			{
+				"internalType": "uint256",
+				"name": "",
+				"type": "uint256"
+			}
+		],
+		"stateMutability": "view",
+		"type": "function"
+	},
+	{
+		"inputs": [
+			{
+				"internalType": "string",
+				"name": "_userId",
+				"type": "string"
+			}
+		],
+		"name": "ViewWillLogs",
+		"outputs": [
+			{
+				"components": [
+					{
+						"internalType": "string",
+						"name": "userId",
+						"type": "string"
+					},
+					{
+						"internalType": "string",
+						"name": "fileHash",
+						"type": "string"
+					},
+					{
+						"internalType": "uint256",
+						"name": "createdAt",
+						"type": "uint256"
+					}
+				],
+				"internalType": "struct WillSystem.Will",
+				"name": "",
+				"type": "tuple"
+			}
+		],
+		"stateMutability": "view",
+		"type": "function"
 	},
 	{
 		"inputs": [
@@ -89,14 +192,27 @@
 				"internalType": "uint256",
 				"name": "createdAt",
 				"type": "uint256"
-			},
-			{
-				"internalType": "string",
-				"name": "ipfsHash",
-				"type": "string"
 			}
 		],
 		"stateMutability": "view",
+		"type": "function"
+	},
+	{
+		"inputs": [
+			{
+				"internalType": "string",
+				"name": "userId",
+				"type": "string"
+			},
+			{
+				"internalType": "string",
+				"name": "fileHash",
+				"type": "string"
+			}
+		],
+		"name": "createWill",
+		"outputs": [],
+		"stateMutability": "nonpayable",
 		"type": "function"
 	},
 	{
@@ -114,11 +230,6 @@
 						"internalType": "uint256",
 						"name": "timestamp",
 						"type": "uint256"
-					},
-					{
-						"internalType": "address",
-						"name": "userAddress",
-						"type": "address"
 					},
 					{
 						"internalType": "string",
@@ -158,11 +269,6 @@
 				"internalType": "uint256",
 				"name": "createdAt",
 				"type": "uint256"
-			},
-			{
-				"internalType": "string",
-				"name": "ipfsHash",
-				"type": "string"
 			}
 		],
 		"stateMutability": "view",
@@ -189,11 +295,6 @@
 				"type": "uint256"
 			},
 			{
-				"internalType": "address",
-				"name": "userAddress",
-				"type": "address"
-			},
-			{
 				"internalType": "string",
 				"name": "userId",
 				"type": "string"
@@ -203,99 +304,33 @@
 		"type": "function"
 	},
 	{
-		"inputs": [],
-		"name": "MyWill",
-		"outputs": [
-			{
-				"components": [
-					{
-						"internalType": "string",
-						"name": "userId",
-						"type": "string"
-					},
-					{
-						"internalType": "string",
-						"name": "fileHash",
-						"type": "string"
-					},
-					{
-						"internalType": "uint256",
-						"name": "createdAt",
-						"type": "uint256"
-					},
-					{
-						"internalType": "string",
-						"name": "ipfsHash",
-						"type": "string"
-					}
-				],
-				"internalType": "struct WillSystem.Will",
-				"name": "",
-				"type": "tuple"
-			}
-		],
-		"stateMutability": "view",
-		"type": "function"
-	},
-	{
 		"inputs": [
 			{
 				"internalType": "string",
-				"name": "_userId",
+				"name": "",
 				"type": "string"
+			},
+			{
+				"internalType": "uint256",
+				"name": "",
+				"type": "uint256"
 			}
 		],
-		"name": "MyWillLogs",
+		"name": "userIdToWills",
 		"outputs": [
 			{
-				"components": [
-					{
-						"internalType": "string",
-						"name": "eventType",
-						"type": "string"
-					},
-					{
-						"internalType": "uint256",
-						"name": "timestamp",
-						"type": "uint256"
-					},
-					{
-						"internalType": "address",
-						"name": "userAddress",
-						"type": "address"
-					},
-					{
-						"internalType": "string",
-						"name": "userId",
-						"type": "string"
-					}
-				],
-				"internalType": "struct WillSystem.History[]",
-				"name": "",
-				"type": "tuple[]"
-			}
-		],
-		"stateMutability": "view",
-		"type": "function"
-	},
-	{
-		"inputs": [
-			{
 				"internalType": "string",
-				"name": "_fileHash",
+				"name": "userId",
 				"type": "string"
 			},
 			{
 				"internalType": "string",
-				"name": "_userId",
+				"name": "fileHash",
 				"type": "string"
-			}
-		],
-		"name": "SearchByHash",
-		"outputs": [
+			},
 			{
 				"internalType": "uint256",
-				"name": "",
+				"name": "createdAt",
 				"type": "uint256"
 			}
 		],
@@ -334,45 +369,6 @@
 				"type": "uint256"
 			}
 		],
-		"name": "userIdToWills",
-		"outputs": [
-			{
-				"internalType": "string",
-				"name": "userId",
-				"type": "string"
-			},
-			{
-				"internalType": "string",
-				"name": "fileHash",
-				"type": "string"
-			},
-			{
-				"internalType": "uint256",
-				"name": "createdAt",
-				"type": "uint256"
-			},
-			{
-				"internalType": "string",
-				"name": "ipfsHash",
-				"type": "string"
-			}
-		],
-		"stateMutability": "view",
-		"type": "function"
-	},
-	{
-		"inputs": [
-			{
-				"internalType": "string",
-				"name": "",
-				"type": "string"
-			},
-			{
-				"internalType": "uint256",
-				"name": "",
-				"type": "uint256"
-			}
-		],
 		"name": "userToHistroy",
 		"outputs": [
 			{
@@ -386,55 +382,9 @@
 				"type": "uint256"
 			},
 			{
-				"internalType": "address",
-				"name": "userAddress",
-				"type": "address"
-			},
-			{
 				"internalType": "string",
 				"name": "userId",
 				"type": "string"
-			}
-		],
-		"stateMutability": "view",
-		"type": "function"
-	},
-	{
-		"inputs": [
-			{
-				"internalType": "string",
-				"name": "_userId",
-				"type": "string"
-			}
-		],
-		"name": "ViewWillLogs",
-		"outputs": [
-			{
-				"components": [
-					{
-						"internalType": "string",
-						"name": "userId",
-						"type": "string"
-					},
-					{
-						"internalType": "string",
-						"name": "fileHash",
-						"type": "string"
-					},
-					{
-						"internalType": "uint256",
-						"name": "createdAt",
-						"type": "uint256"
-					},
-					{
-						"internalType": "string",
-						"name": "ipfsHash",
-						"type": "string"
-					}
-				],
-				"internalType": "struct WillSystem.Will",
-				"name": "",
-				"type": "tuple"
 			}
 		],
 		"stateMutability": "view",

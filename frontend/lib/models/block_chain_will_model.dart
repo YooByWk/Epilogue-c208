@@ -8,6 +8,9 @@ import 'package:http/http.dart';
 import 'package:path/path.dart' as path;
 import 'package:flutter/services.dart' show rootBundle;
 import 'package:flutter/material.dart';
+import 'package:flutter_dotenv/flutter_dotenv.dart';
+
+
 class AudioHash {
   String filePath;
   String fileName;
@@ -30,8 +33,9 @@ class BlockChainWillModel {
   // static final Future<String> _ABI = File('/smart_contract/will_system.json').readAsString();
   // print(_ABI);
   static const String _contractAddress =
-      '0xed2e8aac38bcddd780bc046f1223296e9ca1d00c';
-  final String _rpcUrl = 'https://rpc.ssafy-blockchain.com'; // RPC 주소
+      // '0xed2e8aac38bcddd780bc046f1223296e9ca1d00c'; // 구버전. ipfs 이전
+      '0x76F5e6B981e8928ae639B1fe4E13789310F5D887';
+   final String _rpcUrl= dotenv.env['RPC_URL']?? ''; // RPC 주소
 
   static Future<String> get _pk async {
     String? value = await storage.read(key: 'privateKey');
@@ -92,7 +96,7 @@ class BlockChainWillModel {
 
   }
   // 트랜잭션 전송
-  Future<String> sendTransaction(String txt, String functionName, List<dynamic> params) async {
+  Future<String> sendTransaction(String txt, String functionName, List params) async {
     final function = _contract.function(functionName);
     final res = await _client.sendTransaction(
       _credentials,

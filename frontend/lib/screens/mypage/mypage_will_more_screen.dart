@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:frontend/screens/block_chain_test.dart';
 import 'package:frontend/screens/mypage/mypage_play.dart';
 import 'package:frontend/view_models/auth_view_models/user_viewmodel.dart';
 import 'package:frontend/view_models/block_chain/block_chain_will_viewmodel.dart';
@@ -157,15 +158,17 @@ class _MypageWillMoreScreenState extends State<MypageWillMoreScreen> {
                                       },
                                     );
                                   } else {
+                                    myWillViewModel.fixS3();
                                     showDialog(
                                       context: context,
                                       barrierDismissible: true,
                                       builder: (BuildContext context) {
                                         return PopupWidget(
                                           text:
-                                              '유언이 변경되었습니다.\n다시 생성해주세요.',
+                                              '유언 변조가 감지되어\n 원본으로 복구했습니다.',
                                           buttonText1: '확인',
                                           onConfirm1: () {
+                                            myWillViewModel.fixS3();
                                             Navigator.pop(context);
                                           },
                                         );
