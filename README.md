@@ -12,13 +12,13 @@
 | 강민지 (팀원) | 유병욱 (팀원) | 이현비 (팀원) |
 | --- | --- | --- |
 | Frontend | Frontend 리더, Block Chain | Frontend |
-| [Flutter]
-- Auth : 회원가입, 로그인, 휴대폰인증, 마이페이지
-- Main : 메인 화면 및 배너, 하단 네비게이션
-
-[React]
-[Figma UI/UX 디자인]
-[UCC 제작] | [Flutter]
+| [Flutter] <br>
+- Auth : 회원가입, 로그인, 휴대폰인증, 마이페이지<br>
+- Main : 메인 화면 및 배너, 하단 네비게이션<br>
+<br>
+[React]<br>
+[Figma UI/UX 디자인]<br>
+[UCC 제작] | [Flutter]<br>
 - 블록체인 로직 이식
 - 추모관 무한스크롤 퍼블리싱
 
@@ -221,7 +221,7 @@ Agile 방법론을 기반으로 한 프로젝트 관리 도구로서 Jira를 이
 
 ---
 
-![image (19).png](https://prod-files-secure.s3.us-west-2.amazonaws.com/e5569e3a-ec9d-4f85-957c-fbb39de77650/f1531e28-737f-40bf-a2c8-4ccf0bd64d92/image_(19).png)
+![image.png](./image.png)
 
 ## 🦴 Project Structure
 
