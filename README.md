@@ -221,7 +221,7 @@ Agile 방법론을 기반으로 한 프로젝트 관리 도구로서 Jira를 이
 
 ---
 
-![image (19).png](https://prod-files-secure.s3.us-west-2.amazonaws.com/e5569e3a-ec9d-4f85-957c-fbb39de77650/f1531e28-737f-40bf-a2c8-4ccf0bd64d92/image_(19).png)
+![image.png](./image.png)
 
 ## 🦴 Project Structure
 
