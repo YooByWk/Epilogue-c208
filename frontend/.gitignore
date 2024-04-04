@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 # See https://help.github.com/articles/ignoring-files/ for more about ignoring files.
 
 # dependencies
@@ -21,6 +22,8 @@
 npm-debug.log*
 yarn-debug.log*
 yarn-error.log*
+=======
+>>>>>>> 89bb60f2156c9bbb8fe8a70025ca5a804eddd590
 # Miscellaneous
 *.class
 *.log
@@ -37,12 +40,21 @@ yarn-error.log*
 *.ipr
 *.iws
 .idea/
+<<<<<<< HEAD
+=======
+**/.idea/
+>>>>>>> 89bb60f2156c9bbb8fe8a70025ca5a804eddd590
 
 # The .vscode folder contains launch configuration and tasks you configure in
 # VS Code which you may wish to be included in version control, so this line
 # is commented out by default.
 #.vscode/
+<<<<<<< HEAD
 
+=======
+/node_modules/
+frontend/node_modules/
+>>>>>>> 89bb60f2156c9bbb8fe8a70025ca5a804eddd590
 # Flutter/Dart/Pub related
 **/doc/api/
 .dart_tool/
@@ -68,4 +80,43 @@ lib/generated_plugin_registrant.dart
 **/ios/Flutter/flutter_export_environment.sh
 **/ios/ServiceDefinitions.json
 **/ios/Runner/GeneratedPluginRegistrant.*
+<<<<<<< HEAD
 
+=======
+# test : 경로 문제 파악 
+*/ios/.symlinks/
+*/ios/Flutter/.last_build_id
+*/ios/Flutter/App.framework
+*/ios/Flutter/Flutter.framework
+*/ios/Flutter/Flutter.podspec
+*/ios/Flutter/Generated.xcconfig
+*/ios/Flutter/app.flx
+*/ios/Flutter/app.zip
+*/ios/Flutter/flutter_assets/
+*/ios/Flutter/flutter_export_environment.sh
+*/ios/ServiceDefinitions.json
+*/ios/Runner/GeneratedPluginRegistrant.*
+
+# Android related
+**/android/.gradle
+**/android/app/build/
+**/android/app/src/main/java/io/flutter/plugins/GeneratedPluginRegistrant.java
+**/android/gradle/wrapper/gradle-wrapper.properties
+# Android related : 경로 문제 파악
+*/android/.gradle
+*/android/app/build/
+*/android/app/src/main/java/io/flutter/plugins/GeneratedPluginRegistrant.java
+*/android/gradle/wrapper/gradle-wrapper.properties
+
+/android/.gradle
+/android/app/build/
+/android/app/src/main/java/io/flutter/plugins/GeneratedPluginRegistrant.java
+/android/gradle/wrapper/gradle-wrapper.properties
+
+
+# Exceptions to above rules.
+!/packages/flutter_tools/test/data/dart_dependencies_test/.packages
+
+.flutter-plugins-dependencies
+assets/config/.env
+>>>>>>> 89bb60f2156c9bbb8fe8a70025ca5a804eddd590
