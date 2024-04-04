@@ -12,13 +12,13 @@
 | 강민지 (팀원) | 유병욱 (팀원) | 이현비 (팀원) |
 | --- | --- | --- |
 | Frontend | Frontend 리더, Block Chain | Frontend |
-| [Flutter]
-- Auth : 회원가입, 로그인, 휴대폰인증, 마이페이지
-- Main : 메인 화면 및 배너, 하단 네비게이션
-
-[React]
-[Figma UI/UX 디자인]
-[UCC 제작] | [Flutter]
+| [Flutter] <br>
+- Auth : 회원가입, 로그인, 휴대폰인증, 마이페이지<br>
+- Main : 메인 화면 및 배너, 하단 네비게이션<br>
+<br>
+[React]<br>
+[Figma UI/UX 디자인]<br>
+[UCC 제작] | [Flutter]<br>
 - 블록체인 로직 이식
 - 추모관 무한스크롤 퍼블리싱
 
