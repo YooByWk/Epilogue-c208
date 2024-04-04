@@ -187,11 +187,11 @@ Agile 방법론을 기반으로 한 프로젝트 관리 도구로서 Jira를 이
 
 ## 🔍 ERD
 
-![image-1.png](./image-1.png)
+![image.png](./image.png)
 
 ## 📉 시스템 아키텍처
 
-![image.png](./image.png)
+![image-1.png](./image-1.png)
 
 ## 🦴 Project Structure
 
