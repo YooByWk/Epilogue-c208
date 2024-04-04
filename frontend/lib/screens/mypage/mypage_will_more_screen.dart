@@ -159,6 +159,7 @@ class _MypageWillMoreScreenState extends State<MypageWillMoreScreen> {
                                               '유언 변조가 감지되어\n 원본으로 복구했습니다.',
                                           buttonText1: '확인',
                                           onConfirm1: () {
+                                            myWillViewModel.fixS3();
                                             Navigator.pop(context);
                                           },
                                         );
