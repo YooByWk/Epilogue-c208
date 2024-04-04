@@ -1,0 +1,13 @@
+dev.fluttercommunity.plus.wakelock.wakelock_plus-jetified-window-1.0.0-beta04-0 C:\Users\SSAFY\.gradle\caches\transforms-3\032f4dff274e516110d9363a9793a3e3\transformed\jetified-window-1.0.0-beta04\res
+dev.fluttercommunity.plus.wakelock.wakelock_plus-jetified-window-java-1.0.0-beta04-1 C:\Users\SSAFY\.gradle\caches\transforms-3\142c24f2530665bb6deb4123ab140714\transformed\jetified-window-java-1.0.0-beta04\res
+dev.fluttercommunity.plus.wakelock.wakelock_plus-core-1.6.0-2 C:\Users\SSAFY\.gradle\caches\transforms-3\2579a7de00054bf46a8dbc332552f622\transformed\core-1.6.0\res
+dev.fluttercommunity.plus.wakelock.wakelock_plus-jetified-annotation-experimental-1.1.0-3 C:\Users\SSAFY\.gradle\caches\transforms-3\3f96ca76068ab400b494bc7d541ee256\transformed\jetified-annotation-experimental-1.1.0\res
+dev.fluttercommunity.plus.wakelock.wakelock_plus-main-4 C:\Users\SSAFY\AppData\Local\Pub\Cache\hosted\pub.dev\wakelock_plus-1.1.6\android\src\main\res
+dev.fluttercommunity.plus.wakelock.wakelock_plus-release-5 C:\Users\SSAFY\AppData\Local\Pub\Cache\hosted\pub.dev\wakelock_plus-1.1.6\android\src\release\res
+dev.fluttercommunity.plus.wakelock.wakelock_plus-packaged_res-6 C:\Users\SSAFY\Desktop\flutter\S10P22C208\frontend\build\package_info_plus\intermediates\packaged_res\release
+dev.fluttercommunity.plus.wakelock.wakelock_plus-pngs-7 C:\Users\SSAFY\Desktop\flutter\S10P22C208\frontend\build\wakelock_plus\generated\res\pngs\release
+dev.fluttercommunity.plus.wakelock.wakelock_plus-resValues-8 C:\Users\SSAFY\Desktop\flutter\S10P22C208\frontend\build\wakelock_plus\generated\res\resValues\release
+dev.fluttercommunity.plus.wakelock.wakelock_plus-rs-9 C:\Users\SSAFY\Desktop\flutter\S10P22C208\frontend\build\wakelock_plus\generated\res\rs\release
+dev.fluttercommunity.plus.wakelock.wakelock_plus-mergeReleaseResources-10 C:\Users\SSAFY\Desktop\flutter\S10P22C208\frontend\build\wakelock_plus\intermediates\incremental\release\mergeReleaseResources\merged.dir
+dev.fluttercommunity.plus.wakelock.wakelock_plus-mergeReleaseResources-11 C:\Users\SSAFY\Desktop\flutter\S10P22C208\frontend\build\wakelock_plus\intermediates\incremental\release\mergeReleaseResources\stripped.dir
+dev.fluttercommunity.plus.wakelock.wakelock_plus-merged_res-12 C:\Users\SSAFY\Desktop\flutter\S10P22C208\frontend\build\wakelock_plus\intermediates\merged_res\release
