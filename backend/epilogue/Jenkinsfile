@@ -1,0 +1,104 @@
+pipeline {
+    agent any
+
+//     tools {
+//         gradle 8.5
+//     }
+
+    stages {
+        stage('Git Clone') {
+            steps {
+                // Git 저장소에서 소스 코드를 가져옵니다.
+//                 git url: 'https://lab.ssafy.com/s10-blockchain-contract-sub2/S10P22C208.git',
+//                     credentialsId: 'kn9012'
+                echo 'Git Clone'
+                git branch: 'backend', credentialsId: 'epilogue', url: 'https://lab.ssafy.com/s10-blockchain-contract-sub2/S10P22C208.git'
+            }
+        }
+
+        stage('Build') {
+            steps {
+                echo 'Build'
+//              sh 'cd ./backend/epilogue'
+                dir('backend/epilogue') {
+//                  sh 'pwd'
+//                  sh 'ls -al'
+//                  sh 'whoami'
+                    sh 'chmod +x ./gradlew'
+                    sh './gradlew clean build' // 기존 파일을 지우고 gralde로 프로젝트 새로 빌드
+                }
+            }
+        }
+
+        stage('Deploy') {
+            steps {
+//                 sh 'cp ./build/libs/epilogue-0.0.1-SNAPSHOT.jar '
+//                 sh 'su root' // Authentication Failure (Password)
+
+                // 스프링 도커 컨테이너 중지
+                sh 'docker stop spring-docker || true'
+                // 스프링 도커 컨테이너 제거
+                sh 'docker rm spring-docker || true'
+                // 스프링 이미지 삭제
+                sh 'docker rmi spring || true'
+
+                // 스프링 이미지 빌드(생성)
+//                 <1번 방법>
+//                 dir('backend/epilogue') {
+//                    sh 'docker build -t spring .'
+//                 }
+//                 <2번 방법>
+//                 sh 'docker build -t spring ./build/libs/epilogue-0.0.1-SNAPSHOT.jar'
+//                 <3번 방법>
+//                 sh 'pwd' // jenkins-data/workspace/Epilogue_Backend
+                  sh 'docker build -t spring ./backend/epilogue' // backend/epilogue 들어가서 spring 이미지 생성
+//                 sh 'ls -al'
+
+                // 스프링 도커 컨테이너 실행
+                sh 'docker run -d -p 8080:8080 --name spring-docker spring'
+            }
+        }
+    }
+}
+
+
+
+// pipeline {
+//     agent any
+//
+//     stages {
+//         stage('Git Clone') {
+//             steps {
+//                 echo 'Git Clone'
+//                 git branch: 'backend', credentialsId: 'epilogue', url: 'https://lab.ssafy.com/s10-blockchain-contract-sub2/S10P22C208.git'
+//             }
+//         }
+//
+//         stage('Build') {
+//             steps {
+//                 echo 'Build'
+//                 dir('backend/epilogue') {
+//                     sh 'chmod +x ./gradlew'
+//                     sh './gradlew clean build'
+//                 }
+//             }
+//         }
+//
+//         stage('Deploy') {
+//             steps {
+//                 // 스프링 도커 컨테이너 중지
+//                 sh 'docker stop spring-docker || true'
+//                 // 스프링 도커 컨테이너 제거
+//                 sh 'docker rm spring-docker || true'
+//                 // 스프링 이미지 삭제
+//                 sh 'docker rmi spring || true'
+//                 // 스프링 이미지 빌드(생성)
+//                 sh 'docker build -t spring ./backend/epilogue'
+//                 // 스프링 도커 컨테이너 실행
+//                 sh 'docker run -d -p 8080:8080 --name spring-docker spring'
+//             }
+//         }
+//     }
+// }
+
+
