@@ -34,13 +34,31 @@ dependencies:
 
   # The following adds the Cupertino Icons font to your application.
   # Use with the CupertinoIcons class for iOS style icons.
-  cupertino_icons: ^1.0.6
-  provider: ^6.1.2
-  http: ^1.2.1
-  web3dart: ^2.7.3
-  crypto: ^3.0.3
-  flutter_native_splash: ^2.3.13
-  flutter_launcher_icons: ^0.13.1
+  cupertino_icons: ^1.0.6 # 아이콘
+  provider: ^6.1.2 # 상태관리
+  http: ^1.2.1 # http 통신
+  web3dart: ^2.7.3 # 이더리움
+  crypto: ^3.0.3 # 암호화
+  flutter_native_splash: ^2.3.13 # 스플래시 스크린
+  flutter_launcher_icons: ^0.13.1 # 앱 아이콘
+  carousel_slider: ^4.2.1 # 이미지 슬라이더
+  video_player: ^2.8.3 # 비디오 플레이어
+  chewie: ^1.7.5 # 비디오 플레이어
+  video_thumbnail: ^0.5.3 # 비디오 썸네일
+  visibility_detector: ^0.4.0+2 # 스크롤 감지
+  flutter_sound: ^9.4.6 # 음성 녹음 및 재생
+  permission_handler: ^11.3.0 # 마이크 권한 부여
+  dio: ^5.4.1
+  convert: ^3.1.1
+  flutter_secure_storage: ^4.2.1  # 토큰 저장
+  flutter_dotenv: ^5.0.2  # .env 파일 사용
+  bip39: ^1.0.6 # 니모닉 생성
+  bip32: ^2.0.0 # 계좌 생성
+  path_provider: ^2.1.2 # 파일 저장 / 불러오기
+  file_picker: ^8.0.0+1
+  flutter_widget_to_image: ^0.0.1
+  overlay_support: ^2.1.0 # 배너 알람
+  webview_flutter: ^4.7.0 # 네이버 로그인 창 띄우기
 
 dev_dependencies:
   flutter_test:
@@ -68,9 +86,12 @@ flutter:
   assets:
     - assets/images/
     - assets/launcher_icon/
+    - assets/images/memorialTest/
     # - images/a_dot_burr.jpeg
   #   - images/a_dot_ham.jpeg
-
+    - assets/config/
+    - smart_contract/
+    - assets/blockchain/
   # An image asset can refer to one or more resolution-specific "variants", see
   # https://flutter.dev/assets-and-images/#resolution-aware
 
