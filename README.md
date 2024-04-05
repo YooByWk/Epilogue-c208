@@ -11,26 +11,8 @@
 
 | 강민지 (팀원) | 유병욱 (팀원) | 이현비 (팀원) |
 | --- | --- | --- |
-| Frontend | Frontend 리더, Block Chain | Frontend |
-| [Flutter] <br>
-- Auth : 회원가입, 로그인, 휴대폰인증, 마이페이지<br>
-- Main : 메인 화면 및 배너, 하단 네비게이션<br>
-<br>
-[React]<br>
-[Figma UI/UX 디자인]<br>
-[UCC 제작] | [Flutter]<br>
-- 블록체인 로직 이식
-- 추모관 무한스크롤 퍼블리싱
-
-[Block Chain]
-- 스마트 컨트랙트 배포
-- FE - Block Chain 이식
-- IPFS : 설정 / 노드 구성 | [Flutter]
-- 추모관 : 파일 업로드, 즐겨찾기, 검색, 리스트
-- 유언 생성 : 녹음, 재생, 열람인, 증인, 선택사항
-
-[React]
-- 증인 유언장 열람 신청, 열람인 유언장 열람 신청, 유언장 |
+| Frontend| Frontend 리더, Block Chain | Frontend |
+| **[Flutter]**<br>- Auth : 회원가입, 로그인, 휴대폰인증, 마이페이지<br>- Main : 메인 화면 및 배너, 하단 네비게이션<br>**[React]**<br>**[Figma UI/UX 디자인]**<br>**[UCC 제작]** | **[Flutter]**<br>- 블록체인 로직 이식<br>- 추모관 무한스크롤 퍼블리싱<br>**[Block Chain]**<br>- 스마트 컨트랙트 배포<br>- FE - Block Chain 이식<br>- IPFS : 설정 / 노드 구성 | **[Flutter]**<br>- 추모관 : 파일 업로드, 즐겨찾기, 검색, 리스트<br>- 유언 생성 : 녹음, 재생, 열람인, 증인, 선택사항<br>**[React]**<br>- 증인 유언장 열람 신청, 열람인 유언장 열람 신청, 유언장 |
 
 | 김유나 (팀장) | 유세진 (팀원) | 한재현 (팀원) |
 | --- | --- | --- |
@@ -58,15 +40,11 @@
 
 ## ✏ 개요
 
----
-
  한국은 고령사회를 넘어 2025년 초고령사회의 진입을 눈앞에 두고 있습니다. 노령 인구의 증가는 유언을 통한 상속 수요를 증가시키고 있지만, 복잡한 절차 때문에 많은 사람들이 유언을 작성하지 않는 추세입니다. 실제로 금융기관 연구소 등의 조사에 따르면 응답자의 67% 이상이 유언을 작성하겠다고 답변했으나, 실제 유언을 작성한 사람은 3%에 불과했습니다. 이러한 수요를 반영해 간편하게 유언을 생성할 수 있는 서비스를 기획했습니다.
 
  복잡한 절차 없이 위변조 위험이 없는 유언을 남기고 싶다면, 고인의 삶과 기억을 언제 어디서든 추모하고 싶다면, **E:pilogue**를 찾아주세요😊
 
 ## 🖥️ 개발 환경
-
----
 
 ### **💻 IDE**
 
@@ -122,8 +100,6 @@
 - Mattermost
 
 ## ⚒ 주요 기능
-
----
 
 [기능 GIF](https://www.notion.so/GIF-2b8589131a294b7a8d05b6932bafef9e?pvs=21)
 
@@ -187,8 +163,6 @@
 
 ## 💡 프로젝트 진행
 
----
-
 ### Git
 
 형상 관리 시스템으로, 프로젝트의 소스 코드 버전 관리를 위해 Git을 사용했습니다.
@@ -213,23 +187,18 @@ Agile 방법론을 기반으로 한 프로젝트 관리 도구로서 Jira를 이
 
 ## 🔍 ERD
 
----
-
-![Untitled](https://prod-files-secure.s3.us-west-2.amazonaws.com/e5569e3a-ec9d-4f85-957c-fbb39de77650/3886fe79-bbd0-4d5f-88b2-bd1a8bc573f0/Untitled.png)
+![image.png](./image.png)
 
 ## 📉 시스템 아키텍처
 
----
-
-![image.png](./image.png)
+![image-1.png](./image-1.png)
 
 ## 🦴 Project Structure
 
----
+<details>
+<summary>Backend</summary>
+<div markdown="1">
 
-- **Backend**
-    
-    ```jsx
     📦backend
      ┣ 📂.idea
      ┃ ┣ 📂modules
@@ -607,13 +576,15 @@ Agile 방법론을 기반으로 한 프로젝트 관리 도구로서 Jira를 이
      ┃ ┣ 📜gradlew.bat
      ┃ ┣ 📜Jenkinsfile
      ┃ ┗ 📜settings.gradle
-    ```
-    
-- **Frontend**
-    - **Flutter**
-        
-        ```dart
-        📦lib
+
+</div>
+</details>
+
+<details>
+<summary>Frontend - Flutter</summary>
+<div markdown="1">
+
+📦lib
          ┣ 📂models
          ┃ ┣ 📂memorial
          ┃ ┃ ┣ 📜memorial_grave_model.dart
@@ -749,12 +720,15 @@ Agile 방법론을 기반으로 한 프로젝트 관리 도구로서 Jira를 이
          ┃ ┣ 📜will_play_widget.dart
          ┃ ┗ 📜will_viewer_widget.dart
          ┗ 📜main.dart
-        ```
-        
-    - **React**
-        
-        ```dart
-        📦src
+
+</div>
+</details>
+
+<details>
+<summary>Frontend - React</summary>
+<div markdown="1">
+
+📦src
          ┣ 📂hooks
          ┃ ┣ 📜blockCall.js
          ┃ ┣ 📜blockChainHash.js
@@ -813,4 +787,6 @@ Agile 방법론을 기반으로 한 프로젝트 관리 도구로서 Jira를 이
             mapping(string => Will) public hashToWill; // 하나의 해시값은 하나의 유언장
             mapping(string => History[]) public userToHistroy; // 한 유저는 여러 이력
             mapping(string => address) public userIdToaddress; // 유저 아이디로 주소를 찾음
-        ```
+
+</div>
+</details>
