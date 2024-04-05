@@ -1,184 +1,117 @@
 import 'package:flutter/material.dart';
-import 'package:frontend/screens/mypage/mypage_play.dart';
+import 'package:flutter/services.dart';
+import 'package:frontend/main.dart';
+import 'package:frontend/models/user/user_model.dart';
 import 'package:frontend/view_models/auth_view_models/user_viewmodel.dart';
-import 'package:frontend/view_models/block_chain/block_chain_will_viewmodel.dart';
-import 'package:frontend/view_models/will_view_models/my_will_viewmodel.dart';
-import 'package:frontend/widgets/common_text_widget.dart';
 import 'package:frontend/widgets/common_button.dart';
-import 'package:frontend/widgets/popup_widget.dart';
-import 'package:frontend/widgets/will_additional_info_widget.dart';
-import 'package:flutter/material.dart';
+import 'package:frontend/widgets/common_text_widget.dart';
+import 'package:frontend/widgets/input_form_widget.dart';
 import 'package:provider/provider.dart';
 
-
-class MypageWillMoreScreen extends StatefulWidget {
-  final String path;
-  const MypageWillMoreScreen({
-    required this.path,
-    Key? key}) : super(key: key);
-
-  @override
-  _MypageWillMoreScreenState createState() => _MypageWillMoreScreenState();
-}
-
-class _MypageWillMoreScreenState extends State<MypageWillMoreScreen> {
-  late Future myWillDataFuture;
-
-  // late String audioPath;
-
-  @override
-  void didChangeDependencies() {
-    super.didChangeDependencies();
-    myWillDataFuture = MyWillViewModel().normalfetchData();
-  }
-
+class MypageModifyInfoScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-    debugPrint('추가정보 위젯 테스트 : ${widget.path}');
-    return MultiProvider(
-      providers: [
-        ChangeNotifierProvider(create: (context) => UserViewModel()),
-        ChangeNotifierProvider(create: (context) => MyWillViewModel()),
-      ],
-      child: Consumer2<UserViewModel, MyWillViewModel>(
-        builder: (context, userViewModel, myWillViewModel, child) {
-          return FutureBuilder(
-            future: myWillDataFuture,
-            builder: (context, snapshot) {
-              if (snapshot.connectionState == ConnectionState.waiting) {
-                return Scaffold(
-                  body: Center(
-                    child: CircularProgressIndicator(),
-                  ),
-                );
-                
-              } else {
-                if (snapshot.hasError) {
-                  return Text('Error: ${snapshot.error}');
-                } else {
-                  return Scaffold(
-                    appBar: AppBar(
-                      title: CommonText(
-                        text: '내가 기록한 유언',
-                        fontSize: 30,
-                        isBold: true,
-                      ),
-                      actions: [
-                        Padding(
-                          padding: EdgeInsets.only(right: 20.0),
-                          child: CommonButtonWidget(
-                            text: '삭제',
-                            width: 80,
-                            fontSize: 20,
-                            onPressed: () {
-                              showDialog(
-                                context: context,
-                                barrierDismissible: true,
-                                builder: (BuildContext context) {
-                                  return PopupWidget(
-                                    text:
-                                        '삭제하면 처음부터 다시 생성해야 합니다.\n정말 삭제하시겠습니까?',
-                                    buttonText1: '삭제',
-                                    onConfirm1: () {},
-                                    buttonText2: '취소',
-                                    onConfirm2: () {},
-                                  );
-                                },
-                              );
-                            },
-                          ),
-                        ),
-                      ],
-                    ),
-                    body: Center(
-                      child: SingleChildScrollView(
-                        child: Column(
-                          crossAxisAlignment: CrossAxisAlignment.center,
+    return ChangeNotifierProvider(
+        create: (context) => UserViewModel(),
+        child: Consumer<UserViewModel>(builder: (context, viewModel, child) {
+          final user = viewModel.user;
+          return Scaffold(
+              appBar: AppBar(
+                title: CommonText(
+                  text: '정보 수정',
+                  isBold: true,
+                  fontSize: 30,
+                ),
+              ),
+              body: viewModel.isLoading
+                  ? Center(child: CircularProgressIndicator())
+                  : viewModel.user == null
+                  ? Center(child: Text('사용자 정보를 불러올 수 없습니다.'))
+                  : viewModel.errorMessage != null
+                  ? Center(child: Text(viewModel.errorMessage!))
+                  : SingleChildScrollView(
+                  child: Center(
+                      child: Column(
+                          crossAxisAlignment:
+                          CrossAxisAlignment.center,
                           children: [
-                            Stack(
-                              alignment: Alignment.center,
-                              children: [
-                                CommonButtonWidget(
-                                  height: 300,
-                                  width: 300,
-                                  text: '${myWillViewModel.graveName}\n故${userViewModel.user!.name}',
-                                  fontSize: 24,
-                                  textColor: Colors.black,
-                                  imagePath: 'assets/images/stone.png',
-                                  onPressed: () {},
-                                ),
-                                Positioned(
-                                    top: 40,
-                                    child: Text('RIP', style: TextStyle(fontSize: 30),)),
-                                Positioned(
-                                  bottom: 40,
-                                  child: myWillViewModel.graveImageAddress != null // imageUrl은 ViewModel에서 이미지 URL을 가리키는 속성입니다.
-                                      ? Image.network(
-                                    myWillViewModel.graveImageAddress!,
-                                    width: 100, // 이미지 크기, 필요에 따라 조정
-                                    height: 70,
-                                    fit: BoxFit.cover, // 이미지가 컨테이너에 맞게 조절되도록 설정
-                                  ) : Container(),
-                                  ),
-                              ],
+                            InputFormWidget(
+                              onChanged: (value) {
+                                if (viewModel.user != null) {
+                                  viewModel.user!.name = value;
+                                }},
+                              keyboardType: TextInputType.text,
+                              label: '성함',
+                              borderColor: themeColour3,
+                              textColor: themeColour5,
+                              backgroundColor: Colors.white,
+                              hintText: '${user!.name}',
                             ),
-                            MyPagePlay(path: widget.path),
-                            // MyPagePlay(path: 'myWillViewModel.willData[]'),
-                            WillAdditionalInfo(willData : myWillViewModel.willData),
+                            Container(
+                              margin: EdgeInsets.only(top: 30),
+                              padding:
+                              EdgeInsets.symmetric(horizontal: 20),
+                              width:
+                              MediaQuery.of(context).size.width * 0.9,
+                              height: 60,
+                              decoration: BoxDecoration(
+                                  borderRadius:
+                                  BorderRadius.circular(8.0),
+                                  border: Border.all(color: themeColour3),
+                                  color: Colors.white),
+                              alignment: Alignment.centerLeft,
+                              child: Row(
+                                children: [
+                                  CommonText(
+                                    text: '생년월일',
+                                    fontSize: 24,
+                                    textColor: themeColour5,
+                                  ),
+                                  SizedBox(width: 15),
+                                  CommonText(
+                                    text: user.birth,
+                                    textColor: themeColour5,
+                                    isBold: true,
+                                    fontSize: 24,
+                                  ),
+                                ],
+                              ),
+                            ),
+                            SizedBox(height: 30),
+                            Row(
+                                mainAxisAlignment:
+                                MainAxisAlignment.spaceEvenly,
+                                children: [
+                                  InputFormWidget(
+                                    onChanged: (value) {
+                                      if (viewModel.user != null) {
+                                        viewModel.user!.mobile = value;
+                                      }
+                                    },
+                                    keyboardType: TextInputType.number,
+                                    label: '휴대폰 번호',
+                                    borderColor: themeColour3,
+                                    textColor: themeColour5,
+                                    backgroundColor: Colors.white,
+                                    hintText: '   ${user.mobile}',
+                                  ),
+                                  // CommonButtonWidget(
+                                  //     text: '인증',
+                                  //     width: 60,
+                                  //     height: 50,
+                                  //     fontSize: 24,
+                                  //     backgroundColor: themeColour3,
+                                  //     onPressed: () {})
+                                ]),
                             SizedBox(height: 20),
                             CommonButtonWidget(
-                              width: 250,
-                              text: '저장된 유언 진위여부 확인',
-                              onPressed: () async {
-                                await BlockChainWillViewModel()
-                                    .WillCheck()
-                                    .then((res) {
-                                  debugPrint(res.toString());
-                                  if (res == '200') {
-                                    showDialog(
-                                      context: context,
-                                      builder: (BuildContext context) {
-                                        return PopupWidget(
-                                          text: '유언이 안전하게 저장되고 있습니다.',
-                                          buttonText1: '확인',
-                                          onConfirm1: () {
-                                            Navigator.pop(context);
-                                          },
-                                        );
-                                      },
-                                    );
-                                  } else {
-                                    myWillViewModel.fixS3();
-                                    showDialog(
-                                      context: context,
-                                      barrierDismissible: true,
-                                      builder: (BuildContext context) {
-                                        return PopupWidget(
-                                          text:
-                                              '유언 변조가 감지되어\n 원본으로 복구했습니다.',
-                                          buttonText1: '확인',
-                                          onConfirm1: () {
-                                            myWillViewModel.fixS3();
-                                            Navigator.pop(context);
-                                          },
-                                        );
-                                      },
-                                    );
-                                  }
-                                });
-                              },
-                            ),
-                          ],
-                        ),
-                      ),
-                    ),
-                  );
-                }
-              }
-            },
-          );
-        },
-      ),
-    );
+                                text: '수정하기',
+                                width: 100,
+                                fontSize: 24,
+                                onPressed: () async {
+                                  viewModel.modifyUserData();
+                                }),
+                          ]))));
+        }));
   }
 }
