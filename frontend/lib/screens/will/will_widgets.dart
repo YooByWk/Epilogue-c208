@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:frontend/main.dart';
 import 'package:frontend/screens/main/main_body_screen.dart';
-import 'package:frontend/view_models/memorial_view_models/memorial_viewmodel.dart';
 import 'package:frontend/view_models/will_view_models/memorial_name_picture_viewmodel.dart';
 import 'package:frontend/view_models/will_view_models/witness_viewmodel.dart';
 import 'package:frontend/widgets/common_button.dart';

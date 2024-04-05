@@ -4,7 +4,6 @@ import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 import 'package:frontend/main.dart';
 import 'package:frontend/screens/login/login_input_field_widget.dart';
 import 'package:frontend/screens/login/mnemonic_recovery_screen.dart';
-import 'package:frontend/screens/login/naver_login_screen.dart';
 import 'package:frontend/services/auth_service.dart';
 import 'package:frontend/view_models/auth_view_models/login_viewmodel.dart';
 import 'package:frontend/screens/login/social_button_widget.dart';

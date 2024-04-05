@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:frontend/screens/block_chain_test.dart';
 import 'package:frontend/screens/mypage/mypage_play.dart';
 import 'package:frontend/view_models/auth_view_models/user_viewmodel.dart';
 import 'package:frontend/view_models/block_chain/block_chain_will_viewmodel.dart';

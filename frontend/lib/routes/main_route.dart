@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:frontend/screens/block_chain_test.dart';
 import 'package:frontend/screens/login/login_screen.dart';
 import 'package:frontend/screens/login/mnemonic_recovery_screen.dart';
 import 'package:frontend/screens/memorial/memorial_detail/memorial_detail_screen.dart';
@@ -41,9 +40,6 @@ Route<dynamic> generateMainRoute(RouteSettings settings) {
       return MaterialPageRoute(
           builder: (context) => MemorialPhotoDetailScreen(),
           settings: RouteSettings(arguments: settings.arguments));
-
-    case '/blockChain':
-      return MaterialPageRoute(builder: (context) => BlockChainTest());
 
     case '/mnemonic':
       // return MaterialPageRoute(builder: (context) => MnemonicShowScreen());
